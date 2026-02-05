@@ -19,16 +19,16 @@ public class PlayerCameraRotation : MonoBehaviour
 
     private void RotateCamera()
     {
-        var mouseAxis = GetMouseAxis();
+        var mouseAxis = MouseAxis;
 
         var yAxis = mouseAxis.x;
         var xAxis = mouseAxis.y;
 
-        var yRotation = transform.localEulerAngles.y + yAxis * GetSensitivity().x * Time.deltaTime;
-        var xRotation = playerCamera.transform.localEulerAngles.x - xAxis * GetSensitivity().y * Time.deltaTime;
+        var yRotation = transform.localEulerAngles.y + yAxis * Sensitivity.x * Time.deltaTime;
+        var xRotation = playerCamera.transform.localEulerAngles.x - xAxis * Sensitivity.y * Time.deltaTime;
 
         if (xRotation > 180f) xRotation -= 360f;
-        xRotation = Mathf.Clamp(xRotation, GetMinMaxYAngle().x, GetMinMaxYAngle().y);
+        xRotation = Mathf.Clamp(xRotation, MinMaxYAngle.x, MinMaxYAngle.y);
 
         LookAt(new Vector2(xRotation, yRotation));
     }
@@ -36,7 +36,7 @@ public class PlayerCameraRotation : MonoBehaviour
     public void LookAt(Vector2 direction)
     {
         transform.localEulerAngles = new Vector3(0, direction.y, 0);
-        GetCameraPivot().transform.localEulerAngles = new Vector3(direction.x, 0, 0);
+        CameraPivot.transform.localEulerAngles = new Vector3(direction.x, 0, 0);
     }
 
     public void MouseToggle(string state = "~")
@@ -83,14 +83,30 @@ public class PlayerCameraRotation : MonoBehaviour
         playerCamera.SetActive(toggle);
     }
 
-    public Vector2 GetMouseAxis()
+    public Vector2 MouseAxis
     {
-        var xAxis = Input.GetAxis("Mouse X");
-        var yAxis = Input.GetAxis("Mouse Y");
-        return new Vector2(xAxis, yAxis);
+        get {
+            var xAxis = Input.GetAxis("Mouse X");
+            var yAxis = Input.GetAxis("Mouse Y");
+            return new Vector2(xAxis, yAxis);
+        }
     }
 
-    public GameObject GetCameraPivot() => playerCamera;
-    public Vector2 GetSensitivity() => xySensitivity;
-    public Vector2 GetMinMaxYAngle() => minMaxYAngle;
+    public GameObject CameraPivot 
+    { 
+        get { return playerCamera; } 
+        set { playerCamera = value; } 
+    }
+
+    public Vector2 Sensitivity 
+    { 
+        get { return xySensitivity; } 
+        set { xySensitivity = value; } 
+    }
+
+    public Vector2 MinMaxYAngle 
+    { 
+        get { return minMaxYAngle; } 
+        set { minMaxYAngle = value; } 
+    }
 }
