@@ -24,26 +24,19 @@ public class PlayerCameraRotation : MonoBehaviour
         var yAxis = mouseAxis.x;
         var xAxis = mouseAxis.y;
 
-        var yRotation = transform.localEulerAngles.y + yAxis * xySensitivity.x * Time.deltaTime;
-        var xRotation = playerCamera.transform.localEulerAngles.x - xAxis * xySensitivity.y * Time.deltaTime;
+        var yRotation = transform.localEulerAngles.y + yAxis * GetSensitivity().x * Time.deltaTime;
+        var xRotation = playerCamera.transform.localEulerAngles.x - xAxis * GetSensitivity().y * Time.deltaTime;
 
         if (xRotation > 180f) xRotation -= 360f;
-        xRotation = Mathf.Clamp(xRotation, minMaxYAngle.x, minMaxYAngle.y);
+        xRotation = Mathf.Clamp(xRotation, GetMinMaxYAngle().x, GetMinMaxYAngle().y);
 
         LookAt(new Vector2(xRotation, yRotation));
-    }
-
-    public Vector2 GetMouseAxis()
-    {
-        var xAxis = Input.GetAxis("Mouse X");
-        var yAxis = Input.GetAxis("Mouse Y");
-        return new Vector2(xAxis, yAxis);
     }
 
     public void LookAt(Vector2 direction)
     {
         transform.localEulerAngles = new Vector3(0, direction.y, 0);
-        playerCamera.transform.localEulerAngles = new Vector3(direction.x, 0, 0);
+        GetCameraPivot().transform.localEulerAngles = new Vector3(direction.x, 0, 0);
     }
 
     public void MouseToggle(string state = "~")
@@ -89,4 +82,15 @@ public class PlayerCameraRotation : MonoBehaviour
 
         playerCamera.SetActive(toggle);
     }
+
+    public Vector2 GetMouseAxis()
+    {
+        var xAxis = Input.GetAxis("Mouse X");
+        var yAxis = Input.GetAxis("Mouse Y");
+        return new Vector2(xAxis, yAxis);
+    }
+
+    public GameObject GetCameraPivot() => playerCamera;
+    public Vector2 GetSensitivity() => xySensitivity;
+    public Vector2 GetMinMaxYAngle() => minMaxYAngle;
 }
