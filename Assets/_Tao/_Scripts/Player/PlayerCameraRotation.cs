@@ -3,9 +3,9 @@ using NaughtyAttributes;
 
 public class PlayerCameraRotation : MonoBehaviour
 {
-    [SerializeField] GameObject playerCamera;
-    [SerializeField] Vector2 xySensitivity = Vector2.one;
-    [SerializeField, MinMaxSlider(-90f, 90f)] Vector2 minMaxYAngle = Vector2.zero;
+    [SerializeField, Label("Player Camera Assign")] GameObject playerCamera;
+    [Space, SerializeField, Label("Camera Sensitivity of X and Y axis")] Vector2 xySensitivity = Vector2.one;
+    [SerializeField, Label("Minimum and Maximum Angle of Y axis"), MinMaxSlider(-90f, 90f)] Vector2 minMaxYAngle = Vector2.zero;
 
     private void Start()
     {
