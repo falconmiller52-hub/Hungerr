@@ -389,21 +389,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2173067555501984758, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: m_CollisionDetection
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2173067555980055523, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: field of view
-      value: 75
-      objectReference: {fileID: 0}
-    - target: {fileID: 2173067555980055523, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: near clip plane
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 2173067556786832946, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}

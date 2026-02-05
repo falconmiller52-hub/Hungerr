@@ -42,6 +42,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2173067555501984757}
   - component: {fileID: 2173067555501984756}
+  - component: {fileID: 2044785971}
+  - component: {fileID: 2520924086877492952}
   - component: {fileID: 2173067555501984758}
   - component: {fileID: 2173067555501984759}
   m_Layer: 0
@@ -58,7 +60,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2173067555501984754}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -84,6 +86,32 @@ MonoBehaviour:
   playerCamera: {fileID: 2173067555231181418}
   xySensitivity: {x: 500, y: 500}
   minMaxYAngle: {x: -90, y: 72}
+--- !u!114 &2044785971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173067555501984754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f28994e634aa5f4faffd97083b9e5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpHeight: 1
+  gravity: 1
+--- !u!114 &2520924086877492952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2173067555501984754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24a63f5e3941244298e8bb54c53a311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!54 &2173067555501984758
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -99,7 +127,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 2
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!75 &2173067555501984759
 ConstantForce:
   m_ObjectHideFlags: 0
@@ -171,7 +199,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 1000
-  field of view: 60
+  field of view: 75
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
