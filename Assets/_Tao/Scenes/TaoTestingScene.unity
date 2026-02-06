@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 2095325876}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -352,10 +352,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2044785971, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: _jumpHeight
-      value: 10
+      value: 8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2044785971, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _groundCheck
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2044785971, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _groundHeight
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2044785971, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _maxJumpCooldown
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2173067555501984754, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173067555501984754, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
@@ -426,6 +442,14 @@ PrefabInstance:
       propertyPath: m_RelativeForce.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2173067555980055551, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: m_TagString
+      value: MainCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173067556786832947, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: b5573599ec20c9a41ac54f745d2c9d64, type: 2}
     - target: {fileID: 2520924086877492952, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: _stancesSpeeds.x
       value: 2

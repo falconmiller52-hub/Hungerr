@@ -6,12 +6,16 @@ using NaughtyAttributes;
 public class PlayerMovement : MonoBehaviour
 {
     //Переменные инспектора
-    [SerializeField, Label("Jump Height")] float _jumpHeight = 1f;
+    [Space, SerializeField, Label("Jump Height")] float _jumpHeight = 1f;
     [SerializeField, Label("Player Gravity")] float _gravity = 1f;
-    
+
+    [Space, SerializeField, Label("Can player move?")] bool _canMove = true;
+    [SerializeField, Label("Can player jump?")] bool _canJump = true;
+
     //Внутренние переменные
     Vector2 _playerMovingDirection = Vector2.zero;
     float _currentSpeed;
+    bool _isGrounded = false;
 
     //Кэшированные переменные
     Rigidbody _rigidbody;
@@ -31,15 +35,26 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         _playerMovingDirection = PlayerMovingDirection; //Присваиваю направление ходьбы переменной
-        if (Input.GetKeyDown(KeyCode.Space)) Jump(_jumpHeight); //Прыгаю (игрок в воздухе). Хуевая реализация, ибо физика должна находиться в FixedUpdate()
+        if (Input.GetKeyDown(KeyCode.Space) && _canJump) Jump(_jumpHeight); //Прыгаю (игрок в воздухе). Хуевая реализация, ибо физика должна находиться в FixedUpdate()
     }
 
     //Фиксированное обновление игры
     private void FixedUpdate()
     {
-        Move(_playerMovingDirection); //Двигаю игрока
+        if (_canMove) Move(_playerMovingDirection); //Двигаю игрока
     }
-    
+
+    //Триггеры для проверки пола
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.collider.CompareTag("Floor")) _isGrounded = true;
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if (other.collider.CompareTag("Floor")) _isGrounded = false;
+    }
+
     //no fuck (получаю направление движения игрока с инпутами)
     public Vector2 PlayerMovingDirection {
         get
@@ -63,14 +78,17 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody.MovePosition(nextPosition);
     }
 
-    //Подкидываю в воздух
+    //Подкидываю в воздух и даю кулдаун прыжку
     public void Jump(float strength)
     {
         var jumpHeightVector = new Vector3(0, strength, 0);
-        _rigidbody.AddForce(jumpHeightVector, ForceMode.VelocityChange);
+
+        if (_isGrounded) _rigidbody.AddForce(jumpHeightVector, ForceMode.Impulse);
     }
 
     //Геттеры и сеттеры
+    public bool IsGrounded => _isGrounded;
+
     public float JumpHeight
     {
         get => _jumpHeight;
@@ -91,5 +109,17 @@ public class PlayerMovement : MonoBehaviour
     {
         get => _currentSpeed;
         set => _currentSpeed = value;
+    }
+
+    public bool CanJump
+    {
+        get => _canJump;
+        set => _canJump = value;
+    }
+
+    public bool CanMove
+    {
+        get => _canJump;
+        set => _canJump = value;
     }
 }

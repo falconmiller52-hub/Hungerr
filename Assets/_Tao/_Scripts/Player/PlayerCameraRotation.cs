@@ -4,8 +4,11 @@ using NaughtyAttributes;
 public class PlayerCameraRotation : MonoBehaviour
 {
     [SerializeField, Label("Player Camera Assign")] GameObject _playerCamera;
+
     [Space, SerializeField, Label("Camera Sensitivity of X and Y axis")] Vector2 _xySensitivity = Vector2.one;
     [SerializeField, Label("Minimum and Maximum Angle of Y axis"), MinMaxSlider(-90f, 90f)] Vector2 _minMaxYAngle = Vector2.zero;
+
+    [Space, SerializeField, Label("Can player rotate his camera?")] bool _canRotate = true;
 
     private void Start()
     {
@@ -30,7 +33,7 @@ public class PlayerCameraRotation : MonoBehaviour
         if (xRotation > 180f) xRotation -= 360f;
         xRotation = Mathf.Clamp(xRotation, _minMaxYAngle.x, _minMaxYAngle.y);
 
-        LookAt(new Vector2(xRotation, yRotation));
+        if (_canRotate) LookAt(new Vector2(xRotation, yRotation));
     }
 
     public void LookAt(Vector2 direction)
@@ -108,5 +111,11 @@ public class PlayerCameraRotation : MonoBehaviour
     {
         get => _minMaxYAngle;
         set => _minMaxYAngle = value;
+    }
+
+    public bool CanRotate
+    {
+        get => _canRotate;
+        set => _canRotate = value;
     }
 }
