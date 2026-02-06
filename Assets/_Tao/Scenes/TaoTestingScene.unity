@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &1804589160 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2173067555231181418, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+  m_PrefabInstance: {fileID: 2173067555543606993}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2038401172
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,9 +346,37 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2044785971, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _gravity
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2044785971, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _jumpHeight
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2173067555501984754, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _playerCamera
+      value: 
+      objectReference: {fileID: 1804589160}
+    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _minMaxYAngle.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _minMaxYAngle.y
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _xySensitivity.x
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _xySensitivity.y
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 2173067555501984757, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: m_RootOrder
@@ -388,6 +421,22 @@ PrefabInstance:
     - target: {fileID: 2173067555501984757, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173067555501984759, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: m_RelativeForce.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2520924086877492952, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _stancesSpeeds.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2520924086877492952, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _stancesSpeeds.y
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2520924086877492952, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _stancesSpeeds.z
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}

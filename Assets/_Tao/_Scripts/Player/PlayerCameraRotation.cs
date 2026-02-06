@@ -3,9 +3,9 @@ using NaughtyAttributes;
 
 public class PlayerCameraRotation : MonoBehaviour
 {
-    [SerializeField, Label("Player Camera Assign")] GameObject playerCamera;
-    [Space, SerializeField, Label("Camera Sensitivity of X and Y axis")] Vector2 xySensitivity = Vector2.one;
-    [SerializeField, Label("Minimum and Maximum Angle of Y axis"), MinMaxSlider(-90f, 90f)] Vector2 minMaxYAngle = Vector2.zero;
+    [SerializeField, Label("Player Camera Assign")] GameObject _playerCamera;
+    [Space, SerializeField, Label("Camera Sensitivity of X and Y axis")] Vector2 _xySensitivity = Vector2.one;
+    [SerializeField, Label("Minimum and Maximum Angle of Y axis"), MinMaxSlider(-90f, 90f)] Vector2 _minMaxYAngle = Vector2.zero;
 
     private void Start()
     {
@@ -24,11 +24,11 @@ public class PlayerCameraRotation : MonoBehaviour
         var yAxis = mouseAxis.x;
         var xAxis = mouseAxis.y;
 
-        var yRotation = transform.localEulerAngles.y + yAxis * Sensitivity.x * Time.deltaTime;
-        var xRotation = playerCamera.transform.localEulerAngles.x - xAxis * Sensitivity.y * Time.deltaTime;
+        var yRotation = transform.localEulerAngles.y + yAxis * _xySensitivity.x * Time.deltaTime;
+        var xRotation = _playerCamera.transform.localEulerAngles.x - xAxis * _xySensitivity.y * Time.deltaTime;
 
         if (xRotation > 180f) xRotation -= 360f;
-        xRotation = Mathf.Clamp(xRotation, MinMaxYAngle.x, MinMaxYAngle.y);
+        xRotation = Mathf.Clamp(xRotation, _minMaxYAngle.x, _minMaxYAngle.y);
 
         LookAt(new Vector2(xRotation, yRotation));
     }
@@ -36,7 +36,7 @@ public class PlayerCameraRotation : MonoBehaviour
     public void LookAt(Vector2 direction)
     {
         transform.localEulerAngles = new Vector3(0, direction.y, 0);
-        CameraPivot.transform.localEulerAngles = new Vector3(direction.x, 0, 0);
+        _playerCamera.transform.localEulerAngles = new Vector3(direction.x, 0, 0);
     }
 
     public void MouseToggle(string state = "~")
@@ -65,7 +65,7 @@ public class PlayerCameraRotation : MonoBehaviour
 
     public void CameraToggle(string state = "~")
     {
-        bool toggle = playerCamera.activeSelf;
+        bool toggle = _playerCamera.activeSelf;
 
         if (state == "~")
         {
@@ -80,7 +80,7 @@ public class PlayerCameraRotation : MonoBehaviour
             toggle = true;
         }
 
-        playerCamera.SetActive(toggle);
+        _playerCamera.SetActive(toggle);
     }
 
     public Vector2 MouseAxis
@@ -93,20 +93,20 @@ public class PlayerCameraRotation : MonoBehaviour
     }
 
     public GameObject CameraPivot 
-    { 
-        get { return playerCamera; } 
-        set { playerCamera = value; } 
+    {
+        get => _playerCamera;
+        set => _playerCamera = value;
     }
 
     public Vector2 Sensitivity 
-    { 
-        get { return xySensitivity; } 
-        set { xySensitivity = value; } 
+    {
+        get => _xySensitivity;
+        set => _xySensitivity = value;
     }
 
     public Vector2 MinMaxYAngle 
-    { 
-        get { return minMaxYAngle; } 
-        set { minMaxYAngle = value; } 
+    {
+        get => _minMaxYAngle;
+        set => _minMaxYAngle = value;
     }
 }
