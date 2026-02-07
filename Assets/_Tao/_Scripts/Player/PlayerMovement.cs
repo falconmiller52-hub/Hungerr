@@ -3,6 +3,7 @@ using NaughtyAttributes;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(ConstantForce))]
+[RequireComponent(typeof(PlayerStance))]
 public class PlayerMovement : MonoBehaviour
 {
     //Переменные инспектора
@@ -20,15 +21,17 @@ public class PlayerMovement : MonoBehaviour
     //Кэшированные переменные
     Rigidbody _rigidbody;
     ConstantForce _constantForce;
+    PlayerStance _playerStance;
 
     //Кэширование и задание переменным значения при запуске
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         _constantForce = GetComponent<ConstantForce>();
+        _playerStance = GetComponent<PlayerStance>();
 
         _constantForce.relativeForce = new Vector3(0, -_gravity, 0);
-        _currentSpeed = 3.5f;
+        _currentSpeed = _playerStance.StancesSpeeds.y;
     }
 
     //Постоянное обновление игры

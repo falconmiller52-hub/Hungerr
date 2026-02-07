@@ -3,6 +3,7 @@ using NaughtyAttributes;
 
 public class PlayerCameraRotation : MonoBehaviour
 {
+    //Переменные инспектора
     [SerializeField, Label("Player Camera Assign")] GameObject _playerCamera;
 
     [Space, SerializeField, Label("Camera Sensitivity of X and Y axis")] Vector2 _xySensitivity = Vector2.one;
@@ -10,16 +11,19 @@ public class PlayerCameraRotation : MonoBehaviour
 
     [Space, SerializeField, Label("Can player rotate his camera?")] bool _canRotate = true;
 
+    //Инициализация
     private void Start()
     {
-        MouseToggle("-");
+        MouseToggle("-"); //Скрываю и блокаю мышь
     }
 
+    //Постоянное обновление игры
     private void Update()
     {
-        RotateCamera();
+        RotateCamera(); //Поворот камеры
     }
 
+    //Функция поворота камеры
     private void RotateCamera()
     {
         var mouseAxis = MouseAxis;
@@ -36,12 +40,14 @@ public class PlayerCameraRotation : MonoBehaviour
         if (_canRotate) LookAt(new Vector2(xRotation, yRotation));
     }
 
+    //Функция взгляда в направлении
     public void LookAt(Vector2 direction)
     {
         transform.localEulerAngles = new Vector3(0, direction.y, 0);
         _playerCamera.transform.localEulerAngles = new Vector3(direction.x, 0, 0);
     }
 
+    //Отключалка курсора
     public void MouseToggle(string state = "~")
     {
         bool visible = Cursor.visible;
@@ -66,6 +72,7 @@ public class PlayerCameraRotation : MonoBehaviour
         Cursor.visible = visible; Cursor.lockState = lockState;
     }
 
+    //Переключение работы камеры
     public void CameraToggle(string state = "~")
     {
         bool toggle = _playerCamera.activeSelf;
@@ -86,6 +93,7 @@ public class PlayerCameraRotation : MonoBehaviour
         _playerCamera.SetActive(toggle);
     }
 
+    //Оси мыши
     public Vector2 MouseAxis
     {
         get {
@@ -95,6 +103,7 @@ public class PlayerCameraRotation : MonoBehaviour
         }
     }
 
+    //Геттеры и сеттеры
     public GameObject CameraPivot 
     {
         get => _playerCamera;
