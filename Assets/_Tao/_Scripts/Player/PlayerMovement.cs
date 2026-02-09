@@ -2,64 +2,67 @@ using UnityEngine;
 using NaughtyAttributes;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(ConstantForce))]
 [RequireComponent(typeof(PlayerStance))]
 public class PlayerMovement : MonoBehaviour
 {
     //Переменные инспектора
-    [Space, SerializeField, Label("Jump Height")] float _jumpHeight = 1f;
-    [SerializeField, Label("Player Gravity")] float _gravity = 1f;
+    [SerializeField, Label("Ground Checker Position")] private Transform _groundCheck;
+    [SerializeField, Label("Ground Checker Size")] private float _groundCheckDistance = 1f;
 
-    [Space, SerializeField, Label("Can player move?")] bool _canMove = true;
-    [SerializeField, Label("Can player jump?")] bool _canJump = true;
+    [Space, SerializeField, Label("Jump Height")] private float _jumpHeight = 1f;
+
+    [Space, SerializeField, Label("Can player move?")] private bool _canMove = true;
+    [SerializeField, Label("Can player jump?")] private bool _canJump = true;
 
     //Внутренние переменные
-    Vector2 _playerMovingDirection = Vector2.zero;
-    float _currentSpeed;
-    bool _isGrounded = false;
+    float _currentSpeed = 0f;
+    Vector2 _movingDirection = Vector2.zero;
+    bool _isGrounded = true;
 
     //Кэшированные переменные
     Rigidbody _rigidbody;
-    ConstantForce _constantForce;
     PlayerStance _playerStance;
 
-    //Кэширование и задание переменным значения при запуске
+    //Методы Моно
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        _constantForce = GetComponent<ConstantForce>();
         _playerStance = GetComponent<PlayerStance>();
 
-        _constantForce.relativeForce = new Vector3(0, -_gravity, 0);
-        _currentSpeed = _playerStance.StancesSpeeds.y;
+        //_currentSpeed = _playerStance.StancesSpeeds.y;
+        _currentSpeed = 3f;
     }
 
-    //Постоянное обновление игры
     private void Update()
     {
-        _playerMovingDirection = PlayerMovingDirection; //Присваиваю направление ходьбы переменной
-        if (Input.GetKeyDown(KeyCode.Space) && _canJump) Jump(_jumpHeight); //Прыгаю (игрок в воздухе). Хуевая реализация, ибо физика должна находиться в FixedUpdate()
+        _isGrounded = IsGrounded;
+        _movingDirection = MovingDirection;
+        if (Input.GetKey(KeyCode.Space) && _canJump) Jump(_jumpHeight);
     }
 
-    //Фиксированное обновление игры
     private void FixedUpdate()
     {
-        if (_canMove) Move(_playerMovingDirection); //Двигаю игрока
+        if (_canMove) Move(_movingDirection);
     }
 
-    //Триггеры для проверки пола
-    private void OnCollisionEnter(Collision other)
+    //Методы скрипта
+    public void Move(Vector2 direction)
     {
-        if (other.collider.CompareTag("Floor")) _isGrounded = true;
+        var tripleAxisDirection = new Vector3(direction.x, 0, direction.y);
+        var nextPosition = transform.localPosition + tripleAxisDirection * _currentSpeed * Time.fixedDeltaTime;
+
+        _rigidbody.MovePosition(nextPosition);
     }
 
-    private void OnCollisionExit(Collision other)
+    public void Jump(float strength)
     {
-        if (other.collider.CompareTag("Floor")) _isGrounded = false;
+        var velocityChange = new Vector3(_rigidbody.velocity.x, strength, _rigidbody.velocity.z);
+        if (_isGrounded) _rigidbody.velocity = velocityChange;
     }
 
-    //no fuck (получаю направление движения игрока с инпутами)
-    public Vector2 PlayerMovingDirection {
+    //Геттеры и сеттеры
+    public Vector2 MovingDirection
+    {
         get
         {
             var horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -72,40 +75,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    //Двигаю игрока
-    public void Move(Vector2 direction)
-    {
-        var tripleAxisDirection = new Vector3(direction.x, 0, direction.y);
-        var nextPosition = transform.localPosition + tripleAxisDirection * _currentSpeed * Time.fixedDeltaTime;
-
-        _rigidbody.MovePosition(nextPosition);
-    }
-
-    //Подкидываю в воздух и даю кулдаун прыжку
-    public void Jump(float strength)
-    {
-        var jumpHeightVector = new Vector3(0, strength, 0);
-
-        if (_isGrounded) _rigidbody.AddForce(jumpHeightVector, ForceMode.Impulse);
-    }
-
-    //Геттеры и сеттеры
-    public bool IsGrounded => _isGrounded;
+    public bool IsGrounded => Physics.Raycast(_groundCheck.position, -transform.up, _groundCheckDistance);
 
     public float JumpHeight
     {
         get => _jumpHeight;
         set => _jumpHeight = value;
-    }
-
-    public float Gravity
-    {
-        get => _gravity;
-        set 
-        {
-            _gravity = value;
-            _constantForce.relativeForce = new Vector3(0, -_gravity, 0);
-        }
     }
 
     public float CurrentSpeed
