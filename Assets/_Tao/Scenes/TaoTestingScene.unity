@@ -641,8 +641,16 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _steppingSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: _minMaxYAngle.y
       value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _steppingMagnitude
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 2173067555501984757, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: m_RootOrder
@@ -687,6 +695,22 @@ PrefabInstance:
     - target: {fileID: 2173067555501984757, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2173067555501984758, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 2520924086877492952, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _stancesSpeeds.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2520924086877492952, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _stancesSpeeds.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2520924086877492952, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: _stancesSpeeds.z
+      value: 5.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}

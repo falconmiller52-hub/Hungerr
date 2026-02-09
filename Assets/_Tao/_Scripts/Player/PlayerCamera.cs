@@ -72,13 +72,14 @@ public class PlayerCamera : MonoBehaviour
 
     private void StepMove()
     {
-        /*
-        var currentStance = _playerStance.CurrentStanceSpeed;
+        var playerCurrentStance = _playerStance.CurrentStance;
+        var playerCurrentSpeed = _playerStance.CurrentStanceSpeed(playerCurrentStance);
 
-        var nextStepPosition = Vector3.up * Mathf.Sin(Time.time * _steppingSpeeds) * _steppingMagnitudes;
+        var playerMovingDirectionMagnitude = _playerMovement.MovingDirection.magnitude;
+
+        var nextStepPosition = Vector3.up * Mathf.Sin(Time.time * _steppingSpeed * playerCurrentSpeed) * _steppingMagnitude * playerMovingDirectionMagnitude;
 
         _cameraObjects[1].transform.localPosition = nextStepPosition;
-        */
     }
 
     public void LookAt(Vector2 direction)

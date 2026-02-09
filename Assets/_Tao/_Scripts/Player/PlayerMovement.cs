@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Label("Can player jump?")] private bool _canJump = true;
 
     //Внутренние переменные
-    private float _currentSpeed = 0f;
+    private float _currentSpeed;
     private Vector2 _movingDirection = Vector2.zero;
     private bool _isGrounded = true;
 
@@ -29,15 +29,17 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _playerStance = GetComponent<PlayerStance>();
 
-        //_currentSpeed = _playerStance.CurrentStanceSpeed;
-        _currentSpeed = 3f;
+        StanceUpdate();
     }
 
     private void Update()
     {
         _isGrounded = IsGrounded;
         _movingDirection = MovingDirection;
+
         if (Input.GetKey(KeyCode.Space) && _canJump) Jump(_jumpHeight);
+
+        StanceUpdate();
     }
 
     private void FixedUpdate()
@@ -46,6 +48,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //Методы скрипта
+    private void StanceUpdate()
+    {
+        var playerCurrentStance = _playerStance.CurrentStance;
+        _currentSpeed = _playerStance.CurrentStanceSpeed(playerCurrentStance);
+    }
+
     public void Move(Vector2 direction)
     {
         var tripleAxisDirection = new Vector3(direction.x, 0, direction.y);
