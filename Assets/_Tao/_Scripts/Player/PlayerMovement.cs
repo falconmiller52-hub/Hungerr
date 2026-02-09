@@ -15,13 +15,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Label("Can player jump?")] private bool _canJump = true;
 
     //Внутренние переменные
-    float _currentSpeed = 0f;
-    Vector2 _movingDirection = Vector2.zero;
-    bool _isGrounded = true;
+    private float _currentSpeed = 0f;
+    private Vector2 _movingDirection = Vector2.zero;
+    private bool _isGrounded = true;
 
     //Кэшированные переменные
-    Rigidbody _rigidbody;
-    PlayerStance _playerStance;
+    private Rigidbody _rigidbody;
+    private PlayerStance _playerStance;
 
     //Методы Моно
     private void Start()
@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         _playerStance = GetComponent<PlayerStance>();
 
-        //_currentSpeed = _playerStance.StancesSpeeds.y;
+        //_currentSpeed = _playerStance.CurrentStanceSpeed;
         _currentSpeed = 3f;
     }
 
