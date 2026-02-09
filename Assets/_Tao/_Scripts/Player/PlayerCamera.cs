@@ -16,8 +16,8 @@ public class PlayerCamera : MonoBehaviour
     [Space, SerializeField, Label("Breathing Magnitude")] private float _breathingMagnitude = 0f;
     [SerializeField, Label("Breathing Speed")] private float _breathingSpeed = 0f;
 
-    [Space, SerializeField, Label("Stepping Magnitudes")] private Vector3 _steppingMagnitudes = Vector3.zero;
-    [SerializeField, Label("Stepping Speeds")] private Vector3 _steppingSpeeds = Vector3.zero;
+    [Space, SerializeField, Label("Stepping Magnitude")] private float _steppingMagnitude = 0f;
+    [SerializeField, Label("Stepping Speed")] private float _steppingSpeed = 0f;
 
     [Space, SerializeField, Label("Can player rotate his camera?")] private bool _canRotate = true;
 
@@ -138,6 +138,30 @@ public class PlayerCamera : MonoBehaviour
     {
         get => _minMaxYAngle;
         set => _minMaxYAngle = value;
+    }
+
+    public float BreathingMagnitude
+    {
+        get => _breathingMagnitude;
+        set => _breathingMagnitude = value;
+    }
+
+    public float BreathingSpeed
+    {
+        get => _breathingSpeed;
+        set => _breathingSpeed = value;
+    }
+
+    public float SteppingMagnitude
+    {
+        get => _steppingMagnitude;
+        set => _steppingMagnitude = value;
+    }
+
+    public float SteppingSpeed
+    {
+        get => _steppingSpeed;
+        set => _steppingSpeed = value;
     }
 
     public bool CanRotate

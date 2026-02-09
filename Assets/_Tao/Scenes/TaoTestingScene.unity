@@ -219,11 +219,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1296608231 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2173067555231181418, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-  m_PrefabInstance: {fileID: 2173067555543606993}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1660831729
 GameObject:
   m_ObjectHideFlags: 0
@@ -637,54 +632,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2173067555231181418, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
-    - target: {fileID: 2173067555231181418, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: m_Name
-      value: PivotParent
-      objectReference: {fileID: 0}
-    - target: {fileID: 2173067555231181421, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.75
+    - target: {fileID: 1362656354689376886, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2173067555501984754, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: _breathingSpeed
-      value: 2
+      propertyPath: _minMaxYAngle.y
+      value: 90
       objectReference: {fileID: 0}
-    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: _cameraPivotObject
-      value: 
-      objectReference: {fileID: 1296608231}
-    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: _cameraShakeObject
-      value: 
-      objectReference: {fileID: 2173067555543606994}
-    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: _breathingMagnitude
-      value: 0.015
-      objectReference: {fileID: 0}
-    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: _cameraBreatheObject
-      value: 
-      objectReference: {fileID: 2173067555543606995}
-    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: _cameraObjects.Array.data[0]
-      value: 
-      objectReference: {fileID: 2173067555543606995}
-    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: _cameraObjects.Array.data[1]
-      value: 
-      objectReference: {fileID: 2173067555543606994}
-    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: _cameraObjects.Array.data[2]
-      value: 
-      objectReference: {fileID: 1296608231}
     - target: {fileID: 2173067555501984757, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -729,27 +688,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2173067555980055550, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.085
-      objectReference: {fileID: 0}
-    - target: {fileID: 2173067555980055550, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8061621831671488601, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
---- !u!1 &2173067555543606994 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8483658312271850794, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-  m_PrefabInstance: {fileID: 2173067555543606993}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2173067555543606995 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4555280013158345422, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-  m_PrefabInstance: {fileID: 2173067555543606993}
-  m_PrefabAsset: {fileID: 0}
