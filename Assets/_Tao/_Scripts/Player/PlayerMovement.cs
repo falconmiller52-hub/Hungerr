@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
     public void Jump(float strength)
     {
         var velocityChange = new Vector3(_rigidbody.velocity.x, strength, _rigidbody.velocity.z);
-        if (_isGrounded) _rigidbody.velocity = velocityChange;
+        if (_isGrounded || _playerStance.CurrentStance != PlayerStance.Stance.Crouching) _rigidbody.velocity = velocityChange;
     }
 
     //Геттеры и сеттеры

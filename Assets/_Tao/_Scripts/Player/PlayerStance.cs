@@ -15,6 +15,9 @@ public class PlayerStance : MonoBehaviour
     [SerializeField, Label("Stamina Wait To Regen")] private float _staminaWaiter = 3f;
     [SerializeField, Label("Stamina Multiplier")] private float _staminaMultiplier = 1f;
 
+    [Space, SerializeField, Label("Crouching Speed")] private float _crouchingSpeed = 1f;
+    [SerializeField, Label("Crouching Cooldown")] private float _crouchingCooldown = 1f;
+
     //Внутренние переменные
     public enum Stance
     {
@@ -24,35 +27,45 @@ public class PlayerStance : MonoBehaviour
     }
 
     private bool _isExhausted = false;
-    private float _currentStamina, _staminaWaiterTimer, _exhaustionTimer;
+    private float _currentStamina, _staminaWaiterTimer, _exhaustionTimer, _crouchingTimer;
 
     //Кэшированные переменные
     PlayerMovement _playerMovement;
+    CapsuleCollider _capsuleCollider;
 
     //Методы Моно
     private void Start()
     {
         _playerMovement = GetComponent<PlayerMovement>();
+        _capsuleCollider = GetComponentInChildren<CapsuleCollider>();
 
         _currentStamina = _maxStamina;
         _staminaWaiterTimer = _staminaWaiter;
         _exhaustionTimer = _exhaustionDur;
+        _crouchingTimer = _crouchingCooldown;
     }
 
     private void Update()
     {
-        ChangeStance();
+        StanceChange();
         StaminaChange();
+        CrouchChange();
     }
 
     //Методы скрипта
-    private void ChangeStance()
+    private void StanceChange()
     {
+        _crouchingTimer = Mathf.Clamp(_crouchingTimer, 0, _crouchingCooldown);
+        if (_crouchingTimer < _crouchingCooldown) _crouchingTimer += Time.deltaTime;
+
+        var crouchCondition = Input.GetKeyDown(KeyCode.C) && _crouchingTimer >= _crouchingCooldown;
+
         if (_currentStance == Stance.Running)
         {
-            if (Input.GetKeyDown(KeyCode.C))
+            if (crouchCondition)
             {
                 _currentStance = Stance.Crouching;
+                _crouchingTimer = 0f;
             }
             else if (Input.GetKeyUp(KeyCode.LeftShift) || _currentStamina <= 0f)
             {
@@ -61,16 +74,18 @@ public class PlayerStance : MonoBehaviour
         }
         else if (_currentStance == Stance.Crouching)
         {
-            if (Input.GetKeyDown(KeyCode.C))
+            if (crouchCondition)
             {
                 _currentStance = Stance.Walking;
+                _crouchingTimer = 0f;
             }
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.C))
+            if (crouchCondition)
             {
                 _currentStance = Stance.Crouching;
+                _crouchingTimer = 0f;
             }
             else if (Input.GetKeyDown(KeyCode.LeftShift) && !_isExhausted)
             {
@@ -113,6 +128,12 @@ public class PlayerStance : MonoBehaviour
                 }
             }  
         }
+    }
+
+    private void CrouchChange()
+    {
+        _capsuleCollider.height = Mathf.Lerp(_capsuleCollider.height, _currentStance == Stance.Crouching ? 1f : 2f, Time.deltaTime * _crouchingSpeed);
+        _capsuleCollider.center = Vector3.Lerp(_capsuleCollider.center, _currentStance == Stance.Crouching ? Vector3.up * -0.5f : Vector3.zero, Time.deltaTime * _crouchingSpeed);
     }
 
     public float CurrentStanceSpeed(Stance stance)

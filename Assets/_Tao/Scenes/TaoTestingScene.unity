@@ -632,9 +632,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1362656354689376886, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 811791943, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.95
       objectReference: {fileID: 0}
     - target: {fileID: 2173067555501984754, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: m_Name
@@ -642,15 +642,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: _steppingSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: _minMaxYAngle.y
-      value: 90
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 2173067555501984756, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: _steppingMagnitude
-      value: 0.05
+      value: 0.03
       objectReference: {fileID: 0}
     - target: {fileID: 2173067555501984757, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: m_RootOrder
@@ -696,21 +692,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2173067555501984758, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
     - target: {fileID: 2520924086877492952, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: _stancesSpeeds.x
-      value: 1.5
+      propertyPath: _crouchingSpeed
+      value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 2520924086877492952, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: _stancesSpeeds.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2520924086877492952, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
-      propertyPath: _stancesSpeeds.z
-      value: 5.5
+    - target: {fileID: 4919445728919126066, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+    - target: {fileID: 8520715468973685848, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
