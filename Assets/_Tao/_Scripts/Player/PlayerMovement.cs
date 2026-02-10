@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     //Переменные инспектора
     [SerializeField, Label("Ground Checker Position")] private Transform _groundCheck;
-    [SerializeField, Label("Ground Checker Size")] private float _groundCheckDistance = 1f;
+    [SerializeField, Label("Ground Checker Length")] private float _groundCheckDistance = 1f;
 
     [Space, SerializeField, Label("Jump Height")] private float _jumpHeight = 1f;
 
@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
     public void Jump(float strength)
     {
         var velocityChange = new Vector3(_rigidbody.velocity.x, strength, _rigidbody.velocity.z);
-        if (_isGrounded || _playerStance.CurrentStance != PlayerStance.Stance.Crouching) _rigidbody.velocity = velocityChange;
+        if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching) _rigidbody.velocity = velocityChange;
     }
 
     //Геттеры и сеттеры

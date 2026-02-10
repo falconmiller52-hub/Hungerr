@@ -55,7 +55,7 @@ public class PlayerCamera : MonoBehaviour
         var xAxis = mouseAxis.y;
 
         var yRotation = transform.localEulerAngles.y + yAxis * _xySensitivity.x * Time.deltaTime;
-        var xRotation = _cameraObjects[2].transform.localEulerAngles.x - xAxis * _xySensitivity.y * Time.deltaTime;
+        var xRotation = _cameraObjects[3].transform.localEulerAngles.x - xAxis * _xySensitivity.y * Time.deltaTime;
 
         if (xRotation > 180f) xRotation -= 360f;
         xRotation = Mathf.Clamp(xRotation, _minMaxYAngle.x, _minMaxYAngle.y);
@@ -67,7 +67,7 @@ public class PlayerCamera : MonoBehaviour
     {
         var nextBreathePosition = Vector3.up * Mathf.Sin(Time.time * _breathingSpeed) * _breathingMagnitude;
 
-        _cameraObjects[0].transform.localPosition = nextBreathePosition;
+        _cameraObjects[1].transform.localPosition = nextBreathePosition;
     }
 
     private void StepMove()
@@ -79,13 +79,13 @@ public class PlayerCamera : MonoBehaviour
 
         var nextStepPosition = Vector3.up * Mathf.Sin(Time.time * _steppingSpeed * playerCurrentSpeed) * _steppingMagnitude * playerMovingDirectionMagnitude;
 
-        _cameraObjects[1].transform.localPosition = nextStepPosition;
+        _cameraObjects[2].transform.localPosition = nextStepPosition;
     }
 
     public void LookAt(Vector2 direction)
     {
         transform.localEulerAngles = new Vector3(0, direction.y, 0);
-        _cameraObjects[2].transform.localEulerAngles = new Vector3(direction.x, 0, 0);
+        _cameraObjects[3].transform.localEulerAngles = new Vector3(direction.x, 0, 0);
     }
 
     public void MouseToggle(string state = "~")

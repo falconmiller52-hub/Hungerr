@@ -2,6 +2,7 @@ using UnityEngine;
 using NaughtyAttributes;
 
 [RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerCamera))]
 public class PlayerStance : MonoBehaviour
 {
     //Переменные инспектора
@@ -18,6 +19,9 @@ public class PlayerStance : MonoBehaviour
     [Space, SerializeField, Label("Crouching Speed")] private float _crouchingSpeed = 1f;
     [SerializeField, Label("Crouching Cooldown")] private float _crouchingCooldown = 1f;
 
+    [Space, SerializeField, Label("Ceiling Checker Position")] private Transform _ceilingCheck;
+    [SerializeField, Label("Ceiling Checker Length")] private float _ceilingCheckDistance = 1f;
+
     //Внутренние переменные
     public enum Stance
     {
@@ -28,15 +32,18 @@ public class PlayerStance : MonoBehaviour
 
     private bool _isExhausted = false;
     private float _currentStamina, _staminaWaiterTimer, _exhaustionTimer, _crouchingTimer;
+    private bool _isUnderCeiling = false;
 
     //Кэшированные переменные
     PlayerMovement _playerMovement;
+    PlayerCamera _playerCamera;
     CapsuleCollider _capsuleCollider;
 
     //Методы Моно
     private void Start()
     {
         _playerMovement = GetComponent<PlayerMovement>();
+        _playerCamera = GetComponent<PlayerCamera>();
         _capsuleCollider = GetComponentInChildren<CapsuleCollider>();
 
         _currentStamina = _maxStamina;
@@ -47,6 +54,8 @@ public class PlayerStance : MonoBehaviour
 
     private void Update()
     {
+        _isUnderCeiling = IsUnderCeiling;
+
         StanceChange();
         StaminaChange();
         CrouchChange();
@@ -58,7 +67,7 @@ public class PlayerStance : MonoBehaviour
         _crouchingTimer = Mathf.Clamp(_crouchingTimer, 0, _crouchingCooldown);
         if (_crouchingTimer < _crouchingCooldown) _crouchingTimer += Time.deltaTime;
 
-        var crouchCondition = Input.GetKeyDown(KeyCode.C) && _crouchingTimer >= _crouchingCooldown;
+        var crouchCondition = Input.GetKeyDown(KeyCode.C) && _crouchingTimer >= _crouchingCooldown && !_isUnderCeiling;
 
         if (_currentStance == Stance.Running)
         {
@@ -134,6 +143,7 @@ public class PlayerStance : MonoBehaviour
     {
         _capsuleCollider.height = Mathf.Lerp(_capsuleCollider.height, _currentStance == Stance.Crouching ? 1f : 2f, Time.deltaTime * _crouchingSpeed);
         _capsuleCollider.center = Vector3.Lerp(_capsuleCollider.center, _currentStance == Stance.Crouching ? Vector3.up * -0.5f : Vector3.zero, Time.deltaTime * _crouchingSpeed);
+        _playerCamera.CameraObjects[0].transform.localPosition = Vector3.Lerp(_playerCamera.CameraObjects[0].transform.localPosition, _currentStance == Stance.Crouching ? Vector3.up * -1f : Vector3.zero, Time.deltaTime * _crouchingSpeed);
     }
 
     public float CurrentStanceSpeed(Stance stance)
@@ -147,6 +157,8 @@ public class PlayerStance : MonoBehaviour
     }
 
     //Геттеры и сеттеры
+    public bool IsUnderCeiling => Physics.Raycast(_ceilingCheck.position, transform.up, _ceilingCheckDistance);
+
     public Stance CurrentStance
     {
         get => _currentStance;
@@ -211,5 +223,23 @@ public class PlayerStance : MonoBehaviour
     {
         get => _staminaMultiplier;
         set => _staminaMultiplier = value;
+    }
+
+    public float CrouchSpeed
+    {
+        get => _crouchingSpeed;
+        set => _crouchingSpeed = value;
+    }
+
+    public float CrouchCooldown
+    {
+        get => _crouchingCooldown;
+        set => _crouchingCooldown = value;
+    }
+
+    public float CrouchTimer
+    {
+        get => _crouchingTimer;
+        set => _crouchingTimer = value;
     }
 }
