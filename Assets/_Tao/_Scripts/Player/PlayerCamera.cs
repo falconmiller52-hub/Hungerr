@@ -2,7 +2,6 @@ using UnityEngine;
 using NaughtyAttributes;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(PlayerStance))]
 public class PlayerCamera : MonoBehaviour
@@ -22,46 +21,33 @@ public class PlayerCamera : MonoBehaviour
     [Space, SerializeField, Label("Can player rotate his camera?")] private bool _canRotate = true;
 
     //Внутренние переменные
-
+    private float _xRotation, _yRotation;
 
     //Кэшированные переменные
-    private Rigidbody _rigidbody;
     private PlayerMovement _playerMovement;
     private PlayerStance _playerStance;
 
     //Методы Моно
     private void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
         _playerMovement = GetComponent<PlayerMovement>();
         _playerStance = GetComponent<PlayerStance>();
+
+        _xRotation = _cameraObjects[3].transform.localEulerAngles.x;
+        _yRotation = transform.localEulerAngles.y;
 
         MouseToggle("-");
     }
 
     private void Update()
     {
-        RotateCamera();
+        if (_canRotate) LookAt(CameraRotation);
+
         BreatheMove();
         StepMove();
     }
 
     //Методы скрипта
-    private void RotateCamera()
-    {
-        var mouseAxis = MouseAxis;
-
-        var yAxis = mouseAxis.x;
-        var xAxis = mouseAxis.y;
-
-        var yRotation = transform.localEulerAngles.y + yAxis * _xySensitivity.x * Time.deltaTime;
-        var xRotation = _cameraObjects[3].transform.localEulerAngles.x - xAxis * _xySensitivity.y * Time.deltaTime;
-
-        if (xRotation > 180f) xRotation -= 360f;
-        xRotation = Mathf.Clamp(xRotation, _minMaxYAngle.x, _minMaxYAngle.y);
-
-        if (_canRotate) LookAt(new Vector2(xRotation, yRotation));
-    }
 
     private void BreatheMove()
     {
@@ -85,7 +71,11 @@ public class PlayerCamera : MonoBehaviour
     public void LookAt(Vector2 direction)
     {
         transform.localEulerAngles = new Vector3(0, direction.y, 0);
-        _cameraObjects[3].transform.localEulerAngles = new Vector3(direction.x, 0, 0);
+
+        var angleChange = direction.x;
+        if (angleChange > 180f) angleChange -= 360f;
+
+        _cameraObjects[3].transform.localEulerAngles = new Vector3(angleChange, 0, 0);
     }
 
     public void MouseToggle(string state = "~")
@@ -118,8 +108,27 @@ public class PlayerCamera : MonoBehaviour
         get
         {
             var xAxis = Input.GetAxis("Mouse X");
-            var yAxis = Input.GetAxis("Mouse Y");
+            var yAxis = -Input.GetAxis("Mouse Y");
+
             return new Vector2(xAxis, yAxis);
+        }
+    }
+
+    public Vector2 CameraRotation
+    {
+        get
+        {
+            var mouseAxis = MouseAxis;
+
+            var yAxis = mouseAxis.x;
+            var xAxis = mouseAxis.y;
+
+            _yRotation += yAxis * _xySensitivity.x * Time.deltaTime;
+
+            _xRotation += xAxis * _xySensitivity.y * Time.deltaTime;
+            _xRotation = Mathf.Clamp(_xRotation, _minMaxYAngle.x, _minMaxYAngle.y);
+
+            return new Vector2(_xRotation, _yRotation);
         }
     }
 

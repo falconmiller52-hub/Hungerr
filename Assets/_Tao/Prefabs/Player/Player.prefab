@@ -149,6 +149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cameraObjects:
+  - {fileID: 4601950924738088037}
   - {fileID: 4555280013158345422}
   - {fileID: 8483658312271850794}
   - {fileID: 2173067555231181418}
@@ -157,8 +158,8 @@ MonoBehaviour:
   _minMaxYAngle: {x: -90, y: 90}
   _breathingMagnitude: 0.015
   _breathingSpeed: 2
-  _steppingMagnitude: 0.03
-  _steppingSpeed: 2.5
+  _steppingMagnitude: 0.05
+  _steppingSpeed: 3
   _canRotate: 1
 --- !u!114 &2044785971
 MonoBehaviour:
@@ -190,9 +191,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _currentStance: 0
-  _stancesSpeeds: {x: 1.5, y: 3, z: 5.5}
+  _stancesSpeeds: {x: 2, y: 4, z: 7}
   _maxStamina: 100
-  _staminaUsage: 15
+  _staminaUsage: 20
   _staminaRegen: 20
   _exhaustionDur: 7
   _staminaWaiter: 3
