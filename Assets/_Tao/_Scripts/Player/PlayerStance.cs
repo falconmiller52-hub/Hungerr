@@ -22,11 +22,6 @@ public class PlayerStance : MonoBehaviour
     [Space, SerializeField, Label("Ceiling Checker Position")] private Transform _ceilingCheck;
     [SerializeField, Label("Ceiling Checker Length")] private float _ceilingCheckDistance = 1f;
 
-    [Space, SerializeField, Label("Exhaustion Sound Object")] private AudioSource _exhaustionSoundObject;
-
-    [Space, SerializeField, Label("Can player run?")] private bool _canRun = true;
-    [SerializeField, Label("Can player crouch?")] private bool _canCrouch = true;
-
     //Внутренние переменные
     public enum Stance
     {
@@ -72,7 +67,7 @@ public class PlayerStance : MonoBehaviour
         _crouchingTimer = Mathf.Clamp(_crouchingTimer, 0, _crouchingCooldown);
         if (_crouchingTimer < _crouchingCooldown) _crouchingTimer += Time.deltaTime;
 
-        var crouchCondition = Input.GetKeyDown(KeyCode.C) && _crouchingTimer >= _crouchingCooldown && !_isUnderCeiling && _canCrouch;
+        var crouchCondition = Input.GetKeyDown(KeyCode.C) && _crouchingTimer >= _crouchingCooldown && !_isUnderCeiling;
 
         if (_currentStance == Stance.Running)
         {
@@ -101,7 +96,7 @@ public class PlayerStance : MonoBehaviour
                 _currentStance = Stance.Crouching;
                 _crouchingTimer = 0f;
             }
-            else if (Input.GetKeyDown(KeyCode.LeftShift) && !_isExhausted && _canRun)
+            else if (Input.GetKeyDown(KeyCode.LeftShift) && !_isExhausted)
             {
                 _currentStance = Stance.Running;
             }
@@ -119,11 +114,7 @@ public class PlayerStance : MonoBehaviour
             _staminaWaiterTimer = _staminaWaiter;
             _currentStamina -= _staminaUsage * _staminaMultiplier * Time.deltaTime;
 
-            if (_currentStamina <= 0f)
-            {
-                _isExhausted = true;
-                _exhaustionSoundObject.Play();
-            }
+            if (_currentStamina <= 0f) _isExhausted = true;
         }
         else
         {
@@ -155,7 +146,7 @@ public class PlayerStance : MonoBehaviour
         _playerCamera.CameraObjects[0].transform.localPosition = Vector3.Lerp(_playerCamera.CameraObjects[0].transform.localPosition, _currentStance == Stance.Crouching ? Vector3.up * -1f : Vector3.zero, Time.deltaTime * _crouchingSpeed);
     }
 
-    public float StanceSpeed(Stance stance)
+    public float CurrentStanceSpeed(Stance stance)
     {
         if (stance != Stance.Crouching && !_isExhausted)
         {
@@ -250,17 +241,5 @@ public class PlayerStance : MonoBehaviour
     {
         get => _crouchingTimer;
         set => _crouchingTimer = value;
-    }
-
-    public bool CanRun
-    {
-        get => _canRun;
-        set => _canRun = value;
-    }
-
-    public bool CanCrouch
-    {
-        get => _canCrouch;
-        set => _canCrouch = value;
     }
 }
