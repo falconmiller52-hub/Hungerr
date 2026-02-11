@@ -18,6 +18,10 @@ public class PlayerCamera : MonoBehaviour
     [Space, SerializeField, Label("Stepping Magnitude")] private float _steppingMagnitude = 0f;
     [SerializeField, Label("Stepping Speed")] private float _steppingSpeed = 0f;
 
+    [Space, SerializeField, Label("Camera FOV")] private float _cameraFov = 75f;
+    [SerializeField, Label("Running FOV Damping")] private float _runFovDamp = 1f;
+    [SerializeField, Label("Running FOV Multiplier")] private float _runFovMultiplier = 1f;
+
     [Space, SerializeField, Label("Can player rotate his camera?")] private bool _canRotate = true;
 
     //Внутренние переменные
@@ -26,12 +30,14 @@ public class PlayerCamera : MonoBehaviour
     //Кэшированные переменные
     private PlayerMovement _playerMovement;
     private PlayerStance _playerStance;
+    private Camera _camera;
 
     //Методы Моно
     private void Start()
     {
         _playerMovement = GetComponent<PlayerMovement>();
         _playerStance = GetComponent<PlayerStance>();
+        _camera = _cameraObjects[4].GetComponent<Camera>();
 
         _xRotation = _cameraObjects[3].transform.localEulerAngles.x;
         _yRotation = transform.localEulerAngles.y;
@@ -45,6 +51,7 @@ public class PlayerCamera : MonoBehaviour
 
         BreatheMove();
         StepMove();
+        FovChange();
     }
 
     //Методы скрипта
@@ -59,13 +66,19 @@ public class PlayerCamera : MonoBehaviour
     private void StepMove()
     {
         var playerCurrentStance = _playerStance.CurrentStance;
-        var playerCurrentSpeed = _playerStance.CurrentStanceSpeed(playerCurrentStance);
+        var playerCurrentSpeed = _playerStance.StanceSpeed(playerCurrentStance);
 
         var playerMovingDirectionMagnitude = _playerMovement.MovingDirection.magnitude;
 
         var nextStepPosition = Vector3.up * Mathf.Sin(Time.time * _steppingSpeed * playerCurrentSpeed) * _steppingMagnitude * playerMovingDirectionMagnitude;
 
         _cameraObjects[2].transform.localPosition = nextStepPosition;
+    }
+
+    private void FovChange()
+    {
+        var nextFov = _cameraFov * _runFovMultiplier;
+        _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, _playerStance.CurrentStance == PlayerStance.Stance.Running && _playerMovement.MovingDirection.magnitude > 0f ? nextFov : _cameraFov, Time.deltaTime * _runFovDamp);
     }
 
     public void LookAt(Vector2 direction)
@@ -174,6 +187,24 @@ public class PlayerCamera : MonoBehaviour
     {
         get => _steppingSpeed;
         set => _steppingSpeed = value;
+    }
+
+    public float CameraFOV
+    {
+        get => _cameraFov;
+        set => _cameraFov = value;
+    }
+
+    public float RunningFOVDamp
+    {
+        get => _runFovDamp;
+        set => _runFovDamp = value;
+    }
+
+    public float RunningFOVMultiplier
+    {
+        get => _runFovMultiplier;
+        set => _runFovMultiplier = value;
     }
 
     public bool CanRotate

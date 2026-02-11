@@ -14,6 +14,9 @@ public class PlayerMovement : MonoBehaviour
     [Space, SerializeField, Label("Can player move?")] private bool _canMove = true;
     [SerializeField, Label("Can player jump?")] private bool _canJump = true;
 
+    [Space, SerializeField, Label("Steps Sound Object")] private AudioSource _stepsSoundObject;
+    [SerializeField, Label("Standart Sound")] private SoundMaterial _stepsStandartSound;
+
     //Внутренние переменные
     private float _currentSpeed;
     private Vector2 _movingDirection = Vector2.zero;
@@ -51,7 +54,34 @@ public class PlayerMovement : MonoBehaviour
     private void StanceUpdate()
     {
         var playerCurrentStance = _playerStance.CurrentStance;
-        _currentSpeed = _playerStance.CurrentStanceSpeed(playerCurrentStance);
+        _currentSpeed = _playerStance.StanceSpeed(playerCurrentStance);
+    }
+
+    private void MakeStepSound()
+    {
+        var ray = new Ray(_groundCheck.position, -transform.up);
+
+        RaycastHit hit;
+        Physics.Raycast(ray, out hit, _groundCheckDistance);
+
+        SurfaceMaterialHolder _surfaceMaterialHolder;
+        if (hit.collider && hit.collider.gameObject.TryGetComponent<SurfaceMaterialHolder>(out _surfaceMaterialHolder))
+        {
+            var _stepSoundsAmount = _surfaceMaterialHolder.MaterialSound.StepSounds.Count - 1;
+            _stepsSoundObject.clip = _surfaceMaterialHolder.MaterialSound.StepSounds[Random.Range(0, _stepSoundsAmount)];
+        }
+        else
+        {
+            var _stepSoundsAmount = _stepsStandartSound.StepSounds.Count - 1;
+            _stepsSoundObject.clip = _stepsStandartSound.StepSounds[Random.Range(0, _stepSoundsAmount)];
+        }
+
+        if (!IsInvoking("PlaySound")) Invoke("PlaySound", 1 / _playerStance.StanceSpeed(_playerStance.CurrentStance) * 2);
+    }
+
+    private void PlaySound()
+    {
+        _stepsSoundObject.Play();
     }
 
     public void Move(Vector2 direction)
@@ -60,6 +90,8 @@ public class PlayerMovement : MonoBehaviour
         var nextPosition = transform.localPosition + tripleAxisDirection * _currentSpeed * Time.fixedDeltaTime;
 
         _rigidbody.MovePosition(nextPosition);
+
+        if (direction.magnitude != 0f) MakeStepSound();
     }
 
     public void Jump(float strength)
@@ -95,6 +127,18 @@ public class PlayerMovement : MonoBehaviour
     {
         get => _currentSpeed;
         set => _currentSpeed = value;
+    }
+
+    public AudioSource StepsSoundObject
+    {
+        get => _stepsSoundObject;
+        set => _stepsSoundObject = value;
+    }
+
+    public SoundMaterial StandartStepsSound
+    {
+        get => _stepsStandartSound;
+        set => _stepsStandartSound = value;
     }
 
     public bool CanJump

@@ -146,7 +146,7 @@ public class PlayerStance : MonoBehaviour
         _playerCamera.CameraObjects[0].transform.localPosition = Vector3.Lerp(_playerCamera.CameraObjects[0].transform.localPosition, _currentStance == Stance.Crouching ? Vector3.up * -1f : Vector3.zero, Time.deltaTime * _crouchingSpeed);
     }
 
-    public float CurrentStanceSpeed(Stance stance)
+    public float StanceSpeed(Stance stance)
     {
         if (stance != Stance.Crouching && !_isExhausted)
         {

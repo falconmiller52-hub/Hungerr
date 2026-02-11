@@ -59,4 +59,15 @@ public class PlayerFlashlight : MonoBehaviour
     }
 
     //Геттеры и сеттеры
+    public GameObject FlashlightObject
+    {
+        get => _flashlightObject;
+        set => _flashlightObject = value;
+    }
+
+    public float FlashlightSmoothness
+    {
+        get => _flashlightDamp;
+        set => _flashlightDamp = value;
+    }
 }
