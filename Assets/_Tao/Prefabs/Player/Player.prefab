@@ -620,11 +620,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6444869935845891396}
+  - component: {fileID: 6444869935845891399}
+  - component: {fileID: 6444869935845891398}
   - component: {fileID: 6444869935845891397}
   - component: {fileID: 5141015529201329026}
   - component: {fileID: 7324138851664920681}
-  - component: {fileID: 6444869935845891399}
-  - component: {fileID: 6444869935845891398}
   - component: {fileID: 7324138851664920682}
   m_Layer: 0
   m_Name: Player
@@ -652,6 +652,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &6444869935845891399
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6444869935845891395}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 2
+  m_Constraints: 112
+  m_CollisionDetection: 3
+--- !u!75 &6444869935845891398
+ConstantForce:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6444869935845891395}
+  m_Enabled: 1
+  m_Force: {x: 0, y: 0, z: 0}
+  m_RelativeForce: {x: 0, y: -30, z: 0}
+  m_Torque: {x: 0, y: 0, z: 0}
+  m_RelativeTorque: {x: 0, y: 0, z: 0}
 --- !u!114 &6444869935845891397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -718,34 +746,6 @@ MonoBehaviour:
   _crouchingCooldown: 1
   _ceilingCheck: {fileID: 1965845122360698883}
   _ceilingCheckDistance: 1
---- !u!54 &6444869935845891399
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6444869935845891395}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 2
-  m_Constraints: 112
-  m_CollisionDetection: 3
---- !u!75 &6444869935845891398
-ConstantForce:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6444869935845891395}
-  m_Enabled: 1
-  m_Force: {x: 0, y: 0, z: 0}
-  m_RelativeForce: {x: 0, y: -30, z: 0}
-  m_Torque: {x: 0, y: 0, z: 0}
-  m_RelativeTorque: {x: 0, y: 0, z: 0}
 --- !u!114 &7324138851664920682
 MonoBehaviour:
   m_ObjectHideFlags: 0
