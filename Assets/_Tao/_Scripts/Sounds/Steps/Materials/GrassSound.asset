@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b143544527ccbe4c8ab2704a490fc82, type: 3}
+  m_Name: GrassSound
+  m_EditorClassIdentifier: 
+  MaterialID: grass
+  StepSounds:
+  - {fileID: 8300000, guid: 4c27ff1a17540864489c128071319869, type: 3}
+  - {fileID: 8300000, guid: 05f5cdd67b104bf48b498a6aae33f005, type: 3}
