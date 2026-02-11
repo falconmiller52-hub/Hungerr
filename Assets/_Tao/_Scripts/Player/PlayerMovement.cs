@@ -5,7 +5,7 @@ using NaughtyAttributes;
 [RequireComponent(typeof(PlayerStance))]
 public class PlayerMovement : MonoBehaviour
 {
-    //Переменные инспектора
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     [SerializeField, Label("Ground Checker Position")] private Transform _groundCheck;
     [SerializeField, Label("Ground Checker Length")] private float _groundCheckDistance = 1f;
 
@@ -14,16 +14,16 @@ public class PlayerMovement : MonoBehaviour
     [Space, SerializeField, Label("Can player move?")] private bool _canMove = true;
     [SerializeField, Label("Can player jump?")] private bool _canJump = true;
 
-    //Внутренние переменные
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private float _currentSpeed;
     private Vector2 _movingDirection = Vector2.zero;
     private bool _isGrounded = true;
 
-    //Кэшированные переменные
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private Rigidbody _rigidbody;
     private PlayerStance _playerStance;
 
-    //Методы Моно
+    //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -47,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
         if (_canMove) Move(_movingDirection);
     }
 
-    //Методы скрипта
+    //пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private void StanceUpdate()
     {
         var playerCurrentStance = _playerStance.CurrentStance;
@@ -64,11 +64,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(float strength)
     {
-        var velocityChange = new Vector3(_rigidbody.velocity.x, strength, _rigidbody.velocity.z);
-        if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching) _rigidbody.velocity = velocityChange;
+        var velocityChange = new Vector3(_rigidbody.linearVelocity.x, strength, _rigidbody.linearVelocity.z);
+        if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching) _rigidbody.linearVelocity = velocityChange;
     }
 
-    //Геттеры и сеттеры
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     public Vector2 MovingDirection
     {
         get
