@@ -11,11 +11,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Space, SerializeField, Label("Jump Height")] private float _jumpHeight = 1f;
 
-    [Space, SerializeField, Label("Can player move?")] private bool _canMove = true;
-    [SerializeField, Label("Can player jump?")] private bool _canJump = true;
-
     [Space, SerializeField, Label("Steps Sound Object")] private AudioSource _stepsSoundObject;
     [SerializeField, Label("Standart Sound")] private SoundMaterial _stepsStandartSound;
+
+    [Space, SerializeField, Label("Can player move?")] private bool _canMove = true;
+    [SerializeField, Label("Can player jump?")] private bool _canJump = true;
 
     //Внутренние переменные
     private float _currentSpeed;

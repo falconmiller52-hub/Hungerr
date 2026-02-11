@@ -8,6 +8,8 @@ public class PlayerFlashlight : MonoBehaviour
     [SerializeField, Label("Flashlight Object")] private GameObject _flashlightObject;
     [SerializeField, Label("Flashlight Smoothness")] private float _flashlightDamp = 1f;
 
+    [Space, SerializeField, Label("Can player use flashlight?")] private bool _canUseFlash = true;
+
     //Внутренние переменные
 
 
@@ -69,5 +71,11 @@ public class PlayerFlashlight : MonoBehaviour
     {
         get => _flashlightDamp;
         set => _flashlightDamp = value;
+    }
+
+    public bool CanUseFlashlight
+    {
+        get => _canUseFlash;
+        set => _canUseFlash = value;
     }
 }
