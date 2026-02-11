@@ -73,7 +73,9 @@ public class PlayerCamera : MonoBehaviour
         transform.localEulerAngles = new Vector3(0, direction.y, 0);
 
         var angleChange = direction.x;
+
         if (angleChange > 180f) angleChange -= 360f;
+        angleChange = Mathf.Clamp(angleChange, _minMaxYAngle.x, _minMaxYAngle.y);
 
         _cameraObjects[3].transform.localEulerAngles = new Vector3(angleChange, 0, 0);
     }
