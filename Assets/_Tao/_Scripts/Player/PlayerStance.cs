@@ -1,8 +1,7 @@
 using UnityEngine;
 using NaughtyAttributes;
+using System.Collections;
 
-[RequireComponent(typeof(PlayerMovement))]
-[RequireComponent(typeof(PlayerCamera))]
 public class PlayerStance : MonoBehaviour
 {
     //Переменные инспектора
@@ -24,9 +23,6 @@ public class PlayerStance : MonoBehaviour
 
     [Space, SerializeField, Label("Exhaustion Sound Object")] private AudioSource _exhaustionSoundObject;
 
-    [Space, SerializeField, Label("Can player run?")] private bool _canRun = true;
-    [SerializeField, Label("Can player crouch?")] private bool _canCrouch = true;
-
     //Внутренние переменные
     public enum Stance
     {
@@ -35,9 +31,9 @@ public class PlayerStance : MonoBehaviour
         Crouching
     }
 
-    private bool _isExhausted = false;
+    private bool _isExhausted = false, _isUnderCeiling = false;
     private float _currentStamina, _staminaWaiterTimer, _exhaustionTimer, _crouchingTimer;
-    private bool _isUnderCeiling = false;
+    private bool _runPress = false, _crouchPress = false;
 
     //Кэшированные переменные
     PlayerMovement _playerMovement;
@@ -72,23 +68,23 @@ public class PlayerStance : MonoBehaviour
         _crouchingTimer = Mathf.Clamp(_crouchingTimer, 0, _crouchingCooldown);
         if (_crouchingTimer < _crouchingCooldown) _crouchingTimer += Time.deltaTime;
 
-        var crouchCondition = Input.GetKeyDown(KeyCode.C) && _crouchingTimer >= _crouchingCooldown && !_isUnderCeiling && _canCrouch;
+        var crouchCondition = _crouchingTimer >= _crouchingCooldown && !_isUnderCeiling;
 
         if (_currentStance == Stance.Running)
         {
-            if (crouchCondition)
+            if (_crouchPress && crouchCondition)
             {
                 _currentStance = Stance.Crouching;
                 _crouchingTimer = 0f;
             }
-            else if (Input.GetKeyUp(KeyCode.LeftShift) || _currentStamina <= 0f)
+            else if (!_runPress || _currentStamina <= 0f)
             {
                 _currentStance = Stance.Walking;
             }
         }
         else if (_currentStance == Stance.Crouching)
         {
-            if (crouchCondition)
+            if (_crouchPress && crouchCondition)
             {
                 _currentStance = Stance.Walking;
                 _crouchingTimer = 0f;
@@ -96,12 +92,12 @@ public class PlayerStance : MonoBehaviour
         }
         else
         {
-            if (crouchCondition)
+            if (_crouchPress && crouchCondition)
             {
                 _currentStance = Stance.Crouching;
                 _crouchingTimer = 0f;
             }
-            else if (Input.GetKeyDown(KeyCode.LeftShift) && !_isExhausted && _canRun)
+            else if (_runPress && !_isExhausted)
             {
                 _currentStance = Stance.Running;
             }
@@ -144,7 +140,7 @@ public class PlayerStance : MonoBehaviour
                     _exhaustionTimer = _exhaustionDur;
                     _isExhausted = false;
                 }
-            }  
+            }
         }
     }
 
@@ -163,6 +159,23 @@ public class PlayerStance : MonoBehaviour
             else return _stancesSpeeds.y;
         }
         else return _stancesSpeeds.x;
+    }
+
+    private IEnumerator DelayedCrouch()
+    {
+        _crouchPress = true;
+        yield return new WaitForSeconds(Time.deltaTime);
+        _crouchPress = false;
+    }
+
+    public void Crouch()
+    {
+        StartCoroutine("DelayedCrouch");
+    }
+
+    public void Run()
+    {
+        _runPress = !_runPress;
     }
 
     //Геттеры и сеттеры
@@ -186,7 +199,7 @@ public class PlayerStance : MonoBehaviour
         set => _currentStamina = value;
     }
 
-    public float MaximumStamina 
+    public float MaximumStamina
     {
         get => _maxStamina;
         set => _maxStamina = value;
@@ -250,17 +263,5 @@ public class PlayerStance : MonoBehaviour
     {
         get => _crouchingTimer;
         set => _crouchingTimer = value;
-    }
-
-    public bool CanRun
-    {
-        get => _canRun;
-        set => _canRun = value;
-    }
-
-    public bool CanCrouch
-    {
-        get => _canCrouch;
-        set => _canCrouch = value;
     }
 }

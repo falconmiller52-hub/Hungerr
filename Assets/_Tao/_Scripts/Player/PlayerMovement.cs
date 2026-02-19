@@ -40,8 +40,6 @@ public class PlayerMovement : MonoBehaviour
         _isGrounded = IsGrounded;
         _movingDirection = MovingDirection;
 
-        if (Input.GetKey(KeyCode.Space) && _canJump) Jump(_jumpHeight);
-
         StanceUpdate();
     }
 
@@ -92,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody.MovePosition(nextPosition);
 
         if (direction.magnitude != 0f) MakeStepSound();
+        else _stepsSoundObject.Pause();
     }
 
     public void Jump(float strength)
