@@ -37,6 +37,7 @@ public class PlayerStance : MonoBehaviour
 
     //Кэшированные переменные
     PlayerMovement _playerMovement;
+    PlayerInputManager _playerInputManager;
     PlayerCamera _playerCamera;
     CapsuleCollider _capsuleCollider;
 
@@ -44,6 +45,7 @@ public class PlayerStance : MonoBehaviour
     private void Start()
     {
         _playerMovement = GetComponent<PlayerMovement>();
+        _playerInputManager = GetComponent<PlayerInputManager>();
         _playerCamera = GetComponent<PlayerCamera>();
         _capsuleCollider = GetComponentInChildren<CapsuleCollider>();
 
@@ -110,7 +112,7 @@ public class PlayerStance : MonoBehaviour
         _staminaWaiterTimer = Mathf.Clamp(_staminaWaiterTimer, 0, _staminaWaiter);
         _exhaustionTimer = Mathf.Clamp(_exhaustionTimer, 0, _exhaustionDur);
 
-        if (_currentStance == Stance.Running && _playerMovement.MovingDirection.magnitude > 0f && !_isExhausted)
+        if (_currentStance == Stance.Running && _playerInputManager.MovingDirection.magnitude > 0f && !_isExhausted)
         {
             _staminaWaiterTimer = _staminaWaiter;
             _currentStamina -= _staminaUsage * _staminaMultiplier * Time.deltaTime;
@@ -128,7 +130,7 @@ public class PlayerStance : MonoBehaviour
                 if (_staminaWaiterTimer > 0f) _staminaWaiterTimer -= Time.deltaTime;
                 else if (_staminaWaiterTimer <= 0f)
                 {
-                    var movementCoefficient = _playerMovement.MovingDirection.magnitude == 0f ? 1f : 0.8f;
+                    var movementCoefficient = _playerInputManager.MovingDirection.magnitude == 0f ? 1f : 0.8f;
                     _currentStamina += _staminaRegen * _staminaMultiplier * Time.deltaTime * movementCoefficient;
                 }
             }

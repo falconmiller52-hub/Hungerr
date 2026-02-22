@@ -3,6 +3,7 @@ using NaughtyAttributes;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerInputManager))]
 [RequireComponent(typeof(PlayerStance))]
 public class PlayerCamera : MonoBehaviour
 {
@@ -22,20 +23,18 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField, Label("Running FOV Damping")] private float _runFovDamp = 1f;
     [SerializeField, Label("Running FOV Multiplier")] private float _runFovMultiplier = 1f;
 
-    [Space, SerializeField, Label("Can player rotate his camera?")] private bool _canRotate = true;
-
     //Внутренние переменные
     private float _xRotation, _yRotation;
 
     //Кэшированные переменные
-    private PlayerMovement _playerMovement;
+    private PlayerInputManager _playerInputManager;
     private PlayerStance _playerStance;
     private Camera _camera;
 
     //Методы Моно
     private void Start()
     {
-        _playerMovement = GetComponent<PlayerMovement>();
+        _playerInputManager = GetComponent<PlayerInputManager>();
         _playerStance = GetComponent<PlayerStance>();
         _camera = _cameraObjects[4].GetComponent<Camera>();
 
@@ -47,8 +46,6 @@ public class PlayerCamera : MonoBehaviour
 
     private void Update()
     {
-        if (_canRotate) LookAt(CameraRotation);
-
         BreatheMove();
         StepMove();
         FovChange();
@@ -68,7 +65,7 @@ public class PlayerCamera : MonoBehaviour
         var playerCurrentStance = _playerStance.CurrentStance;
         var playerCurrentSpeed = _playerStance.StanceSpeed(playerCurrentStance);
 
-        var playerMovingDirectionMagnitude = _playerMovement.MovingDirection.magnitude;
+        var playerMovingDirectionMagnitude = _playerInputManager.MovingDirection.magnitude;
 
         var nextStepPosition = Vector3.up * Mathf.Sin(Time.time * _steppingSpeed * playerCurrentSpeed) * _steppingMagnitude * playerMovingDirectionMagnitude;
 
@@ -78,7 +75,7 @@ public class PlayerCamera : MonoBehaviour
     private void FovChange()
     {
         var nextFov = _cameraFov * _runFovMultiplier;
-        _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, _playerStance.CurrentStance == PlayerStance.Stance.Running && _playerMovement.MovingDirection.magnitude > 0f ? nextFov : _cameraFov, Time.deltaTime * _runFovDamp);
+        _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, _playerStance.CurrentStance == PlayerStance.Stance.Running && _playerInputManager.MovingDirection.magnitude > 0f ? nextFov : _cameraFov, Time.deltaTime * _runFovDamp);
     }
 
     public void LookAt(Vector2 direction)
@@ -117,36 +114,24 @@ public class PlayerCamera : MonoBehaviour
         Cursor.visible = visible; Cursor.lockState = lockState;
     }
 
-   //Геттеры и сеттеры
-   public Vector2 MouseAxis
-    {
-        get
-        {
-            var xAxis = Input.GetAxis("Mouse X");
-            var yAxis = -Input.GetAxis("Mouse Y");
-
-            return new Vector2(xAxis, yAxis);
-        }
-    }
-
+    //Геттеры и сеттеры
     public Vector2 CameraRotation
     {
         get
         {
-            var mouseAxis = MouseAxis;
+            var mouseAxis = _playerInputManager.MouseAxis;
 
             var yAxis = mouseAxis.x;
             var xAxis = mouseAxis.y;
 
             _yRotation += yAxis * _xySensitivity.x * Time.deltaTime;
 
-            _xRotation += xAxis * _xySensitivity.y * Time.deltaTime;
+            _xRotation -= xAxis * _xySensitivity.y * Time.deltaTime;
             _xRotation = Mathf.Clamp(_xRotation, _minMaxYAngle.x, _minMaxYAngle.y);
 
             return new Vector2(_xRotation, _yRotation);
         }
     }
-
     public List<GameObject> CameraObjects
     {
         get => _cameraObjects;
@@ -205,11 +190,5 @@ public class PlayerCamera : MonoBehaviour
     {
         get => _runFovMultiplier;
         set => _runFovMultiplier = value;
-    }
-
-    public bool CanRotate
-    {
-        get => _canRotate;
-        set => _canRotate = value;
     }
 }

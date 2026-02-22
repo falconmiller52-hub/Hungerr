@@ -14,12 +14,8 @@ public class PlayerMovement : MonoBehaviour
     [Space, SerializeField, Label("Steps Sound Object")] private AudioSource _stepsSoundObject;
     [SerializeField, Label("Standart Sound")] private SoundMaterial _stepsStandartSound;
 
-    [Space, SerializeField, Label("Can player move?")] private bool _canMove = true;
-    [SerializeField, Label("Can player jump?")] private bool _canJump = true;
-
     //Внутренние переменные
     private float _currentSpeed;
-    private Vector2 _movingDirection = Vector2.zero;
     private bool _isGrounded = true;
 
     //Кэшированные переменные
@@ -38,14 +34,8 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         _isGrounded = IsGrounded;
-        _movingDirection = MovingDirection;
 
         StanceUpdate();
-    }
-
-    private void FixedUpdate()
-    {
-        if (_canMove) Move(_movingDirection);
     }
 
     //Методы скрипта
@@ -89,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
         _rigidbody.MovePosition(nextPosition);
 
-        if (direction.magnitude != 0f) MakeStepSound();
+        if (direction.magnitude != 0f && _isGrounded) MakeStepSound();
         else _stepsSoundObject.Pause();
     }
 
@@ -100,20 +90,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //Геттеры и сеттеры
-    public Vector2 MovingDirection
-    {
-        get
-        {
-            var horizontalInput = Input.GetAxisRaw("Horizontal");
-            var verticalInput = Input.GetAxisRaw("Vertical");
-            var normalizedInputAxis = new Vector2(horizontalInput, verticalInput).normalized;
-
-            var moveDirection = transform.forward * normalizedInputAxis.y + transform.right * normalizedInputAxis.x;
-            var directionResult = new Vector2(moveDirection.x, moveDirection.z);
-            return directionResult;
-        }
-    }
-
     public bool IsGrounded => Physics.Raycast(_groundCheck.position, -transform.up, _groundCheckDistance);
 
     public float JumpHeight
@@ -138,17 +114,5 @@ public class PlayerMovement : MonoBehaviour
     {
         get => _stepsStandartSound;
         set => _stepsStandartSound = value;
-    }
-
-    public bool CanJump
-    {
-        get => _canJump;
-        set => _canJump = value;
-    }
-
-    public bool CanMove
-    {
-        get => _canJump;
-        set => _canJump = value;
     }
 }

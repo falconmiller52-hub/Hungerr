@@ -5,77 +5,48 @@ using NaughtyAttributes;
 public class PlayerFlashlight : MonoBehaviour
 {
     //Переменные инспектора
-    [SerializeField, Label("Flashlight Object")] private GameObject _flashlightObject;
-    [SerializeField, Label("Flashlight Smoothness")] private float _flashlightDamp = 1f;
-
-    [Space, SerializeField, Label("Can player use flashlight?")] private bool _canUseFlash = true;
+    [SerializeField, Label("Flashlight Object")] private Light _flashlightObject;
+    [SerializeField, Label("Flashlight Intensity")] private float _intensity = 1f;
 
     //Внутренние переменные
 
 
     //Кэшированные переменные
-    PlayerCamera _playerCamera;
 
     //Методы Моно
-    private void Start()
-    {
-        _playerCamera = GetComponent<PlayerCamera>();
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F)) Toggle();
-
-        FlashlightMove();
-    }
 
     //Методы скрипта
-    private void FlashlightMove()
-    {
-        var xRotation = -_playerCamera.MouseAxis.x * _playerCamera.Sensitivity.x * Time.deltaTime * _flashlightDamp;
-        var yRotation = -_playerCamera.MouseAxis.y * _playerCamera.Sensitivity.y * Time.deltaTime * _flashlightDamp;
-
-        var vectorResult = new Vector3(yRotation, xRotation, 0);
-
-        _flashlightObject.transform.localEulerAngles = vectorResult;
-    }
-
     public void Toggle(string state = "~")
     {
-        bool toggleState = _flashlightObject.activeSelf;
+        var initialIntensity = _flashlightObject.intensity;
 
         if (state == "~")
         {
-            toggleState = !toggleState;
+            if (initialIntensity == 0f) initialIntensity = _intensity;
+            else initialIntensity = 0f;   
         }
         else if (state == "+")
         {
-            toggleState = true;
+            initialIntensity = _intensity;
         }
         else
         {
-            toggleState = false;
+            initialIntensity = 0f;
         }
 
-        _flashlightObject.SetActive(toggleState);
+        _flashlightObject.intensity = initialIntensity;
     }
 
     //Геттеры и сеттеры
-    public GameObject FlashlightObject
+    public Light Object
     {
         get => _flashlightObject;
         set => _flashlightObject = value;
     }
 
-    public float FlashlightSmoothness
+    public float Intensity
     {
-        get => _flashlightDamp;
-        set => _flashlightDamp = value;
-    }
-
-    public bool CanUseFlashlight
-    {
-        get => _canUseFlash;
-        set => _canUseFlash = value;
+        get => _intensity;
+        set => _intensity = value;
     }
 }

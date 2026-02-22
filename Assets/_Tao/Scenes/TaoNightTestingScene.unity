@@ -401,7 +401,7 @@ GameObject:
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &593548385
 Transform:
   m_ObjectHideFlags: 0
@@ -1112,8 +1112,6 @@ MonoBehaviour:
   _jumpHeight: 8.5
   _stepsSoundObject: {fileID: 5141015529634012193}
   _stepsStandartSound: {fileID: 11400000, guid: 328c1cfcf57a7fb46a1e3d9dc1dd5c9e, type: 2}
-  _canMove: 1
-  _canJump: 1
 --- !u!1 &1710147141
 GameObject:
   m_ObjectHideFlags: 0
@@ -1257,7 +1255,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 50
+  m_Intensity: 0
   m_Range: 25
   m_SpotAngle: 50
   m_InnerSpotAngle: 0
@@ -2014,7 +2012,7 @@ MonoBehaviour:
   - {fileID: 8483658311828918931}
   - {fileID: 2173067555875427795}
   - {fileID: 2173067556624313414}
-  _xySensitivity: {x: 400, y: 400}
+  _xySensitivity: {x: 3750, y: 3750}
   _minMaxYAngle: {x: -90, y: 90}
   _breathingMagnitude: 0.015
   _breathingSpeed: 2
@@ -2023,7 +2021,6 @@ MonoBehaviour:
   _cameraFov: 75
   _runFovDamp: 5
   _runFovMultiplier: 1.1
-  _canRotate: 1
 --- !u!75 &2173067555055727694
 ConstantForce:
   m_ObjectHideFlags: 0
@@ -2326,8 +2323,6 @@ MonoBehaviour:
   _ceilingCheck: {fileID: 6633973619373097227}
   _ceilingCheckDistance: 1
   _exhaustionSoundObject: {fileID: 5141015528407428622}
-  _canRun: 1
-  _canCrouch: 1
 --- !u!114 &2520924087590955362
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2340,9 +2335,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f762caffb94b94dadbdf8b39d82887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _flashlightObject: {fileID: 593548384}
-  _flashlightDamp: 3
-  _canUseFlash: 1
+  _flashlightObject: {fileID: 1763532068}
+  _intensity: 50
 --- !u!114 &2520924087590955363
 MonoBehaviour:
   m_ObjectHideFlags: 0
