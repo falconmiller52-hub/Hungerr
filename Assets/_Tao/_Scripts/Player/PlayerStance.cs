@@ -17,11 +17,13 @@ public class PlayerStance : MonoBehaviour
 
     [Space, SerializeField, Label("Crouching Speed")] private float _crouchingSpeed = 1f;
     [SerializeField, Label("Crouching Cooldown")] private float _crouchingCooldown = 1f;
+    [SerializeField, Label("Crouching Volumes")] private Vector2 _crouchingVolumes = Vector2.one;
 
     [Space, SerializeField, Label("Ceiling Checker Position")] private Transform _ceilingCheck;
     [SerializeField, Label("Ceiling Checker Length")] private float _ceilingCheckDistance = 1f;
 
     [Space, SerializeField, Label("Exhaustion Sound Object")] private AudioSource _exhaustionSoundObject;
+    [SerializeField, Label("Exhaustion Sound Object")] private AudioSource _stepsSoundObject;
 
     //Внутренние переменные
     public enum Stance
@@ -78,6 +80,7 @@ public class PlayerStance : MonoBehaviour
             {
                 _currentStance = Stance.Crouching;
                 _crouchingTimer = 0f;
+                _stepsSoundObject.volume = _crouchingVolumes.x;
             }
             else if (!_runPress || _currentStamina <= 0f)
             {
@@ -90,6 +93,7 @@ public class PlayerStance : MonoBehaviour
             {
                 _currentStance = Stance.Walking;
                 _crouchingTimer = 0f;
+                _stepsSoundObject.volume = _crouchingVolumes.y;
             }
         }
         else
@@ -98,6 +102,7 @@ public class PlayerStance : MonoBehaviour
             {
                 _currentStance = Stance.Crouching;
                 _crouchingTimer = 0f;
+                _stepsSoundObject.volume = _crouchingVolumes.x;
             }
             else if (_runPress && !_isExhausted)
             {
@@ -259,6 +264,12 @@ public class PlayerStance : MonoBehaviour
     {
         get => _crouchingCooldown;
         set => _crouchingCooldown = value;
+    }
+
+    public Vector2 CrouchingVolumes
+    {
+        get => _crouchingVolumes;
+        set => _crouchingVolumes = value;
     }
 
     public float CrouchTimer

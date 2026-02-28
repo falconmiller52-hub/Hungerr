@@ -121,6 +121,10 @@ public class PlayerCamera : MonoBehaviour
         {
             var mouseAxis = _playerInputManager.MouseAxis;
 
+            #if UNITY_EDITOR
+            mouseAxis *= 10f;
+            #endif
+
             var yAxis = mouseAxis.x;
             var xAxis = mouseAxis.y;
 

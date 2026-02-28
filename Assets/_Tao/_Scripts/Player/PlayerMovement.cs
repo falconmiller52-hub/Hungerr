@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
         _rigidbody.MovePosition(nextPosition);
 
         if (direction.magnitude != 0f && _isGrounded) MakeStepSound();
-        else _stepsSoundObject.Pause();
+        else CancelInvoke("PlaySound");
     }
 
     public void Jump(float strength)

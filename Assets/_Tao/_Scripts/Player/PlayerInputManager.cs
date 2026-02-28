@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 public class PlayerInputManager : MonoBehaviour
 {
     //Переменные инспектора
+    [SerializeField, Label("Jump Sound Object")] private AudioSource _jumpSoundObject;
 
     //Внутренние переменные
     private bool _isJumping = false;
@@ -46,7 +47,14 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Update()
     {
-        if (_isJumping) _playerMovement.Jump(_playerMovement.JumpHeight);
+        if (_isJumping)
+        {
+            _playerMovement.Jump(_playerMovement.JumpHeight);
+            if (_playerMovement.IsGrounded)
+            {
+                _jumpSoundObject.Play();
+            }
+        }
     }
 
     private void FixedUpdate()
