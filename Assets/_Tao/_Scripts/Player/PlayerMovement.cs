@@ -1,7 +1,7 @@
 using UnityEngine;
 using NaughtyAttributes;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(PlayerStance))]
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,18 +14,22 @@ public class PlayerMovement : MonoBehaviour
     [Space, SerializeField, Label("Steps Sound Object")] private AudioSource _stepsSoundObject;
     [SerializeField, Label("Standart Sound")] private SoundMaterial _stepsStandartSound;
 
+    [Space, SerializeField, Label("Gravity Force")] private float _gravityForce = 30f;
+
     //Внутренние переменные
     private float _currentSpeed;
     private bool _isGrounded = true;
+    private RaycastHit _playerGroundHit;
+    private float _gravitySpeed = 0f;
 
     //Кэшированные переменные
-    private Rigidbody _rigidbody;
+    private CharacterController _cc;
     private PlayerStance _playerStance;
 
     //Методы Моно
     private void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        _cc = GetComponent<CharacterController>();
         _playerStance = GetComponent<PlayerStance>();
 
         StanceUpdate();
@@ -33,9 +37,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        _isGrounded = IsGrounded;
-
+        GroundRayHit();
         StanceUpdate();
+    }
+
+    private void FixedUpdate()
+    {
+        GravityUpdate();
     }
 
     //Методы скрипта
@@ -67,6 +75,18 @@ public class PlayerMovement : MonoBehaviour
         if (!IsInvoking("PlaySound")) Invoke("PlaySound", 1 / _playerStance.StanceSpeed(_playerStance.CurrentStance) * 2);
     }
 
+    private void GroundRayHit()
+    {
+        var ray = new Ray(_groundCheck.position, -transform.up);
+        _isGrounded = Physics.Raycast(ray, out _playerGroundHit, _groundCheckDistance);
+    }
+
+    private void GravityUpdate()
+    {
+        if (!_isGrounded) _gravitySpeed += _gravityForce * -9.81f * Time.fixedDeltaTime;
+        _cc.Move(new Vector3(0, _gravitySpeed, 0));
+    }
+
     private void PlaySound()
     {
         _stepsSoundObject.Play();
@@ -75,9 +95,9 @@ public class PlayerMovement : MonoBehaviour
     public void Move(Vector2 direction)
     {
         var tripleAxisDirection = new Vector3(direction.x, 0, direction.y);
-        var nextPosition = transform.localPosition + tripleAxisDirection * _currentSpeed * Time.fixedDeltaTime;
+        var nextPosition = tripleAxisDirection * _currentSpeed * Time.fixedDeltaTime;
 
-        _rigidbody.MovePosition(nextPosition);
+        _cc.Move(nextPosition);  
 
         if (direction.magnitude != 0f && _isGrounded) MakeStepSound();
         else CancelInvoke("PlaySound");
@@ -85,12 +105,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(float strength)
     {
-        var velocityChange = new Vector3(_rigidbody.velocity.x, strength, _rigidbody.velocity.z);
-        if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching) _rigidbody.velocity = velocityChange;
+        if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching)
+        {
+            _gravitySpeed = strength;
+            _gravityForce = 0f;
+        }
     }
 
     //Геттеры и сеттеры
-    public bool IsGrounded => Physics.Raycast(_groundCheck.position, -transform.up, _groundCheckDistance);
+    public bool IsGrounded => _isGrounded;
 
     public float JumpHeight
     {

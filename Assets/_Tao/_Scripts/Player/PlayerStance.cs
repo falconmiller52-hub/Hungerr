@@ -38,18 +38,16 @@ public class PlayerStance : MonoBehaviour
     private bool _runPress = false, _crouchPress = false;
 
     //Кэшированные переменные
-    PlayerMovement _playerMovement;
     PlayerInputManager _playerInputManager;
     PlayerCamera _playerCamera;
-    CapsuleCollider _capsuleCollider;
+    CharacterController _cc;
 
     //Методы Моно
     private void Start()
     {
-        _playerMovement = GetComponent<PlayerMovement>();
         _playerInputManager = GetComponent<PlayerInputManager>();
         _playerCamera = GetComponent<PlayerCamera>();
-        _capsuleCollider = GetComponentInChildren<CapsuleCollider>();
+        _cc = GetComponentInChildren<CharacterController>();
 
         _currentStamina = _maxStamina;
         _staminaWaiterTimer = _staminaWaiter;
@@ -153,8 +151,8 @@ public class PlayerStance : MonoBehaviour
 
     private void CrouchChange()
     {
-        _capsuleCollider.height = Mathf.Lerp(_capsuleCollider.height, _currentStance == Stance.Crouching ? 1f : 2f, Time.deltaTime * _crouchingSpeed);
-        _capsuleCollider.center = Vector3.Lerp(_capsuleCollider.center, _currentStance == Stance.Crouching ? Vector3.up * -0.5f : Vector3.zero, Time.deltaTime * _crouchingSpeed);
+        _cc.height = Mathf.Lerp(_cc.height, _currentStance == Stance.Crouching ? 1f : 2f, Time.deltaTime * _crouchingSpeed);
+        _cc.center = Vector3.Lerp(_cc.center, _currentStance == Stance.Crouching ? Vector3.up * -0.5f : Vector3.zero, Time.deltaTime * _crouchingSpeed);
         _playerCamera.CameraObjects[0].transform.localPosition = Vector3.Lerp(_playerCamera.CameraObjects[0].transform.localPosition, _currentStance == Stance.Crouching ? Vector3.up * -1f : Vector3.zero, Time.deltaTime * _crouchingSpeed);
     }
 
