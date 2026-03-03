@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Label("Ground Checker Length")] private float _groundCheckDistance = 1f;
 
     [Space, SerializeField, Label("Jump Height")] private float _jumpHeight = 1f;
+    [SerializeField, Label("Jump Sound")] private AudioSource _jumpSound;
+    [SerializeField, Label("Grounded Sound")] private AudioSource _groundedSound;
 
     [Space, SerializeField, Label("Steps Sound Object")] private AudioSource _stepsSoundObject;
     [SerializeField, Label("Standart Sound")] private SoundMaterial _stepsStandartSound;
@@ -48,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
 
     //Методы скрипта
     private void StanceUpdate()
-    {
+    {          
         var playerCurrentStance = _playerStance.CurrentStance;
         _currentSpeed = _playerStance.StanceSpeed(playerCurrentStance);
     }
@@ -78,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
     private void GroundRayHit()
     {
         var ray = new Ray(_groundCheck.position, -transform.up);
-        _isGrounded = Physics.Raycast(ray, out _playerGroundHit, _groundCheckDistance);
+        GroundSet(Physics.Raycast(ray, out _playerGroundHit, _groundCheckDistance));
     }
 
     private void GravityUpdate()
@@ -91,6 +93,30 @@ public class PlayerMovement : MonoBehaviour
     {
         _stepsSoundObject.Play();
     }
+
+    private void GroundSet(bool isGrounded)
+    {
+        if (_isGrounded == false && isGrounded == true)
+        {
+            Grounded();
+        }
+        else if (_isGrounded == true && isGrounded == false)
+        {
+            Ungrounded();
+        }
+    }
+
+    private void Ungrounded()
+    {
+        _isGrounded = false;
+    }
+
+    private void Grounded()
+    {
+        _isGrounded = true;
+        _gravitySpeed = 0f;
+    }
+
 
     public void Move(Vector2 direction)
     {
@@ -108,7 +134,6 @@ public class PlayerMovement : MonoBehaviour
         if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching)
         {
             _gravitySpeed = strength;
-            _gravityForce = 0f;
         }
     }
 
