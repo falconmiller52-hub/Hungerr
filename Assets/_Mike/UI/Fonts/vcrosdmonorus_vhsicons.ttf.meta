@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 60fc552588434e44bbb3d5d8c7d1d24e
+guid: 1071b66d6c6f09d4f8dd8b0601d80aa8
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - BoldPixels
+  - VCR OSD Mono RUS+VHS icons
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
