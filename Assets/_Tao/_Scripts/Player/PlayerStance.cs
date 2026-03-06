@@ -275,4 +275,16 @@ public class PlayerStance : MonoBehaviour
         get => _crouchingTimer;
         set => _crouchingTimer = value;
     }
+
+    public AudioSource ExhaustionSoundObject
+    {
+        get => _exhaustionSoundObject;
+        set => _exhaustionSoundObject = value;
+    }
+
+    public AudioSource StepsSoundObject
+    {
+        get => _stepsSoundObject;
+        set => _stepsSoundObject = value;
+    }
 }

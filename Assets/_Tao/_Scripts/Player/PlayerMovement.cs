@@ -14,7 +14,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Label("Grounded Sound")] private AudioSource _groundedSoundObject;
 
     [Space, SerializeField, Label("Steps Sound Object")] private AudioSource _stepsSoundObject;
-    [SerializeField, Label("Standart Sound")] private SoundMaterial _stepsStandartSound;
+    [SerializeField, Label("Steps Standart Sound")] private SoundMaterial _stepsStandartSound;
+    [SerializeField, MinMaxSlider(-3f, 3f), Label("Steps Pitch Range")] private Vector2 _stepsPitchRange;
 
     [Space, SerializeField, Label("Gravity Force")] private float _gravityForce = 30f;
 
@@ -91,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void PlaySound()
     {
+        _stepsSoundObject.pitch = Random.Range(_stepsPitchRange.x, _stepsPitchRange.y);
         _stepsSoundObject.Play();
     }
 
@@ -117,7 +119,6 @@ public class PlayerMovement : MonoBehaviour
         _gravitySpeed = 0f;
         _groundedSoundObject.Play();
     }
-
 
     public void Move(Vector2 direction)
     {
@@ -152,6 +153,18 @@ public class PlayerMovement : MonoBehaviour
     {
         get => _currentSpeed;
         set => _currentSpeed = value;
+    }
+
+    public AudioSource GroundedSoundObject
+    {
+        get => _groundedSoundObject;
+        set => _groundedSoundObject = value;
+    }
+
+    public AudioSource JumpSoundObject
+    {
+        get => _jumpSoundObject;
+        set => _jumpSoundObject = value;
     }
 
     public AudioSource StepsSoundObject
