@@ -10,8 +10,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Label("Ground Checker Length")] private float _groundCheckDistance = 1f;
 
     [Space, SerializeField, Label("Jump Height")] private float _jumpHeight = 1f;
-    [SerializeField, Label("Jump Sound")] private AudioSource _jumpSound;
-    [SerializeField, Label("Grounded Sound")] private AudioSource _groundedSound;
+    [SerializeField, Label("Jump Sound")] private AudioSource _jumpSoundObject;
+    [SerializeField, Label("Grounded Sound")] private AudioSource _groundedSoundObject;
 
     [Space, SerializeField, Label("Steps Sound Object")] private AudioSource _stepsSoundObject;
     [SerializeField, Label("Standart Sound")] private SoundMaterial _stepsStandartSound;
@@ -115,6 +115,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _isGrounded = true;
         _gravitySpeed = 0f;
+        _groundedSoundObject.Play();
     }
 
 
@@ -134,6 +135,7 @@ public class PlayerMovement : MonoBehaviour
         if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching)
         {
             _gravitySpeed = strength;
+            _jumpSoundObject.Play();
         }
     }
 
