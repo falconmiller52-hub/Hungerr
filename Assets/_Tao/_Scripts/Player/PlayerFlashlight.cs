@@ -8,12 +8,17 @@ public class PlayerFlashlight : MonoBehaviour
     [SerializeField, Label("Flashlight Object")] private Light _flashlightObject;
     [SerializeField, Label("Flashlight Intensity")] private float _intensity = 1f;
 
+    [Space, SerializeField, Label("Flashlight ON Sound Object")] private AudioSource _flashlightsSoundObjectOn;
+    [SerializeField, Label("Flashlight OFF Sound Object")] private AudioSource _flashlightsSoundObjectOff;
+
     //Внутренние переменные
 
 
     //Кэшированные переменные
 
+
     //Методы Моно
+
 
     //Методы скрипта
     public void Toggle(string state = "~")
@@ -22,16 +27,27 @@ public class PlayerFlashlight : MonoBehaviour
 
         if (state == "~")
         {
-            if (initialIntensity == 0f) initialIntensity = _intensity;
-            else initialIntensity = 0f;   
+            if (initialIntensity == 0f)
+            {
+                initialIntensity = _intensity;
+                _flashlightsSoundObjectOn.Play();
+            }
+                
+            else
+            {
+                initialIntensity = 0f;
+                _flashlightsSoundObjectOff.Play();
+            }
         }
         else if (state == "+")
         {
             initialIntensity = _intensity;
+            _flashlightsSoundObjectOn.Play();
         }
         else
         {
             initialIntensity = 0f;
+            _flashlightsSoundObjectOff.Play();
         }
 
         _flashlightObject.intensity = initialIntensity;
