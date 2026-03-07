@@ -1,8 +1,15 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/_Tao/Volumes.meta
 guid: c300368a14cea1a4f8a8a0c3055616e8
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
+========
+guid: 35bbe1807af7698488a98df91a145271
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+>>>>>>>> 76c121e85b385e9928405f97a22bdf5f0ce2e928:Assets/_Tao/Volumes/PlayerPPVolume.asset.meta
   userData: 
   assetBundleName: 
   assetBundleVariant: 
