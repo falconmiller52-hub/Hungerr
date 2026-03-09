@@ -14,7 +14,7 @@ public class LocationChanger : MonoBehaviour
     [SerializeField, Label("End Sound")] private AudioClip _endSound;
 
     //Внутренние переменные
-
+    private static bool _isCoroutineActive = false;
 
     //Кэшированные переменные
     private AudioSource _as;
@@ -32,11 +32,12 @@ public class LocationChanger : MonoBehaviour
     //Методы скрипта
     public void ChangeLocation()
     {
-        StartCoroutine(LocationChangeAnimation());
+        if (!_isCoroutineActive) StartCoroutine(LocationChangeAnimation());
     }
 
     private IEnumerator LocationChangeAnimation()
     {
+        _isCoroutineActive = true;
         _as.PlayOneShot(_startSound);
         for (float i = _bsc.BlackScreenObject.color.a; i <= 1f; i += Time.deltaTime)
         {
@@ -61,6 +62,7 @@ public class LocationChanger : MonoBehaviour
 
         _bsc.BlackScreenObject.color = Color.black * 0f;
 
+        _isCoroutineActive = false;
         yield return null;
     }
 
