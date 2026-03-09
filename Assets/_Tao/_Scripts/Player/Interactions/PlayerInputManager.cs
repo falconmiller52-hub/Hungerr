@@ -2,10 +2,6 @@ using UnityEngine;
 using NaughtyAttributes;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerInput))]
-[RequireComponent(typeof(PlayerStance))]
-[RequireComponent(typeof(PlayerCamera))]
-[RequireComponent(typeof(PlayerMovement))]
 public class PlayerInputManager : MonoBehaviour
 {
     //Переменные инспектора
@@ -18,6 +14,7 @@ public class PlayerInputManager : MonoBehaviour
     PlayerStance _playerStance;
     PlayerCamera _playerCamera;
     PlayerMovement _playerMovement;
+    PlayerScope _playerScope;
     PlayerFlashlight _playerFlashlight;
     PlayerInputActions _playerInputActions;
 
@@ -28,6 +25,7 @@ public class PlayerInputManager : MonoBehaviour
         _playerStance = GetComponent<PlayerStance>();
         _playerCamera = GetComponent<PlayerCamera>();
         _playerMovement = GetComponent<PlayerMovement>();
+        _playerScope = GetComponent<PlayerScope>();
         _playerFlashlight = GetComponent<PlayerFlashlight>();
         _playerInputActions = new PlayerInputActions();
 
@@ -40,6 +38,8 @@ public class PlayerInputManager : MonoBehaviour
         _playerInputActions.Player.Jump.canceled += JumpStop;
 
         _playerInputActions.Player.Flashlight.started += Flashlight;
+
+        _playerInputActions.Player.Interact.started += Interact;
 
         _playerInputActions.Player.Enable();
     }
@@ -87,6 +87,11 @@ public class PlayerInputManager : MonoBehaviour
     private void Flashlight(InputAction.CallbackContext context)
     {
         _playerFlashlight.Toggle();
+    }
+
+    private void Interact(InputAction.CallbackContext context)
+    {
+        _playerScope.Interact();
     }
 
     //Геттеры и сеттеры
