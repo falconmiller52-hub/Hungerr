@@ -10,16 +10,21 @@ public class LocationChanger : MonoBehaviour
 
     [Space, SerializeField, Label("Transition Speed")] private Vector2 _transitionSpeed = Vector2.right;
 
+    [Space, SerializeField, Label("Start Sound")] private AudioClip _startSound;
+    [SerializeField, Label("End Sound")] private AudioClip _endSound;
+
     //Внутренние переменные
 
 
     //Кэшированные переменные
-    BlackScreenController _bsc;
-    CharacterController _cc;
+    private AudioSource _as;
+    private BlackScreenController _bsc;
+    private CharacterController _cc;
 
     //Методы Моно
     private void Start()
     {
+        _as = GetComponent<AudioSource>();
         _bsc = _theFuckingPlayerItself.GetComponent<BlackScreenController>();
         _cc = _theFuckingPlayerItself.GetComponent<CharacterController>();
     }
@@ -32,6 +37,7 @@ public class LocationChanger : MonoBehaviour
 
     private IEnumerator LocationChangeAnimation()
     {
+        _as.PlayOneShot(_startSound);
         for (float i = _bsc.BlackScreenObject.color.a; i <= 1f; i += Time.deltaTime)
         {
             _bsc.BlackScreenObject.color = Color.black * i;
@@ -46,6 +52,7 @@ public class LocationChanger : MonoBehaviour
         _theFuckingPlayerItself.position = _nextPositionObject.position;
         _cc.enabled = true;
 
+        _as.PlayOneShot(_endSound);
         for (float i = _bsc.BlackScreenObject.color.a; i >= 0f; i -= Time.deltaTime)
         {
             _bsc.BlackScreenObject.color = Color.black * i;
