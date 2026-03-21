@@ -5,7 +5,6 @@ using System.Collections;
 public class LocationChanger : MonoBehaviour
 {
     //Переменные инспектора
-    [SerializeField, Label("Player")] private Transform _theFuckingPlayerItself;
     [SerializeField, Label("Next Position Object")] private Transform _nextPositionObject;
 
     [Space, SerializeField, Label("Transition Speed")] private Vector2 _transitionSpeed = Vector2.right;
@@ -17,6 +16,7 @@ public class LocationChanger : MonoBehaviour
     private static bool _isCoroutineActive = false;
 
     //Кэшированные переменные
+    private Transform _theFuckingPlayerItself;
     private AudioSource _as;
     private BlackScreenController _bsc;
     private CharacterController _cc;
@@ -24,6 +24,7 @@ public class LocationChanger : MonoBehaviour
     //Методы Моно
     private void Start()
     {
+        _theFuckingPlayerItself = FindObjectOfType<CharacterController>().transform;
         _as = GetComponent<AudioSource>();
         _bsc = _theFuckingPlayerItself.GetComponent<BlackScreenController>();
         _cc = _theFuckingPlayerItself.GetComponent<CharacterController>();

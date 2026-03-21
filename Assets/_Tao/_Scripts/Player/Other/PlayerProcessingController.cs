@@ -10,7 +10,7 @@ public class PlayerProcessingController : MonoBehaviour
     [SerializeField, Label("Post Processing Object")] private Volume _postProcessingObject;
 
     [Space, SerializeField, MinMaxSlider(0f, 1f), Label("Crouch Vignette Strength")] private Vector2 _crouchVignetteStrength;
-    [SerializeField, Label("Crouch Depth of Field Strength")] private Vector2 _crouchDofStrength;
+    [SerializeField, MinMaxSlider(0f, 500f), Label("Exhaustion Depth of Field Strength")] private Vector2 _exhaustionDofStrength;
 
     //Внутренние переменные
     private float _nextVignetteStrength;
@@ -29,16 +29,16 @@ public class PlayerProcessingController : MonoBehaviour
         _postProcessingObject.profile.TryGet(out _depthOfField);
 
         _nextVignetteStrength = _crouchVignetteStrength.y;
-        _nextDofStrength = _crouchDofStrength.y;
+        _nextDofStrength = _exhaustionDofStrength.y;
     }
 
     private void Update()
     {
         _nextVignetteStrength = _playerStance.CurrentStance == PlayerStance.Stance.Crouching ? _crouchVignetteStrength.y : _crouchVignetteStrength.x;
-        _nextDofStrength = _playerStance.CurrentStance == PlayerStance.Stance.Crouching ? _crouchDofStrength.x : _crouchDofStrength.y;
+        _nextDofStrength = _playerStance.IsExhausted ? _exhaustionDofStrength.x : _exhaustionDofStrength.y;
 
         _vignette.intensity.value = Mathf.Lerp(_vignette.intensity.value, _nextVignetteStrength, Time.deltaTime * _playerStance.CrouchSpeed);
-        _depthOfField.gaussianEnd.value = Mathf.Lerp(_depthOfField.gaussianEnd.value, _nextDofStrength, Time.deltaTime * _playerStance.CrouchSpeed);
+        _depthOfField.gaussianEnd.value = Mathf.Lerp(_depthOfField.gaussianEnd.value, _nextDofStrength, Time.deltaTime * _playerStance.ExhaustionDuration / 2);
     }
 
     //Методы скрипта
@@ -51,10 +51,10 @@ public class PlayerProcessingController : MonoBehaviour
         set => _crouchVignetteStrength = value;
     }
 
-    public Vector2 CrouchDepthOfFieldStrength
+    public Vector2 ExhaustionDepthOfFieldStrength
     {
-        get => _crouchDofStrength;
-        set => _crouchDofStrength = value;
+        get => _exhaustionDofStrength;
+        set => _exhaustionDofStrength = value;
     }
 
     public float NextVignetteStrength

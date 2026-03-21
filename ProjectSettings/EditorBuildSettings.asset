@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_Tao/Scenes/TaoNatureTestingScene.unity
-    guid: 4d96ecca21183254f9d8c4482bfc93bf
+    path: Assets/_Tao/Scenes/TaoLocationTestingScene.unity
+    guid: 572dc80dec9d81e41babbee104951da6
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 406a532503de93e44a000394d5442961, type: 2}

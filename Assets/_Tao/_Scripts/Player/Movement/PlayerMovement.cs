@@ -60,14 +60,12 @@ public class PlayerMovement : MonoBehaviour
     {
         var ray = new Ray(_groundCheck.position, -transform.up);
 
-        RaycastHit hit;
-        Physics.Raycast(ray, out hit, _groundCheckDistance);
+        Physics.Raycast(ray, out RaycastHit hit, _groundCheckDistance);
 
-        SurfaceMaterialHolder _surfaceMaterialHolder;
-        if (hit.collider && hit.collider.gameObject.TryGetComponent<SurfaceMaterialHolder>(out _surfaceMaterialHolder))
+        if (hit.collider && hit.collider.gameObject.TryGetComponent<SurfaceMaterialHolder>(out var surfaceMaterialHolder))
         {
-            var _stepSoundsAmount = _surfaceMaterialHolder.MaterialSound.StepSounds.Count - 1;
-            _stepsSoundObject.clip = _surfaceMaterialHolder.MaterialSound.StepSounds[Random.Range(0, _stepSoundsAmount)];
+            var _stepSoundsAmount = surfaceMaterialHolder.MaterialSound.StepSounds.Count - 1;
+            _stepsSoundObject.clip = surfaceMaterialHolder.MaterialSound.StepSounds[Random.Range(0, _stepSoundsAmount)];
         }
         else
         {

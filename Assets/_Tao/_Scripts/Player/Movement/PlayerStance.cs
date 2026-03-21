@@ -234,6 +234,8 @@ public class PlayerStance : MonoBehaviour
         set => _exhaustionTimer = value;
     }
 
+    public bool IsExhausted => _isExhausted;
+
     public float StaminaWaiter
     {
         get => _staminaWaiter;
