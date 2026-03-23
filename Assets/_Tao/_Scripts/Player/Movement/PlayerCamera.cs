@@ -7,7 +7,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(PlayerStance))]
 public class PlayerCamera : MonoBehaviour
 {
-    //Переменные инспектора
+    //РџРµСЂРµРјРµРЅРЅС‹Рµ РёРЅСЃРїРµРєС‚РѕСЂР°
     [SerializeField, Label("Player Camera Objects Assign")] private List<GameObject> _cameraObjects;
 
     [Space, SerializeField, Label("Camera Sensitivity of X and Y axis")] private Vector2 _xySensitivity = Vector2.one;
@@ -23,15 +23,15 @@ public class PlayerCamera : MonoBehaviour
     [SerializeField, Label("Running FOV Damping")] private float _runFovDamp = 1f;
     [SerializeField, Label("Running FOV Multiplier")] private float _runFovMultiplier = 1f;
 
-    //Внутренние переменные
+    //Р’РЅСѓС‚СЂРµРЅРЅРёРµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     private float _xRotation, _yRotation;
 
-    //Кэшированные переменные
+    //РљСЌС€РёСЂРѕРІР°РЅРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     private PlayerInputManager _playerInputManager;
     private PlayerStance _playerStance;
     private Camera _camera;
 
-    //Методы Моно
+    //РњРµС‚РѕРґС‹ РњРѕРЅРѕ
     private void Start()
     {
         _playerInputManager = GetComponent<PlayerInputManager>();
@@ -51,7 +51,7 @@ public class PlayerCamera : MonoBehaviour
         FovChange();
     }
 
-    //Методы скрипта
+    //РњРµС‚РѕРґС‹ СЃРєСЂРёРїС‚Р°
 
     private void BreatheMove()
     {
@@ -114,7 +114,7 @@ public class PlayerCamera : MonoBehaviour
         Cursor.visible = visible; Cursor.lockState = lockState;
     }
 
-    //Геттеры и сеттеры
+    //Р“РµС‚С‚РµСЂС‹ Рё СЃРµС‚С‚РµСЂС‹
     public Vector2 CameraRotation
     {
         get

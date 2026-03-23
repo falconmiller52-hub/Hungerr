@@ -4,23 +4,23 @@ using NaughtyAttributes;
 [RequireComponent(typeof(PlayerCamera))]
 public class PlayerFlashlight : MonoBehaviour
 {
-    //Ïåðåìåííûå èíñïåêòîðà
+    //ÐŸÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ðµ Ð¸Ð½ÑÐ¿ÐµÐºÑ‚Ð¾Ñ€Ð°
     [SerializeField, Label("Flashlight Object")] private Light _flashlightObject;
     [SerializeField, Label("Flashlight Intensity")] private float _intensity = 1f;
 
     [Space, SerializeField, Label("Flashlight ON Sound Object")] private AudioSource _flashlightsSoundObjectOn;
     [SerializeField, Label("Flashlight OFF Sound Object")] private AudioSource _flashlightsSoundObjectOff;
 
-    //Âíóòðåííèå ïåðåìåííûå
+    //Ð’Ð½ÑƒÑ‚Ñ€ÐµÐ½Ð½Ð¸Ðµ Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ðµ
 
 
-    //Êýøèðîâàííûå ïåðåìåííûå
+    //ÐšÑÑˆÐ¸Ñ€Ð¾Ð²Ð°Ð½Ð½Ñ‹Ðµ Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ðµ
 
 
-    //Ìåòîäû Ìîíî
+    //ÐœÐµÑ‚Ð¾Ð´Ñ‹ ÐœÐ¾Ð½Ð¾
 
 
-    //Ìåòîäû ñêðèïòà
+    //ÐœÐµÑ‚Ð¾Ð´Ñ‹ ÑÐºÑ€Ð¸Ð¿Ñ‚Ð°
     public void Toggle(string state = "~")
     {
         var initialIntensity = _flashlightObject.intensity;
@@ -53,7 +53,7 @@ public class PlayerFlashlight : MonoBehaviour
         _flashlightObject.intensity = initialIntensity;
     }
 
-    //Ãåòòåðû è ñåòòåðû
+    //Ð“ÐµÑ‚Ñ‚ÐµÑ€Ñ‹ Ð¸ ÑÐµÑ‚Ñ‚ÐµÑ€Ñ‹
     public Light Object
     {
         get => _flashlightObject;

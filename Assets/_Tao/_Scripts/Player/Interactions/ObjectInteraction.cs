@@ -5,26 +5,26 @@ using NaughtyAttributes;
 [RequireComponent(typeof(Outline))]
 public class ObjectInteraction : MonoBehaviour
 {
-    //Переменные инспектора
+    //РџРµСЂРµРјРµРЅРЅС‹Рµ РёРЅСЃРїРµРєС‚РѕСЂР°
     [SerializeField, Label("Interaction Events")] private UnityEvent _interactionEvents;
 
     [SerializeField, Label("Outline Mode")] private Outline.Mode _outlineMode = Outline.Mode.OutlineAll;
     [SerializeField, Label("Outline Color")] private Color _outlineColor = Color.white;
     [SerializeField, Label("Outline Width")] private float _outlineWidth = 25f;
 
-    //Внутренние переменные
+    //Р’РЅСѓС‚СЂРµРЅРЅРёРµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     private float _currentOutlineWidth = 0f;
 
-    //Кэшированные переменные
+    //РљСЌС€РёСЂРѕРІР°РЅРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     private Outline _outline;
 
-    //Методы Моно
+    //РњРµС‚РѕРґС‹ РњРѕРЅРѕ
     private void Start()
     {
         _outline = GetComponent<Outline>();
     }
 
-    //Методы скрипта
+    //РњРµС‚РѕРґС‹ СЃРєСЂРёРїС‚Р°
     private void Update()
     {
         _outline.OutlineMode = _outlineMode;
@@ -32,7 +32,7 @@ public class ObjectInteraction : MonoBehaviour
         _outline.OutlineWidth = _currentOutlineWidth; 
     }
 
-    //Геттеры и сеттеры
+    //Р“РµС‚С‚РµСЂС‹ Рё СЃРµС‚С‚РµСЂС‹
     public UnityEvent InteractionEvents
     {
         get => _interactionEvents;

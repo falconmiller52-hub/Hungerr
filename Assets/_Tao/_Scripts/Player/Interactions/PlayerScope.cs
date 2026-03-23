@@ -4,20 +4,20 @@ using System.Collections.Generic;
 
 public class PlayerScope : MonoBehaviour
 {
-    //Переменные инспектора
+    //РџРµСЂРµРјРµРЅРЅС‹Рµ РёРЅСЃРїРµРєС‚РѕСЂР°
     [SerializeField, Label("Player Camera")] private Camera _playerCamera;
 
     [Space, SerializeField, Label("Raycasting Length")] private float _rayLength;
 
-    //Внутренние переменные
+    //Р’РЅСѓС‚СЂРµРЅРЅРёРµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     private RaycastHit _rayHit;
     private GameObject _interactableObject;
     private ObjectInteraction _interaction;
 
-    //Кэшированные переменные
+    //РљСЌС€РёСЂРѕРІР°РЅРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ
 
 
-    //Методы Моно
+    //РњРµС‚РѕРґС‹ РњРѕРЅРѕ
     private void Update()
     {
         var ray = _playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
@@ -39,13 +39,13 @@ public class PlayerScope : MonoBehaviour
         } 
     }
 
-    //Методы скрипта
+    //РњРµС‚РѕРґС‹ СЃРєСЂРёРїС‚Р°
     public void Interact()
     {
         if (_interaction) _interaction.InteractionEvents.Invoke();
     }
 
-    //Геттеры и сеттеры
+    //Р“РµС‚С‚РµСЂС‹ Рё СЃРµС‚С‚РµСЂС‹
 
 
 }

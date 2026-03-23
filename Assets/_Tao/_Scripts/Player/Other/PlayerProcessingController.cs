@@ -6,22 +6,22 @@ using UnityEngine.Rendering.Universal;
 [RequireComponent(typeof(PlayerStance))]
 public class PlayerProcessingController : MonoBehaviour
 {
-    //Переменные инспектора
+    //РџРµСЂРµРјРµРЅРЅС‹Рµ РёРЅСЃРїРµРєС‚РѕСЂР°
     [SerializeField, Label("Post Processing Object")] private Volume _postProcessingObject;
 
     [Space, SerializeField, MinMaxSlider(0f, 1f), Label("Crouch Vignette Strength")] private Vector2 _crouchVignetteStrength;
     [SerializeField, MinMaxSlider(0f, 500f), Label("Exhaustion Depth of Field Strength")] private Vector2 _exhaustionDofStrength;
 
-    //Внутренние переменные
+    //Р’РЅСѓС‚СЂРµРЅРЅРёРµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     private float _nextVignetteStrength;
     private float _nextDofStrength;
 
-    //Кэшированные переменные
+    //РљСЌС€РёСЂРѕРІР°РЅРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     PlayerStance _playerStance;
     private Vignette _vignette;
     private DepthOfField _depthOfField;
 
-    //Методы Моно
+    //РњРµС‚РѕРґС‹ РњРѕРЅРѕ
     private void Start()
     {
         _playerStance = GetComponent<PlayerStance>();
@@ -41,10 +41,10 @@ public class PlayerProcessingController : MonoBehaviour
         _depthOfField.gaussianEnd.value = Mathf.Lerp(_depthOfField.gaussianEnd.value, _nextDofStrength, Time.deltaTime * _playerStance.ExhaustionDuration / 2);
     }
 
-    //Методы скрипта
+    //РњРµС‚РѕРґС‹ СЃРєСЂРёРїС‚Р°
 
 
-    //Геттеры и сеттеры
+    //Р“РµС‚С‚РµСЂС‹ Рё СЃРµС‚С‚РµСЂС‹
     public Vector2 CrouchVignetteStrength
     {
         get => _crouchVignetteStrength;

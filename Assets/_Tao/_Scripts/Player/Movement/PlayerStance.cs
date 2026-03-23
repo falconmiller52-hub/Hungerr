@@ -4,7 +4,7 @@ using System.Collections;
 
 public class PlayerStance : MonoBehaviour
 {
-    //Переменные инспектора
+    //РџРµСЂРµРјРµРЅРЅС‹Рµ РёРЅСЃРїРµРєС‚РѕСЂР°
     [SerializeField, Label("Current Player Stance")] private Stance _currentStance;
     [SerializeField, Label("Stances Speeds")] private Vector3 _stancesSpeeds = Vector3.one;
 
@@ -25,7 +25,7 @@ public class PlayerStance : MonoBehaviour
     [Space, SerializeField, Label("Exhaustion Sound Object")] private AudioSource _exhaustionSoundObject;
     [SerializeField, Label("Exhaustion Sound Object")] private AudioSource _stepsSoundObject;
 
-    //Внутренние переменные
+    //Р’РЅСѓС‚СЂРµРЅРЅРёРµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     public enum Stance
     {
         Walking,
@@ -37,12 +37,12 @@ public class PlayerStance : MonoBehaviour
     private float _currentStamina, _staminaWaiterTimer, _exhaustionTimer, _crouchingTimer;
     private bool _runPress = false, _crouchPress = false;
 
-    //Кэшированные переменные
+    //РљСЌС€РёСЂРѕРІР°РЅРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     PlayerInputManager _playerInputManager;
     PlayerCamera _playerCamera;
     CharacterController _cc;
 
-    //Методы Моно
+    //РњРµС‚РѕРґС‹ РњРѕРЅРѕ
     private void Start()
     {
         _playerInputManager = GetComponent<PlayerInputManager>();
@@ -64,7 +64,7 @@ public class PlayerStance : MonoBehaviour
         CrouchChange();
     }
 
-    //Методы скрипта
+    //РњРµС‚РѕРґС‹ СЃРєСЂРёРїС‚Р°
     private void StanceChange()
     {
         _crouchingTimer = Mathf.Clamp(_crouchingTimer, 0, _crouchingCooldown);
@@ -183,7 +183,7 @@ public class PlayerStance : MonoBehaviour
         _runPress = !_runPress;
     }
 
-    //Геттеры и сеттеры
+    //Р“РµС‚С‚РµСЂС‹ Рё СЃРµС‚С‚РµСЂС‹
     public bool IsUnderCeiling => Physics.Raycast(_ceilingCheck.position, transform.up, _ceilingCheckDistance);
 
     public Stance CurrentStance

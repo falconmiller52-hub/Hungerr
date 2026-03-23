@@ -4,7 +4,7 @@ using System.Collections;
 
 public class LocationChanger : MonoBehaviour
 {
-    //Переменные инспектора
+    //РџРµСЂРµРјРµРЅРЅС‹Рµ РёРЅСЃРїРµРєС‚РѕСЂР°
     [SerializeField, Label("Next Position Object")] private Transform _nextPositionObject;
 
     [Space, SerializeField, Label("Transition Speed")] private Vector2 _transitionSpeed = Vector2.right;
@@ -12,16 +12,16 @@ public class LocationChanger : MonoBehaviour
     [Space, SerializeField, Label("Start Sound")] private AudioClip _startSound;
     [SerializeField, Label("End Sound")] private AudioClip _endSound;
 
-    //Внутренние переменные
+    //Р’РЅСѓС‚СЂРµРЅРЅРёРµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     private static bool _isCoroutineActive = false;
 
-    //Кэшированные переменные
+    //РљСЌС€РёСЂРѕРІР°РЅРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     private Transform _theFuckingPlayerItself;
     private AudioSource _as;
     private BlackScreenController _bsc;
     private CharacterController _cc;
 
-    //Методы Моно
+    //РњРµС‚РѕРґС‹ РњРѕРЅРѕ
     private void Start()
     {
         _theFuckingPlayerItself = FindObjectOfType<CharacterController>().transform;
@@ -30,7 +30,7 @@ public class LocationChanger : MonoBehaviour
         _cc = _theFuckingPlayerItself.GetComponent<CharacterController>();
     }
 
-    //Методы скрипта
+    //РњРµС‚РѕРґС‹ СЃРєСЂРёРїС‚Р°
     public void ChangeLocation()
     {
         if (!_isCoroutineActive) StartCoroutine(LocationChangeAnimation());
@@ -67,7 +67,7 @@ public class LocationChanger : MonoBehaviour
         yield return null;
     }
 
-    //Геттеры и сеттеры
+    //Р“РµС‚С‚РµСЂС‹ Рё СЃРµС‚С‚РµСЂС‹
     public Transform NextPositionObject
     {
         get => _nextPositionObject;

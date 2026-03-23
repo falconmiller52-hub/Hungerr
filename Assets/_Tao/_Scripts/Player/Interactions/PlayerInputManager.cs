@@ -4,12 +4,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputManager : MonoBehaviour
 {
-    //Переменные инспектора
+    //РџРµСЂРµРјРµРЅРЅС‹Рµ РёРЅСЃРїРµРєС‚РѕСЂР°
 
-    //Внутренние переменные
+    //Р’РЅСѓС‚СЂРµРЅРЅРёРµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     private bool _isJumping = false;
 
-    //Кэшированные переменные
+    //РљСЌС€РёСЂРѕРІР°РЅРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     PlayerInput _playerInput;
     PlayerStance _playerStance;
     PlayerCamera _playerCamera;
@@ -18,7 +18,7 @@ public class PlayerInputManager : MonoBehaviour
     PlayerFlashlight _playerFlashlight;
     PlayerInputActions _playerInputActions;
 
-    //Методы Моно
+    //РњРµС‚РѕРґС‹ РњРѕРЅРѕ
     private void Start()
     {
         _playerInput = GetComponent<PlayerInput>();
@@ -63,7 +63,7 @@ public class PlayerInputManager : MonoBehaviour
         _playerCamera.LookAt(_playerCamera.CameraRotation);
     }
 
-    //Методы скрипта
+    //РњРµС‚РѕРґС‹ СЃРєСЂРёРїС‚Р°
     private void Crouch(InputAction.CallbackContext context)
     {
         _playerStance.Crouch();
@@ -94,7 +94,7 @@ public class PlayerInputManager : MonoBehaviour
         _playerScope.Interact();
     }
 
-    //Геттеры и сеттеры
+    //Р“РµС‚С‚РµСЂС‹ Рё СЃРµС‚С‚РµСЂС‹
     public Vector2 MovingDirection
     {
         get

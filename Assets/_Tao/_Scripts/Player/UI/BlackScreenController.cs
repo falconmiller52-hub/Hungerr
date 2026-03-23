@@ -4,25 +4,25 @@ using NaughtyAttributes;
 
 public class BlackScreenController : MonoBehaviour
 {
-    //Ïåðåìåííûå èíñïåêòîðà
+    //ÐŸÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ðµ Ð¸Ð½ÑÐ¿ÐµÐºÑ‚Ð¾Ñ€Ð°
     [SerializeField, Label("Black Screen Object")] private Image _blackScreenObject;
 
-    //Âíóòðåííèå ïåðåìåííûå
+    //Ð’Ð½ÑƒÑ‚Ñ€ÐµÐ½Ð½Ð¸Ðµ Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ðµ
 
 
-    //Êýøèðîâàííûå ïåðåìåííûå
+    //ÐšÑÑˆÐ¸Ñ€Ð¾Ð²Ð°Ð½Ð½Ñ‹Ðµ Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ðµ
 
 
-    //Ìåòîäû Ìîíî
+    //ÐœÐµÑ‚Ð¾Ð´Ñ‹ ÐœÐ¾Ð½Ð¾
 
 
-    //Ìåòîäû ñêðèïòà
+    //ÐœÐµÑ‚Ð¾Ð´Ñ‹ ÑÐºÑ€Ð¸Ð¿Ñ‚Ð°
     public void ChangeTransparency(float value)
     {
         _blackScreenObject.color = new Color(0f, 0f, 0f, value);
     }
 
-    //Ãåòòåðû è ñåòòåðû
+    //Ð“ÐµÑ‚Ñ‚ÐµÑ€Ñ‹ Ð¸ ÑÐµÑ‚Ñ‚ÐµÑ€Ñ‹
     public Image BlackScreenObject
     {
         get => _blackScreenObject;

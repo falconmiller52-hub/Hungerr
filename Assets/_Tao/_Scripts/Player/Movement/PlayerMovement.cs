@@ -5,7 +5,7 @@ using NaughtyAttributes;
 [RequireComponent(typeof(PlayerStance))]
 public class PlayerMovement : MonoBehaviour
 {
-    //Переменные инспектора
+    //РџРµСЂРµРјРµРЅРЅС‹Рµ РёРЅСЃРїРµРєС‚РѕСЂР°
     [SerializeField, Label("Ground Checker Position")] private Transform _groundCheck;
     [SerializeField, Label("Ground Checker Length")] private float _groundCheckDistance = 1f;
 
@@ -19,17 +19,17 @@ public class PlayerMovement : MonoBehaviour
 
     [Space, SerializeField, Label("Gravity Force")] private float _gravityForce = 30f;
 
-    //Внутренние переменные
+    //Р’РЅСѓС‚СЂРµРЅРЅРёРµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     private float _currentSpeed;
     private bool _isGrounded = true;
     private RaycastHit _playerGroundHit;
     private float _gravitySpeed = 0f;
 
-    //Кэшированные переменные
+    //РљСЌС€РёСЂРѕРІР°РЅРЅС‹Рµ РїРµСЂРµРјРµРЅРЅС‹Рµ
     private CharacterController _cc;
     private PlayerStance _playerStance;
 
-    //Методы Моно
+    //РњРµС‚РѕРґС‹ РњРѕРЅРѕ
     private void Start()
     {
         _cc = GetComponent<CharacterController>();
@@ -49,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         GravityUpdate();
     }
 
-    //Методы скрипта
+    //РњРµС‚РѕРґС‹ СЃРєСЂРёРїС‚Р°
     private void StanceUpdate()
     {          
         var playerCurrentStance = _playerStance.CurrentStance;
@@ -138,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    //Геттеры и сеттеры
+    //Р“РµС‚С‚РµСЂС‹ Рё СЃРµС‚С‚РµСЂС‹
     public bool IsGrounded => _isGrounded;
 
     public float JumpHeight

@@ -3,9 +3,9 @@ using NaughtyAttributes;
 
 public class SurfaceMaterialHolder : MonoBehaviour
 {
-    //Ïåðåìåííûå èíñïåêòîðà
+    //ÐŸÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ñ‹Ðµ Ð¸Ð½ÑÐ¿ÐµÐºÑ‚Ð¾Ñ€Ð°
     [SerializeField, Label("Surface Material Sound")] private SoundMaterial _materialSound;
 
-    //Ãåòòåðû è ñåòòåðû
+    //Ð“ÐµÑ‚Ñ‚ÐµÑ€Ñ‹ Ð¸ ÑÐµÑ‚Ñ‚ÐµÑ€Ñ‹
     public SoundMaterial MaterialSound => _materialSound;
 }
