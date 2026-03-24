@@ -7,7 +7,6 @@ using Zenject;
 namespace Runtime.Features.Player.Movement
 {
     [RequireComponent(typeof(PlayerMovement))]
-    [RequireComponent(typeof(PlayerInputManager))]
     [RequireComponent(typeof(PlayerStance))]
     public class PlayerCamera : MonoBehaviour
     {

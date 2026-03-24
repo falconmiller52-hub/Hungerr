@@ -10,5 +10,7 @@ namespace Runtime.Common.Services.Input
 		event Action<bool> JumpInputPressed;
 		event Action InteractPerformed;
 		event Action<bool> RunInputPressed;
+		event Action FlashlightInputPressed;
+		event Action CrouchInputPressed;
 	}
 }

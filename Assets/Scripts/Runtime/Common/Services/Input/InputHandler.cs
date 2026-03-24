@@ -19,6 +19,8 @@ namespace Runtime.Common.Services.Input
 
 		// Gameplay - Player
 		public event Action<bool> RunInputPressed = delegate { };
+		public event Action FlashlightInputPressed = delegate { };
+		public event Action CrouchInputPressed = delegate { };
 		public event Action<Vector2> PlayerMoveInputChanged = delegate { };
 		public event Action<bool> JumpInputPressed = delegate { };
 		public event Action<Vector2> RotateInputChanged = delegate { };
@@ -39,6 +41,10 @@ namespace Runtime.Common.Services.Input
 
 			Input.Player.Jump.performed += _ => JumpInputPressed?.Invoke(true);
 			Input.Player.Jump.canceled += _ => JumpInputPressed?.Invoke(false);
+			
+			Input.Player.Flashlight.performed += _ => FlashlightInputPressed?.Invoke();
+			
+			Input.Player.Crouch.performed += _ => CrouchInputPressed?.Invoke();
 
 			Input.Enable();
 		}

@@ -8,7 +8,7 @@ namespace Runtime.Features.Player.Movement
 {
     public class PlayerStance : MonoBehaviour
     {
-        [Header("Components")]
+        [Header("Components")] 
         [SerializeField] private Transform _playerTransform;
         //Переменные инспектора
         [Header("Settings")]
@@ -77,6 +77,7 @@ namespace Runtime.Features.Player.Movement
         
             _inputHandler.PlayerMoveInputChanged += SetNewMoveInputDirection;
             _inputHandler.RunInputPressed += Run;
+            _inputHandler.CrouchInputPressed += Crouch;
         }
 
         private void OnDisable()
@@ -89,6 +90,7 @@ namespace Runtime.Features.Player.Movement
         
             _inputHandler.PlayerMoveInputChanged -= SetNewMoveInputDirection;
             _inputHandler.RunInputPressed -= Run;
+            _inputHandler.CrouchInputPressed -= Crouch;
         }
     
         private void Update()

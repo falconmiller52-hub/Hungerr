@@ -1,69 +1,93 @@
-using UnityEngine;
 using NaughtyAttributes;
+using Runtime.Common.Services.Input;
 using Runtime.Features.Player.Movement;
+using UnityEngine;
+using Zenject;
 
-[RequireComponent(typeof(PlayerCamera))]
-public class PlayerFlashlight : MonoBehaviour
+namespace Runtime.Features.Player.Other
 {
-    //Переменные инспектора
-    [SerializeField, Label("Flashlight Object")] private Light _flashlightObject;
-    [SerializeField, Label("Flashlight Intensity")] private float _intensity = 1f;
-
-    [Space, SerializeField, Label("Flashlight ON Sound Object")] private AudioSource _flashlightsSoundObjectOn;
-    [SerializeField, Label("Flashlight OFF Sound Object")] private AudioSource _flashlightsSoundObjectOff;
-
-    //Внутренние переменные
-
-
-    //Кэшированные переменные
-
-
-    //Методы Моно
-
-
-    //Методы скрипта
-    public void Toggle(string state = "~")
+    [RequireComponent(typeof(PlayerCamera))]
+    public class PlayerFlashlight : MonoBehaviour
     {
-        var initialIntensity = _flashlightObject.intensity;
+        //Переменные инспектора
+        [SerializeField, Label("Flashlight Object")] private Light _flashlightObject;
+        [SerializeField, Label("Flashlight Intensity")] private float _intensity = 1f;
 
-        if (state == "~")
+        [Space, SerializeField, Label("Flashlight ON Sound Object")] private AudioSource _flashlightsSoundObjectOn;
+        [SerializeField, Label("Flashlight OFF Sound Object")] private AudioSource _flashlightsSoundObjectOff;
+    
+        private IInputHandler _inputHandler;
+        private bool _isEnabled = false;
+
+
+        [Inject]
+        private void Construct(IInputHandler inputHandler)
         {
-            if (initialIntensity == 0f)
+            _inputHandler = inputHandler;
+        }
+    
+        private void OnEnable()
+        {
+            if (_inputHandler == null)
             {
-                initialIntensity = _intensity;
-                _flashlightsSoundObjectOn.Play();
+                Debug.LogError("PlayerFlashlight::OnEnable() No Input Handler was assigned");
+                return;
             }
-                
+        
+            _inputHandler.FlashlightInputPressed += Toggle;
+        }
+
+        private void OnDisable()
+        {
+            if (_inputHandler == null)
+            {
+                Debug.LogError("PlayerFlashlight::OnDisable() No Input Handler was assigned");
+                return;
+            }
+        
+            _inputHandler.FlashlightInputPressed -= Toggle;
+        }
+        
+        public void Toggle()
+        {
+            var initialIntensity = _flashlightObject.intensity;
+
+            if (_isEnabled == false)
+            {
+                if (initialIntensity == 0f)
+                {
+                    initialIntensity = _intensity;
+                    _flashlightsSoundObjectOn.Play();
+                }
+                else
+                {
+                    initialIntensity = 0f;
+                    _flashlightsSoundObjectOff.Play();
+                }
+
+                _isEnabled = true;
+            }
             else
             {
                 initialIntensity = 0f;
                 _flashlightsSoundObjectOff.Play();
+                _isEnabled = false;
             }
+
+            _flashlightObject.intensity = initialIntensity;
         }
-        else if (state == "+")
+
+        //Геттеры и сеттеры
+        public Light Object
         {
-            initialIntensity = _intensity;
-            _flashlightsSoundObjectOn.Play();
+            get => _flashlightObject;
+            set => _flashlightObject = value;
         }
-        else
+
+        public float Intensity
         {
-            initialIntensity = 0f;
-            _flashlightsSoundObjectOff.Play();
+            get => _intensity;
+            set => _intensity = value;
         }
-
-        _flashlightObject.intensity = initialIntensity;
-    }
-
-    //Геттеры и сеттеры
-    public Light Object
-    {
-        get => _flashlightObject;
-        set => _flashlightObject = value;
-    }
-
-    public float Intensity
-    {
-        get => _intensity;
-        set => _intensity = value;
     }
 }
