@@ -1156,7 +1156,6 @@ GameObject:
   - component: {fileID: 3123808520275554825}
   - component: {fileID: 695208376743956962}
   - component: {fileID: 695208376743956961}
-  - component: {fileID: 695208376743956960}
   - component: {fileID: 1791534461}
   - component: {fileID: 2021880616}
   - component: {fileID: 1957775664}
@@ -1329,18 +1328,6 @@ MonoBehaviour:
   _intensity: 50
   _flashlightsSoundObjectOn: {fileID: 3122358020370375593}
   _flashlightsSoundObjectOff: {fileID: 8619240680947597913}
---- !u!114 &695208376743956960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3851059412217318600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dd91fa4913e7f34990eae6fba689aa0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1791534461
 MonoBehaviour:
   m_ObjectHideFlags: 0
