@@ -1195,7 +1195,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3851059412217318600}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
@@ -1254,6 +1254,7 @@ MonoBehaviour:
   - {fileID: 6838149809136527888}
   - {fileID: 3851059411422752080}
   - {fileID: 3851059412846384325}
+  _playerTransform: {fileID: 3851059412217318607}
   _xySensitivity: {x: 400, y: 400}
   _minMaxYAngle: {x: -90, y: 90}
   _breathingMagnitude: 0.015
@@ -1296,8 +1297,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24a63f5e3941244298e8bb54c53a311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerTransform: {fileID: 3851059412217318607}
   _currentStance: 0
-  _stancesSpeeds: {x: 2, y: 4, z: 7}
+  _stancesSpeeds: {x: 0.5, y: 1, z: 2}
   _maxStamina: 100
   _staminaUsage: 20
   _staminaRegen: 20

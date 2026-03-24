@@ -1,5 +1,6 @@
 using UnityEngine;
 using NaughtyAttributes;
+using Runtime.Features.Player.Movement;
 
 [RequireComponent(typeof(PlayerCamera))]
 public class PlayerFlashlight : MonoBehaviour

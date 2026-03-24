@@ -1,5 +1,7 @@
 using UnityEngine;
 using NaughtyAttributes;
+using Runtime.Features.Player.Interactions;
+using Runtime.Features.Player.Movement;
 using UnityEngine.InputSystem;
 
 public class PlayerInputManager : MonoBehaviour
@@ -54,13 +56,13 @@ public class PlayerInputManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _playerMovement.Move(MovingDirection);
+        // _playerMovement.Move(MovingDirection);
     }
 
     private void LateUpdate()
     {
 
-        _playerCamera.LookAt(_playerCamera.CameraRotation);
+        // _playerCamera.LookAt(_playerCamera.CameraRotation);
     }
 
     //Методы скрипта
@@ -71,17 +73,17 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Run(InputAction.CallbackContext context)
     {
-        _playerStance.Run();
+        // _playerStance.Run();
     }
 
     private void JumpStart(InputAction.CallbackContext context)
     {
-        _isJumping = true;
+        // _isJumping = true;
     }
 
     private void JumpStop(InputAction.CallbackContext context)
     {
-        _isJumping = false;
+        // _isJumping = false;
     }
 
     private void Flashlight(InputAction.CallbackContext context)
@@ -91,7 +93,7 @@ public class PlayerInputManager : MonoBehaviour
 
     private void Interact(InputAction.CallbackContext context)
     {
-        _playerScope.Interact();
+        // _playerScope.Interact();
     }
 
     //Геттеры и сеттеры
