@@ -6,16 +6,18 @@
   <component name="ChangeListManager">
     <list default="true" id="71d34e89-be79-468e-bcd8-89462007bd87" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Hungerr/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Hungerr/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Player/Self/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Player/Self/Player.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TaoLocationTestingScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TaoLocationTestingScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Interactions/PlayerInputManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Interactions/PlayerInputManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Interactions/PlayerScope.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Interactions/PlayerScope.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Movement/PlayerCamera.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Movement/PlayerCamera.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Movement/PlayerMovement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Movement/PlayerMovement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Movement/PlayerStance.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Movement/PlayerStance.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Other/PlayerFlashlight.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Other/PlayerFlashlight.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Other/PlayerProcessingController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Other/PlayerProcessingController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/UI/Fonts/LiberationSans.ttf.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/UI/Fonts/LiberationSans.ttf.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/UI/Fonts/vcrosdmonorus_vhsicons SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/UI/Fonts/vcrosdmonorus_vhsicons SDF.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/UI/Fonts/vcrosdmonorus_vhsicons SDF.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/UI/Fonts/vcrosdmonorus_vhsicons SDF.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/UI/MainMenu/Rectangle 12.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/UI/MainMenu/Rectangle 12.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/UI/MainMenu/Rectangle 14.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/UI/MainMenu/Rectangle 14.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/UI/MainMenu/Rectangle 4.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/UI/MainMenu/Rectangle 4.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/UI/MainMenu/Слот 1.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/UI/MainMenu/Слот 1.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/UI/MainMenu/Слот 2.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/UI/MainMenu/Слот 2.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/UI/MainMenu/Слот 8.png.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/UI/MainMenu/Слот 8.png.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/BaseScene.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/BaseScene.unity.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +34,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Runtime/Common/EntryPoints/GameplayEntryPoint.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Runtime/Common/Installers/GameplayInstaller.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.7.0/InputSystem/Plugins/PlayerInput/PlayerInput.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.textmeshpro@3.0.6/Scripts/Editor/TMP_EditorUtility.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -48,7 +51,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "add-zenject",
+    "git-widget-placeholder": "main-menu",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -94,15 +97,13 @@
       <option name="useMixedMode" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="21828">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="21828" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list>
-          <MonoRuntime />
-        </list>
+        <list />
       </option>
       <option name="selectedOptions">
         <list />
@@ -120,6 +121,7 @@
       <updated>1774267968301</updated>
       <workItem from="1774267970105" duration="1031000" />
       <workItem from="1774377173733" duration="4910000" />
+      <workItem from="1774451917653" duration="3245000" />
     </task>
     <servers />
   </component>
