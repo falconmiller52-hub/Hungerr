@@ -1,179 +1,240 @@
-using UnityEngine;
 using NaughtyAttributes;
+using Runtime.Common.Services.Input;
+using UnityEngine;
+using Zenject;
 
-[RequireComponent(typeof(CharacterController))]
-[RequireComponent(typeof(PlayerStance))]
-public class PlayerMovement : MonoBehaviour
+namespace Runtime.Features.Player.Movement
 {
-    //Переменные инспектора
-    [SerializeField, Label("Ground Checker Position")] private Transform _groundCheck;
-    [SerializeField, Label("Ground Checker Length")] private float _groundCheckDistance = 1f;
-
-    [Space, SerializeField, Label("Jump Height")] private float _jumpHeight = 1f;
-    [SerializeField, Label("Jump Sound")] private AudioSource _jumpSoundObject;
-    [SerializeField, Label("Grounded Sound")] private AudioSource _groundedSoundObject;
-
-    [Space, SerializeField, Label("Steps Sound Object")] private AudioSource _stepsSoundObject;
-    [SerializeField, Label("Steps Standart Sound")] private SoundMaterial _stepsStandartSound;
-    [SerializeField, MinMaxSlider(-3f, 3f), Label("Steps Pitch Range")] private Vector2 _stepsPitchRange;
-
-    [Space, SerializeField, Label("Gravity Force")] private float _gravityForce = 30f;
-
-    //Внутренние переменные
-    private float _currentSpeed;
-    private bool _isGrounded = true;
-    private RaycastHit _playerGroundHit;
-    private float _gravitySpeed = 0f;
-
-    //Кэшированные переменные
-    private CharacterController _cc;
-    private PlayerStance _playerStance;
-
-    //Методы Моно
-    private void Start()
+    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(PlayerStance))]
+    public class PlayerMovement : MonoBehaviour
     {
-        _cc = GetComponent<CharacterController>();
-        _playerStance = GetComponent<PlayerStance>();
+        //Переменные инспектора
+        [SerializeField, Label("Ground Checker Position")] private Transform _groundCheck;
+        [SerializeField, Label("Ground Checker Length")] private float _groundCheckDistance = 1f;
 
-        StanceUpdate();
-    }
+        [Space, SerializeField, Label("Jump Height")] private float _jumpHeight = 1f;
+        [SerializeField, Label("Jump Sound")] private AudioSource _jumpSoundObject;
+        [SerializeField, Label("Grounded Sound")] private AudioSource _groundedSoundObject;
 
-    private void Update()
-    {
-        GroundRayHit();
-        StanceUpdate();
-    }
+        [Space, SerializeField, Label("Steps Sound Object")] private AudioSource _stepsSoundObject;
+        [SerializeField, Label("Steps Standart Sound")] private SoundMaterial _stepsStandartSound;
+        [SerializeField, MinMaxSlider(-3f, 3f), Label("Steps Pitch Range")] private Vector2 _stepsPitchRange;
 
-    private void FixedUpdate()
-    {
-        GravityUpdate();
-    }
+        [Space, SerializeField, Label("Gravity Force")] private float _gravityForce = 30f;
 
-    //Методы скрипта
-    private void StanceUpdate()
-    {          
-        var playerCurrentStance = _playerStance.CurrentStance;
-        _currentSpeed = _playerStance.StanceSpeed(playerCurrentStance);
-    }
+        //Внутренние переменные
+        private float _currentSpeed;
+        private bool _isJumpInputActive;
+        private bool _isGrounded = true;
+        private RaycastHit _playerGroundHit;
+        private float _gravitySpeed = 0f;
+        private Vector2 _inputDirection;
 
-    private void MakeStepSound()
-    {
-        var ray = new Ray(_groundCheck.position, -transform.up);
+        //Кэшированные переменные
+        private CharacterController _cc;
+        private PlayerStance _playerStance;
+        private IInputHandler _inputHandler;
 
-        Physics.Raycast(ray, out RaycastHit hit, _groundCheckDistance);
-
-        if (hit.collider && hit.collider.gameObject.TryGetComponent<SurfaceMaterialHolder>(out var surfaceMaterialHolder))
+        [Inject]
+        private void Construct(IInputHandler inputHandler)
         {
-            var _stepSoundsAmount = surfaceMaterialHolder.MaterialSound.StepSounds.Count - 1;
-            _stepsSoundObject.clip = surfaceMaterialHolder.MaterialSound.StepSounds[Random.Range(0, _stepSoundsAmount)];
+            _inputHandler = inputHandler;
         }
-        else
+    
+        private void Start()
         {
-            var _stepSoundsAmount = _stepsStandartSound.StepSounds.Count - 1;
-            _stepsSoundObject.clip = _stepsStandartSound.StepSounds[Random.Range(0, _stepSoundsAmount)];
+            _cc = GetComponent<CharacterController>();
+            _playerStance = GetComponent<PlayerStance>();
+
+            StanceUpdate();
+        }
+    
+        private void OnEnable()
+        {
+            if (_inputHandler == null)
+            {
+                Debug.LogError("PlayerMovement::OnEnable() No Input Handler was assigned");
+                return;
+            }
+        
+            _inputHandler.PlayerMoveInputChanged += SetNewMoveInputDirection;
+            _inputHandler.JumpInputPressed += SetJumpInputPressed;
         }
 
-        if (!IsInvoking("PlaySound")) Invoke("PlaySound", 1 / _playerStance.StanceSpeed(_playerStance.CurrentStance) * 2);
-    }
-
-    private void GroundRayHit()
-    {
-        var ray = new Ray(_groundCheck.position, -transform.up);
-        GroundSet(Physics.Raycast(ray, out _playerGroundHit, _groundCheckDistance));
-    }
-
-    private void GravityUpdate()
-    {
-        if (!_isGrounded) _gravitySpeed += _gravityForce * -9.81f * Time.fixedDeltaTime;
-        _cc.Move(new Vector3(0, _gravitySpeed, 0));
-    }
-
-    private void PlaySound()
-    {
-        _stepsSoundObject.pitch = Random.Range(_stepsPitchRange.x, _stepsPitchRange.y);
-        _stepsSoundObject.Play();
-    }
-
-    private void GroundSet(bool isGrounded)
-    {
-        if (_isGrounded == false && isGrounded == true)
+        private void OnDisable()
         {
-            Grounded();
+            if (_inputHandler == null)
+            {
+                Debug.LogError("PlayerMovement::OnDisable() No Input Handler was assigned");
+                return;
+            }
+        
+            _inputHandler.PlayerMoveInputChanged -= SetNewMoveInputDirection;
+            _inputHandler.JumpInputPressed -= SetJumpInputPressed;
         }
-        else if (_isGrounded == true && isGrounded == false)
+
+        private void Update()
         {
-            Ungrounded();
+            GroundRayHit();
+            StanceUpdate();
+            Move(MovingDirection);
+            
+            if (_isJumpInputActive)
+                Jump(_jumpHeight);
         }
-    }
 
-    private void Ungrounded()
-    {
-        _isGrounded = false;
-    }
-
-    private void Grounded()
-    {
-        _isGrounded = true;
-        _gravitySpeed = 0f;
-        _groundedSoundObject.Play();
-    }
-
-    public void Move(Vector2 direction)
-    {
-        var tripleAxisDirection = new Vector3(direction.x, 0, direction.y);
-        var nextPosition = tripleAxisDirection * _currentSpeed * Time.fixedDeltaTime;
-
-        _cc.Move(nextPosition);  
-
-        if (direction.magnitude != 0f && _isGrounded) MakeStepSound();
-        else CancelInvoke("PlaySound");
-    }
-
-    public void Jump(float strength)
-    {
-        if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching)
+        private void FixedUpdate()
         {
-            _gravitySpeed = strength;
-            _jumpSoundObject.Play();
+            GravityUpdate();
         }
-    }
 
-    //Геттеры и сеттеры
-    public bool IsGrounded => _isGrounded;
+        //Методы скрипта
+        private void StanceUpdate()
+        {          
+            var playerCurrentStance = _playerStance.CurrentStance;
+            _currentSpeed = _playerStance.StanceSpeed(playerCurrentStance);
+        }
 
-    public float JumpHeight
-    {
-        get => _jumpHeight;
-        set => _jumpHeight = value;
-    }
+        private void MakeStepSound()
+        {
+            var ray = new Ray(_groundCheck.position, -transform.up);
 
-    public float CurrentSpeed
-    {
-        get => _currentSpeed;
-        set => _currentSpeed = value;
-    }
+            Physics.Raycast(ray, out RaycastHit hit, _groundCheckDistance);
 
-    public AudioSource GroundedSoundObject
-    {
-        get => _groundedSoundObject;
-        set => _groundedSoundObject = value;
-    }
+            if (hit.collider && hit.collider.gameObject.TryGetComponent<SurfaceMaterialHolder>(out var surfaceMaterialHolder))
+            {
+                var _stepSoundsAmount = surfaceMaterialHolder.MaterialSound.StepSounds.Count - 1;
+                _stepsSoundObject.clip = surfaceMaterialHolder.MaterialSound.StepSounds[Random.Range(0, _stepSoundsAmount)];
+            }
+            else
+            {
+                var _stepSoundsAmount = _stepsStandartSound.StepSounds.Count - 1;
+                _stepsSoundObject.clip = _stepsStandartSound.StepSounds[Random.Range(0, _stepSoundsAmount)];
+            }
 
-    public AudioSource JumpSoundObject
-    {
-        get => _jumpSoundObject;
-        set => _jumpSoundObject = value;
-    }
+            if (!IsInvoking("PlaySound")) Invoke("PlaySound", 1 / _playerStance.StanceSpeed(_playerStance.CurrentStance) * 2);
+        }
 
-    public AudioSource StepsSoundObject
-    {
-        get => _stepsSoundObject;
-        set => _stepsSoundObject = value;
-    }
+        private void GroundRayHit()
+        {
+            var ray = new Ray(_groundCheck.position, -transform.up);
+            GroundSet(Physics.Raycast(ray, out _playerGroundHit, _groundCheckDistance));
+        }
 
-    public SoundMaterial StandartStepsSound
-    {
-        get => _stepsStandartSound;
-        set => _stepsStandartSound = value;
+        private void GravityUpdate()
+        {
+            if (!_isGrounded) _gravitySpeed += _gravityForce * -9.81f * Time.fixedDeltaTime;
+            _cc.Move(new Vector3(0, _gravitySpeed, 0));
+        }
+
+        private void PlaySound()
+        {
+            _stepsSoundObject.pitch = Random.Range(_stepsPitchRange.x, _stepsPitchRange.y);
+            _stepsSoundObject.Play();
+        }
+
+        private void GroundSet(bool isGrounded)
+        {
+            if (_isGrounded == false && isGrounded == true)
+            {
+                Grounded();
+            }
+            else if (_isGrounded == true && isGrounded == false)
+            {
+                Ungrounded();
+            }
+        }
+
+        private void Ungrounded()
+        {
+            _isGrounded = false;
+        }
+
+        private void Grounded()
+        {
+            _isGrounded = true;
+            _gravitySpeed = 0f;
+            _groundedSoundObject.Play();
+        }
+
+        public void Move(Vector2 direction)
+        {
+            var tripleAxisDirection = new Vector3(direction.x, 0, direction.y);
+            var nextPosition = tripleAxisDirection * _currentSpeed * Time.fixedDeltaTime;
+
+            _cc.Move(nextPosition);  
+
+            if (direction.magnitude != 0f && _isGrounded) MakeStepSound();
+            else CancelInvoke("PlaySound");
+        }
+
+        public void Jump(float strength)
+        {
+            if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching)
+            {
+                _gravitySpeed = strength;
+                _jumpSoundObject.Play();
+            }
+        }
+
+        private void SetNewMoveInputDirection(Vector2 inputDirection)
+        {
+            _inputDirection = inputDirection;
+        }
+
+        private void SetJumpInputPressed(bool isPressed)
+        {
+            _isJumpInputActive = isPressed;
+        }
+
+        //Геттеры и сеттеры
+    
+        public Vector2 MovingDirection
+        {
+            get
+            {
+                var moveDirection = transform.forward * _inputDirection.y + transform.right * _inputDirection.x;
+                var directionResult = new Vector2(moveDirection.x, moveDirection.z);
+                return directionResult;
+            }
+        }
+        public bool IsGrounded => _isGrounded;
+
+        public float JumpHeight
+        {
+            get => _jumpHeight;
+            set => _jumpHeight = value;
+        }
+
+        public float CurrentSpeed
+        {
+            get => _currentSpeed;
+            set => _currentSpeed = value;
+        }
+
+        public AudioSource GroundedSoundObject
+        {
+            get => _groundedSoundObject;
+            set => _groundedSoundObject = value;
+        }
+
+        public AudioSource JumpSoundObject
+        {
+            get => _jumpSoundObject;
+            set => _jumpSoundObject = value;
+        }
+
+        public AudioSource StepsSoundObject
+        {
+            get => _stepsSoundObject;
+            set => _stepsSoundObject = value;
+        }
+
+        public SoundMaterial StandartStepsSound
+        {
+            get => _stepsStandartSound;
+            set => _stepsStandartSound = value;
+        }
     }
 }
