@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Runtime.Features.DayNight
 {
-    public class DayNightChangeTrigger : MonoBehaviour
+    public class DayNightChangeTrigger : MonoBehaviour, IInteractable
     {
         [SerializeField] private GameplayStateEvent _eventType;
     
@@ -18,10 +18,9 @@ namespace Runtime.Features.DayNight
             _eventBus = eventBus;
         }
 
-        private void OnTriggerEnter(Collider other)
+        public void Interact()
         {
-            if (other.GetComponent<PlayerMovement>() != null)
-                _eventBus.Trigger(_eventType);
+            _eventBus.Trigger(_eventType);
         }
     }
 }

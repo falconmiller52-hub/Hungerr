@@ -6,17 +6,16 @@ namespace Runtime.Features.DayNight.StateMachine
 {
 	public class PhaseStateMachine : MonoBehaviour
 	{
-		[SerializeField] private DayCycleVisualChanger _dayCycleVisualChanger;
+		[field: SerializeField] public DayCycleVisualChanger DayCycleVisualChanger { get; private set; }
 		
-		[Header("Time Settings")]
-		[SerializeField, Tooltip("Длительность полных суток в секундах"), Range(1, 3600)]
-		private float _nightDuration = 120f;
+		[field: SerializeField, Tooltip("Длительность полных суток в секундах"), Range(1, 3600)]
+		public float NightDuration { get; private set; } = 120f;
+		
+		[field: SerializeField] public Transform DayStartLocationtransform { get; private set; } 
+		[field: SerializeField] public Transform NightStartLocationtransform { get; private set; } 
 		
 		private Dictionary<Type, GamePhaseState> _states = new Dictionary<Type, GamePhaseState>();
 		private GamePhaseState _currentState;
-
-		public DayCycleVisualChanger DayCycleVisualChanger => _dayCycleVisualChanger;
-		public float NightDuration => _nightDuration;
 		
 		public void EnterIn<TState>() where TState : GamePhaseState
 		{

@@ -1,6 +1,7 @@
 using Runtime.Common.Factories.StateFactory;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
+using Runtime.Common.Services.ResourceLoad;
 using Zenject;
 
 namespace Runtime.Infra.App
@@ -13,6 +14,12 @@ namespace Runtime.Infra.App
             BindGameStateMachine();
             BindEventBus();
             BindGlobalEntryPoint();
+            BindResourceLoader();
+        }
+
+        private void BindResourceLoader()
+        {
+            Container.BindInterfacesAndSelfTo<ResourceLoader>().AsSingle();
         }
 
         private void BindInputService() => 

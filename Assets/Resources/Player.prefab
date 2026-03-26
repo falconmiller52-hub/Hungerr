@@ -1150,7 +1150,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3851059412217318607}
-  - component: {fileID: 695208376743956967}
   - component: {fileID: 4537483317504673405}
   - component: {fileID: 3851059412217318606}
   - component: {fileID: 3123808520275554825}
@@ -1158,7 +1157,6 @@ GameObject:
   - component: {fileID: 695208376743956961}
   - component: {fileID: 1791534461}
   - component: {fileID: 2021880616}
-  - component: {fileID: 1957775664}
   m_Layer: 2
   m_Name: Player
   m_TagString: Player
@@ -1173,8 +1171,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3851059412217318600}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.65, y: 1, z: 1.75}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -14.446342, y: 2.1200013, z: 3.9814453}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1187,36 +1185,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &695208376743956967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3851059412217318600}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: bc4e777e55dbc8e489f70581d28a9486, type: 3}
-  m_NotificationBehavior: 3
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!143 &4537483317504673405
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1254,12 +1222,12 @@ MonoBehaviour:
   - {fileID: 3851059411422752080}
   - {fileID: 3851059412846384325}
   _playerTransform: {fileID: 3851059412217318607}
-  _xySensitivity: {x: 200, y: 200}
+  _xySensitivity: {x: 400, y: 400}
   _minMaxYAngle: {x: -90, y: 90}
   _breathingMagnitude: 0.015
   _breathingSpeed: 2
   _steppingMagnitude: 0.05
-  _steppingSpeed: 3
+  _steppingSpeed: 0.3
   _cameraFov: 75
   _runFovDamp: 5
   _runFovMultiplier: 1.1
@@ -1298,7 +1266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerTransform: {fileID: 3851059412217318607}
   _currentStance: 0
-  _stancesSpeeds: {x: 0.5, y: 2, z: 4}
+  _stancesSpeeds: {x: 0.5, y: 4, z: 7}
   _maxStamina: 100
   _staminaUsage: 20
   _staminaRegen: 20
@@ -1357,19 +1325,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerCamera: {fileID: 3851059412846384345}
   _rayLength: 2
---- !u!114 &1957775664
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3851059412217318600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 675835cba1c74094da44e487239467ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _blackScreenObject: {fileID: 2044481954}
 --- !u!1 &3851059412846384325
 GameObject:
   m_ObjectHideFlags: 0

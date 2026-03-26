@@ -1,5 +1,4 @@
 using Runtime.Common.Services.LoadingCurtain;
-using Runtime.Common.Services.Updateable;
 using UnityEngine;
 using Zenject;
 
