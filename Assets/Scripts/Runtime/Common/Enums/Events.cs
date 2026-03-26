@@ -1,9 +1,15 @@
 namespace Runtime.Common.Enums
 {
-    public enum Event
+    public enum GameEvent
     {
         StartGameplay = 0,
         EndGameplay,
-        Quit
+        QuitGame
+    }
+    
+    public enum GameplayStateEvent
+    {
+        StartNightPhaseTrigger,
+        EndNightPhaseTrigger,
     }
 }

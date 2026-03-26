@@ -1,11 +1,11 @@
 using Runtime.Common.Constants;
+using Runtime.Common.Enums;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.LoadingCurtain;
 using Runtime.Common.Services.StateMachine;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
-using Event = Runtime.Common.Enums.Event;
 
 namespace Runtime.Infra.App.GlobalStateMachine.States
 {
@@ -33,16 +33,16 @@ namespace Runtime.Infra.App.GlobalStateMachine.States
 			SceneManager.LoadScene(Scenes.MenuName);
 			_loadingCurtain.Hide();
 
-			_eventBus.Subscribe(Event.StartGameplay, GoToGameplay);
-			_eventBus.Subscribe(Event.Quit, ExitMenu);
+			_eventBus.Subscribe(GameEvent.StartGameplay, GoToGameplay);
+			_eventBus.Subscribe(GameEvent.QuitGame, ExitMenu);
 		}
 
 		public void Exit()
 		{
 			Debug.Log("Exit Menu  State");
 
-			_eventBus.Unsubscribe(Event.StartGameplay, GoToGameplay);
-			_eventBus.Unsubscribe(Event.Quit, ExitMenu);
+			_eventBus.Unsubscribe(GameEvent.StartGameplay, GoToGameplay);
+			_eventBus.Unsubscribe(GameEvent.QuitGame, ExitMenu);
 		}
 
 		void GoToGameplay()

@@ -1,8 +1,8 @@
+using Runtime.Common.Enums;
 using Runtime.Common.Services.EventBus;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
-using Event = Runtime.Common.Enums.Event;
 
 namespace Runtime.Features.MainMenu
 {
@@ -34,12 +34,12 @@ namespace Runtime.Features.MainMenu
 
         private void HandleExitGame()
         {
-            _eventBus.Trigger(Event.Quit);
+            _eventBus.Trigger(GameEvent.QuitGame);
         }
 
         private void HandleStartGame()
         {
-            _eventBus.Trigger(Event.StartGameplay);
+            _eventBus.Trigger(GameEvent.StartGameplay);
         }
     }
 }

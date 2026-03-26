@@ -9,7 +9,7 @@ namespace Runtime.Common.Services.EventBus
     /// </summary>
     public class EventBus : IDisposable
 	{
-		readonly Dictionary<Event, Action> _events = new();
+		private readonly Dictionary<(Type, object), Action> _events = new();
 
         /// <summary>
         ///     Clears all registered event handlers.
@@ -24,33 +24,47 @@ namespace Runtime.Common.Services.EventBus
         /// </summary>
         /// <param name="eventType">Type of the event to subscribe to.</param>
         /// <param name="action">Action to invoke when the event is triggered.</param>
-        public void Subscribe(Event eventType, Action action)
-		{
-			_events.TryAdd(eventType, delegate { });
+        public void Subscribe<T>(T eventType, Action action) where T : Enum
+        {
+	        var key = (typeof(T), (object)eventType);
+            
+	        if (!_events.ContainsKey(key))
+		        _events[key] = delegate { };
 
-			_events[eventType] += action;
-		}
+	        _events[key] += action;
+        }
 
         /// <summary>
         ///     Unsubscribes an action from the specified event type.
         /// </summary>
         /// <param name="eventType">Type of the event to unsubscribe from.</param>
         /// <param name="action">Action to remove.</param>
-        public void Unsubscribe(Event eventType, Action action)
-		{
-			if (_events.ContainsKey(eventType))
-				_events[eventType] -= action;
-		}
+        public void Unsubscribe<T>(T eventType, Action action) where T : Enum
+        {
+	        var key = (typeof(T), (object)eventType);
+            
+	        if (_events.ContainsKey(key))
+	        {
+		        _events[key] -= action;
+                
+		        // Опционально: удаляем ключ, если подписчиков не осталось
+		        if (_events[key] == null || _events[key].Method.Name == "b__0") 
+			        _events.Remove(key);
+	        }
+        }
 
         /// <summary>
         ///     Triggers the specified event, invoking all subscribed actions if any.
         /// </summary>
         /// <param name="eventType">Event to trigger.</param>
-        public void Trigger(Event eventType)
-		{
-			// Используем TryGetValue для безопасности
-			if (_events.TryGetValue(eventType, out var action))
-				action?.Invoke();
-		}
+        public void Trigger<T>(T eventType) where T : Enum
+        {
+	        var key = (typeof(T), (object)eventType);
+            
+	        if (_events.TryGetValue(key, out var action))
+	        {
+		        action?.Invoke();
+	        }
+        }
 	}
 }

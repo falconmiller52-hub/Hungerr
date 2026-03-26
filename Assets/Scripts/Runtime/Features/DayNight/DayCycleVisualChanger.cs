@@ -1,22 +1,25 @@
-using System;
 using UnityEngine;
 
-
-// if (Application.isPlaying)
-//     _timeProgress += Time.deltaTime / _dayTimeInSeconds;
-//             
-// if (_timeProgress >= 1f)
-//     _timeProgress = 0f;
 
 namespace Runtime.Features.DayNight
 {
     [ExecuteInEditMode]
     public class DayCycleVisualChanger : MonoBehaviour
     {
+        [SerializeField] private Light _directionalLight;
+        
+        [Header("Day Settings")]
+        [SerializeField] private Material _daySkybox;
+        [SerializeField] private Color _dayLightColor;
+        [SerializeField] private Color _dayAmbientColor;
+        [SerializeField] private float _dayLightXRotation = 80f;
+        
+        [Header("Night Gradient Settings")]
+        [SerializeField] private float _nightStartLightXRotation = -90f;
+        [SerializeField] private Material _nightSkybox;
         [SerializeField] private Gradient _direactionalLightGraident;
         [SerializeField] private Gradient _ambientLightGradient;
 
-        [SerializeField] private Light _directionalLight;
 
         private Vector3 _defaultAngles;
 
@@ -25,12 +28,37 @@ namespace Runtime.Features.DayNight
             _defaultAngles = _directionalLight.transform.localEulerAngles;
         }
 
-        public void UpdateDayCycle(float timeProgress)
+        /// <summary>
+        /// обновляет визуал ночи от начала ночной фазы до рассвета 
+        /// </summary>
+        /// <param name="timeProgress">от 0 до 1, где 0 это условно полночь а 1 это рассвет</param>
+        public void UpdateNightCycle(float timeProgress)
         {
             _directionalLight.color = _ambientLightGradient.Evaluate(timeProgress);
             RenderSettings.ambientLight = _ambientLightGradient.Evaluate(timeProgress);
             
-            _directionalLight.transform.localEulerAngles = new Vector3(360f * timeProgress - 90, _defaultAngles.y, _defaultAngles.z);
+            float xAngle = Mathf.Lerp(_nightStartLightXRotation, 0f, timeProgress);
+
+            _directionalLight.transform.localEulerAngles = new Vector3(xAngle, _defaultAngles.y, _defaultAngles.z);
+        }
+
+        public void SetNight()
+        {
+            RenderSettings.skybox = _nightSkybox;
+            Vector3 nightStartRotation = _defaultAngles;
+            nightStartRotation.x = _nightStartLightXRotation;
+            _directionalLight.transform.localEulerAngles = nightStartRotation;
+        }
+        
+        public void SetDay()
+        {
+            RenderSettings.skybox = _daySkybox;
+            _directionalLight.color =  _dayLightColor;
+            RenderSettings.ambientLight = _dayAmbientColor;
+
+            Vector3 dayRotation = _defaultAngles;
+            dayRotation.x = _dayLightXRotation;
+            _directionalLight.transform.localEulerAngles = dayRotation;
         }
     }
 }

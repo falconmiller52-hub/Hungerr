@@ -1,12 +1,13 @@
 using Runtime.Common.Services.LoadingCurtain;
+using Runtime.Common.Services.Updateable;
 using UnityEngine;
 using Zenject;
 
-namespace DevFuckers._Project.CodeBase.Runtime.Infrastructure.GameApp.EntryPoint
+namespace Runtime.Infra.App
 {
     public class GamePrefabsInstaller : MonoInstaller
     {
-        [SerializeField] private Curtain _loadingCurtain;
+        [SerializeField] private Curtain _loadingCurtainPrefab;
 
         public override void InstallBindings()
         {
@@ -17,7 +18,7 @@ namespace DevFuckers._Project.CodeBase.Runtime.Infrastructure.GameApp.EntryPoint
         {
             Container
                 .BindInterfacesAndSelfTo<Curtain>()
-                .FromComponentInNewPrefab(_loadingCurtain)
+                .FromComponentInNewPrefab(_loadingCurtainPrefab)
                 .AsSingle();
         }
     }

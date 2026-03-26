@@ -28,7 +28,7 @@ namespace Runtime.Common.Services.Input
 		
 		public PlayerInputActions Input => _input ??= new PlayerInputActions();
 
-		public void Enable()
+		public void Init()
 		{
 			Input.Player.Run.performed += _ => RunInputPressed?.Invoke(true);
 			Input.Player.Run.canceled += _ => RunInputPressed?.Invoke(false);
@@ -45,8 +45,16 @@ namespace Runtime.Common.Services.Input
 			Input.Player.Flashlight.performed += _ => FlashlightInputPressed?.Invoke();
 			
 			Input.Player.Crouch.performed += _ => CrouchInputPressed?.Invoke();
+		}
 
+		public void Enable()
+		{
 			Input.Enable();
+		}
+
+		public void Disable()
+		{
+			Input.Disable();
 		}
 
 		void OnRotateInputChanged(Vector2 direction)

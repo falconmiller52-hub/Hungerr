@@ -1,0 +1,158 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7435694777756425441
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7435694777756425443}
+  - component: {fileID: 7435694777756425442}
+  m_Layer: 0
+  m_Name: DayCycleChangeFacade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7435694777756425443
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7435694777756425441}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.7193949, y: 2.1427474, z: -4.5265374}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7435694779163363309}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7435694777756425442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7435694777756425441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e955f505fe7ad49aa5834eb268e2f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _directionalLight: {fileID: 0}
+  _daySkybox: {fileID: 2100000, guid: 3f407492204439544acbac16eff7553d, type: 2}
+  _dayLightColor: {r: 1, g: 1, b: 1, a: 0}
+  _dayAmbientColor: {r: 1, g: 0.8207547, b: 0.8207547, a: 0}
+  _dayLightXRotation: 80
+  _nightStartLightXRotation: -90
+  _nightSkybox: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  _direactionalLightGraident:
+    serializedVersion: 2
+    key0: {r: 0.22541113, g: 0.46504372, b: 0.6528301, a: 1}
+    key1: {r: 0.076660745, g: 0.24126054, b: 0.3660378, a: 1}
+    key2: {r: 0.09303671, g: 0.26639348, b: 0.3978091, a: 0}
+    key3: {r: 0.22352943, g: 0.4666667, b: 0.6509804, a: 0}
+    key4: {r: 0.71916693, g: 0.8703211, b: 0.98490566, a: 0}
+    key5: {r: 0.22352943, g: 0.4666667, b: 0.6509804, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 15035
+    ctime2: 26908
+    ctime3: 57902
+    ctime4: 63916
+    ctime5: 65535
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 5
+    m_NumAlphaKeys: 2
+  _ambientLightGradient:
+    serializedVersion: 2
+    key0: {r: 0.19358486, g: 0.42414734, b: 0.5999999, a: 1}
+    key1: {r: 0.14862938, g: 0.32994345, b: 0.4716981, a: 1}
+    key2: {r: 0.40500528, g: 0.60278857, b: 0.7584905, a: 0}
+    key3: {r: 0.8132075, g: 0.9137881, b: 1, a: 0}
+    key4: {r: 0.48547465, g: 0.4734425, b: 0.6226415, a: 0}
+    key5: {r: 0.48547465, g: 0.4734425, b: 0.6226415, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 21048
+    ctime2: 53122
+    ctime3: 61449
+    ctime4: 64379
+    ctime5: 64379
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 2
+--- !u!1 &7435694779163363307
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7435694779163363309}
+  - component: {fileID: 611767309}
+  m_Layer: 0
+  m_Name: = DayNightController =
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7435694779163363309
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7435694779163363307}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.1736574, y: 2.1200013, z: 9.051445}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7435694777756425443}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &611767309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7435694779163363307}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b47e18539425014fa94d03d85d05786, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dayCycleVisualChanger: {fileID: 7435694777756425442}
+  _nightDuration: 120

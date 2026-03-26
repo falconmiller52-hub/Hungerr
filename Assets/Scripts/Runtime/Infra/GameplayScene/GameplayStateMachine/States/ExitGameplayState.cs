@@ -1,7 +1,7 @@
+using Runtime.Common.Enums;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.StateMachine;
 using Zenject;
-using Event = Runtime.Common.Enums.Event;
 
 namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 {
@@ -24,7 +24,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			// clear subscriptions
 			// release the addressables assets
 			
-			_eventBus.Trigger(Event.EndGameplay);
+			_eventBus.Trigger(GameEvent.EndGameplay);
 		}
 
 		public void Exit()
