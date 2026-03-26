@@ -1,3 +1,4 @@
+using Runtime.Common.Constants;
 using Runtime.Common.Factories.StateFactory;
 using Runtime.Common.Helpers;
 using Runtime.Infra.App.GlobalStateMachine.States;
@@ -30,10 +31,11 @@ namespace Runtime.Infra.App
             }
             else
             {
-                _globalStateMachine.EnterIn<GameplayLoopState>(); 
+                if (QuickStartBridge.SceneName == Scenes.MenuName)
+                    _globalStateMachine.EnterIn<GameMenuState>();
+                else
+                    _globalStateMachine.EnterIn<GameplayLoopState>(); 
             }
-
-            // DontDestroyOnLoad(this);
         }
     }
 }

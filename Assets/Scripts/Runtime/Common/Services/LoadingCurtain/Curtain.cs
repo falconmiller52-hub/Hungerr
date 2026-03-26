@@ -22,18 +22,26 @@ namespace Runtime.Common.Services.LoadingCurtain
 			_curtain.alpha = 1;
 		}
 
-		public void Hide()
+		public void Hide(float customTime = -1)
 		{
 			gameObject.SetActive(true);
-			StartCoroutine(DoFadeIn());
+
+			float tempFadeInSpeed = _fadeInSpeed;
+			
+			if (customTime > -1)
+			{
+				tempFadeInSpeed = customTime;
+			}
+			
+			StartCoroutine(DoFadeIn(tempFadeInSpeed));
 		}
 
-		IEnumerator DoFadeIn()
+		IEnumerator DoFadeIn(float fadeInSpeed)
 		{
 			while (_curtain.alpha > 0)
 			{
 				_curtain.alpha -= 0.03f;
-				yield return new WaitForSeconds(_fadeInSpeed);
+				yield return new WaitForSeconds(fadeInSpeed);
 			}
 
 			gameObject.SetActive(false);

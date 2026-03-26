@@ -25,6 +25,7 @@ namespace Runtime.Infra.GameRunner
                 // Быстрый запуск: остаемся на текущей сцене, 
                 // но говорим StateMachine пропустить меню.
                 QuickStartBridge.IsQuickStart = true;
+                QuickStartBridge.SceneName = SceneManager.GetActiveScene().name;
             }
         }
 
