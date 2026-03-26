@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Material Sound", order = 51)]
-public class SoundMaterial : ScriptableObject
+namespace Runtime.Features.Sounds.Steps
 {
-    public List<AudioClip> StepSounds;
+    [CreateAssetMenu(menuName = "Material Sound", order = 51)]
+    public class SoundMaterial : ScriptableObject
+    {
+        public List<AudioClip> StepSounds;
+    }
 }

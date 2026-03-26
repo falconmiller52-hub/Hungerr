@@ -1,11 +1,15 @@
-using UnityEngine;
 using NaughtyAttributes;
+using Runtime.Features.Sounds.Steps;
+using UnityEngine;
 
-public class SurfaceMaterialHolder : MonoBehaviour
+namespace Runtime.Features.Sounds
 {
-    //Переменные инспектора
-    [SerializeField, Label("Surface Material Sound")] private SoundMaterial _materialSound;
+    public class SurfaceMaterialHolder : MonoBehaviour
+    {
+        //Переменные инспектора
+        [SerializeField, Label("Surface Material Sound")] private SoundMaterial _materialSound;
 
-    //Геттеры и сеттеры
-    public SoundMaterial MaterialSound => _materialSound;
+        //Геттеры и сеттеры
+        public SoundMaterial MaterialSound => _materialSound;
+    }
 }

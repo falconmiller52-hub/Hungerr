@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 4321713733929099054}
   - component: {fileID: 4321713733929099053}
   m_Layer: 0
-  m_Name: = GameplayEntryPoint =
+  m_Name: = GameplayInfrastructure =
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1254,7 +1254,7 @@ MonoBehaviour:
   - {fileID: 3851059411422752080}
   - {fileID: 3851059412846384325}
   _playerTransform: {fileID: 3851059412217318607}
-  _xySensitivity: {x: 400, y: 400}
+  _xySensitivity: {x: 200, y: 200}
   _minMaxYAngle: {x: -90, y: 90}
   _breathingMagnitude: 0.015
   _breathingSpeed: 2
@@ -1298,7 +1298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerTransform: {fileID: 3851059412217318607}
   _currentStance: 0
-  _stancesSpeeds: {x: 0.5, y: 1, z: 2}
+  _stancesSpeeds: {x: 0.5, y: 2, z: 4}
   _maxStamina: 100
   _staminaUsage: 20
   _staminaRegen: 20
