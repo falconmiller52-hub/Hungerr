@@ -1,76 +1,85 @@
-using UnityEngine;
-using NaughtyAttributes;
 using System.Collections;
+using Runtime.Common.Services.LoadingCurtain;
+using UnityEngine;
+using Zenject;
 
-public class LocationChanger : MonoBehaviour
+namespace Runtime.Features.Location
 {
-    //Переменные инспектора
-    [SerializeField, Label("Next Position Object")] private Transform _nextPositionObject;
-
-    [Space, SerializeField, Label("Transition Speed")] private Vector2 _transitionSpeed = Vector2.right;
-
-    [Space, SerializeField, Label("Start Sound")] private AudioClip _startSound;
-    [SerializeField, Label("End Sound")] private AudioClip _endSound;
-
-    //Внутренние переменные
-    private static bool _isCoroutineActive = false;
-
-    //Кэшированные переменные
-    private Transform _theFuckingPlayerItself;
-    private AudioSource _as;
-    private BlackScreenController _bsc;
-    private CharacterController _cc;
-
-    //Методы Моно
-    private void Start()
+    public class LocationChanger : MonoBehaviour
     {
-        _theFuckingPlayerItself = FindObjectOfType<CharacterController>().transform;
-        _as = GetComponent<AudioSource>();
-        _bsc = _theFuckingPlayerItself.GetComponent<BlackScreenController>();
-        _cc = _theFuckingPlayerItself.GetComponent<CharacterController>();
-    }
+        [Header("Settings")]
+        [SerializeField] private float _fadeInDuration = 0.2f;
+        [SerializeField] private float _stayBlackDuration = 0.5f;
+        [SerializeField] private float _fadeOutDuration = 0.5f;
+        
+        // [Header("Audio")]
+        // [SerializeField] private AudioClip _startSound;
+        // [SerializeField] private AudioClip _endSound;
 
-    //Методы скрипта
-    public void ChangeLocation()
-    {
-        if (!_isCoroutineActive) StartCoroutine(LocationChangeAnimation());
-    }
+        private ILoadingCurtain _curtain;
+        private CharacterController _playerController;
+        // private AudioSource _audioSource;
+        
+        private bool _isProcessing;
 
-    private IEnumerator LocationChangeAnimation()
-    {
-        _isCoroutineActive = true;
-        _as.PlayOneShot(_startSound);
-        for (float i = _bsc.BlackScreenObject.color.a; i <= 1f; i += Time.deltaTime)
+        [Inject]
+        public void Construct(ILoadingCurtain curtain)
         {
-            _bsc.BlackScreenObject.color = Color.black * i;
-            yield return new WaitForSeconds(_transitionSpeed.x);
+            _curtain = curtain;
         }
 
-        _bsc.BlackScreenObject.color = Color.black * 1f;
-
-        yield return new WaitForSeconds(_transitionSpeed.y);
-
-        _cc.enabled = false;
-        _theFuckingPlayerItself.position = _nextPositionObject.position;
-        _cc.enabled = true;
-
-        _as.PlayOneShot(_endSound);
-        for (float i = _bsc.BlackScreenObject.color.a; i >= 0f; i -= Time.deltaTime)
+        public void Init(CharacterController playerController)
         {
-            _bsc.BlackScreenObject.color = Color.black * i;
-            yield return new WaitForSeconds(_transitionSpeed.x);
+            _playerController = playerController;
         }
 
-        _bsc.BlackScreenObject.color = Color.black * 0f;
+        public void ChangeLocation(Transform targetPoint, bool needCurtain = true, bool needToDisableCC = true)
+        {
+            if (_isProcessing) 
+                return;
 
-        _isCoroutineActive = false;
-        yield return null;
-    }
+            if (_playerController == null)
+            {
+                Debug.LogError("LocationChanger::ChangeLocation() PlayerController is null");
+                return;
+            }
+            
+            StartCoroutine(LocationChangeRoutine(targetPoint, needCurtain, needToDisableCC));
+        }
 
-    //Геттеры и сеттеры
-    public Transform NextPositionObject
-    {
-        get => _nextPositionObject;
-        set => _nextPositionObject = value;
+        private IEnumerator LocationChangeRoutine(Transform target, bool needCurtain = true, bool needToDisableCC = true)
+        {
+            _isProcessing = true;
+            
+            if (needToDisableCC)
+                _playerController.enabled = false;
+            
+            if (needCurtain)
+            {
+                _curtain.Show(_fadeInDuration, needText: false);
+                yield return new WaitForSeconds(_fadeInDuration);
+            }
+            
+            Teleport(target);
+            
+            if (needCurtain)
+                yield return new WaitForSeconds(_stayBlackDuration);
+
+            if (needCurtain)
+            {
+                _curtain.Hide(_fadeOutDuration, needText: false);
+                yield return new WaitForSeconds(_fadeOutDuration);
+            }
+
+            _isProcessing = false;
+            
+            if (needToDisableCC)
+                _playerController.enabled = true;
+        }
+
+        private void Teleport(Transform target)
+        {
+            _playerController.transform.SetPositionAndRotation(target.position, target.rotation);
+        }
     }
 }

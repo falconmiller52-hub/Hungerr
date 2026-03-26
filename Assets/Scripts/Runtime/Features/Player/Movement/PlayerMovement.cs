@@ -1,5 +1,7 @@
 using NaughtyAttributes;
 using Runtime.Common.Services.Input;
+using Runtime.Features.Sounds;
+using Runtime.Features.Sounds.Steps;
 using UnityEngine;
 using Zenject;
 
@@ -161,7 +163,7 @@ namespace Runtime.Features.Player.Movement
         public void Move(Vector2 direction)
         {
             var tripleAxisDirection = new Vector3(direction.x, 0, direction.y);
-            var nextPosition = tripleAxisDirection * _currentSpeed * Time.fixedDeltaTime;
+            var nextPosition = tripleAxisDirection * _currentSpeed * Time.deltaTime;
 
             _cc.Move(nextPosition);  
 

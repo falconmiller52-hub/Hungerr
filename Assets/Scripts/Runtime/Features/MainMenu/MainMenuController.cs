@@ -1,6 +1,8 @@
+using Runtime.Common.Enums;
+using Runtime.Common.Services.EventBus;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 namespace Runtime.Features.MainMenu
 {
@@ -9,7 +11,15 @@ namespace Runtime.Features.MainMenu
         [SerializeField] private Button _startGameButton;
         [SerializeField] private Button _exitGameButton;
         [SerializeField] private string _gameplaySceneName;
+        
+        private EventBus _eventBus;
 
+        [Inject]
+        private void Construct(EventBus eventBus)
+        {
+            _eventBus = eventBus;
+        }
+        
         private void OnEnable()
         {
             _startGameButton.onClick.AddListener(HandleStartGame);
@@ -24,12 +34,12 @@ namespace Runtime.Features.MainMenu
 
         private void HandleExitGame()
         {
-            Application.Quit();
+            _eventBus.Trigger(GameEvent.QuitGame);
         }
 
         private void HandleStartGame()
         {
-            SceneManager.LoadScene(_gameplaySceneName);
+            _eventBus.Trigger(GameEvent.StartGameplay);
         }
     }
 }

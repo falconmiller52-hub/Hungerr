@@ -1,31 +1,34 @@
+using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
-using NaughtyAttributes;
 
-public class BlackScreenController : MonoBehaviour
+namespace Runtime.Features.Player.UI
 {
-    //Переменные инспектора
-    [SerializeField, Label("Black Screen Object")] private Image _blackScreenObject;
-
-    //Внутренние переменные
-
-
-    //Кэшированные переменные
-
-
-    //Методы Моно
-
-
-    //Методы скрипта
-    public void ChangeTransparency(float value)
+    public class BlackScreenController : MonoBehaviour
     {
-        _blackScreenObject.color = new Color(0f, 0f, 0f, value);
-    }
+        //Переменные инспектора
+        [SerializeField, Label("Black Screen Object")] private Image _blackScreenObject;
 
-    //Геттеры и сеттеры
-    public Image BlackScreenObject
-    {
-        get => _blackScreenObject;
-        set => _blackScreenObject = value;
+        //Внутренние переменные
+
+
+        //Кэшированные переменные
+
+
+        //Методы Моно
+
+
+        //Методы скрипта
+        public void ChangeTransparency(float value)
+        {
+            _blackScreenObject.color = new Color(0f, 0f, 0f, value);
+        }
+
+        //Геттеры и сеттеры
+        public Image BlackScreenObject
+        {
+            get => _blackScreenObject;
+            set => _blackScreenObject = value;
+        }
     }
 }
