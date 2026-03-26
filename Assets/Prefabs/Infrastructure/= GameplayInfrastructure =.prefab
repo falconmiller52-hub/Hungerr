@@ -215,7 +215,7 @@ PrefabInstance:
     - target: {fileID: 7435694777756425442, guid: 4318b857f5b3f3442a9faf9f8e6901f0, type: 3}
       propertyPath: _directionalLight
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 5231901035533860236}
     - target: {fileID: 7435694779163363307, guid: 4318b857f5b3f3442a9faf9f8e6901f0, type: 3}
       propertyPath: m_Name
       value: = DayNightStateMachine =
@@ -269,6 +269,11 @@ PrefabInstance:
 --- !u!4 &1189343938 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7435694779163363309, guid: 4318b857f5b3f3442a9faf9f8e6901f0, type: 3}
+  m_PrefabInstance: {fileID: 7435694778129429807}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &5231901035533860236 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 3435005461636565155, guid: 4318b857f5b3f3442a9faf9f8e6901f0, type: 3}
   m_PrefabInstance: {fileID: 7435694778129429807}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &7435694777528967458 stripped
