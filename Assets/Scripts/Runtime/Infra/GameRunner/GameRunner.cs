@@ -9,6 +9,11 @@ namespace Runtime.Infra.GameRunner
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
         public static void InitBootstrapScene()
         {
+            if (!Application.isEditor)
+            {
+                return;
+            }
+            
             bool enabled = IsEnabled();
             int activeSceneIndex = SceneManager.GetActiveScene().buildIndex;
 
@@ -22,8 +27,6 @@ namespace Runtime.Infra.GameRunner
             }
             else
             {
-                // Быстрый запуск: остаемся на текущей сцене, 
-                // но говорим StateMachine пропустить меню.
                 QuickStartBridge.IsQuickStart = true;
                 QuickStartBridge.SceneName = SceneManager.GetActiveScene().name;
             }

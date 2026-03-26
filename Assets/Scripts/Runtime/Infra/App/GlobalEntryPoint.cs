@@ -25,7 +25,7 @@ namespace Runtime.Infra.App
             _globalStateMachine.RegisterState(_stateFactory.Create<GameplayLoopState>());
             _globalStateMachine.RegisterState(_stateFactory.Create<GameExitState>());
 
-            if (!QuickStartBridge.IsQuickStart)
+            if (!QuickStartBridge.IsQuickStart || QuickStartBridge.SceneName == Scenes.Boot)
             {
                 _globalStateMachine.EnterIn<GameBootstrapState>();
             }

@@ -428,6 +428,54 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &611767306
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 611767308}
+  - component: {fileID: 611767307}
+  m_Layer: 0
+  m_Name: GameDirector
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &611767307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611767306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98f181598f225fb4390a3293c850a76c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _visualChanger: {fileID: 1213370115}
+  _fullDayDuration: 60
+  _timeProgress: 0
+  _maxNightTimeOutside: 30
+--- !u!4 &611767308
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611767306}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.1736574, y: 2.1200013, z: 9.051445}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &818432564
 GameObject:
   m_ObjectHideFlags: 0
@@ -1175,7 +1223,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1213370112}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9e955f505fe7ad49aa5834eb268e2f4, type: 3}
   m_Name: 
@@ -1934,11 +1982,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 695208376743956962, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: _stancesSpeeds.y
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 695208376743956962, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: _stancesSpeeds.z
-      value: 4
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 695208376743956967, guid: 1d460049ba5a5c64bab3b2674999cf40, type: 3}
       propertyPath: m_Enabled
