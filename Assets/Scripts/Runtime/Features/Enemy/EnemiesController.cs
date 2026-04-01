@@ -1,15 +1,37 @@
+using System;
+using Runtime.Features.Enemy.Thin;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 namespace Runtime.Features.Enemy
 {
     public class EnemiesController : MonoBehaviour
     {
-        [SerializeField] private ThinEnemyAI _thinAI;
-    
+        [SerializeField] private NavMeshSurface _navMeshSurface;
+
+        private void OnValidate()
+        {
+            if (_navMeshSurface == null)
+            {
+                _navMeshSurface = FindAnyObjectByType<NavMeshSurface>();
+            }
+            
+            if (_navMeshSurface.navMeshData == null)
+                Debug.LogError("You need to bake NavMeshSurface");
+        }
+
         public void Init(GameObject player)
         {
-            if (_thinAI != null)
-                _thinAI.InitPlayer(player);
+            var thinAi = FindAnyObjectByType<ThinEnemyAI>();
+
+            if (thinAi != null)
+            {
+                thinAi.InitPlayer(player);
+            }
+            else
+            {
+                Debug.LogError("No Thin AI assigned");
+            }
         }
     }
 }

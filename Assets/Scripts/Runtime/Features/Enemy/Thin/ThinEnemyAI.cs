@@ -2,107 +2,116 @@ using Runtime.Features.Enemy.Thin.States;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ThinEnemyAI : MonoBehaviour
+namespace Runtime.Features.Enemy.Thin
 {
-    [field: Header("Settings")]
-    [field: SerializeField] public Transform[] PatrolPoints { get; private set; }
-    [field: SerializeField] public float PatrolSpeedMultiplier { get; private set; }
-    [field: SerializeField] public float ChaseSpeedMultiplier { get; private set; }
-    [field: SerializeField] public float DetectionRadius { get; private set; } = 10f;
-    [field: SerializeField] public Animator Animator { get; private set; }
-    [field: SerializeField] public NavMeshAgent Agent { get; private set; }
+    public class ThinEnemyAI : MonoBehaviour
+    {
+        [field: SerializeField] public Transform[] PatrolPoints { get; private set; }
     
-    [field: Header("Attack Settings")]
-    [field: SerializeField] public float AttackRadius { get; private set; } = 2f;
-    [field: SerializeField] public int AttackDamage { get; private set; } = 10;
-    [field: SerializeField] public float AttackCooldown { get; private set; } = 1.5f; // Время отдыха
+        [field: Header("Settings")]
+        [field: SerializeField] public float PatrolSpeedMultiplier { get; private set; }
+        [field: SerializeField] public float ChaseSpeedMultiplier { get; private set; }
+        [field: SerializeField] public float DetectionRadius { get; private set; } = 10f;
+        [field: SerializeField] public Animator Animator { get; private set; }
+        [field: SerializeField] public NavMeshAgent Agent { get; private set; }
     
-    private IEnemyState _currentState;
-    private int _currentTargetIndex = -1;
-    private Vector2 _smoothDeltaPosition;
-    private Vector2 _velocity;
-
-    public Transform Target { get; private set; }
+        [field: Header("Attack Settings")]
+        [field: SerializeField] public float AttackRadius { get; private set; } = 2f;
+        [field: SerializeField] public int AttackDamage { get; private set; } = 10;
+        [field: SerializeField] public float AttackCooldown { get; private set; } = 1.5f; // Время отдыха
     
-    public void InitPlayer(GameObject player) => Target = player.transform;
+        private IEnemyState _currentState;
+        private int _currentTargetIndex = -1;
+        private Vector2 _smoothDeltaPosition;
+        private Vector2 _velocity;
 
-    private void Awake()
-    {
-        Agent.updatePosition = false;
-        Agent.updateRotation = true;
-    }
+        public Transform Target { get; private set; }
+    
+        public void InitPlayer(GameObject player) => Target = player.transform;
 
-    private void Start()
-    {
-        ChangeState(new PatrolState(this));
-    }
-
-    private void Update()
-    {
-        _currentState?.Execute();
-        SynchronizeAnimatorAndAgent();
-    }
-
-    public void ChangeState(IEnemyState newState)
-    {
-        _currentState?.Exit();
-        _currentState = newState;
-        _currentState.Enter();
-    }
-
-    public bool CanSeePlayer() => 
-        Target != null && Vector3.Distance(transform.position, Target.position) < DetectionRadius;
-
-    public bool CanAttackPlayer() => 
-        Target != null && Vector3.Distance(transform.position, Target.position) < AttackRadius;
-
-    public void SetNewAgentPoint()
-    {
-        if (PatrolPoints == null || PatrolPoints.Length == 0) 
-            return;
-        
-        int nextIndex = Random.Range(0, PatrolPoints.Length);
-        if (nextIndex == _currentTargetIndex) nextIndex = (nextIndex + 1) % PatrolPoints.Length;
-        _currentTargetIndex = nextIndex;
-        
-        Agent.SetDestination(PatrolPoints[_currentTargetIndex].position);
-    }
-
-    private void SynchronizeAnimatorAndAgent()
-    {
-        Vector3 worldDeltaPosition = Agent.nextPosition - transform.position;
-        worldDeltaPosition.y = 0;
-
-        float dx = Vector3.Dot(transform.right, worldDeltaPosition);
-        float dy = Vector3.Dot(transform.forward, worldDeltaPosition);
-        Vector2 deltaPosition = new Vector2(dx, dy);
-
-        float smooth = Mathf.Min(1, Time.deltaTime / 0.1f);
-        _smoothDeltaPosition = Vector2.Lerp(_smoothDeltaPosition, deltaPosition, smooth);
-
-        _velocity = _smoothDeltaPosition / Time.deltaTime;
-        
-        // логика замедления возле цели
-        if (Agent.remainingDistance <= Agent.stoppingDistance)
+        private void Awake()
         {
-            _velocity = Vector2.Lerp(Vector2.zero, _velocity, Agent.remainingDistance / Agent.stoppingDistance);
+            Agent.updatePosition = false;
+            Agent.updateRotation = true;
         }
 
-        bool shouldMove = _velocity.magnitude > 0.5f && Agent.remainingDistance > Agent.stoppingDistance;
-        Animator.SetBool("Move", shouldMove);
-
-        // подтягивание трансформа к агенту
-        if (worldDeltaPosition.magnitude > Agent.radius / 2f)
+        private void Start()
         {
-            transform.position = Vector3.Lerp(transform.position, Agent.nextPosition, smooth);
+            ChangeState(new PatrolState(this));
+
+            if (PatrolPoints == null || PatrolPoints.Length == 0)
+            {
+                Debug.LogError("No Patrol Points assigned for Thin Enemy!");
+            }
         }
-    }
 
-    public void OnAnimationEventInvoked()
-    {
-        if (_currentState is IAnimationEventListener listener)
+        private void Update()
         {
-            listener.OnAnimationEventHandled();
+            _currentState?.Execute();
+            SynchronizeAnimatorAndAgent();
+        }
+
+        public void ChangeState(IEnemyState newState)
+        {
+            _currentState?.Exit();
+            _currentState = newState;
+            _currentState.Enter();
+        }
+
+        public bool CanSeePlayer() => 
+            Target != null && Vector3.Distance(transform.position, Target.position) < DetectionRadius;
+
+        public bool CanAttackPlayer() => 
+            Target != null && Vector3.Distance(transform.position, Target.position) < AttackRadius;
+
+        public void SetNewAgentPoint()
+        {
+            if (PatrolPoints == null || PatrolPoints.Length == 0) 
+                return;
+        
+            int nextIndex = Random.Range(0, PatrolPoints.Length);
+            if (nextIndex == _currentTargetIndex) nextIndex = (nextIndex + 1) % PatrolPoints.Length;
+            _currentTargetIndex = nextIndex;
+        
+            Agent.SetDestination(PatrolPoints[_currentTargetIndex].position);
+        }
+
+        private void SynchronizeAnimatorAndAgent()
+        {
+            Vector3 worldDeltaPosition = Agent.nextPosition - transform.position;
+            worldDeltaPosition.y = 0;
+
+            float dx = Vector3.Dot(transform.right, worldDeltaPosition);
+            float dy = Vector3.Dot(transform.forward, worldDeltaPosition);
+            Vector2 deltaPosition = new Vector2(dx, dy);
+
+            float smooth = Mathf.Min(1, Time.deltaTime / 0.1f);
+            _smoothDeltaPosition = Vector2.Lerp(_smoothDeltaPosition, deltaPosition, smooth);
+
+            _velocity = _smoothDeltaPosition / Time.deltaTime;
+        
+            // логика замедления возле цели
+            if (Agent.remainingDistance <= Agent.stoppingDistance)
+            {
+                _velocity = Vector2.Lerp(Vector2.zero, _velocity, Agent.remainingDistance / Agent.stoppingDistance);
+            }
+
+            bool shouldMove = _velocity.magnitude > 0.5f && Agent.remainingDistance > Agent.stoppingDistance;
+            Animator.SetBool("Move", shouldMove);
+
+            // подтягивание трансформа к агенту
+            if (worldDeltaPosition.magnitude > Agent.radius / 2f)
+            {
+                transform.position = Vector3.Lerp(transform.position, Agent.nextPosition, smooth);
+            }
+        }
+
+        public void OnAnimationEventInvoked()
+        {
+            if (_currentState is IAnimationEventListener listener)
+            {
+                listener.OnAnimationEventHandled();
+            }
         }
     }
 }

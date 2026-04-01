@@ -5,19 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71d34e89-be79-468e-bcd8-89462007bd87" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/IAnimationEventListener.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/IAnimationEventListener.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/StreetMap.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/StreetMap.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/DayNight/DayCycleVisualChanger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/DayNight/DayCycleVisualChanger.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/EnemiesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/EnemiesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/EnemyVID.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/EnemyVID.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/AttackState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/AttackState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/ChaseState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/ChaseState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/IEnemyState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/IEnemyState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/LostPlayerState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/LostPlayerState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/PatrolState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/PatrolState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/ThinEnemyAI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/ThinEnemyAI.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +128,7 @@
       <workItem from="1774972734728" duration="3739000" />
       <workItem from="1774983551492" duration="1613000" />
       <workItem from="1775037878950" duration="8908000" />
-      <workItem from="1775059260693" duration="7745000" />
+      <workItem from="1775059260693" duration="9111000" />
     </task>
     <servers />
   </component>
