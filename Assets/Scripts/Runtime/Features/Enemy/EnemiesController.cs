@@ -8,30 +8,21 @@ namespace Runtime.Features.Enemy
     public class EnemiesController : MonoBehaviour
     {
         [SerializeField] private NavMeshSurface _navMeshSurface;
-
-        private void OnValidate()
-        {
-            if (_navMeshSurface == null)
-            {
-                _navMeshSurface = FindAnyObjectByType<NavMeshSurface>();
-            }
-            
-            if (_navMeshSurface.navMeshData == null)
-                Debug.LogError("You need to bake NavMeshSurface");
-        }
-
+        
         public void Init(GameObject player)
         {
+            if (_navMeshSurface == null)
+                _navMeshSurface = FindAnyObjectByType<NavMeshSurface>();
+            
+            if (_navMeshSurface.navMeshData == null)
+                _navMeshSurface.BuildNavMesh();
+            
             var thinAi = FindAnyObjectByType<ThinEnemyAI>();
 
             if (thinAi != null)
-            {
                 thinAi.InitPlayer(player);
-            }
             else
-            {
                 Debug.LogError("No Thin AI assigned");
-            }
         }
     }
 }
