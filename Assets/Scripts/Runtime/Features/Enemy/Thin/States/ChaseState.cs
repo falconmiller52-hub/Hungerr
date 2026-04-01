@@ -1,36 +1,38 @@
-using UnityEngine;
+using Runtime.Features.Enemy.Thin.States;
 
-namespace Runtime.Features.Enemy.Thin.States
+public class ChaseState : IEnemyState
 {
-	public class ChaseState : IEnemyState
+	private ThinEnemyAI _ai;
+	public ChaseState(ThinEnemyAI ai) => _ai = ai;
+
+	public void Enter()
 	{
-		private ThinEnemyAI _owner;
-		private float _loseTargetTimer;
+		_ai.Animator.SetFloat("WalkSpeed", _ai.ChaseSpeedMultiplier);
+		_ai.Agent.speed = _ai.Animator.GetFloat("WalkSpeed");
+		
+		_ai.Animator.SetBool("Chase", true);
+	}
 
-		public ChaseState(ThinEnemyAI owner) => _owner = owner;
-
-		public void Enter()
+	public void Execute()
+	{
+		if (!_ai.CanSeePlayer())
 		{
-			_owner.Agent.speed = _owner.ChaseSpeed;
-			_owner.PlayChaseSound(true);
+			_ai.ChangeState(new LostPlayerState(_ai));
+			return;
 		}
 
-		public void Execute()
+		if (_ai.CanAttackPlayer())
 		{
-			if (_owner.CanSeePlayer())
-			{
-				_loseTargetTimer = 5f; // Сброс таймера
-				_owner.Agent.destination = _owner.Target.position;
-			}
-			else
-			{
-				_loseTargetTimer -= Time.deltaTime;
-				if (_loseTargetTimer <= 0) {
-					_owner.ChangeState(new ReturnState(_owner));
-				}
-			}
+			_ai.ChangeState(new AttackState(_ai));
+			return;
 		}
+		
+		_ai.Agent.SetDestination(_ai.Target.position);
+	}
 
-		public void Exit() => _owner.PlayChaseSound(false);
+	public void Exit() => _ai.Animator.SetBool("Chase", false);
+	public void OnAnimationEventHandled()
+	{
+		
 	}
 }

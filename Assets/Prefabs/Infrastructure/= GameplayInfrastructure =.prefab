@@ -93,6 +93,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _phaseStateMachine: {fileID: 7435694777528967458}
   _locationChanger: {fileID: 1908752502828135830}
+  _enemiesController: {fileID: 0}
 --- !u!1 &4321713733802562588
 GameObject:
   m_ObjectHideFlags: 0
@@ -212,6 +213,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4321713733929099054}
     m_Modifications:
+    - target: {fileID: 611767309, guid: 4318b857f5b3f3442a9faf9f8e6901f0, type: 3}
+      propertyPath: <NightDuration>k__BackingField
+      value: 3600
+      objectReference: {fileID: 0}
+    - target: {fileID: 611767309, guid: 4318b857f5b3f3442a9faf9f8e6901f0, type: 3}
+      propertyPath: <DayStartLocationtransform>k__BackingField
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 611767309, guid: 4318b857f5b3f3442a9faf9f8e6901f0, type: 3}
+      propertyPath: <NightStartLocationtransform>k__BackingField
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7435694777756425442, guid: 4318b857f5b3f3442a9faf9f8e6901f0, type: 3}
       propertyPath: _directionalLight
       value: 

@@ -1,5 +1,6 @@
 using Runtime.Common.Factories.StateFactory;
 using Runtime.Features.DayNight.StateMachine;
+using Runtime.Features.Enemy;
 using Runtime.Features.Location;
 using UnityEngine;
 using Zenject;
@@ -11,12 +12,19 @@ namespace Runtime.Infra.GameplayScene
         // монобехи для инсталла
         [SerializeField] private PhaseStateMachine _phaseStateMachine;
         [SerializeField] private LocationChanger _locationChanger;
+        [SerializeField] private EnemiesController _enemiesController;
         
         public override void InstallBindings()
         {
             BindGameplayStateMachine();
             BindPhaseStateMachine();
             BindLocationChanger();
+            BindEnemiesController();
+        }
+
+        private void BindEnemiesController()
+        {
+            Container.Bind<EnemiesController>().FromInstance(_enemiesController).AsSingle();
         }
 
         private void BindLocationChanger()
