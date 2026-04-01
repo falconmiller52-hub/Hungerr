@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71d34e89-be79-468e-bcd8-89462007bd87" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Hungerr/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Hungerr/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Enemies/Thin_prefab.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Enemies/Thin_prefab.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Infrastructure/= GameplayInfrastructure =.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Infrastructure/= GameplayInfrastructure =.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/StreetMap.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/StreetMap.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/EnemiesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/EnemiesController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/ThinEnemyAI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/ThinEnemyAI.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +128,7 @@
       <workItem from="1774972734728" duration="3739000" />
       <workItem from="1774983551492" duration="1613000" />
       <workItem from="1775037878950" duration="8908000" />
-      <workItem from="1775059260693" duration="8716000" />
+      <workItem from="1775059260693" duration="9111000" />
     </task>
     <servers />
   </component>
