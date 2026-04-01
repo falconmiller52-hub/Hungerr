@@ -3,6 +3,7 @@ using Runtime.Common.Services.Input;
 using Runtime.Common.Services.ResourceLoad;
 using Runtime.Common.Services.StateMachine;
 using Runtime.Features.DayNight.StateMachine;
+using Runtime.Features.Enemy;
 using Runtime.Features.Location;
 using UnityEngine;
 using Zenject;
@@ -21,11 +22,12 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		private readonly IResourceLoader _resourceLoader;
 		private readonly LocationChanger _locationChanger;
 		private readonly DiContainer _container;
+		private readonly EnemiesController _enemiesController;
 
 		[Inject]
 		public EntryGameplayState(SceneStateMachine sceneStateMachine, PhaseStateMachine phaseStateMachine, 
 			StateFactory stateFactory, InputHandler inputHandler, IResourceLoader resourceLoader, LocationChanger locationChanger,
-			DiContainer diContainer)
+			DiContainer diContainer, EnemiesController enemiesController)
 		{
 			_sceneStateMachine = sceneStateMachine;
 			_phaseStateMachine = phaseStateMachine;
@@ -34,6 +36,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			_resourceLoader = resourceLoader;
 			_locationChanger = locationChanger;
 			_container = diContainer;
+			_enemiesController = enemiesController;
 		}
 
 		public void Enter()
@@ -46,6 +49,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
 			
 			_inputHandler.Init();
+			_enemiesController.Init(playerInstance);
 			// init PhaseStateMachine
 			DayPhaseState dayPhaseState = _stateFactory.Create<DayPhaseState>();
 			_phaseStateMachine.RegisterState(dayPhaseState);
