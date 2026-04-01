@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 
 namespace Runtime.Features.DayNight
@@ -26,6 +27,8 @@ namespace Runtime.Features.DayNight
         private void Start()
         {
             _defaultAngles = _directionalLight.transform.localEulerAngles;
+            RenderSettings.sun = _directionalLight;
+            RenderSettings.ambientMode = AmbientMode.Trilight;
         }
 
         /// <summary>
