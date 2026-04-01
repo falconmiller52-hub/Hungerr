@@ -1,4 +1,3 @@
-using Runtime.Features.Enemy.Thin;
 using UnityEngine;
 
 namespace Runtime.Features.Enemy

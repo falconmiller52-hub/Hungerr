@@ -4,14 +4,15 @@ namespace Runtime.Features.Enemy.Thin.States
 {
 	public class PatrolState : IEnemyState
 	{
-		private ThinEnemyAI _ai;
+		private static readonly int WalkSpeed = Animator.StringToHash("WalkSpeed");
+		private readonly ThinEnemyAI _ai;
+		
 		public PatrolState(ThinEnemyAI ai) => _ai = ai;
 
 		public void Enter()
 		{
-			Debug.Log("Set Patrol State");
-			_ai.Animator.SetFloat("WalkSpeed", _ai.PatrolSpeedMultiplier);
-			_ai.Agent.speed = _ai.Animator.GetFloat("WalkSpeed");
+			_ai.Animator.SetFloat(WalkSpeed, _ai.PatrolSpeedMultiplier);
+			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed);
 		}
 
 		public void Execute()
@@ -27,6 +28,7 @@ namespace Runtime.Features.Enemy.Thin.States
 				_ai.SetNewAgentPoint();
 			}
 		}
+		
 		public void Exit() {}
 	}
 }

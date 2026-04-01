@@ -1,38 +1,44 @@
-using Runtime.Features.Enemy.Thin.States;
+using UnityEngine;
 
-public class ChaseState : IEnemyState
+namespace Runtime.Features.Enemy.Thin.States
 {
-	private ThinEnemyAI _ai;
-	public ChaseState(ThinEnemyAI ai) => _ai = ai;
-
-	public void Enter()
+	public class ChaseState : IEnemyState
 	{
-		_ai.Animator.SetFloat("WalkSpeed", _ai.ChaseSpeedMultiplier);
-		_ai.Agent.speed = _ai.Animator.GetFloat("WalkSpeed");
-		
-		_ai.Animator.SetBool("Chase", true);
-	}
+		private static readonly int WalkSpeed = Animator.StringToHash("WalkSpeed");
+		private static readonly int Chase = Animator.StringToHash("Chase");
+	
+		private readonly ThinEnemyAI _ai;
+		public ChaseState(ThinEnemyAI ai) => _ai = ai;
 
-	public void Execute()
-	{
-		if (!_ai.CanSeePlayer())
+		public void Enter()
 		{
-			_ai.ChangeState(new LostPlayerState(_ai));
-			return;
+			_ai.Animator.SetFloat(WalkSpeed, _ai.ChaseSpeedMultiplier);
+			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed);
+		
+			_ai.Animator.SetBool(Chase, true);
 		}
 
-		if (_ai.CanAttackPlayer())
+		public void Execute()
 		{
-			_ai.ChangeState(new AttackState(_ai));
-			return;
-		}
-		
-		_ai.Agent.SetDestination(_ai.Target.position);
-	}
+			if (!_ai.CanSeePlayer())
+			{
+				_ai.ChangeState(new LostPlayerState(_ai));
+				return;
+			}
 
-	public void Exit() => _ai.Animator.SetBool("Chase", false);
-	public void OnAnimationEventHandled()
-	{
+			if (_ai.CanAttackPlayer())
+			{
+				_ai.ChangeState(new AttackState(_ai));
+				return;
+			}
 		
+			_ai.Agent.SetDestination(_ai.Target.position);
+		}
+
+		public void Exit() => _ai.Animator.SetBool(Chase, false);
+		public void OnAnimationEventHandled()
+		{
+		
+		}
 	}
 }

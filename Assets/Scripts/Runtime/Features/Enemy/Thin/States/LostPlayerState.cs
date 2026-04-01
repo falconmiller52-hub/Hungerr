@@ -1,33 +1,36 @@
-using Runtime.Features.Enemy.Thin.States;
 using UnityEngine;
 
-public class LostPlayerState : IEnemyState
+namespace Runtime.Features.Enemy.Thin.States
 {
-	private ThinEnemyAI _ai;
-	private float _timer;
-
-	public LostPlayerState(ThinEnemyAI ai) => _ai = ai;
-
-	public void Enter()
+	public class LostPlayerState : IEnemyState
 	{
-		_timer = 0;
-		_ai.Agent.ResetPath(); 
-	}
+		private readonly ThinEnemyAI _ai;
+		private float _timer;
 
-	public void Execute()
-	{
-		if (_ai.CanSeePlayer())
+		public LostPlayerState(ThinEnemyAI ai) => _ai = ai;
+
+		public void Enter()
 		{
-			_ai.ChangeState(new ChaseState(_ai));
-			return;
+			_timer = 0;
+			_ai.Agent.ResetPath(); 
 		}
 
-		_timer += Time.deltaTime;
+		public void Execute()
+		{
+			if (_ai.CanSeePlayer())
+			{
+				_ai.ChangeState(new ChaseState(_ai));
+				return;
+			}
+
+			_timer += Time.deltaTime;
 		
-		if (_timer >= 3f)
-		{
-			_ai.ChangeState(new PatrolState(_ai));
+			if (_timer >= 3f)
+			{
+				_ai.ChangeState(new PatrolState(_ai));
+			}
 		}
+		
+		public void Exit() {}
 	}
-	public void Exit() {}
 }

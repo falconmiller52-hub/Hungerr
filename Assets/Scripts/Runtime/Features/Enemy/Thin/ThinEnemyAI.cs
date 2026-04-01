@@ -17,12 +17,13 @@ public class ThinEnemyAI : MonoBehaviour
     [field: SerializeField] public int AttackDamage { get; private set; } = 10;
     [field: SerializeField] public float AttackCooldown { get; private set; } = 1.5f; // Время отдыха
     
-    public Transform Target { get; private set; }
     private IEnemyState _currentState;
     private int _currentTargetIndex = -1;
     private Vector2 _smoothDeltaPosition;
     private Vector2 _velocity;
 
+    public Transform Target { get; private set; }
+    
     public void InitPlayer(GameObject player) => Target = player.transform;
 
     private void Awake()
@@ -90,7 +91,7 @@ public class ThinEnemyAI : MonoBehaviour
         bool shouldMove = _velocity.magnitude > 0.5f && Agent.remainingDistance > Agent.stoppingDistance;
         Animator.SetBool("Move", shouldMove);
 
-        // Твоя логика «подтягивания» транформа к агенту
+        // подтягивание трансформа к агенту
         if (worldDeltaPosition.magnitude > Agent.radius / 2f)
         {
             transform.position = Vector3.Lerp(transform.position, Agent.nextPosition, smooth);

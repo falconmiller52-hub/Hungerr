@@ -5,24 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="71d34e89-be79-468e-bcd8-89462007bd87" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/AttackState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/AttackState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/LostPlayerState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/LostPlayerState.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Hungerr/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Hungerr/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Content/Art/Models/Thin/Thin.controller" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/Art/Models/Thin/Thin.controller" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Content/Art/Models/Thin/Thin.fbx.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/Art/Models/Thin/Thin.fbx.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Infrastructure/= GameplayInfrastructure =.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Infrastructure/= GameplayInfrastructure =.prefab" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/IAnimationEventListener.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/IAnimationEventListener.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/StreetMap.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/StreetMap.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TaoLocationTestingScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TaoLocationTestingScene.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/DayNight/DayCycleVisualChanger.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/DayNight/DayCycleVisualChanger.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/EnemiesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/EnemiesController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/EnemyVID.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/EnemyVID.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/AttackState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/AttackState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/ChaseState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/ChaseState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/IEnemyState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/IEnemyState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/LostPlayerState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/LostPlayerState.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/PatrolState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/PatrolState.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/ReturnState.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/States/ReturnState.cs.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/ThinEnemyAI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Enemy/Thin/ThinEnemyAI.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Infra/GameplayScene/GameplayInstaller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Infra/GameplayScene/GameplayInstaller.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Infra/GameplayScene/GameplayStateMachine/States/EntryGameplayState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Infra/GameplayScene/GameplayStateMachine/States/EntryGameplayState.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,7 +139,7 @@
       <workItem from="1774972734728" duration="3739000" />
       <workItem from="1774983551492" duration="1613000" />
       <workItem from="1775037878950" duration="8908000" />
-      <workItem from="1775059260693" duration="7442000" />
+      <workItem from="1775059260693" duration="7745000" />
     </task>
     <servers />
   </component>

@@ -4,7 +4,9 @@ namespace Runtime.Features.Enemy.Thin.States
 {
 	public class AttackState : IEnemyState, IAnimationEventListener
 	{
-		private ThinEnemyAI _ai;
+		private static readonly int Attack = Animator.StringToHash("Attack");
+		
+		private readonly ThinEnemyAI _ai;
 		private bool _isAttackFinished;
 		private float _cooldownTimer;
 		
@@ -15,7 +17,7 @@ namespace Runtime.Features.Enemy.Thin.States
 			// стартим анимацию
 			_ai.Agent.ResetPath();
 			_ai.Agent.velocity = Vector3.zero;
-			_ai.Animator.SetTrigger("Attack");
+			_ai.Animator.SetTrigger(Attack);
 		}
 
 		public void Execute()

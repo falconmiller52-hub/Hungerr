@@ -6,9 +6,4 @@ namespace Runtime.Features.Enemy.Thin.States
 		void Execute();     // Вызывается каждый кадр (как Update)
 		void Exit();        // Вызывается перед переходом в другое состояние
 	}
-
-	public interface IAnimationEventListener
-	{
-		void OnAnimationEventHandled();
-	}
 }
