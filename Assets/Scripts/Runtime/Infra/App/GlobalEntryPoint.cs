@@ -25,6 +25,7 @@ namespace Runtime.Infra.App
             _globalStateMachine.RegisterState(_stateFactory.Create<GameplayLoopState>());
             _globalStateMachine.RegisterState(_stateFactory.Create<GameExitState>());
 
+            // выбирает что запустить исходя из текущей сцены и переменных в бридже
             if (!QuickStartBridge.IsQuickStart || QuickStartBridge.SceneName == Scenes.Boot)
             {
                 _globalStateMachine.EnterIn<GameBootstrapState>();

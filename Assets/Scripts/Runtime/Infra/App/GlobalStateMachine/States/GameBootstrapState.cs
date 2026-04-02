@@ -12,14 +12,12 @@ namespace Runtime.Infra.App.GlobalStateMachine.States
 	public class GameBootstrapState : IState
 	{
 		readonly GlobalStateMachine _globalStateMachine;
-		readonly InputHandler _inputHandler;
 		readonly ILoadingCurtain _loadingCurtain;
 
 		[Inject]
-		public GameBootstrapState(GlobalStateMachine globalStateMachine, InputHandler inputHandler, ILoadingCurtain loadingCurtain)
+		public GameBootstrapState(GlobalStateMachine globalStateMachine, ILoadingCurtain loadingCurtain)
 		{
 			_globalStateMachine = globalStateMachine;
-			_inputHandler = inputHandler;
 			_loadingCurtain = loadingCurtain;
 		}
 
@@ -27,9 +25,10 @@ namespace Runtime.Infra.App.GlobalStateMachine.States
 		{
 			Debug.Log("Boostrap State");
 
+			// устанавливает глобальные настройки
 			Application.targetFrameRate = 60;
 
-			// init services 
+			// инитит и включает глобальные сервисы
 			_loadingCurtain.Show();
 
 			_globalStateMachine.EnterIn<GameMenuState>();

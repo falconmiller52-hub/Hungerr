@@ -1,8 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public interface IInteractable
+namespace Runtime.Features.Interactable
 {
-	void Interact();
+	/// <summary>
+	/// Общий интерфейс, наследуют чтоб игрок имел возможность взаимодействовать с этим объектом
+	/// </summary>
+	public interface IInteractable
+	{
+		void Interact();
+	}
 }

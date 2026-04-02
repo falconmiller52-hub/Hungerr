@@ -1,10 +1,12 @@
-using System;
 using Runtime.Features.Enemy.Thin;
 using Unity.AI.Navigation;
 using UnityEngine;
 
 namespace Runtime.Features.Enemy
 {
+	/// <summary>
+	/// скрипт который инитит всех врагов на сцене, задает их таргета - игрока
+	/// </summary>
 	public class EnemiesBootstrap : MonoBehaviour
 	{
 		[SerializeField] private NavMeshSurface _navMeshSurface;

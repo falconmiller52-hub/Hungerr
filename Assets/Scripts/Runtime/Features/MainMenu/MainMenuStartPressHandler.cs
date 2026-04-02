@@ -1,10 +1,12 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Runtime.Features.MainMenu
 {
+    /// <summary>
+    /// реагирует на нажатие start кнопки в меню и запускает геймплейную сцену
+    /// </summary>
     public class MainMenuStartPressHandler : MonoBehaviour
     {
         [SerializeField] private Button _startPressButton;
