@@ -4,6 +4,9 @@ using UnityEngine.SceneManagement;
 
 namespace Runtime.Infra.GameRunner
 {
+    /// <summary>
+    /// Запускает глобальный жизненный цикл и инициирует переход к начальному глобальному состоянию (в зависимости от переменной в конфиге).
+    /// </summary>
     public class GameRunner
     {
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]

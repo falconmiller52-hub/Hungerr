@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 2372862246219275689}
   - component: {fileID: 8264645752893384828}
   m_Layer: 0
-  m_Name: = EnemiesSpawnControler =
+  m_Name: EnemiesBootstrap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,7 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _phaseStateMachine: {fileID: 7435694777528967458}
   _locationChanger: {fileID: 1908752502828135830}
-  _enemiesController: {fileID: 8264645752893384828}
+  _enemiesBootstrap: {fileID: 8264645752893384828}
 --- !u!1 &4321713733802562588
 GameObject:
   m_ObjectHideFlags: 0

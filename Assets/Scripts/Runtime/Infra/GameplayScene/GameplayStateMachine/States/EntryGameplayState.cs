@@ -22,12 +22,12 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		private readonly IResourceLoader _resourceLoader;
 		private readonly LocationChanger _locationChanger;
 		private readonly DiContainer _container;
-		private readonly EnemiesController _enemiesController;
+		private readonly EnemiesBootstrap _enemiesBootstrap;
 
 		[Inject]
 		public EntryGameplayState(SceneStateMachine sceneStateMachine, PhaseStateMachine phaseStateMachine, 
 			StateFactory stateFactory, InputHandler inputHandler, IResourceLoader resourceLoader, LocationChanger locationChanger,
-			DiContainer diContainer, EnemiesController enemiesController)
+			DiContainer diContainer, EnemiesBootstrap enemiesBootstrap)
 		{
 			_sceneStateMachine = sceneStateMachine;
 			_phaseStateMachine = phaseStateMachine;
@@ -36,20 +36,20 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			_resourceLoader = resourceLoader;
 			_locationChanger = locationChanger;
 			_container = diContainer;
-			_enemiesController = enemiesController;
+			_enemiesBootstrap = enemiesBootstrap;
 		}
 
 		public void Enter()
 		{
 			// заглушка пока нет адресаблов
-			GameObject player = _resourceLoader.Load<GameObject>("Player");
-
-			GameObject playerInstance = _container.InstantiatePrefab(player);
+			GameObject playerPrefab = _resourceLoader.Load<GameObject>("Player");
+			GameObject playerInstance = _container.InstantiatePrefab(playerPrefab);
 			
 			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
 			
 			_inputHandler.Init();
-			_enemiesController.Init(playerInstance);
+			_enemiesBootstrap.Init(playerInstance);
+			
 			// init PhaseStateMachine
 			DayPhaseState dayPhaseState = _stateFactory.Create<DayPhaseState>();
 			_phaseStateMachine.RegisterState(dayPhaseState);
