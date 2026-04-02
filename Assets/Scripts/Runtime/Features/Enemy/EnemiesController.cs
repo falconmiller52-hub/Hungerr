@@ -16,13 +16,25 @@ namespace Runtime.Features.Enemy
             
             if (_navMeshSurface.navMeshData == null)
                 _navMeshSurface.BuildNavMesh();
-            
-            var thinAi = FindAnyObjectByType<ThinEnemyAI>();
 
-            if (thinAi != null)
-                thinAi.InitPlayer(player);
-            else
-                Debug.LogError("No Thin AI assigned");
+            if (player == null)
+            {
+                Debug.LogError("EnemiesController::Init() Player is null");
+                return;
+            }
+            
+            var enemyAis = FindObjectsOfType<ThinEnemyAI>();
+
+            if (enemyAis == null)
+            {
+                Debug.LogError("EnemiesController::Init() No AI assigned");
+                return;
+            }
+            
+            foreach (var ai in enemyAis)
+            {
+                ai.InitPlayer(player);
+            }
         }
     }
 }
