@@ -1399,6 +1399,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _counterUI: {fileID: 8163710076659395384}
   _maxHealth: 100
+  _shakeCameraTransform: {fileID: 2558597041051772335}
+  _shakeDuration: 0.3
+  _shakeStrength: {x: 5, y: 5, z: 2}
+  _vibrato: 10
 --- !u!1 &3851059412846384325
 GameObject:
   m_ObjectHideFlags: 0

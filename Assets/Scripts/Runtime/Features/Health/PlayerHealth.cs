@@ -1,3 +1,4 @@
+using PrimeTween;
 using Runtime.UI;
 using UnityEngine;
 
@@ -7,6 +8,12 @@ namespace Runtime.Features.Health
 	{
 		[SerializeField] private CounterUI _counterUI;
 		[SerializeField] private float _maxHealth;
+		
+		[Header("Shake Settings")]
+		[SerializeField] private Transform _shakeCameraTransform;
+		[SerializeField, Tooltip("Длительность тряски")] private float _shakeDuration = 0.3f;
+		[SerializeField, Tooltip("Сила тряски по осям (вращение)")] private Vector3 _shakeStrength = new Vector3(5f, 5f, 2f); 
+		[SerializeField, Tooltip("Насколько часто будет дергаться камера")] private int _vibrato = 10; 
 		
 		private float _currentHealth;
 
@@ -32,6 +39,17 @@ namespace Runtime.Features.Health
 			CurrentHealth -= value;
 			
 			_counterUI.UpdateUI(_currentHealth, _maxHealth);
+			
+			ShakeCameraOnDamage();
+		}
+		
+		private void ShakeCameraOnDamage()
+		{
+			if (_shakeCameraTransform == null) 
+				return;
+			
+			Tween.ShakeLocalRotation(_shakeCameraTransform, _shakeStrength, _shakeDuration, _vibrato);
+
 		}
 	}
 }
