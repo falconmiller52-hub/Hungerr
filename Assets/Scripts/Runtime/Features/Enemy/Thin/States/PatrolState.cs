@@ -1,3 +1,5 @@
+using Runtime.Common.Extensions;
+using Runtime.Features.Sounds;
 using UnityEngine;
 
 namespace Runtime.Features.Enemy.Thin.States
@@ -5,14 +7,22 @@ namespace Runtime.Features.Enemy.Thin.States
 	public class PatrolState : IEnemyState
 	{
 		private static readonly int WalkSpeed = Animator.StringToHash("WalkSpeed");
-		private readonly ThinEnemyAI _ai;
 		
+		private readonly ThinEnemyAI _ai;
+		private SoundData _currentSound;
+		private bool _isActive = false;
+
 		public PatrolState(ThinEnemyAI ai) => _ai = ai;
 
 		public void Enter()
 		{
+			_isActive = true;
+			
 			_ai.Animator.SetFloat(WalkSpeed, _ai.PatrolSpeedMultiplier);
-			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed);
+			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed) * _ai.transform.lossyScale.x;
+			
+			_currentSound = _ai.ChaseSounds.Random();
+			_ai.AudioService.PlaySfx(_currentSound, _ai.transform.position, onEnd: SetNewSound);
 		}
 
 		public void Execute()
@@ -28,7 +38,20 @@ namespace Runtime.Features.Enemy.Thin.States
 				_ai.SetNewAgentPoint();
 			}
 		}
+
+		public void Exit()
+		{
+			_isActive = false;
+			_ai.AudioService.StopPlaying(_currentSound);
+		}
 		
-		public void Exit() {}
+		private void SetNewSound(SoundData currentPlayedData)
+		{
+			if (!_isActive) 
+				return;
+			
+			_currentSound = _ai.ChaseSounds.RandomExcept(currentPlayedData);
+			_ai.AudioService.PlaySfx(_currentSound, _ai.transform.position, onEnd: SetNewSound);
+		}
 	}
 }

@@ -1,28 +1,31 @@
+using Runtime.Common.Services.Audio;
 using Runtime.Features.Enemy.Thin.States;
+using Runtime.Features.Sounds;
 using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 
 namespace Runtime.Features.Enemy.Thin
 {
 	public class ThinEnemyAI : MonoBehaviour
 	{
 		private static readonly int Move = Animator.StringToHash("Move");
-
-		[field: SerializeField] public Transform[] PatrolPoints { get; private set; }
-
-		[field: Header("Settings")]
-		[field: SerializeField]
-		public float PatrolSpeedMultiplier { get; private set; }
-
-		[field: SerializeField] public float ChaseSpeedMultiplier { get; private set; }
-		[field: SerializeField] public float DetectionRadius { get; private set; } = 10f;
+		
 		[field: SerializeField] public Animator Animator { get; private set; }
 		[field: SerializeField] public NavMeshAgent Agent { get; private set; }
+		
+		[field: Header("Patrol Settings")]
+		[field: SerializeField] public Transform[] PatrolPoints { get; private set; }
+		[field: SerializeField] public SoundData[] PatrolSounds { get; private set; }
+		[field: SerializeField] public float PatrolSpeedMultiplier { get; private set; }
+
+		[field: Header("Chase Settings")]
+		[field: SerializeField] public float ChaseSpeedMultiplier { get; private set; }
+		[field: SerializeField] public float DetectionRadius { get; private set; } = 10f;
+		[field: SerializeField] public SoundData[] ChaseSounds { get; private set; }
 
 		[field: Header("Attack Settings")]
-		[field: SerializeField]
-		public float AttackRadius { get; private set; } = 2f;
-
+		[field: SerializeField] public float AttackRadius { get; private set; } = 2f;
 		[field: SerializeField] public int AttackDamage { get; private set; } = 10;
 		[field: SerializeField] public float AttackCooldown { get; private set; } = 1.5f; // Время отдыха
 
@@ -30,10 +33,18 @@ namespace Runtime.Features.Enemy.Thin
 		private int _currentTargetIndex = -1;
 		private Vector2 _smoothDeltaPosition;
 		private Vector2 _velocity;
+		private IAudioService _audioService;
 
-		public Transform Target { get; private set; }
-
+		[Inject]
+		private void Construct(IAudioService audioService)
+		{
+			_audioService = audioService;
+		}
+		
 		public void InitPlayer(GameObject player) => Target = player.transform;
+		
+		public Transform Target { get; private set; }
+		public IAudioService AudioService => _audioService;
 
 		private void Awake()
 		{
