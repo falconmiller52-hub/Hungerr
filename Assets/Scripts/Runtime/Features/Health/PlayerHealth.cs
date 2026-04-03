@@ -32,8 +32,7 @@ namespace Runtime.Features.Health
 			
 			_counterUI.UpdateUI(_currentHealth, _maxHealth);
 		}
-
-
+		
 		public void ApplyDamage(int value)
 		{
 			CurrentHealth -= value;
@@ -49,7 +48,6 @@ namespace Runtime.Features.Health
 				return;
 			
 			Tween.ShakeLocalRotation(_shakeCameraTransform, _shakeStrength, _shakeDuration, _vibrato);
-
 		}
 	}
 }
