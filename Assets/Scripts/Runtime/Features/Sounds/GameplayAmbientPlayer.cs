@@ -7,6 +7,8 @@ namespace Runtime.Features.Sounds
     public class GameplayAmbientPlayer : MonoBehaviour
     {
         [SerializeField] private SoundData _startAmbientSound;
+        [SerializeField] private SoundData _ambientTwoSound;
+        [SerializeField] private float _fadeDuration = 1f;
     
         private IAudioService _audioService;
 
@@ -24,6 +26,20 @@ namespace Runtime.Features.Sounds
         private void OnDisable()
         {
             _audioService.StopPlaying(_startAmbientSound);
+        }
+
+        // тест
+        
+        [ContextMenu("Play Second Ambient")]
+        public void PlaySecondAmbient()
+        {
+            _audioService.PlayAmbient(_ambientTwoSound, _fadeDuration);
+        }
+        
+        [ContextMenu("Play First Ambient")]
+        public void PlayFirstAmbient()
+        {
+            _audioService.PlayAmbient(_startAmbientSound, _fadeDuration);
         }
     }
 }

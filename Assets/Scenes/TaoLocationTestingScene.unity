@@ -1584,6 +1584,14 @@ PrefabInstance:
       propertyPath: <NightStartLocationtransform>k__BackingField
       value: 
       objectReference: {fileID: 892996673}
+    - target: {fileID: 7632384789657716642, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _fadeDuration
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632384789657716642, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _ambientTwoSound
+      value: 
+      objectReference: {fileID: 11400000, guid: bc999334aae868d45952ce72a4a6342c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
 --- !u!108 &1653941967 stripped
