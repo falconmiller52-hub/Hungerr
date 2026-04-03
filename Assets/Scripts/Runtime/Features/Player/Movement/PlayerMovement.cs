@@ -1,4 +1,5 @@
 using NaughtyAttributes;
+using Runtime.Common.Extensions;
 using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
 using Runtime.Features.Sounds;
@@ -107,8 +108,7 @@ namespace Runtime.Features.Player.Movement
 
             if (hit.collider && hit.collider.gameObject.TryGetComponent<SurfaceMaterialSoundHolder>(out var surfaceMaterialHolder))
             {
-                var stepSoundsAmount = surfaceMaterialHolder.MaterialSounds.Count;
-                _currentStepSoundData = surfaceMaterialHolder.MaterialSounds[Random.Range(0, stepSoundsAmount)];
+                _currentStepSoundData = surfaceMaterialHolder.MaterialSounds.Random();
             }
             else
             {

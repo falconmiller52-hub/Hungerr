@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Clip>k__BackingField: {fileID: 8300000, guid: 7ab9cfaf0cec920499ad16dd50b290a9, type: 3}
   <MixerGroup>k__BackingField: {fileID: -2304933351387166823, guid: a281b0abee8ad5941b9156b33c9f3ef8, type: 2}
-  <Volume>k__BackingField: 1
+  <Volume>k__BackingField: 0.3
   <PitchRange>k__BackingField: {x: 0.789205, y: 1.3832648}
   <Loop>k__BackingField: 0
   <SpatialBlend>k__BackingField: 1

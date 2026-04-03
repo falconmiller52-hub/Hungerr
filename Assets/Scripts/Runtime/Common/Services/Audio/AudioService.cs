@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Runtime.Features.Sounds;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Runtime.Common.Services.Audio
 {
@@ -17,8 +20,14 @@ namespace Runtime.Common.Services.Audio
 			_pool = pool;
 		}
 
-		public void PlaySfx(SoundData data, Vector3 position = default)
+		public void PlaySfx(SoundData data, Vector3 position, Action<SoundData> onEnd = null)
 		{
+			if (data == null)
+			{
+				Debug.LogError("AudioService::PlaySfx() data is null");
+				return;
+			}
+			
 			SoundEmitter emitter = _pool.Spawn();
 			emitter.transform.position = position;
 
@@ -30,6 +39,7 @@ namespace Runtime.Common.Services.Audio
 			emitter.Play(data, e => {
 				_activeEmitters.Remove(e);
 				_pool.Despawn(e);
+				onEnd?.Invoke(data);
 			}, pitch);
         
 			_activeEmitters.Add(emitter);
@@ -37,9 +47,19 @@ namespace Runtime.Common.Services.Audio
 
 		public void PlayMusic(SoundData data, float fadeDuration = 1f)
 		{
-			// Здесь логика Crossfade (плавного перехода)
-			// Можно использовать DOTween для затухания старого _currentMusic
-			// и появления нового из пула.
+		}
+
+		public void StopPlaying(SoundData data)
+		{
+			for (int i = _activeEmitters.Count - 1; i >= 0; i--)
+			{
+				var emitter = _activeEmitters[i];
+        
+				if (emitter.Data == data)
+				{
+					emitter.Stop();
+				}
+			}
 		}
 	}
 }

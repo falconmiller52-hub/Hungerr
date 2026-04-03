@@ -5,12 +5,13 @@ using Zenject;
 namespace Runtime.Features.Sounds
 {
 	/// <summary>
-	/// компонент для воспроизведения звука
+	/// компонент для воспроизведения звука, включается на время исполнения и потом выключается (работает через пул зенжекта) 
 	/// </summary>
 	[RequireComponent(typeof(AudioSource))]
 	public partial class SoundEmitter : MonoBehaviour
 	{
 		private AudioSource _source;
+		private SoundData _data;
 		private Action<SoundEmitter> _onFinished;
 
 		private void Awake() => _source = GetComponent<AudioSource>();
@@ -29,6 +30,7 @@ namespace Runtime.Features.Sounds
 			_source.maxDistance = data.MaxDistance;
 			_source.rolloffMode = data.RolloffMode;
 
+			_data = data;
 			_source.Play();
 
 			if (!data.Loop)
@@ -38,7 +40,11 @@ namespace Runtime.Features.Sounds
 		}
 
 		private void NotifyFinished() => _onFinished?.Invoke(this);
-		public void Stop() => _source.Stop();
+		public SoundData Data => _data;
+		public void Stop()
+		{
+			_source.Stop();
+		}
 	}
 	
 	public partial class SoundEmitter { public class Pool : MonoMemoryPool<SoundEmitter> { } }

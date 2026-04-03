@@ -533,12 +533,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f01d751d9950844f860429dbb195850, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Animator>k__BackingField: {fileID: 285659395}
+  <Agent>k__BackingField: {fileID: 285659396}
   <PatrolPoints>k__BackingField: []
+  <PatrolSounds>k__BackingField:
+  - {fileID: 11400000, guid: e69316dda48c65643bbb525f9afefdce, type: 2}
+  - {fileID: 11400000, guid: 2dc81df7f0c0fab488a22c277d035365, type: 2}
+  - {fileID: 11400000, guid: d3fd846e3d6fa6c47bc978d393ee5344, type: 2}
+  - {fileID: 11400000, guid: f341959c5b5983448a955fa5f2edf8ca, type: 2}
   <PatrolSpeedMultiplier>k__BackingField: 1
   <ChaseSpeedMultiplier>k__BackingField: 2
   <DetectionRadius>k__BackingField: 11
-  <Animator>k__BackingField: {fileID: 285659395}
-  <Agent>k__BackingField: {fileID: 285659396}
+  <ChaseSounds>k__BackingField:
+  - {fileID: 11400000, guid: 4925a1e961b7e4647beae1bb199a60d9, type: 2}
+  - {fileID: 11400000, guid: 1131fa60bbe9f034fb727175ae054b5b, type: 2}
+  - {fileID: 11400000, guid: e8613945a6c982447a442576d6078ca5, type: 2}
+  - {fileID: 11400000, guid: ad404470792bcce44ba7afe22a3f0803, type: 2}
   <AttackRadius>k__BackingField: 2
   <AttackDamage>k__BackingField: 10
   <AttackCooldown>k__BackingField: 7
