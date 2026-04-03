@@ -1,4 +1,5 @@
 using NaughtyAttributes;
+using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
 using Runtime.Features.Sounds;
 using Runtime.Features.Sounds.Steps;
@@ -16,12 +17,10 @@ namespace Runtime.Features.Player.Movement
         [SerializeField, Label("Ground Checker Length")] private float _groundCheckDistance = 1f;
 
         [Space, SerializeField, Label("Jump Height")] private float _jumpHeight = 1f;
-        [SerializeField, Label("Jump Sound")] private AudioSource _jumpSoundObject;
-        [SerializeField, Label("Grounded Sound")] private AudioSource _groundedSoundObject;
-
-        [Space, SerializeField, Label("Steps Sound Object")] private AudioSource _stepsSoundObject;
-        [SerializeField, Label("Steps Standart Sound")] private SoundMaterial _stepsStandartSound;
-        [SerializeField, MinMaxSlider(-3f, 3f), Label("Steps Pitch Range")] private Vector2 _stepsPitchRange;
+        
+        [SerializeField, Label("Standard Step Sound")] private SoundData _standartStepSound;
+        [SerializeField, Tooltip("Ground Sound On Start Jump")] private SoundData _jumpStartSound;
+        [SerializeField, Tooltip("Ground Sound After Jump")] private SoundData _jumpEndSound;
 
         [Space, SerializeField, Label("Gravity Force")] private float _gravityForce = 30f;
 
@@ -32,16 +31,19 @@ namespace Runtime.Features.Player.Movement
         private RaycastHit _playerGroundHit;
         private float _gravitySpeed = 0f;
         private Vector2 _inputDirection;
+        private SoundData _currentStepSoundData;
 
         //Кэшированные переменные
         private CharacterController _cc;
         private PlayerStance _playerStance;
         private IInputHandler _inputHandler;
+        private IAudioService _audioService;
 
         [Inject]
-        private void Construct(IInputHandler inputHandler)
+        private void Construct(IInputHandler inputHandler, IAudioService audioService)
         {
             _inputHandler = inputHandler;
+            _audioService = audioService;
         }
     
         private void Start()
@@ -104,15 +106,14 @@ namespace Runtime.Features.Player.Movement
 
             Physics.Raycast(ray, out RaycastHit hit, _groundCheckDistance);
 
-            if (hit.collider && hit.collider.gameObject.TryGetComponent<SurfaceMaterialHolder>(out var surfaceMaterialHolder))
+            if (hit.collider && hit.collider.gameObject.TryGetComponent<SurfaceMaterialSoundHolder>(out var surfaceMaterialHolder))
             {
-                var _stepSoundsAmount = surfaceMaterialHolder.MaterialSound.StepSounds.Count - 1;
-                _stepsSoundObject.clip = surfaceMaterialHolder.MaterialSound.StepSounds[Random.Range(0, _stepSoundsAmount)];
+                var stepSoundsAmount = surfaceMaterialHolder.MaterialSounds.Count;
+                _currentStepSoundData = surfaceMaterialHolder.MaterialSounds[Random.Range(0, stepSoundsAmount)];
             }
             else
             {
-                var _stepSoundsAmount = _stepsStandartSound.StepSounds.Count - 1;
-                _stepsSoundObject.clip = _stepsStandartSound.StepSounds[Random.Range(0, _stepSoundsAmount)];
+                _currentStepSoundData = _standartStepSound;
             }
 
             if (!IsInvoking("PlaySound")) Invoke("PlaySound", 1 / _playerStance.StanceSpeed(_playerStance.CurrentStance) * 2);
@@ -132,8 +133,7 @@ namespace Runtime.Features.Player.Movement
 
         private void PlaySound()
         {
-            _stepsSoundObject.pitch = Random.Range(_stepsPitchRange.x, _stepsPitchRange.y);
-            _stepsSoundObject.Play();
+            _audioService.PlaySfx(_currentStepSoundData, transform.position);
         }
 
         private void GroundSet(bool isGrounded)
@@ -157,7 +157,7 @@ namespace Runtime.Features.Player.Movement
         {
             _isGrounded = true;
             _gravitySpeed = 0f;
-            _groundedSoundObject.Play();
+            _audioService.PlaySfx(_jumpEndSound, _groundCheck.position);
         }
 
         public void Move(Vector2 direction)
@@ -176,7 +176,7 @@ namespace Runtime.Features.Player.Movement
             if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching)
             {
                 _gravitySpeed = strength;
-                _jumpSoundObject.Play();
+                _audioService.PlaySfx(_jumpStartSound, _groundCheck.position);
             }
         }
 
@@ -213,30 +213,6 @@ namespace Runtime.Features.Player.Movement
         {
             get => _currentSpeed;
             set => _currentSpeed = value;
-        }
-
-        public AudioSource GroundedSoundObject
-        {
-            get => _groundedSoundObject;
-            set => _groundedSoundObject = value;
-        }
-
-        public AudioSource JumpSoundObject
-        {
-            get => _jumpSoundObject;
-            set => _jumpSoundObject = value;
-        }
-
-        public AudioSource StepsSoundObject
-        {
-            get => _stepsSoundObject;
-            set => _stepsSoundObject = value;
-        }
-
-        public SoundMaterial StandartStepsSound
-        {
-            get => _stepsStandartSound;
-            set => _stepsStandartSound = value;
         }
     }
 }

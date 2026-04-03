@@ -1306,11 +1306,9 @@ MonoBehaviour:
   _groundCheck: {fileID: 3123808519059337597}
   _groundCheckDistance: 0.2
   _jumpHeight: 0.2
-  _jumpSoundObject: {fileID: 195080310}
-  _groundedSoundObject: {fileID: 359077781}
-  _stepsSoundObject: {fileID: 7782626077527811234}
-  _stepsStandartSound: {fileID: 11400000, guid: 328c1cfcf57a7fb46a1e3d9dc1dd5c9e, type: 2}
-  _stepsPitchRange: {x: 0.85, y: 1.15}
+  _standartStepSound: {fileID: 11400000, guid: 165547486abab514898ef9e2e7530f6e, type: 2}
+  _jumpStartSound: {fileID: 11400000, guid: d0a27c4eb9ff12640a767a8861f59088, type: 2}
+  _jumpEndSound: {fileID: 11400000, guid: e2a4563da7422754a8c4f642a4bdfad8, type: 2}
   _gravityForce: 0.07
 --- !u!114 &695208376743956962
 MonoBehaviour:

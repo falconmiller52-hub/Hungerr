@@ -343,17 +343,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &285659397 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 285659397, guid: ad50ac11feb4bfc42a1058d8a8aed12a, type: 3}
-  m_PrefabInstance: {fileID: 2706023828363385955}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f01d751d9950844f860429dbb195850, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &326087265
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,7 +962,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 584972627f75ee24285f04c8fbe15a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _materialSound: {fileID: 11400000, guid: 9682ed47cdacb0844ae09431681b51a9, type: 2}
+  _materialSounds:
+  - {fileID: 11400000, guid: e1a1a20461912b541a85aead2f4cdded, type: 2}
+  - {fileID: 11400000, guid: 499b3a6bf93673e4ba56cdb5d99b8d2e, type: 2}
 --- !u!95 &818432570
 Animator:
   serializedVersion: 5
@@ -1314,6 +1305,7 @@ GameObject:
   - component: {fileID: 1292547891}
   - component: {fileID: 1292547890}
   - component: {fileID: 1292547889}
+  - component: {fileID: 1292547893}
   m_Layer: 0
   m_Name: Cube (4)
   m_TagString: Untagged
@@ -1399,6 +1391,21 @@ Transform:
   m_Father: {fileID: 1778265185}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1292547893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1292547888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 584972627f75ee24285f04c8fbe15a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _materialSounds:
+  - {fileID: 11400000, guid: 165547486abab514898ef9e2e7530f6e, type: 2}
+  - {fileID: 11400000, guid: 1c2a77a776a785847bd90869b7504b4d, type: 2}
 --- !u!1 &1410869360
 GameObject:
   m_ObjectHideFlags: 0
@@ -1848,7 +1855,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2cfa42ced1b1af4f9fc32e22a72de67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _thinAI: {fileID: 285659397}
+  _navMeshSurface: {fileID: 0}
 --- !u!4 &2017935350
 Transform:
   m_ObjectHideFlags: 0
