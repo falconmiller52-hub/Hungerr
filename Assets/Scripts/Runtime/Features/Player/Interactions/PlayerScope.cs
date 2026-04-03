@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using Runtime.Common.Services.Input;
+using Runtime.Features.Interactable;
 using Runtime.Features.Outline;
 using UnityEngine;
 using Zenject;

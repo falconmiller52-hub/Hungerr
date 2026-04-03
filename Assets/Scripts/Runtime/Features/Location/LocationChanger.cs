@@ -5,20 +5,18 @@ using Zenject;
 
 namespace Runtime.Features.Location
 {
+    /// <summary>
+    /// скрипт отвечающий за хендл смены позиции игрока, к нему обращаются все компоненты-триггеры
+    /// </summary>
     public class LocationChanger : MonoBehaviour
     {
         [Header("Settings")]
         [SerializeField] private float _fadeInDuration = 0.2f;
         [SerializeField] private float _stayBlackDuration = 0.5f;
         [SerializeField] private float _fadeOutDuration = 0.5f;
-        
-        // [Header("Audio")]
-        // [SerializeField] private AudioClip _startSound;
-        // [SerializeField] private AudioClip _endSound;
 
         private ILoadingCurtain _curtain;
         private CharacterController _playerController;
-        // private AudioSource _audioSource;
         
         private bool _isProcessing;
 

@@ -18,7 +18,7 @@ namespace Runtime.Common.Services.ResourceLoad
 
 			if (loadedResource == null)
 			{
-				Debug.LogError($"[ResourcesLoader] Не удалось найти ресурс по пути: {path}");
+				Debug.LogError($"ResourcesLoader::Load() Не удалось найти ресурс по пути: {path}");
 				return null;
 			}
 

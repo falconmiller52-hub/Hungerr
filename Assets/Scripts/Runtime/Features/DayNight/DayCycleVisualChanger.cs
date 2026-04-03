@@ -4,6 +4,9 @@ using UnityEngine.Rendering;
 
 namespace Runtime.Features.DayNight
 {
+    /// <summary>
+    /// фасадный скрипт который дает апи для манипуляции с временем суток
+    /// </summary>
     [ExecuteInEditMode]
     public class DayCycleVisualChanger : MonoBehaviour
     {

@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace Runtime.UI
 {
+	// класс для добавления фичи мерцающего квадрата возле выбранной опции в меню
 	public class MenuButtonHelper : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		[SerializeField] private GameObject _buttonSelectionTag;

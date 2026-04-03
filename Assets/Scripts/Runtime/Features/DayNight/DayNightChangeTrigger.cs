@@ -1,11 +1,14 @@
 using Runtime.Common.Enums;
 using Runtime.Common.Services.EventBus;
-using Runtime.Features.Player.Movement;
+using Runtime.Features.Interactable;
 using UnityEngine;
 using Zenject;
 
 namespace Runtime.Features.DayNight
 {
+    /// <summary>
+    /// компонент-триггер отвечающий за вызов ивента о намерении сменить время суток
+    /// </summary>
     public class DayNightChangeTrigger : MonoBehaviour, IInteractable
     {
         [SerializeField] private GameplayStateEvent _eventType;
