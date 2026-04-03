@@ -16,6 +16,14 @@ namespace Runtime.Features.Sounds
 
 		private void Awake() => _source = GetComponent<AudioSource>();
 
+		public float Volume
+		{
+			get => _source.volume;
+			set => _source.volume = value;
+		}
+		
+		public SoundData Data => _data;
+		
 		public void Play(SoundData data, Action<SoundEmitter> onFinished, float pitch = 1)
 		{
 			_onFinished = onFinished;
@@ -35,15 +43,22 @@ namespace Runtime.Features.Sounds
 
 			if (!data.Loop)
 			{
-				Invoke(nameof(NotifyFinished), data.Clip.length / Mathf.Abs(pitch));
+				float duration = data.Clip.length / Mathf.Abs(pitch);
+				Invoke(nameof(NotifyFinished), duration);
 			}
 		}
 
-		private void NotifyFinished() => _onFinished?.Invoke(this);
-		public SoundData Data => _data;
+		private void NotifyFinished()
+		{
+			_onFinished?.Invoke(this);
+			_onFinished = null;
+		}
+
 		public void Stop()
 		{
+			CancelInvoke(nameof(NotifyFinished));
 			_source.Stop();
+			NotifyFinished();
 		}
 	}
 	
