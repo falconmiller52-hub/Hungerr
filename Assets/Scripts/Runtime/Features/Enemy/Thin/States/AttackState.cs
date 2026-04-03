@@ -1,3 +1,4 @@
+using Runtime.Features.Health;
 using UnityEngine;
 
 namespace Runtime.Features.Enemy.Thin.States
@@ -48,21 +49,23 @@ namespace Runtime.Features.Enemy.Thin.States
 		
 		private void DoDamageCheck()
 		{
-			// Позиция начала каста (чуть впереди врага на уровне груди/рук)
-			Vector3 origin = _ai.transform.position + Vector3.up * 1f;
+			Vector3 size = new Vector3(1.5f, 1.0f, 0.5f); // Ширина, Высота, Толщина
+			Vector3 halfExtents = size / 2f;
+			
+			Vector3 origin = _ai.transform.position + Vector3.up * 1.0f; 
 			Vector3 direction = _ai.transform.forward;
-
-			// SphereCast летит вперед на AttackRange
-			if (Physics.SphereCast(origin, _ai.AttackRadius, direction, out RaycastHit hit, _ai.AttackRadius))
+			Quaternion orientation = _ai.transform.rotation;
+			float maxDistance = _ai.AttackRadius; // Насколько далеко летит "коробка"
+			
+			if (Physics.BoxCast(origin, halfExtents, direction, out RaycastHit hit, orientation, maxDistance))
 			{
-				// Если у игрока есть компонент здоровья (например, Health)
-				// if (hit.collider.TryGetComponent(out Health health)) health.TakeDamage(_ai.AttackDamage);
-                
-				Debug.Log($"Пизданул игрока! Объект: {hit.collider.name}");
-			}
-			else
-			{
-				Debug.Log("Промахнулся!");
+				var damageable = hit.collider.GetComponentInParent<IDamageable>();
+        
+				if (damageable != null)
+				{
+					damageable.ApplyDamage(_ai.AttackDamage);
+					Debug.Log($"<color=yellow>BoxCast попал по: {hit.collider.name}</color>");
+				}
 			}
 		}
 	}

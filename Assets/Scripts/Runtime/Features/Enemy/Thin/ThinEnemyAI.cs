@@ -6,6 +6,8 @@ namespace Runtime.Features.Enemy.Thin
 {
 	public class ThinEnemyAI : MonoBehaviour
 	{
+		private static readonly int Move = Animator.StringToHash("Move");
+
 		[field: SerializeField] public Transform[] PatrolPoints { get; private set; }
 
 		[field: Header("Settings")]
@@ -96,7 +98,7 @@ namespace Runtime.Features.Enemy.Thin
 			}
 
 			bool shouldMove = _velocity.magnitude > 0.5f && Agent.remainingDistance > Agent.stoppingDistance;
-			Animator.SetBool("Move", shouldMove);
+			Animator.SetBool(Move, shouldMove);
 
 			// подтягивание трансформа к агенту
 			if (worldDeltaPosition.magnitude > Agent.radius / 2f)
