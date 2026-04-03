@@ -4,6 +4,9 @@ using Zenject;
 
 namespace Runtime.Features.Sounds
 {
+	/// <summary>
+	/// компонент для воспроизведения звука
+	/// </summary>
 	[RequireComponent(typeof(AudioSource))]
 	public partial class SoundEmitter : MonoBehaviour
 	{

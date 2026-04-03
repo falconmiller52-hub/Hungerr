@@ -1,6 +1,8 @@
 using System.Collections;
 using NaughtyAttributes;
+using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
+using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -29,8 +31,7 @@ namespace Runtime.Features.Player.Movement
         [Space, SerializeField, Label("Ceiling Checker Position")] private Transform _ceilingCheck;
         [SerializeField, Label("Ceiling Checker Length")] private float _ceilingCheckDistance = 1f;
 
-        [Space, SerializeField, Label("Exhaustion Sound Object")] private AudioSource _exhaustionSoundObject;
-        [SerializeField, Label("Exhaustion Sound Object")] private AudioSource _stepsSoundObject;
+        [SerializeField, Label("Exhaustion Sound")] private SoundData _exhaustionStepSound;
 
         //Внутренние переменные
         public enum Stance
@@ -47,13 +48,15 @@ namespace Runtime.Features.Player.Movement
 
         //Кэшированные переменные
         private IInputHandler _inputHandler;
+        private IAudioService _audioService;
         PlayerCamera _playerCamera;
         CharacterController _cc;
 
         [Inject]
-        private void Construct(IInputHandler inputHandler)
+        private void Construct(IInputHandler inputHandler, IAudioService audioService)
         {
             _inputHandler = inputHandler;
+            _audioService = audioService;
         }
     
         private void Start()
@@ -116,7 +119,6 @@ namespace Runtime.Features.Player.Movement
                 {
                     _currentStance = Stance.Crouching;
                     _crouchingTimer = 0f;
-                    _stepsSoundObject.volume = _crouchingVolumes.x;
                 }
                 else if (!_runPress || _currentStamina <= 0f)
                 {
@@ -129,7 +131,6 @@ namespace Runtime.Features.Player.Movement
                 {
                     _currentStance = Stance.Walking;
                     _crouchingTimer = 0f;
-                    _stepsSoundObject.volume = _crouchingVolumes.y;
                 }
             }
             else
@@ -138,7 +139,6 @@ namespace Runtime.Features.Player.Movement
                 {
                     _currentStance = Stance.Crouching;
                     _crouchingTimer = 0f;
-                    _stepsSoundObject.volume = _crouchingVolumes.x;
                 }
                 else if (_runPress && !_isExhausted)
                 {
@@ -161,7 +161,7 @@ namespace Runtime.Features.Player.Movement
                 if (_currentStamina <= 0f)
                 {
                     _isExhausted = true;
-                    _exhaustionSoundObject.Play();
+                    _audioService.PlaySfx(_exhaustionStepSound, transform.position);
                 }
             }
             else
@@ -330,18 +330,6 @@ namespace Runtime.Features.Player.Movement
         {
             get => _crouchingTimer;
             set => _crouchingTimer = value;
-        }
-
-        public AudioSource ExhaustionSoundObject
-        {
-            get => _exhaustionSoundObject;
-            set => _exhaustionSoundObject = value;
-        }
-
-        public AudioSource StepsSoundObject
-        {
-            get => _stepsSoundObject;
-            set => _stepsSoundObject = value;
         }
     }
 }

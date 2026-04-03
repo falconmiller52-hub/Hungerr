@@ -6,70 +6,43 @@ using UnityEngine.Rendering.Universal;
 
 namespace Runtime.Features.Player.Other
 {
-    [RequireComponent(typeof(PlayerStance))]
-    public class PlayerProcessingController : MonoBehaviour
-    {
-        //Переменные инспектора
-        [SerializeField, Label("Post Processing Object")] private Volume _postProcessingObject;
+	[RequireComponent(typeof(PlayerStance))]
+	public class PlayerProcessingController : MonoBehaviour
+	{
+		[SerializeField, Label("Post Processing Object")]
+		private Volume _postProcessingObject;
 
-        [Space, SerializeField, MinMaxSlider(0f, 1f), Label("Crouch Vignette Strength")] private Vector2 _crouchVignetteStrength;
-        [SerializeField, MinMaxSlider(0f, 500f), Label("Exhaustion Depth of Field Strength")] private Vector2 _exhaustionDofStrength;
+		[Space, SerializeField, MinMaxSlider(0f, 1f), Label("Crouch Vignette Strength")]
+		private Vector2 _crouchVignetteStrength;
 
-        //Внутренние переменные
-        private float _nextVignetteStrength;
-        private float _nextDofStrength;
+		[SerializeField, MinMaxSlider(0f, 500f), Label("Exhaustion Depth of Field Strength")]
+		private Vector2 _exhaustionDofStrength;
 
-        //Кэшированные переменные
-        PlayerStance _playerStance;
-        private Vignette _vignette;
-        private DepthOfField _depthOfField;
+		private float _nextVignetteStrength;
+		private float _nextDofStrength;
 
-        //Методы Моно
-        private void Start()
-        {
-            _playerStance = GetComponent<PlayerStance>();
-            _postProcessingObject.profile.TryGet(out _vignette);
-            _postProcessingObject.profile.TryGet(out _depthOfField);
+		PlayerStance _playerStance;
+		private Vignette _vignette;
+		private DepthOfField _depthOfField;
 
-            _nextVignetteStrength = _crouchVignetteStrength.y;
-            _nextDofStrength = _exhaustionDofStrength.y;
-        }
+		//Методы Моно
+		private void Start()
+		{
+			_playerStance = GetComponent<PlayerStance>();
+			_postProcessingObject.profile.TryGet(out _vignette);
+			_postProcessingObject.profile.TryGet(out _depthOfField);
 
-        private void Update()
-        {
-            _nextVignetteStrength = _playerStance.CurrentStance == PlayerStance.Stance.Crouching ? _crouchVignetteStrength.y : _crouchVignetteStrength.x;
-            _nextDofStrength = _playerStance.IsExhausted ? _exhaustionDofStrength.x : _exhaustionDofStrength.y;
+			_nextVignetteStrength = _crouchVignetteStrength.y;
+			_nextDofStrength = _exhaustionDofStrength.y;
+		}
 
-            _vignette.intensity.value = Mathf.Lerp(_vignette.intensity.value, _nextVignetteStrength, Time.deltaTime * _playerStance.CrouchSpeed);
-            _depthOfField.gaussianEnd.value = Mathf.Lerp(_depthOfField.gaussianEnd.value, _nextDofStrength, Time.deltaTime * _playerStance.ExhaustionDuration / 2);
-        }
+		private void Update()
+		{
+			_nextVignetteStrength = _playerStance.CurrentStance == PlayerStance.Stance.Crouching ? _crouchVignetteStrength.y : _crouchVignetteStrength.x;
+			_nextDofStrength = _playerStance.IsExhausted ? _exhaustionDofStrength.x : _exhaustionDofStrength.y;
 
-        //Методы скрипта
-
-
-        //Геттеры и сеттеры
-        public Vector2 CrouchVignetteStrength
-        {
-            get => _crouchVignetteStrength;
-            set => _crouchVignetteStrength = value;
-        }
-
-        public Vector2 ExhaustionDepthOfFieldStrength
-        {
-            get => _exhaustionDofStrength;
-            set => _exhaustionDofStrength = value;
-        }
-
-        public float NextVignetteStrength
-        {
-            get => _nextVignetteStrength;
-            set => _nextVignetteStrength = value;
-        }
-
-        public float NextDepthOfFieldStrength
-        {
-            get => _nextDofStrength;
-            set => _nextDofStrength = value;
-        }
-    }
+			_vignette.intensity.value = Mathf.Lerp(_vignette.intensity.value, _nextVignetteStrength, Time.deltaTime * _playerStance.CrouchSpeed);
+			_depthOfField.gaussianEnd.value = Mathf.Lerp(_depthOfField.gaussianEnd.value, _nextDofStrength, Time.deltaTime * _playerStance.ExhaustionDuration / 2);
+		}
+	}
 }

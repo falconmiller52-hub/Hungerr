@@ -1,93 +1,70 @@
 using NaughtyAttributes;
+using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
 using Runtime.Features.Player.Movement;
+using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
 
 namespace Runtime.Features.Player.Other
 {
-    [RequireComponent(typeof(PlayerCamera))]
-    public class PlayerFlashlight : MonoBehaviour
-    {
-        //Переменные инспектора
-        [SerializeField, Label("Flashlight Object")] private Light _flashlightObject;
-        [SerializeField, Label("Flashlight Intensity")] private float _intensity = 1f;
+	[RequireComponent(typeof(PlayerCamera))]
+	public class PlayerFlashlight : MonoBehaviour
+	{
+		[SerializeField, Label("Flashlight Object")]
+		private Light _flashlightObject;
 
-        [Space, SerializeField, Label("Flashlight ON Sound Object")] private AudioSource _flashlightsSoundObjectOn;
-        [SerializeField, Label("Flashlight OFF Sound Object")] private AudioSource _flashlightsSoundObjectOff;
-    
-        private IInputHandler _inputHandler;
-        private bool _isEnabled = false;
+		[SerializeField, Label("Flashlight Intensity")]
+		private float _intensity = 1f;
 
+		[Space, SerializeField, Label("Flashlight ON Sound ")]
+		private SoundData _flashlightTurnOnSound;
 
-        [Inject]
-        private void Construct(IInputHandler inputHandler)
-        {
-            _inputHandler = inputHandler;
-        }
-    
-        private void OnEnable()
-        {
-            if (_inputHandler == null)
-            {
-                Debug.LogError("PlayerFlashlight::OnEnable() No Input Handler was assigned");
-                return;
-            }
-        
-            _inputHandler.FlashlightInputPressed += Toggle;
-        }
+		[Space, SerializeField, Label("Flashlight OFF Sound ")]
+		private SoundData _flashlightTurnffSound;
 
-        private void OnDisable()
-        {
-            if (_inputHandler == null)
-            {
-                Debug.LogError("PlayerFlashlight::OnDisable() No Input Handler was assigned");
-                return;
-            }
-        
-            _inputHandler.FlashlightInputPressed -= Toggle;
-        }
-        
-        public void Toggle()
-        {
-            var initialIntensity = _flashlightObject.intensity;
+		private IInputHandler _inputHandler;
+		private IAudioService _audioService;
+		private bool _isEnabled = false;
 
-            if (_isEnabled == false)
-            {
-                if (initialIntensity == 0f)
-                {
-                    initialIntensity = _intensity;
-                    _flashlightsSoundObjectOn.Play();
-                }
-                else
-                {
-                    initialIntensity = 0f;
-                    _flashlightsSoundObjectOff.Play();
-                }
+		[Inject]
+		private void Construct(IInputHandler inputHandler, IAudioService audioService)
+		{
+			_inputHandler = inputHandler;
+			_audioService = audioService;
+		}
 
-                _isEnabled = true;
-            }
-            else
-            {
-                initialIntensity = 0f;
-                _flashlightsSoundObjectOff.Play();
-                _isEnabled = false;
-            }
+		private void OnEnable()
+		{
+			if (_inputHandler == null)
+			{
+				Debug.LogError("PlayerFlashlight::OnEnable() No Input Handler was assigned");
+				return;
+			}
 
-            _flashlightObject.intensity = initialIntensity;
-        }
+			_inputHandler.FlashlightInputPressed += Toggle;
+		}
 
-        //Геттеры и сеттеры
-        public Light Object
-        {
-            get => _flashlightObject;
-            set => _flashlightObject = value;
-        }
+		private void OnDisable()
+		{
+			if (_inputHandler == null)
+			{
+				Debug.LogError("PlayerFlashlight::OnDisable() No Input Handler was assigned");
+				return;
+			}
 
-        public float Intensity
-        {
-            get => _intensity;
-            set => _intensity = value;
-        }
-    }
+			_inputHandler.FlashlightInputPressed -= Toggle;
+		}
+
+		public void Toggle()
+		{
+			_isEnabled = !_isEnabled;
+
+			// Устанавливаем интенсивность (если включен — берем конфиг, если нет — 0)
+			_flashlightObject.intensity = _isEnabled ? _intensity : 0f;
+			
+			var sound = _isEnabled ? _flashlightTurnOnSound : _flashlightTurnffSound;
+			_audioService.PlaySfx(sound, transform.position);
+		}
+	}
 }
