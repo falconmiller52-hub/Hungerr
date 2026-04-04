@@ -20,7 +20,7 @@ Texture2D:
   m_MipsStripped: 0
   m_TextureFormat: 1
   m_MipCount: 1
-  m_IsReadable: 0
+  m_IsReadable: 1
   m_IsPreProcessed: 0
   m_IgnoreMasterTextureLimit: 0
   m_StreamingMipmaps: 0
@@ -57,11 +57,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: Pixel_Glow
+  m_Name: vcrosdmonorus_vhsicons
   m_EditorClassIdentifier: 
-  hashCode: -1710697869
+  hashCode: -2073080510
   material: {fileID: 7194579654493780351}
-  materialHashCode: -927080973
+  materialHashCode: -1432258782
   m_Version: 1.1.0
   m_SourceFontFileGUID: 1071b66d6c6f09d4f8dd8b0601d80aa8
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 1071b66d6c6f09d4f8dd8b0601d80aa8, type: 3}
@@ -4139,8 +4139,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: vcrosdmonorus_vhsicons Atlas Material
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
-  m_ValidKeywords:
-  - GLOW_ON
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
