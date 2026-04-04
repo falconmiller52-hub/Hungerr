@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace Runtime.Common.Services.Audio
 {
-	public class AudioService : IAudioService, IDisposable
+	public class AudioService : IAudioService
 	{
 		private readonly SoundEmitter.Pool _pool;
 		private readonly List<SoundEmitter> _activeEmitters = new();
@@ -92,13 +92,6 @@ namespace Runtime.Common.Services.Audio
 					emitter.Stop();
 				}
 			}
-		}
-
-		public void Dispose()
-		{
-			_activeEmitters.ForEach(x => x.Stop());
-			_activeEmitters.Clear();
-			_pool?.Dispose();
 		}
 	}
 }

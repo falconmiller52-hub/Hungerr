@@ -7,7 +7,8 @@ namespace Runtime.UI
 	public class CounterUI : MonoBehaviour
 	{
 		[SerializeField] private Image _image;
-		[SerializeField] private TMP_Text _textObject;
+		[SerializeField] private TMP_Text _currentValueTextObject;
+		[SerializeField] private TMP_Text _maxValueTextObject;
 
 		private void Start()
 		{
@@ -17,7 +18,8 @@ namespace Runtime.UI
 
 		public void UpdateUI(float currentValue, float maxValue)
 		{
-			_textObject.text = $"{currentValue} / {maxValue}";
+			_currentValueTextObject.text = currentValue.ToString();
+			_maxValueTextObject.text = $"/{maxValue}";
 		}
 	}
 }

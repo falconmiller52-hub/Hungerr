@@ -56,9 +56,17 @@ namespace Runtime.Features.Sounds
 
 		public void Stop()
 		{
+			if (this == null) 
+				return;
+			
 			CancelInvoke(nameof(NotifyFinished));
 			_source.Stop();
 			NotifyFinished();
+		}
+		
+		private void OnDestroy()
+		{
+			CancelInvoke();
 		}
 	}
 	
