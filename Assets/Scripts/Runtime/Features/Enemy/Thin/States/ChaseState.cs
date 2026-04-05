@@ -1,3 +1,5 @@
+using Runtime.Common.Extensions;
+using Runtime.Features.Sounds;
 using UnityEngine;
 
 namespace Runtime.Features.Enemy.Thin.States
@@ -8,14 +10,21 @@ namespace Runtime.Features.Enemy.Thin.States
 		private static readonly int Chase = Animator.StringToHash("Chase");
 	
 		private readonly ThinEnemyAI _ai;
+		private SoundData _currentSound;
+		private bool _isActive = false;
 		public ChaseState(ThinEnemyAI ai) => _ai = ai;
 
 		public void Enter()
 		{
+			_isActive = true;
+			
 			_ai.Animator.SetFloat(WalkSpeed, _ai.ChaseSpeedMultiplier);
-			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed);
+			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed) * _ai.transform.lossyScale.x;
 		
 			_ai.Animator.SetBool(Chase, true);
+			
+			_currentSound = _ai.ChaseSounds.Random();
+			_ai.AudioService.PlaySfx(_currentSound, _ai.transform.position, onEnd: SetNewSound);
 		}
 
 		public void Execute()
@@ -35,10 +44,20 @@ namespace Runtime.Features.Enemy.Thin.States
 			_ai.Agent.SetDestination(_ai.Target.position);
 		}
 
-		public void Exit() => _ai.Animator.SetBool(Chase, false);
-		public void OnAnimationEventHandled()
+		public void Exit()
 		{
-		
+			_isActive = false;
+			_ai.Animator.SetBool(Chase, false);
+			_ai.AudioService.StopPlaying(_currentSound);
+		}
+
+		private void SetNewSound(SoundData currentPlayedData)
+		{
+			if (!_isActive) 
+				return;
+			
+			_currentSound = _ai.ChaseSounds.RandomExcept(currentPlayedData);
+			_ai.AudioService.PlaySfx(_currentSound, _ai.transform.position, onEnd: SetNewSound);
 		}
 	}
 }

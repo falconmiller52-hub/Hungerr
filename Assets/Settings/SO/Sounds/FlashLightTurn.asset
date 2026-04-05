@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 366767c0c20c2314e8a91a40757b4552, type: 3}
+  m_Name: FlashLightTurn
+  m_EditorClassIdentifier: 
+  <Clip>k__BackingField: {fileID: 8300000, guid: f8befc975d992644fb25cb6821ddc3ef, type: 3}
+  <MixerGroup>k__BackingField: {fileID: -2304933351387166823, guid: a281b0abee8ad5941b9156b33c9f3ef8, type: 2}
+  <Volume>k__BackingField: 1
+  <PitchRange>k__BackingField: {x: 0.96167344, y: 1.1341426}
+  <Loop>k__BackingField: 0
+  <SpatialBlend>k__BackingField: 1
+  <MinDistance>k__BackingField: 1
+  <MaxDistance>k__BackingField: 20
+  <RolloffMode>k__BackingField: 0

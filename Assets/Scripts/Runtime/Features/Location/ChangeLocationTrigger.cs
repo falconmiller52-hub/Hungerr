@@ -1,8 +1,12 @@
+using Runtime.Features.Interactable;
 using UnityEngine;
 using Zenject;
 
 namespace Runtime.Features.Location
 {
+    /// <summary>
+    /// триггер смены локации, вешается на объект с коллайдером и если игрок завзаимодействует с этим объектом то сменится поз. игрока на nextPosition
+    /// </summary>
     [RequireComponent(typeof(Collider))]
     public class ChangeLocationTrigger : MonoBehaviour, IInteractable
     {

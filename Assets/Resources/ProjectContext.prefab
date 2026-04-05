@@ -153,3 +153,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _loadingCurtainPrefab: {fileID: 3906718236037790424, guid: a7e17897ae1ce9848a84761d744c5254, type: 3}
+  _emitterPrefab: {fileID: 2165982394807960438, guid: cd22bab4e8fcfb14c862673a1876b3ea, type: 3}
