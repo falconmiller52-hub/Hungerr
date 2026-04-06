@@ -20,7 +20,7 @@ namespace Runtime.Features.DayNight.StateMachine
 
 			Owner.StartCoroutine(ProcessStartDayPhase());
 			
-			EventBus.Subscribe(GameplayStateEvent.StartNightPhaseTrigger, StartNightPhase);
+			EventBus.Subscribe(EGameplayStateEvent.StartNightPhaseTrigger, StartNightPhase);
 		}
 
 		private void StartNightPhase()
@@ -46,7 +46,7 @@ namespace Runtime.Features.DayNight.StateMachine
 
 		public override void Exit()
 		{
-			EventBus.Unsubscribe(GameplayStateEvent.StartNightPhaseTrigger, StartNightPhase);
+			EventBus.Unsubscribe(EGameplayStateEvent.StartNightPhaseTrigger, StartNightPhase);
 		}
 	}
 }

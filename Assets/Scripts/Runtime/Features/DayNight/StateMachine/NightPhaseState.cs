@@ -34,14 +34,14 @@ namespace Runtime.Features.DayNight.StateMachine
 			
 			Owner.StartCoroutine(ProcessStartNightPhase());
 			
-			EventBus.Subscribe(GameplayStateEvent.EndNightPhaseTrigger, EndNightPhase);
+			EventBus.Subscribe(EGameplayStateEvent.EndNightPhaseTrigger, EndNightPhase);
 
 			_isTimerActive = true;
 		}
 
 		public override void Exit()
 		{
-			EventBus.Unsubscribe(GameplayStateEvent.EndNightPhaseTrigger, EndNightPhase);
+			EventBus.Unsubscribe(EGameplayStateEvent.EndNightPhaseTrigger, EndNightPhase);
 		}
 		
 		private void EndNightPhase()
