@@ -12,11 +12,10 @@ namespace Runtime.Features.Location
 	/// </summary>
 	public class LocationChanger : MonoBehaviour
 	{
-		[Header("Settings")] 
-		[SerializeField] private float _defaultFadeInDuration  = 0.2f;
-		[SerializeField] private float _defaultStayBlackDuration  = 0.5f;
+		[Header("Settings")] [SerializeField] private float _defaultFadeInDuration = 0.2f;
+		[SerializeField] private float _defaultStayBlackDuration = 0.5f;
 		[SerializeField] private float _defaultFadeOutDuration = 0.5f;
-		
+
 		private ILoadingCurtain _curtain;
 		private CharacterController _playerController;
 		private LocationChangerData _defaultLocationChangerData;
@@ -32,7 +31,8 @@ namespace Runtime.Features.Location
 		public void Init(CharacterController playerController)
 		{
 			_playerController = playerController;
-			_defaultLocationChangerData = new LocationChangerData(_defaultFadeInDuration, _defaultStayBlackDuration, _defaultFadeOutDuration);
+			_defaultLocationChangerData = new LocationChangerData(_defaultFadeInDuration, _defaultStayBlackDuration,
+							_defaultFadeOutDuration);
 		}
 
 		/// <summary>
@@ -42,7 +42,8 @@ namespace Runtime.Features.Location
 		/// <param name="locationChangerData">Данные о времени Fade</param>
 		/// <param name="needCurtain">Нужно ли затемнение</param>
 		/// <param name="needToDisableCC">Нужно ли выключать character controller</param>
-		public void ChangeLocation(Transform targetPoint,LocationChangerData? locationChangerData = null,  bool needCurtain = true, bool needToDisableCC = true )
+		public void ChangeLocation(Transform targetPoint, LocationChangerData? locationChangerData = null,
+						bool needCurtain = true, bool needToDisableCC = true)
 		{
 			if (_isProcessing)
 				return;
@@ -52,19 +53,20 @@ namespace Runtime.Features.Location
 				Debug.LogError("LocationChanger::ChangeLocation() PlayerController is null");
 				return;
 			}
-			
+
 			StartCoroutine(LocationChangeRoutine(targetPoint, locationChangerData, needCurtain, needToDisableCC));
 		}
 
-		private IEnumerator LocationChangeRoutine(Transform target,LocationChangerData? locationChangerData = null, bool needCurtain = true, bool needToDisableCC = true)
+		private IEnumerator LocationChangeRoutine(Transform target, LocationChangerData? locationChangerData = null,
+						bool needCurtain = true, bool needToDisableCC = true)
 		{
 			_isProcessing = true;
-			
+
 			if (needToDisableCC)
 				_playerController.enabled = false;
 
 			LocationChangerData finalLocationChangerData = locationChangerData ?? _defaultLocationChangerData;
-			
+
 			if (needCurtain)
 			{
 				_curtain.Show(finalLocationChangerData.FadeOutDuration, false, () => { Teleport(target); });
