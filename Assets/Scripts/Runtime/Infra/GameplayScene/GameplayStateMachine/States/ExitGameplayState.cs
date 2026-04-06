@@ -24,7 +24,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			// clear subscriptions
 			// release the addressables assets
 			
-			_eventBus.Trigger(GameEvent.EndGameplay);
+			_eventBus.Trigger(EGameEvent.EndGameplay);
 		}
 
 		public void Exit()

@@ -11,7 +11,7 @@ namespace Runtime.Features.DayNight
     /// </summary>
     public class DayNightChangeTrigger : MonoBehaviour, IInteractable
     {
-        [SerializeField] private GameplayStateEvent _eventType;
+        [SerializeField] private EGameplayStateEvent _eventType;
     
         private EventBus _eventBus;
 
