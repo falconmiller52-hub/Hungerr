@@ -1,4 +1,3 @@
-using System.Collections;
 using Runtime.Common.Enums;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
@@ -17,8 +16,8 @@ namespace Runtime.Features.DayNight.StateMachine
 		public override void Enter()
 		{
 			Debug.Log("--- Наступил ДЕНЬ ---");
-
-			Owner.StartCoroutine(ProcessStartDayPhase());
+			
+			Curtain.Show(0.01f, onEnd: OnCurtainShowEnded);
 			
 			EventBus.Subscribe(EGameplayStateEvent.StartNightPhaseTrigger, StartNightPhase);
 		}
@@ -26,26 +25,17 @@ namespace Runtime.Features.DayNight.StateMachine
 		private void StartNightPhase()
 		{
 			Owner.EnterIn<NightPhaseState>();
-			// Owner.StartCoroutine(ProcessNightPhase());
 		}
 
-		private IEnumerator ProcessStartDayPhase()
+		private void OnCurtainShowEnded()
 		{
-			yield return null; // Заглушка чтобы 
-			InputHandler.Disable();
-			Curtain.Show(0);
-			
-			//ASK: Данный код спавнил игрока в своём месте, Я его закоментил чтобы он позицию игрока не переписывал позицию игрока
-			/*yield return new WaitForSeconds(0.4f); // заглушки
-			ChangeLocation(Owner.DayStartLocationtransform, needCurtain: false);
-			yield return new WaitForSeconds(0.4f);*/
-			
+			LocationChanger.ChangeLocation(Owner.DayStartLocationtransform, needCurtain: false);
 			Owner.DayCycleVisualChanger.SetDay();
 			
-			Curtain.Hide();
+			Curtain.Hide(0.01f);
 			InputHandler.Enable();
 		}
-
+		
 		public override void Exit()
 		{
 			EventBus.Unsubscribe(EGameplayStateEvent.StartNightPhaseTrigger, StartNightPhase);
