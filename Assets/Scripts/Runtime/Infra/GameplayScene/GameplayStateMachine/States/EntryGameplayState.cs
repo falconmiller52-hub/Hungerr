@@ -10,6 +10,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 using IState = Runtime.Common.Services.StateMachine.IState;
+using Object = UnityEngine.Object;
 
 namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 {
@@ -46,11 +47,18 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		{
 			// заглушка пока нет адресаблов
 			GameObject playerPrefab = _resourceLoader.Load<GameObject>("Player");
-			
-			PlayerSpawnPoint playerSpawnPoint = GameObject.FindFirstObjectByType<PlayerSpawnPoint>() 
-			                                    ?? throw new Exception("SpawnPoint not found in scene");
 
-			GameObject playerInstance = _container.InstantiatePrefab(playerPrefab, playerSpawnPoint.transform.position, Quaternion.identity, null);
+			PlayerSpawnPoint playerSpawnPoint = Object.FindFirstObjectByType<PlayerSpawnPoint>();
+			
+			if (playerSpawnPoint == null)
+			{
+				Debug.LogError("EntryGameplayState::Enter() playerSpawnPoint is NULL");
+			}
+
+			GameObject playerInstance = _container.InstantiatePrefab(playerPrefab, 
+				playerSpawnPoint ? playerSpawnPoint.transform.position : Vector3.one, 
+				Quaternion.identity, 
+				null);
 			
 			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
 			
@@ -64,7 +72,11 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			NightPhaseState nightPhaseState = _stateFactory.Create<NightPhaseState>();
 			_phaseStateMachine.RegisterState(nightPhaseState);
 			
-			_phaseStateMachine.EnterIn<DayPhaseState>();
+			FirstDayPhaseState firstDayPhaseState = _stateFactory.Create<FirstDayPhaseState>();
+			_phaseStateMachine.RegisterState(firstDayPhaseState);
+			
+			
+			_phaseStateMachine.EnterIn<FirstDayPhaseState>();
 			
 			// Enter in main Gameplay State
 			_sceneStateMachine.EnterIn<PlayGameplayState>();
