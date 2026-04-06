@@ -31,12 +31,14 @@ namespace Runtime.Features.DayNight.StateMachine
 
 		private IEnumerator ProcessStartDayPhase()
 		{
+			yield return null; // Заглушка чтобы 
 			InputHandler.Disable();
 			Curtain.Show(0);
 			
-			yield return new WaitForSeconds(0.4f); // заглушки
-			LocationChanger.ChangeLocation(Owner.DayStartLocationtransform, needCurtain: false);
-			yield return new WaitForSeconds(0.4f);
+			//ASK: Данный код спавнил игрока в своём месте, Я его закоментил чтобы он позицию игрока не переписывал позицию игрока
+			/*yield return new WaitForSeconds(0.4f); // заглушки
+			ChangeLocation(Owner.DayStartLocationtransform, needCurtain: false);
+			yield return new WaitForSeconds(0.4f);*/
 			
 			Owner.DayCycleVisualChanger.SetDay();
 			

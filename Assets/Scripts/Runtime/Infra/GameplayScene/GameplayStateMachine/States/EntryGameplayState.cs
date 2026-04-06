@@ -5,6 +5,7 @@ using Runtime.Common.Services.StateMachine;
 using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy;
 using Runtime.Features.Location;
+using Runtime.Features.Player.Other;
 using UnityEngine;
 using Zenject;
 
@@ -43,7 +44,10 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		{
 			// заглушка пока нет адресаблов
 			GameObject playerPrefab = _resourceLoader.Load<GameObject>("Player");
-			GameObject playerInstance = _container.InstantiatePrefab(playerPrefab);
+			
+			PlayerSpawnPoint playerSpawnPoint = GameObject.FindFirstObjectByType<PlayerSpawnPoint>();
+
+			GameObject playerInstance = _container.InstantiatePrefab(playerPrefab, playerSpawnPoint.transform.position, Quaternion.identity, null);
 			
 			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
 			
@@ -62,8 +66,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			// Enter in main Gameplay State
 			_sceneStateMachine.EnterIn<PlayGameplayState>();
 		}
-
-	
+		
 		public void Exit()
 		{
 		}
