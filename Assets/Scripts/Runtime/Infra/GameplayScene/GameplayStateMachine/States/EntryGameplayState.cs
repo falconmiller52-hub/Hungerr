@@ -1,13 +1,15 @@
+using System;
 using Runtime.Common.Factories.StateFactory;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.ResourceLoad;
-using Runtime.Common.Services.StateMachine;
 using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy;
 using Runtime.Features.Location;
 using Runtime.Features.Player.Other;
+using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
+using IState = Runtime.Common.Services.StateMachine.IState;
 
 namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 {
@@ -45,7 +47,8 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			// заглушка пока нет адресаблов
 			GameObject playerPrefab = _resourceLoader.Load<GameObject>("Player");
 			
-			PlayerSpawnPoint playerSpawnPoint = GameObject.FindFirstObjectByType<PlayerSpawnPoint>();
+			PlayerSpawnPoint playerSpawnPoint = GameObject.FindFirstObjectByType<PlayerSpawnPoint>() 
+			                                    ?? throw new Exception("SpawnPoint not found in scene");
 
 			GameObject playerInstance = _container.InstantiatePrefab(playerPrefab, playerSpawnPoint.transform.position, Quaternion.identity, null);
 			
