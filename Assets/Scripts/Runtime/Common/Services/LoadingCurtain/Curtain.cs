@@ -21,6 +21,12 @@ namespace Runtime.Common.Services.LoadingCurtain
 			DontDestroyOnLoad(this);
 		}
 
+		/// <summary>
+		/// Метод, который затемняет экран и показывает загрузочный экран
+		/// </summary>
+		/// <param name="customTime">Время между итерациями затемнения</param>
+		/// <param name="needText">Флаг - показывать или нет текст "Loading"</param>
+		/// <param name="onEnd">! Коллбек который выполняется сразу после полного затемнения экрана !</param>
 		public void Show(float customTime = -1, bool needText = true, Action onEnd = null)
 		{
 			gameObject.SetActive(true);
@@ -38,6 +44,12 @@ namespace Runtime.Common.Services.LoadingCurtain
 			StartCoroutine(DoFadeOut(tempFadeOutSpeed, onEnd));
 		}
 
+		/// <summary>
+		/// Метод, который рассветляет экран
+		/// </summary>
+		/// <param name="customTime">Время между итерациями рассветления</param>
+		/// <param name="needText">Флаг - показывать или нет текст "Loading"</param>
+		/// <param name="onEnd">! Коллбек который выполняется сразу после полного рассветления экрана !</param>
 		public void Hide(float customTime = -1, bool needText = true, Action onEnd = null)
 		{
 			gameObject.SetActive(true);
