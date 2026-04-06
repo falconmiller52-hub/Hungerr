@@ -3,7 +3,7 @@ namespace Runtime.Common.Enums
     /// <summary>
     /// ивент о глобальной смене состояния
     /// </summary>
-    public enum GameEvent
+    public enum EGameEvent
     {
         StartGameplay = 0,
         EndGameplay,
@@ -13,7 +13,7 @@ namespace Runtime.Common.Enums
     /// <summary>
     /// ивент о старте геймплейной фазы (дня или ночи)
     /// </summary>
-    public enum GameplayStateEvent
+    public enum EGameplayStateEvent
     {
         StartNightPhaseTrigger,
         EndNightPhaseTrigger,

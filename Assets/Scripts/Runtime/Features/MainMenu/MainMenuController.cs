@@ -34,12 +34,12 @@ namespace Runtime.Features.MainMenu
 
         private void HandleExitGame()
         {
-            _eventBus.Trigger(GameEvent.QuitGame);
+            _eventBus.Trigger(EGameEvent.QuitGame);
         }
 
         private void HandleStartGame()
         {
-            _eventBus.Trigger(GameEvent.StartGameplay);
+            _eventBus.Trigger(EGameEvent.StartGameplay);
         }
     }
 }
