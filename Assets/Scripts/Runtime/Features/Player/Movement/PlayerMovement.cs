@@ -8,210 +8,223 @@ using Zenject;
 
 namespace Runtime.Features.Player.Movement
 {
-    [RequireComponent(typeof(CharacterController))]
-    [RequireComponent(typeof(PlayerStance))]
-    public class PlayerMovement : MonoBehaviour
-    {
-        //Переменные инспектора
-        [SerializeField, Label("Ground Checker Position")] private Transform _groundCheck;
-        [SerializeField, Label("Ground Checker Length")] private float _groundCheckDistance = 1f;
+	[RequireComponent(typeof(CharacterController))]
+	[RequireComponent(typeof(PlayerStance))]
+	public class PlayerMovement : MonoBehaviour
+	{
+		//Переменные инспектора
+		[SerializeField, Label("Ground Checker Position")]
+		private Transform _groundCheck;
 
-        [Space, SerializeField, Label("Jump Height")] private float _jumpHeight = 1f;
-        
-        [SerializeField, Label("Standard Step Sound")] private SoundData _standartStepSound;
-        [SerializeField, Tooltip("Ground Sound On Start Jump")] private SoundData _jumpStartSound;
-        [SerializeField, Tooltip("Ground Sound After Jump")] private SoundData _jumpEndSound;
+		[SerializeField, Label("Ground Checker Length")]
+		private float _groundCheckDistance = 1f;
 
-        [Space, SerializeField, Label("Gravity Force")] private float _gravityForce = 30f;
+		[Space, SerializeField, Label("Jump Height")]
+		private float _jumpHeight = 1f;
 
-        //Внутренние переменные
-        private float _currentSpeed;
-        private bool _isJumpInputActive;
-        private bool _isGrounded = true;
-        private RaycastHit _playerGroundHit;
-        private float _gravitySpeed = 0f;
-        private Vector2 _inputDirection;
-        private SoundData _currentStepSoundData;
+		[SerializeField, Label("Standard Step Sound")]
+		private SoundData _standartStepSound;
 
-        //Кэшированные переменные
-        private CharacterController _cc;
-        private PlayerStance _playerStance;
-        private IInputHandler _inputHandler;
-        private IAudioService _audioService;
+		[SerializeField, Tooltip("Ground Sound On Start Jump")]
+		private SoundData _jumpStartSound;
 
-        [Inject]
-        private void Construct(IInputHandler inputHandler, IAudioService audioService)
-        {
-            _inputHandler = inputHandler;
-            _audioService = audioService;
-        }
-    
-        private void Start()
-        {
-            _cc = GetComponent<CharacterController>();
-            _playerStance = GetComponent<PlayerStance>();
+		[SerializeField, Tooltip("Ground Sound After Jump")]
+		private SoundData _jumpEndSound;
 
-            StanceUpdate();
-        }
-    
-        private void OnEnable()
-        {
-            if (_inputHandler == null)
-            {
-                Debug.LogError("PlayerMovement::OnEnable() No Input Handler was assigned");
-                return;
-            }
-        
-            _inputHandler.PlayerMoveInputChanged += SetNewMoveInputDirection;
-            _inputHandler.JumpInputPressed += SetJumpInputPressed;
-        }
+		[Space, SerializeField, Label("Gravity Force")]
+		private float _gravityForce = 30f;
 
-        private void OnDisable()
-        {
-            if (_inputHandler == null)
-            {
-                Debug.LogError("PlayerMovement::OnDisable() No Input Handler was assigned");
-                return;
-            }
-        
-            _inputHandler.PlayerMoveInputChanged -= SetNewMoveInputDirection;
-            _inputHandler.JumpInputPressed -= SetJumpInputPressed;
-        }
+		//Внутренние переменные
+		private float _currentSpeed;
+		private bool _isJumpInputActive;
+		private bool _isGrounded = true;
+		private RaycastHit _playerGroundHit;
+		private float _gravitySpeed = 0f;
+		private Vector2 _inputDirection;
+		private SoundData _currentStepSoundData;
 
-        private void Update()
-        {
-            GroundRayHit();
-            StanceUpdate();
-            Move(MovingDirection);
-            
-            if (_isJumpInputActive)
-                Jump(_jumpHeight);
-        }
+		//Кэшированные переменные
+		private CharacterController _cc;
+		private PlayerStance _playerStance;
+		private IInputHandler _inputHandler;
+		private IAudioService _audioService;
 
-        private void FixedUpdate()
-        {
-            GravityUpdate();
-        }
+		[Inject]
+		private void Construct(IInputHandler inputHandler, IAudioService audioService)
+		{
+			_inputHandler = inputHandler;
+			_audioService = audioService;
+		}
 
-        //Методы скрипта
-        private void StanceUpdate()
-        {          
-            var playerCurrentStance = _playerStance.CurrentStance;
-            _currentSpeed = _playerStance.StanceSpeed(playerCurrentStance);
-        }
+		private void Start()
+		{
+			_cc = GetComponent<CharacterController>();
+			_playerStance = GetComponent<PlayerStance>();
 
-        private void MakeStepSound()
-        {
-            var ray = new Ray(_groundCheck.position, -transform.up);
+			StanceUpdate();
+		}
 
-            Physics.Raycast(ray, out RaycastHit hit, _groundCheckDistance);
+		private void OnEnable()
+		{
+			if (_inputHandler == null)
+			{
+				Debug.LogError("PlayerMovement::OnEnable() No Input Handler was assigned");
+				return;
+			}
 
-            if (hit.collider && hit.collider.gameObject.TryGetComponent<SurfaceMaterialSoundHolder>(out var surfaceMaterialHolder))
-            {
-                _currentStepSoundData = surfaceMaterialHolder.MaterialSounds.Random();
-            }
-            else
-            {
-                _currentStepSoundData = _standartStepSound;
-            }
+			_inputHandler.PlayerMoveInputChanged += SetNewMoveInputDirection;
+			_inputHandler.JumpInputPressed += SetJumpInputPressed;
+		}
 
-            if (!IsInvoking("PlaySound")) Invoke("PlaySound", 1 / _playerStance.StanceSpeed(_playerStance.CurrentStance) * 2);
-        }
+		private void OnDisable()
+		{
+			if (_inputHandler == null)
+			{
+				Debug.LogError("PlayerMovement::OnDisable() No Input Handler was assigned");
+				return;
+			}
 
-        private void GroundRayHit()
-        {
-            var ray = new Ray(_groundCheck.position, -transform.up);
-            GroundSet(Physics.Raycast(ray, out _playerGroundHit, _groundCheckDistance));
-        }
+			_inputHandler.PlayerMoveInputChanged -= SetNewMoveInputDirection;
+			_inputHandler.JumpInputPressed -= SetJumpInputPressed;
+		}
 
-        private void GravityUpdate()
-        {
-            if (!_isGrounded) _gravitySpeed += _gravityForce * -9.81f * Time.fixedDeltaTime;
-            _cc.Move(new Vector3(0, _gravitySpeed, 0));
-        }
+		private void Update()
+		{
+			GroundRayHit();
+			StanceUpdate();
+			Move(MovingDirection);
 
-        private void PlaySound()
-        {
-            _audioService.PlaySfx(_currentStepSoundData, transform.position);
-        }
+			if (_isJumpInputActive)
+				Jump(_jumpHeight);
+		}
 
-        private void GroundSet(bool isGrounded)
-        {
-            if (_isGrounded == false && isGrounded == true)
-            {
-                Grounded();
-            }
-            else if (_isGrounded == true && isGrounded == false)
-            {
-                Ungrounded();
-            }
-        }
+		private void FixedUpdate()
+		{
+			GravityUpdate();
+		}
 
-        private void Ungrounded()
-        {
-            _isGrounded = false;
-        }
+		//Методы скрипта
+		private void StanceUpdate()
+		{
+			var playerCurrentStance = _playerStance.CurrentStance;
+			_currentSpeed = _playerStance.StanceSpeed(playerCurrentStance);
+		}
 
-        private void Grounded()
-        {
-            _isGrounded = true;
-            _gravitySpeed = 0f;
-            _audioService.PlaySfx(_jumpEndSound, _groundCheck.position);
-        }
+		private void MakeStepSound()
+		{
+			var ray = new Ray(_groundCheck.position, -transform.up);
 
-        public void Move(Vector2 direction)
-        {
-            var tripleAxisDirection = new Vector3(direction.x, 0, direction.y);
-            var nextPosition = tripleAxisDirection * _currentSpeed * Time.deltaTime;
+			Physics.Raycast(ray, out RaycastHit hit, _groundCheckDistance);
 
-            _cc.Move(nextPosition);  
+			if (hit.collider &&
+			    hit.collider.gameObject.TryGetComponent<SurfaceMaterialSoundHolder>(out var surfaceMaterialHolder))
+			{
+				_currentStepSoundData = surfaceMaterialHolder.MaterialSounds.Random();
+			}
+			else
+			{
+				_currentStepSoundData = _standartStepSound;
+			}
 
-            if (direction.magnitude != 0f && _isGrounded) MakeStepSound();
-            else CancelInvoke("PlaySound");
-        }
+			if (!IsInvoking("PlaySound"))
+				Invoke("PlaySound", 1 / _playerStance.StanceSpeed(_playerStance.CurrentStance) * 2);
+		}
 
-        public void Jump(float strength)
-        {
-            if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching)
-            {
-                _gravitySpeed = strength;
-                _audioService.PlaySfx(_jumpStartSound, _groundCheck.position);
-            }
-        }
+		private void GroundRayHit()
+		{
+			var ray = new Ray(_groundCheck.position, -transform.up);
+			GroundSet(Physics.Raycast(ray, out _playerGroundHit, _groundCheckDistance));
+		}
 
-        private void SetNewMoveInputDirection(Vector2 inputDirection)
-        {
-            _inputDirection = inputDirection;
-        }
+		private void GravityUpdate()
+		{
+			if (!_isGrounded) _gravitySpeed += _gravityForce * -9.81f * Time.fixedDeltaTime;
+			_cc.Move(new Vector3(0, _gravitySpeed, 0));
+		}
 
-        private void SetJumpInputPressed(bool isPressed)
-        {
-            _isJumpInputActive = isPressed;
-        }
+		private void PlaySound()
+		{
+			_audioService.PlaySfx(_currentStepSoundData, transform.position);
+		}
 
-        //Геттеры и сеттеры
-    
-        public Vector2 MovingDirection
-        {
-            get
-            {
-                var moveDirection = transform.forward * _inputDirection.y + transform.right * _inputDirection.x;
-                var directionResult = new Vector2(moveDirection.x, moveDirection.z);
-                return directionResult;
-            }
-        }
-        public bool IsGrounded => _isGrounded;
+		private void GroundSet(bool isGrounded)
+		{
+			if (_isGrounded == false && isGrounded == true)
+			{
+				Grounded();
+			}
+			else if (_isGrounded == true && isGrounded == false)
+			{
+				Ungrounded();
+			}
+		}
 
-        public float JumpHeight
-        {
-            get => _jumpHeight;
-            set => _jumpHeight = value;
-        }
+		private void Ungrounded()
+		{
+			_isGrounded = false;
+		}
 
-        public float CurrentSpeed
-        {
-            get => _currentSpeed;
-            set => _currentSpeed = value;
-        }
-    }
+		private void Grounded()
+		{
+			_isGrounded = true;
+			_gravitySpeed = 0f;
+			_audioService.PlaySfx(_jumpEndSound, _groundCheck.position);
+		}
+
+		public void Move(Vector2 direction)
+		{
+			var tripleAxisDirection = new Vector3(direction.x, 0, direction.y);
+			var nextPosition = tripleAxisDirection * _currentSpeed * Time.deltaTime;
+
+			_cc.Move(nextPosition);
+
+			if (direction.magnitude != 0f && _isGrounded) MakeStepSound();
+			else CancelInvoke("PlaySound");
+		}
+
+		public void Jump(float strength)
+		{
+			if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching)
+			{
+				_gravitySpeed = strength;
+				_audioService.PlaySfx(_jumpStartSound, _groundCheck.position);
+			}
+		}
+
+		private void SetNewMoveInputDirection(Vector2 inputDirection)
+		{
+			_inputDirection = inputDirection;
+		}
+
+		private void SetJumpInputPressed(bool isPressed)
+		{
+			_isJumpInputActive = isPressed;
+		}
+
+		//Геттеры и сеттеры
+
+		public Vector2 MovingDirection
+		{
+			get
+			{
+				var moveDirection = transform.forward * _inputDirection.y + transform.right * _inputDirection.x;
+				var directionResult = new Vector2(moveDirection.x, moveDirection.z);
+				return directionResult;
+			}
+		}
+
+		public bool IsGrounded => _isGrounded;
+
+		public float JumpHeight
+		{
+			get => _jumpHeight;
+			set => _jumpHeight = value;
+		}
+
+		public float CurrentSpeed
+		{
+			get => _currentSpeed;
+			set => _currentSpeed = value;
+		}
+	}
 }

@@ -47,11 +47,12 @@ namespace Runtime.Infra.App.GlobalStateMachine.States
 
 		void GoToGameplay()
 		{
-			_loadingCurtain.Show();
+			_loadingCurtain.Show(onEnd: () =>
+			{
+				SceneManager.LoadScene(Scenes.GameplayScene);
 			
-			SceneManager.LoadScene(Scenes.GameplayScene);
-			
-			_stateMachine.EnterIn<GameplayLoopState>();
+				_stateMachine.EnterIn<GameplayLoopState>();
+			});
 		}
 
 		void ExitMenu()

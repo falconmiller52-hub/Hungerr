@@ -1,5 +1,6 @@
 using System.Collections;
 using Runtime.Common.Services.LoadingCurtain;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -41,14 +42,13 @@ namespace Runtime.Features.MainMenu
 
 		private IEnumerator ProcessFadeStartPanel()
 		{
-			_curtain.Show(0.001f);
-
-			yield return new WaitForSeconds(1); // Заглушка ожидания затемнения
-
-			_startPanelGroup.gameObject.SetActive(false);
-
-			yield return new WaitForSeconds(0.2f); // Заглушка чтобы объект точно успел выключится
-
+			_curtain.Show(0.001f, onEnd:() =>
+			{
+				_startPanelGroup.gameObject.SetActive(false);
+			});
+			
+			yield return new WaitForSeconds(1); 
+			
 			_curtain.Hide(0.001f);
 		}
 	}

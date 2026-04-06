@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -20,7 +21,7 @@ namespace Runtime.Common.Services.LoadingCurtain
 			DontDestroyOnLoad(this);
 		}
 
-		public void Show(float customTime = -1, bool needText = true)
+		public void Show(float customTime = -1, bool needText = true, Action onEnd = null)
 		{
 			gameObject.SetActive(true);
 
@@ -34,14 +35,10 @@ namespace Runtime.Common.Services.LoadingCurtain
 			else
 				_textObject.SetActive(false);
 
-			StartCoroutine(DoFadeOut(tempFadeOutSpeed));
-
-			// ASK: ↓ Не уверен что данная строка нужна здесь. Т.к. если вызвать метод Show ↓
-			// ASK: ↓ корутина не успевает сделать плавный переход и сразу идёт альфа = 1 ↓
-			//_curtain.alpha = 1;
+			StartCoroutine(DoFadeOut(tempFadeOutSpeed, onEnd));
 		}
 
-		public void Hide(float customTime = -1, bool needText = true)
+		public void Hide(float customTime = -1, bool needText = true, Action onEnd = null)
 		{
 			gameObject.SetActive(true);
 
@@ -55,10 +52,10 @@ namespace Runtime.Common.Services.LoadingCurtain
 			else
 				_textObject.SetActive(false);
 			
-			StartCoroutine(DoFadeIn(tempFadeInSpeed));
+			StartCoroutine(DoFadeIn(tempFadeInSpeed, onEnd));
 		}
 
-		IEnumerator DoFadeIn(float fadeInSpeed)
+		IEnumerator DoFadeIn(float fadeInSpeed, Action onEnd)
 		{
 			while (_curtain.alpha > 0)
 			{
@@ -67,12 +64,10 @@ namespace Runtime.Common.Services.LoadingCurtain
 			}
 
 			gameObject.SetActive(false);
-			
-			//ASK: Нам бы сюда какие нить колбеки или ивенты  
-			//ASK: чтобы было понятно что действие должно происходить только после полного затемнения / засветления
+			onEnd?.Invoke();
 		}
 
-		IEnumerator DoFadeOut(float fadeOutSpeed)
+		IEnumerator DoFadeOut(float fadeOutSpeed, Action onEnd)
 		{
 			gameObject.SetActive(true);
 
@@ -82,7 +77,7 @@ namespace Runtime.Common.Services.LoadingCurtain
 				yield return new WaitForSeconds(fadeOutSpeed);
 			}
 			
-			//ASK : Тут так же как и в FadeIn
+			onEnd?.Invoke();
 		}
 	}
 }
