@@ -1,5 +1,6 @@
 // PlayerInventory.cs
 
+using System;
 using UnityEngine;
 using Zenject;
 
@@ -18,7 +19,7 @@ namespace Runtime.Features.Inventory
 		private int width = 8;
 		private int height = 4;
     
-		public event System.Action OnInventoryChanged;
+		public event Action OnInventoryChanged;
     
 		[Inject]
 		private void Construct()

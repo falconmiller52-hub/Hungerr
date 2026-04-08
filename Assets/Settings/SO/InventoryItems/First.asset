@@ -19,5 +19,5 @@ MonoBehaviour:
   worldPrefab: {fileID: 0}
   PrefabForInventory: {fileID: 3919629856071798191, guid: bf507c3e9383de84da242ac1262d44af, type: 3}
   Scale: {x: 50, y: 200, z: 50}
-  width: 3
-  height: 1
+  width: 2
+  height: 2
