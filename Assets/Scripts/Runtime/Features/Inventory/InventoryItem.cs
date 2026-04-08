@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Runtime.Features.Inventory
 {
-	[System.Serializable]
 	public class InventoryItem
 	{
 		public InventoryItemData _data;

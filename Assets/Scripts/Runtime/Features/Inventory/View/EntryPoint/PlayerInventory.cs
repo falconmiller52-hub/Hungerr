@@ -36,23 +36,23 @@ namespace Runtime.Features.Inventory
 			return success;
 		}
     
-		public bool RemoveItem(InventoryItemData data, int amount = 1)
-		{
-			if (_inventoryWithCells.TryTakeItem(data, out var taken, amount))
-			{
-				OnInventoryChanged?.Invoke();
-				return true;
-			}
-			return false;
-		}
+		// public bool RemoveItem(InventoryItemData data, int amount = 1)
+		// {
+		// 	if (_inventoryWithCells.TryTakeItem(data, out var taken, amount))
+		// 	{
+		// 		OnInventoryChanged?.Invoke();
+		// 		return true;
+		// 	}
+		// 	return false;
+		// }
     
-		public void DropItem(InventoryItem item, Vector3 worldPosition, Quaternion rotation)
-		{
-			RemoveItem(item._data, item._amount);
-			// тут типа спавн выброшенного предмета в 3д мир и тд
-			// _itemWorldManager.SpawnItemInWorld(item._data, item._amount, worldPosition, rotation);
-			OnInventoryChanged?.Invoke();
-		}
+		// public void DropItem(InventoryItem item, Vector3 worldPosition, Quaternion rotation)
+		// {
+		// 	RemoveItem(item._data, item._amount);
+		// 	// тут типа спавн выброшенного предмета в 3д мир и тд
+		// 	// _itemWorldManager.SpawnItemInWorld(item._data, item._amount, worldPosition, rotation);
+		// 	OnInventoryChanged?.Invoke();
+		// }
     
 		public InventoryWithCells GetInventory() => _inventoryWithCells;
 
