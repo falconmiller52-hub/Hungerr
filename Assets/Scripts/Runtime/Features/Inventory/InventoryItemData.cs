@@ -16,7 +16,6 @@ namespace Runtime.Features.Inventory
 		[Header("3D World")]
 		public GameObject worldPrefab; // 3D префаб предмета в мире
 		public GameObject PrefabForInventory; 
-		public Vector3 Scale = Vector3.one; 
     
 		
 		[Header("Item Size in Inventory")]

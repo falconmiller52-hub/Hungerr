@@ -17,7 +17,6 @@ MonoBehaviour:
   description: 
   maxStackSize: 64
   worldPrefab: {fileID: 3162560305889825858, guid: 67c008550f971be459cf292c2ce5df70, type: 3}
-  PrefabForInventory: {fileID: 3919629856071798191, guid: bf507c3e9383de84da242ac1262d44af, type: 3}
-  Scale: {x: 50, y: 200, z: 50}
-  width: 2
-  height: 2
+  PrefabForInventory: {fileID: 3919629856071798191, guid: 16df4cf753560374aa324ac6bf7af50c, type: 3}
+  width: 3
+  height: 3
