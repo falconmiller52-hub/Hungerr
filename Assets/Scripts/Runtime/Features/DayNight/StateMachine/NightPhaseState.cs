@@ -32,16 +32,14 @@ namespace Runtime.Features.DayNight.StateMachine
 				_timeCounterUI.SetTime(_timeProgress);
 			}
 			
-			Owner.StartCoroutine(ProcessStartNightPhase());
+			Curtain.Show(0.01f, onEnd: OnCurtainShowEnded);
 			
-			EventBus.Subscribe(GameplayStateEvent.EndNightPhaseTrigger, EndNightPhase);
-
-			_isTimerActive = true;
+			EventBus.Subscribe(EGameplayStateEvent.EndNightPhaseTrigger, EndNightPhase);
 		}
 
 		public override void Exit()
 		{
-			EventBus.Unsubscribe(GameplayStateEvent.EndNightPhaseTrigger, EndNightPhase);
+			EventBus.Unsubscribe(EGameplayStateEvent.EndNightPhaseTrigger, EndNightPhase);
 		}
 		
 		private void EndNightPhase()
@@ -57,18 +55,14 @@ namespace Runtime.Features.DayNight.StateMachine
 			Owner.EnterIn<DayPhaseState>();
 		}
 		
-		private IEnumerator ProcessStartNightPhase()
+		private void OnCurtainShowEnded()
 		{
-			InputHandler.Disable();
-			Curtain.Show(0);
-			
-			yield return new WaitForSeconds(0.4f); // заглушки
 			LocationChanger.ChangeLocation(Owner.NightStartLocationtransform, needCurtain: false);
-			yield return new WaitForSeconds(0.4f);
-			
 			Owner.DayCycleVisualChanger.SetNight();
 			
-			Curtain.Hide();
+			_isTimerActive = true;
+			
+			Curtain.Hide(0.01f);
 			InputHandler.Enable();
 		}
 

@@ -33,25 +33,26 @@ namespace Runtime.Infra.App.GlobalStateMachine.States
 			SceneManager.LoadScene(Scenes.MenuName);
 			_loadingCurtain.Hide();
 
-			_eventBus.Subscribe(GameEvent.StartGameplay, GoToGameplay);
-			_eventBus.Subscribe(GameEvent.QuitGame, ExitMenu);
+			_eventBus.Subscribe(EGameEvent.StartGameplay, GoToGameplay);
+			_eventBus.Subscribe(EGameEvent.QuitGame, ExitMenu);
 		}
 
 		public void Exit()
 		{
 			Debug.Log("Exit Menu  State");
 
-			_eventBus.Unsubscribe(GameEvent.StartGameplay, GoToGameplay);
-			_eventBus.Unsubscribe(GameEvent.QuitGame, ExitMenu);
+			_eventBus.Unsubscribe(EGameEvent.StartGameplay, GoToGameplay);
+			_eventBus.Unsubscribe(EGameEvent.QuitGame, ExitMenu);
 		}
 
 		void GoToGameplay()
 		{
-			_loadingCurtain.Show();
+			_loadingCurtain.Show(onEnd: () =>
+			{
+				SceneManager.LoadScene(Scenes.GameplayScene);
 			
-			SceneManager.LoadScene(Scenes.GameplayScene);
-			
-			_stateMachine.EnterIn<GameplayLoopState>();
+				_stateMachine.EnterIn<GameplayLoopState>();
+			});
 		}
 
 		void ExitMenu()
