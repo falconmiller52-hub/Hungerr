@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad149e7783e9e594fa12bb5f99611174, type: 3}
-  m_Name: First
+  m_Name: Second
   m_EditorClassIdentifier: 
   itemName: bybb
-  icon: {fileID: 21300000, guid: 693c8bd7cff9fd845877e7c19e1351c9, type: 3}
+  icon: {fileID: 21300000, guid: 084d07749392c0d4198b0f77d3ee89ca, type: 3}
   description: 
   maxStackSize: 64
-  worldPrefab: {fileID: 3162560305889825858, guid: 67c008550f971be459cf292c2ce5df70, type: 3}
+  worldPrefab: {fileID: 0}
   PrefabForInventory: {fileID: 3919629856071798191, guid: bf507c3e9383de84da242ac1262d44af, type: 3}
   Scale: {x: 50, y: 200, z: 50}
   width: 2
-  height: 2
+  height: 1

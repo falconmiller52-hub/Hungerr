@@ -14,6 +14,7 @@ namespace Runtime.Features.Inventory
 	public class PlayerInventory : MonoBehaviour
 	{
 		[SerializeField] private InventoryItemData _inventoryItemData;
+		[SerializeField] private InventoryItemData _inventoryItemDataTwo;
 		[SerializeField] private Vector2Int _pos = Vector2Int.one;
 		private InventoryWithCells _inventoryWithCells;
 		private int width = 8;
@@ -62,6 +63,13 @@ namespace Runtime.Features.Inventory
 		{
 			var s = new InventoryItem(_inventoryItemData);
 			AddItem(s, _pos);
+		}
+		
+		[ContextMenu("Add Item without pos")]
+		public void AddItemNoPos()
+		{
+			var s = new InventoryItem(_inventoryItemDataTwo);
+			AddItem(s);
 		}
 	}
 }
