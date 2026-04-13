@@ -6,7 +6,7 @@ using Zenject;
 
 namespace Runtime.Common.Services.Input
 {
-	public class InputHandler : IInputHandler, IDisposable, IPausable
+	public class InputHandler : IInputHandler, IDisposable
 	{
 		PlayerInputActions _input;
 
@@ -49,10 +49,7 @@ namespace Runtime.Common.Services.Input
 
 			Input.Player.Crouch.performed += _ => CrouchInputPressed?.Invoke();
 		}
-
-		public void Stop() => Disable();
-		public void Resume() => Enable();
-
+		
 		public void Enable()
 		{
 			Input.Enable();
