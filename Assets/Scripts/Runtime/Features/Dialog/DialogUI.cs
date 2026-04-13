@@ -8,34 +8,34 @@ using Zenject;
 
 namespace _GAME._1_Scripts.INK
 {
-	public class DialogUI : MonoBehaviour, IDisposable
+	public class DialogUI : MonoBehaviour
 	{
 		[SerializeField] private GameObject _dialogPanel;
 		[SerializeField] private TextMeshProUGUI _dialogTmp;
-		[SerializeField] private List<Button>  _dialogButtons;
-	
+		[SerializeField] private List<Button> _dialogButtons;
+
 		private DialogSystem _dialogSystem;
 
 		[Inject]
 		public void Construct(DialogSystem dialogSystem)
 		{
 			_dialogSystem = dialogSystem;
-			
-			_dialogSystem.OnNewDialogLine += SetText;
-			_dialogSystem.OnNewDialogChoices += SetChoices;
-			_dialogSystem.OnStoryEnded += HideDialog;
-			_dialogSystem.OnStoryStarted += ShowDialog;
 		}
 
 		private void OnEnable()
 		{
+			_dialogSystem.OnNewDialogLine += SetText;
+			_dialogSystem.OnNewDialogChoices += SetChoices;
+			_dialogSystem.OnStoryEnded += HideDialog;
+			_dialogSystem.OnStoryStarted += ShowDialog;
+
 			foreach (var dialogButton in _dialogButtons)
 			{
-				dialogButton.onClick.AddListener(()=>MakeChoice(_dialogButtons.IndexOf(dialogButton)));
+				dialogButton.onClick.AddListener(() => MakeChoice(_dialogButtons.IndexOf(dialogButton)));
 			}
 		}
-		
-		public void Dispose()
+
+		public void OnDisable()
 		{
 			_dialogSystem.OnNewDialogLine -= SetText;
 			_dialogSystem.OnNewDialogChoices -= SetChoices;
@@ -70,13 +70,13 @@ namespace _GAME._1_Scripts.INK
 		private void MakeChoice(int index)
 		{
 			_dialogSystem.SetChoiceIndex(index);
-			HideButtons();	
+			HideButtons();
 		}
 
 		private void ShowDialog()
 		{
 			_dialogTmp.text = "";
-			
+
 			_dialogPanel.SetActive(true);
 		}
 

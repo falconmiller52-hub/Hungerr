@@ -32,7 +32,8 @@ namespace _GAME._1_Scripts.INK
 		{
 			_pauseController = pauseController;
 		}
-		
+
+		// TODO: Переделать на InputHandler
 		private void Update()
 		{
 			StopDialog();
@@ -47,7 +48,7 @@ namespace _GAME._1_Scripts.INK
 		{
 			_pauseController.PerformStop();
 			_story = new Story(storyJsonInk.text);
-			
+
 			Cursor.visible = true;
 			Cursor.lockState = CursorLockMode.None;
 
@@ -62,8 +63,9 @@ namespace _GAME._1_Scripts.INK
 
 		private IEnumerator DialogRoutine()
 		{
-			while (true)
+			while (_story != null)
 			{
+				// Показываем текст диалога, ждём пока пользователь не нажмёт на ЛКМ
 				while (_story.canContinue)
 				{
 					yield return null;
@@ -79,11 +81,12 @@ namespace _GAME._1_Scripts.INK
 					}
 
 					//HandleTags(_story);
-					
+
 					//TODO: Переделать на InputHandler
 					yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Mouse0));
 				}
 
+				// Когда текст закончился показываем варианты выбора
 				if (_story.currentChoices.Count > 0)
 				{
 					if (_typeWriterRoutine != null)
@@ -97,6 +100,7 @@ namespace _GAME._1_Scripts.INK
 
 					Choose(_choiceIndex, _story);
 				}
+				// Когда ни текста ни выборов больше нет заканчиваем диалог.
 				else
 				{
 					EndStory();
@@ -127,9 +131,9 @@ namespace _GAME._1_Scripts.INK
 				if (Input.GetKeyDown(KeyCode.Escape))
 				{
 					StopTypeWriterEffect();
-				
+
 					EndStory();
-				
+
 					StopCoroutine(_startDialogRoutine);
 					_startDialogRoutine = null;
 				}
@@ -145,9 +149,10 @@ namespace _GAME._1_Scripts.INK
 		private void EndStory()
 		{
 			Debug.Log("=== END OF STORY ===");
+			_story = null;
 			_pauseController.PerformResume();
 			OnStoryEnded?.Invoke();
-			
+
 			Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Locked;
 		}

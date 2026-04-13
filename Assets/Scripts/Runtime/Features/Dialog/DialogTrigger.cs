@@ -6,11 +6,12 @@ namespace _GAME._1_Scripts.INK
 	[RequireComponent(typeof(Collider))]
 	public class DialogTrigger : MonoBehaviour
 	{
-		[SerializeField] [Tooltip("Ставить если диалог/монолог должен проиграть один раз")] 
+		[SerializeField] [Tooltip("Ставить если диалог/монолог должен проиграть один раз")]
 		private bool _isOnce;
-		[SerializeField] [Tooltip("JSON файл диалога")] 
+
+		[SerializeField] [Tooltip("JSON файл диалога")]
 		private TextAsset _storyJson;
-		
+
 		private DialogSystem _dialogSystem;
 
 		[Inject]
@@ -18,11 +19,17 @@ namespace _GAME._1_Scripts.INK
 		{
 			_dialogSystem = dialogSystem;
 		}
-		
+
 		private void OnTriggerEnter(Collider other)
 		{
 			if (other.CompareTag("Player"))
 			{
+				if (_storyJson == null)
+				{
+					Debug.LogError($"{name}: Story JSON is missing");
+					return;
+				}
+
 				_dialogSystem.StartStory(_storyJson);
 				if (_isOnce)
 					Destroy(this.gameObject);
