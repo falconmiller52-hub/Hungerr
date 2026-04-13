@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71d34e89-be79-468e-bcd8-89462007bd87" name="Changes" comment="" />
+    <list default="true" id="71d34e89-be79-468e-bcd8-89462007bd87" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Hungerr/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Hungerr/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/Dialogs/test.ink" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/Dialogs/test.ink" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/Dialogs/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/Dialogs/test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Dialog/DialogSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Dialog/DialogSystem.cs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -144,6 +149,7 @@
       <workItem from="1775158526052" duration="2996000" />
       <workItem from="1775833041275" duration="1184000" />
       <workItem from="1776071560041" duration="10716000" />
+      <workItem from="1776083410265" duration="791000" />
     </task>
     <servers />
   </component>

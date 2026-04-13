@@ -85,7 +85,7 @@ namespace _GAME._1_Scripts.INK
 					//TODO: Переделать на InputHandler
 					yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Mouse0));
 				}
-
+				
 				// Когда текст закончился показываем варианты выбора
 				if (_story.currentChoices.Count > 0)
 				{
@@ -152,6 +152,7 @@ namespace _GAME._1_Scripts.INK
 			_story = null;
 			_pauseController.PerformResume();
 			OnStoryEnded?.Invoke();
+			StopTypeWriterEffect();
 
 			Cursor.visible = false;
 			Cursor.lockState = CursorLockMode.Locked;
