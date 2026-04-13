@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using Runtime.Common.Extensions;
 using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
+using Runtime.Common.Services.Pause;
 using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
@@ -10,7 +11,7 @@ namespace Runtime.Features.Player.Movement
 {
 	[RequireComponent(typeof(CharacterController))]
 	[RequireComponent(typeof(PlayerStance))]
-	public class PlayerMovement : MonoBehaviour
+	public class PlayerMovement : MonoBehaviour, IPausable
 	{
 		//Переменные инспектора
 		[SerializeField, Label("Ground Checker Position")]
@@ -42,18 +43,21 @@ namespace Runtime.Features.Player.Movement
 		private float _gravitySpeed = 0f;
 		private Vector2 _inputDirection;
 		private SoundData _currentStepSoundData;
+		private bool _isCanMove = true;
 
 		//Кэшированные переменные
 		private CharacterController _cc;
 		private PlayerStance _playerStance;
 		private IInputHandler _inputHandler;
 		private IAudioService _audioService;
+		private IPauseController _pauseController;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, IAudioService audioService)
+		private void Construct(IInputHandler inputHandler, IAudioService audioService,  IPauseController pauseController)
 		{
 			_inputHandler = inputHandler;
 			_audioService = audioService;
+			_pauseController = pauseController;
 		}
 
 		private void Start()
@@ -74,6 +78,14 @@ namespace Runtime.Features.Player.Movement
 
 			_inputHandler.PlayerMoveInputChanged += SetNewMoveInputDirection;
 			_inputHandler.JumpInputPressed += SetJumpInputPressed;
+
+			if (_pauseController == null)
+			{
+				Debug.LogError("PlayerMovement::OnEnable() No Pause Controller was assigned");
+				return;
+			}
+			
+			_pauseController.Add(this);
 		}
 
 		private void OnDisable()
@@ -86,16 +98,28 @@ namespace Runtime.Features.Player.Movement
 
 			_inputHandler.PlayerMoveInputChanged -= SetNewMoveInputDirection;
 			_inputHandler.JumpInputPressed -= SetJumpInputPressed;
+			
+			if (_pauseController == null)
+			{
+				Debug.LogError("PlayerMovement::OnDisable() No Pause Controller was assigned");
+				return;
+			}
+			
+			_pauseController.Remove(this);
 		}
 
 		private void Update()
 		{
-			GroundRayHit();
-			StanceUpdate();
-			Move(MovingDirection);
+			// Сделал проверку тут, т.к когда isCanMove нельзя не только двигаться, но и прыгать, издавать звуки и т.д.
+			if (_isCanMove)
+			{
+				GroundRayHit();
+				StanceUpdate();
+				Move(MovingDirection);
 
-			if (_isJumpInputActive)
-				Jump(_jumpHeight);
+				if (_isJumpInputActive)
+					Jump(_jumpHeight);
+			}
 		}
 
 		private void FixedUpdate()
@@ -104,6 +128,18 @@ namespace Runtime.Features.Player.Movement
 		}
 
 		//Методы скрипта
+		public void Stop()
+			=> SetDisableMove();
+
+		public void Resume()
+			=> SetEnableMove();
+
+		private void SetEnableMove()
+			=> _isCanMove = true;
+
+		private void SetDisableMove()
+			=> _isCanMove = false;
+
 		private void StanceUpdate()
 		{
 			var playerCurrentStance = _playerStance.CurrentStance;
