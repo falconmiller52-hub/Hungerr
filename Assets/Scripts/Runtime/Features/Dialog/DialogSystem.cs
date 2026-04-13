@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Ink.Runtime;
+using Runtime.Common.Services.Pause;
 using UnityEngine;
+using Zenject;
 
 namespace _GAME._1_Scripts.INK
 {
@@ -16,6 +18,7 @@ namespace _GAME._1_Scripts.INK
 		public event Action OnStoryStarted;
 		public event Action OnStoryEnded;
 
+		private IPauseController _pauseController;
 		private Story _story;
 
 		private Coroutine _startDialogRoutine;
@@ -24,6 +27,12 @@ namespace _GAME._1_Scripts.INK
 		private int _choiceIndex = -1;
 		private string _currentLine;
 
+		[Inject]
+		private void Construct(IPauseController pauseController)
+		{
+			_pauseController = pauseController;
+		}
+		
 		private void Update()
 		{
 			StopDialog();
@@ -36,7 +45,11 @@ namespace _GAME._1_Scripts.INK
 
 		public void StartStory(TextAsset storyJsonInk)
 		{
+			_pauseController.PerformStop();
 			_story = new Story(storyJsonInk.text);
+			
+			Cursor.visible = true;
+			Cursor.lockState = CursorLockMode.None;
 
 			if (_startDialogRoutine == null)
 			{
@@ -132,7 +145,11 @@ namespace _GAME._1_Scripts.INK
 		private void EndStory()
 		{
 			Debug.Log("=== END OF STORY ===");
+			_pauseController.PerformResume();
 			OnStoryEnded?.Invoke();
+			
+			Cursor.visible = false;
+			Cursor.lockState = CursorLockMode.Locked;
 		}
 
 		private IEnumerator TypeWriterRoutine(string line)

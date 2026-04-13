@@ -1,5 +1,6 @@
 using _GAME._1_Scripts.INK;
 using Runtime.Common.Factories.StateFactory;
+using Runtime.Common.Services.Pause;
 using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy;
 using Runtime.Features.Location;
@@ -23,6 +24,12 @@ namespace Runtime.Infra.GameplayScene
 			BindLocationChanger();
 			BindEnemiesController();
 			BindDialogSystem();
+			BindPauseController();
+		}
+
+		private void BindPauseController()
+		{
+			Container.Bind<IPauseController>().To<PauseController>().AsSingle();
 		}
 
 		private void BindDialogSystem()
