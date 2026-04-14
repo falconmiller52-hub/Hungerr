@@ -98,13 +98,13 @@ namespace Runtime.Features.Dialog
 					}
 
 					//HandleTags(_story);
-					
+
 					yield return new WaitUntil(() => _canSkip);
 					_canSkip = false;
 				}
 
 				_isDialogText = false;
-				
+
 				// Когда текст закончился показываем варианты выбора
 				if (_story.currentChoices.Count > 0)
 				{
@@ -198,7 +198,7 @@ namespace Runtime.Features.Dialog
 			{
 				_canSkip = true;
 			}
-			
+
 			_typeWriterRoutine = null;
 		}
 

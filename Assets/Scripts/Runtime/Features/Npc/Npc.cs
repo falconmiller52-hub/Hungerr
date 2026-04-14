@@ -10,8 +10,9 @@ namespace Runtime.Features.NPC
 	// Тестовая вариация NPC для тестов диалоговой системы
 	public class Npc : MonoBehaviour, IInteractable
 	{
-		[SerializeField] [Tooltip("Файл с диалогом NPC")] private TextAsset _dialogJson;
-		
+		[SerializeField] [Tooltip("Файл с диалогом NPC")]
+		private TextAsset _dialogJson;
+
 		private DialogSystem _dialogSystem;
 		private Story _story;
 
