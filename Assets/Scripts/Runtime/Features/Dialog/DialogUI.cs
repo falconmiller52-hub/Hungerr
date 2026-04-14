@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace _GAME._1_Scripts.INK
+namespace Runtime.Features.Dialog
 {
 	public class DialogUI : MonoBehaviour
 	{

@@ -2,17 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using Ink.Runtime;
+using Runtime.Common.Services.EventBus;
+using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
 using UnityEngine;
 using Zenject;
 
-namespace _GAME._1_Scripts.INK
+namespace Runtime.Features.Dialog
 {
 	public class DialogSystem : MonoBehaviour
 	{
 		[SerializeField] private float _typeWriterSpeed;
 
-		// TODO: Переделать на eventbus 
 		public event Action<string> OnNewDialogLine;
 		public event Action<List<Choice>> OnNewDialogChoices;
 		public event Action OnStoryStarted;
@@ -20,37 +21,50 @@ namespace _GAME._1_Scripts.INK
 
 		private IPauseController _pauseController;
 		private Story _story;
+		private IInputHandler _inputHandler;
 
 		private Coroutine _startDialogRoutine;
 		private Coroutine _typeWriterRoutine;
 
 		private int _choiceIndex = -1;
 		private string _currentLine;
+		private bool _isStoryStart;
+		private bool _canSkip;
 
 		[Inject]
-		private void Construct(IPauseController pauseController)
+		private void Construct(IPauseController pauseController, IInputHandler inputHandler)
 		{
 			_pauseController = pauseController;
+			_inputHandler = inputHandler;
 		}
 
-		// TODO: Переделать на InputHandler
-		private void Update()
+		private void OnEnable()
 		{
-			StopDialog();
+			_inputHandler.LeftMousePressed += GetMouseInteract;
+			_inputHandler.ExitInputPressed += StopDialog;
+		}
+
+		private void OnDisable()
+		{
+			_inputHandler.LeftMousePressed -= GetMouseInteract;
+			_inputHandler.ExitInputPressed -= StopDialog;
 		}
 
 		public void SetChoiceIndex(int index)
-		{
-			_choiceIndex = index;
-		}
+			=> _choiceIndex = index;
 
-		public void StartStory(TextAsset storyJsonInk)
+
+		public void StartStory(TextAsset storyJsonInk, bool isMonolog = false)
 		{
-			_pauseController.PerformStop();
+			if (!isMonolog)
+			{
+				_pauseController.PerformStop();
+				Cursor.visible = true;
+				Cursor.lockState = CursorLockMode.None;
+			}
+
+			_isStoryStart = true;
 			_story = new Story(storyJsonInk.text);
-
-			Cursor.visible = true;
-			Cursor.lockState = CursorLockMode.None;
 
 			if (_startDialogRoutine == null)
 			{
@@ -82,8 +96,8 @@ namespace _GAME._1_Scripts.INK
 
 					//HandleTags(_story);
 
-					//TODO: Переделать на InputHandler
-					yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Mouse0));
+					_canSkip = false;
+					yield return new WaitUntil(() => _canSkip);
 				}
 
 				// Когда текст закончился показываем варианты выбора
@@ -96,7 +110,7 @@ namespace _GAME._1_Scripts.INK
 
 					OnNewDialogChoices?.Invoke(_story.currentChoices);
 
-					yield return new WaitUntil(() => { return _choiceIndex >= 0; });
+					yield return new WaitUntil(() => _choiceIndex >= 0);
 
 					Choose(_choiceIndex, _story);
 				}
@@ -108,6 +122,12 @@ namespace _GAME._1_Scripts.INK
 					break;
 				}
 			}
+		}
+
+		private void GetMouseInteract(bool value)
+		{
+			if (_isStoryStart)
+				_canSkip = value;
 		}
 
 		private void StopTypeWriterEffect()
@@ -124,19 +144,14 @@ namespace _GAME._1_Scripts.INK
 
 		private void StopDialog()
 		{
-			//TODO: Переделать на InputHandler
-
-			if (_startDialogRoutine != null)
+			if (_startDialogRoutine != null && _isStoryStart)
 			{
-				if (Input.GetKeyDown(KeyCode.Escape))
-				{
-					StopTypeWriterEffect();
+				StopTypeWriterEffect();
 
-					EndStory();
+				EndStory();
 
-					StopCoroutine(_startDialogRoutine);
-					_startDialogRoutine = null;
-				}
+				StopCoroutine(_startDialogRoutine);
+				_startDialogRoutine = null;
 			}
 		}
 
@@ -150,6 +165,7 @@ namespace _GAME._1_Scripts.INK
 		{
 			Debug.Log("=== END OF STORY ===");
 			_story = null;
+			_isStoryStart = false;
 			_pauseController.PerformResume();
 			OnStoryEnded?.Invoke();
 			StopTypeWriterEffect();

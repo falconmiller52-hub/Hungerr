@@ -1,13 +1,17 @@
-﻿using UnityEngine;
+﻿using Runtime.Features.Player.Movement;
+using UnityEngine;
 using Zenject;
 
-namespace _GAME._1_Scripts.INK
+namespace Runtime.Features.Dialog
 {
 	[RequireComponent(typeof(Collider))]
 	public class DialogTrigger : MonoBehaviour
 	{
 		[SerializeField] [Tooltip("Ставить если диалог/монолог должен проиграть один раз")]
 		private bool _isOnce;
+
+		[SerializeField] [Tooltip("True если должен начаться монолог")]
+		private bool _isMonolog = true;
 
 		[SerializeField] [Tooltip("JSON файл диалога")]
 		private TextAsset _storyJson;
@@ -22,7 +26,7 @@ namespace _GAME._1_Scripts.INK
 
 		private void OnTriggerEnter(Collider other)
 		{
-			if (other.CompareTag("Player"))
+			if (other.TryGetComponent<PlayerMovement>(out var playerMovement))
 			{
 				if (_storyJson == null)
 				{
@@ -30,7 +34,7 @@ namespace _GAME._1_Scripts.INK
 					return;
 				}
 
-				_dialogSystem.StartStory(_storyJson);
+				_dialogSystem.StartStory(_storyJson, _isMonolog);
 				if (_isOnce)
 					Destroy(this.gameObject);
 			}

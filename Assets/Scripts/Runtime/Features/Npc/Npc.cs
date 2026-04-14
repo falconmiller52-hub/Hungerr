@@ -1,4 +1,4 @@
-using _GAME._1_Scripts.INK;
+using Runtime.Features.Dialog;
 using Runtime.Features.Interactable;
 using UnityEngine;
 using Zenject;
