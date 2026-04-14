@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Ink.Runtime;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
@@ -30,6 +31,7 @@ namespace Runtime.Features.Dialog
 		private string _currentLine;
 		private bool _isStoryStart;
 		private bool _canSkip;
+		private bool _isDialogText;
 
 		[Inject]
 		private void Construct(IPauseController pauseController, IInputHandler inputHandler)
@@ -54,7 +56,7 @@ namespace Runtime.Features.Dialog
 			=> _choiceIndex = index;
 
 
-		public void StartStory(TextAsset storyJsonInk, bool isMonolog = false)
+		public void StartStory(Story story, bool isMonolog = false)
 		{
 			if (!isMonolog)
 			{
@@ -64,7 +66,7 @@ namespace Runtime.Features.Dialog
 			}
 
 			_isStoryStart = true;
-			_story = new Story(storyJsonInk.text);
+			_story = story;
 
 			if (_startDialogRoutine == null)
 			{
@@ -77,15 +79,16 @@ namespace Runtime.Features.Dialog
 
 		private IEnumerator DialogRoutine()
 		{
+			_story.ChoosePathString("Main");
 			while (_story != null)
 			{
 				// Показываем текст диалога, ждём пока пользователь не нажмёт на ЛКМ
 				while (_story.canContinue)
 				{
-					yield return null;
-
+					_isDialogText = true;
 					if (_typeWriterRoutine == null)
 					{
+						Debug.Log("_typeWriterRoutine == null");
 						_currentLine = _story.Continue();
 						_typeWriterRoutine = StartCoroutine((TypeWriterRoutine(_currentLine)));
 					}
@@ -95,11 +98,13 @@ namespace Runtime.Features.Dialog
 					}
 
 					//HandleTags(_story);
-
-					_canSkip = false;
+					
 					yield return new WaitUntil(() => _canSkip);
+					_canSkip = false;
 				}
 
+				_isDialogText = false;
+				
 				// Когда текст закончился показываем варианты выбора
 				if (_story.currentChoices.Count > 0)
 				{
@@ -126,7 +131,8 @@ namespace Runtime.Features.Dialog
 
 		private void GetMouseInteract(bool value)
 		{
-			if (_isStoryStart)
+			// Если мы в диалоги и в диалоге есть ещё строки, а не выборы
+			if (_isStoryStart && _isDialogText)
 				_canSkip = value;
 		}
 
@@ -186,6 +192,13 @@ namespace Runtime.Features.Dialog
 				yield return new WaitForSeconds(_typeWriterSpeed);
 			}
 
+			// Когда эффект печатанья закончился, если следующая строка это выбор, то показываем её сразу, 
+			// не дожидаясь когда игрок нажмёт MouseInteract
+			if (!_story.canContinue)
+			{
+				_canSkip = true;
+			}
+			
 			_typeWriterRoutine = null;
 		}
 

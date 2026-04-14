@@ -2430,6 +2430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isOnce: 1
+  _isMonolog: 1
   _storyJson: {fileID: 4900000, guid: 164279099d9085b4a91c44758f8c52a1, type: 3}
 --- !u!1001 &2706023828363385955
 PrefabInstance:

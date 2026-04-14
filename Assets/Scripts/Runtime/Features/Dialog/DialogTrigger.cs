@@ -1,4 +1,6 @@
-﻿using Runtime.Features.Player.Movement;
+﻿using System;
+using Ink.Runtime;
+using Runtime.Features.Player.Movement;
 using UnityEngine;
 using Zenject;
 
@@ -17,11 +19,17 @@ namespace Runtime.Features.Dialog
 		private TextAsset _storyJson;
 
 		private DialogSystem _dialogSystem;
+		private Story _story;
 
 		[Inject]
 		public void Construct(DialogSystem dialogSystem)
 		{
 			_dialogSystem = dialogSystem;
+		}
+
+		private void Start()
+		{
+			_story = new Story(_storyJson.text);
 		}
 
 		private void OnTriggerEnter(Collider other)
@@ -34,7 +42,7 @@ namespace Runtime.Features.Dialog
 					return;
 				}
 
-				_dialogSystem.StartStory(_storyJson, _isMonolog);
+				_dialogSystem.StartStory(_story, _isMonolog);
 				if (_isOnce)
 					Destroy(this.gameObject);
 			}
