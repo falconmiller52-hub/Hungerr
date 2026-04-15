@@ -1,5 +1,4 @@
-﻿using System;
-using Ink.Runtime;
+﻿using Ink.Runtime;
 using Runtime.Features.Player.Movement;
 using UnityEngine;
 using Zenject;
@@ -34,7 +33,7 @@ namespace Runtime.Features.Dialog
 
 		private void OnTriggerEnter(Collider other)
 		{
-			if (other.TryGetComponent<PlayerMovement>(out var playerMovement))
+			if (other.GetComponent<PlayerMovement>() != null)
 			{
 				if (_storyJson == null)
 				{

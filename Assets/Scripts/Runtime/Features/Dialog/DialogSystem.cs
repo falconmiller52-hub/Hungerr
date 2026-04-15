@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Ink.Runtime;
-using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
 using UnityEngine;
@@ -42,13 +40,13 @@ namespace Runtime.Features.Dialog
 
 		private void OnEnable()
 		{
-			_inputHandler.LeftMousePressed += GetMouseInteract;
+			_inputHandler.DialogSkipInputPressed += GetMouseInteract;
 			_inputHandler.ExitInputPressed += StopDialog;
 		}
 
 		private void OnDisable()
 		{
-			_inputHandler.LeftMousePressed -= GetMouseInteract;
+			_inputHandler.DialogSkipInputPressed -= GetMouseInteract;
 			_inputHandler.ExitInputPressed -= StopDialog;
 		}
 
@@ -88,7 +86,6 @@ namespace Runtime.Features.Dialog
 					_isDialogText = true;
 					if (_typeWriterRoutine == null)
 					{
-						Debug.Log("_typeWriterRoutine == null");
 						_currentLine = _story.Continue();
 						_typeWriterRoutine = StartCoroutine((TypeWriterRoutine(_currentLine)));
 					}
@@ -96,8 +93,6 @@ namespace Runtime.Features.Dialog
 					{
 						StopTypeWriterEffect();
 					}
-
-					//HandleTags(_story);
 
 					yield return new WaitUntil(() => _canSkip);
 					_canSkip = false;
@@ -129,11 +124,11 @@ namespace Runtime.Features.Dialog
 			}
 		}
 
-		private void GetMouseInteract(bool value)
+		private void GetMouseInteract()
 		{
 			// Если мы в диалоги и в диалоге есть ещё строки, а не выборы
 			if (_isStoryStart && _isDialogText)
-				_canSkip = value;
+				_canSkip = true;
 		}
 
 		private void StopTypeWriterEffect()
@@ -200,32 +195,6 @@ namespace Runtime.Features.Dialog
 			}
 
 			_typeWriterRoutine = null;
-		}
-
-		// Сюда пока что не смотреть :)
-		private void HandleTags(Story _story)
-		{
-			foreach (var storyCurrentTag in _story.currentTags)
-			{
-				string[] tags = storyCurrentTag.Split(':');
-
-				string key = tags[0];
-				string value = tags[1];
-
-				switch (key)
-				{
-					case "sound":
-					{
-						Debug.Log($"Play sound {value}");
-						break;
-					}
-					case "camera":
-					{
-						Debug.Log($"Camera is {value}");
-						break;
-					}
-				}
-			}
 		}
 	}
 }

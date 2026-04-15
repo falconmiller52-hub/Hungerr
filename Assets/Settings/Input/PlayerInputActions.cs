@@ -91,7 +91,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""LeftMouseInteract"",
+                    ""name"": ""DialogSkip"",
                     ""type"": ""Button"",
                     ""id"": ""bc26ec8b-4320-41e9-895e-370f520ec88e"",
                     ""expectedControlType"": ""Button"",
@@ -238,7 +238,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LeftMouseInteract"",
+                    ""action"": ""DialogSkip"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -284,7 +284,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Flashlight = m_Player.FindAction("Flashlight", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_LeftMouseInteract = m_Player.FindAction("LeftMouseInteract", throwIfNotFound: true);
+        m_Player_DialogSkip = m_Player.FindAction("DialogSkip", throwIfNotFound: true);
         m_Player_Exit = m_Player.FindAction("Exit", throwIfNotFound: true);
     }
 
@@ -354,7 +354,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Flashlight;
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Look;
-    private readonly InputAction m_Player_LeftMouseInteract;
+    private readonly InputAction m_Player_DialogSkip;
     private readonly InputAction m_Player_Exit;
     public struct PlayerActions
     {
@@ -367,7 +367,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Flashlight => m_Wrapper.m_Player_Flashlight;
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Look => m_Wrapper.m_Player_Look;
-        public InputAction @LeftMouseInteract => m_Wrapper.m_Player_LeftMouseInteract;
+        public InputAction @DialogSkip => m_Wrapper.m_Player_DialogSkip;
         public InputAction @Exit => m_Wrapper.m_Player_Exit;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -399,9 +399,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @LeftMouseInteract.started += instance.OnLeftMouseInteract;
-            @LeftMouseInteract.performed += instance.OnLeftMouseInteract;
-            @LeftMouseInteract.canceled += instance.OnLeftMouseInteract;
+            @DialogSkip.started += instance.OnDialogSkip;
+            @DialogSkip.performed += instance.OnDialogSkip;
+            @DialogSkip.canceled += instance.OnDialogSkip;
             @Exit.started += instance.OnExit;
             @Exit.performed += instance.OnExit;
             @Exit.canceled += instance.OnExit;
@@ -430,9 +430,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
-            @LeftMouseInteract.started -= instance.OnLeftMouseInteract;
-            @LeftMouseInteract.performed -= instance.OnLeftMouseInteract;
-            @LeftMouseInteract.canceled -= instance.OnLeftMouseInteract;
+            @DialogSkip.started -= instance.OnDialogSkip;
+            @DialogSkip.performed -= instance.OnDialogSkip;
+            @DialogSkip.canceled -= instance.OnDialogSkip;
             @Exit.started -= instance.OnExit;
             @Exit.performed -= instance.OnExit;
             @Exit.canceled -= instance.OnExit;
@@ -471,7 +471,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnFlashlight(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnLeftMouseInteract(InputAction.CallbackContext context);
+        void OnDialogSkip(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
     }
 }

@@ -69,7 +69,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "LeftMouseInteract",
+                    "name": "DialogSkip",
                     "type": "Button",
                     "id": "bc26ec8b-4320-41e9-895e-370f520ec88e",
                     "expectedControlType": "Button",
@@ -216,7 +216,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LeftMouseInteract",
+                    "action": "DialogSkip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

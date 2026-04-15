@@ -1,4 +1,3 @@
-using System;
 using Ink.Runtime;
 using Runtime.Features.Dialog;
 using Runtime.Features.Interactable;
