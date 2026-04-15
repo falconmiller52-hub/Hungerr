@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using Ink.Runtime;
+using Runtime.Features.Player.Movement;
+using UnityEngine;
 using Zenject;
 
-namespace _GAME._1_Scripts.INK
+namespace Runtime.Features.Dialog
 {
 	[RequireComponent(typeof(Collider))]
 	public class DialogTrigger : MonoBehaviour
@@ -9,10 +11,14 @@ namespace _GAME._1_Scripts.INK
 		[SerializeField] [Tooltip("Ставить если диалог/монолог должен проиграть один раз")]
 		private bool _isOnce;
 
+		[SerializeField] [Tooltip("True если должен начаться монолог")]
+		private bool _isMonolog = true;
+
 		[SerializeField] [Tooltip("JSON файл диалога")]
 		private TextAsset _storyJson;
 
 		private DialogSystem _dialogSystem;
+		private Story _story;
 
 		[Inject]
 		public void Construct(DialogSystem dialogSystem)
@@ -20,9 +26,14 @@ namespace _GAME._1_Scripts.INK
 			_dialogSystem = dialogSystem;
 		}
 
+		private void Start()
+		{
+			_story = new Story(_storyJson.text);
+		}
+
 		private void OnTriggerEnter(Collider other)
 		{
-			if (other.CompareTag("Player"))
+			if (other.GetComponent<PlayerMovement>() != null)
 			{
 				if (_storyJson == null)
 				{
@@ -30,7 +41,7 @@ namespace _GAME._1_Scripts.INK
 					return;
 				}
 
-				_dialogSystem.StartStory(_storyJson);
+				_dialogSystem.StartStory(_story, _isMonolog);
 				if (_isOnce)
 					Destroy(this.gameObject);
 			}
