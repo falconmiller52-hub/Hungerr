@@ -17,8 +17,8 @@ namespace Runtime.Features.Inventory
 		[SerializeField] private InventoryItemData _inventoryItemDataTwo;
 		[SerializeField] private Vector2Int _pos = Vector2Int.one;
 		private InventoryWithCells _inventoryWithCells;
-		private int width = 8;
-		private int height = 4;
+		private int width = 10;
+		private int height = 10;
     
 		public event Action OnInventoryChanged;
     
