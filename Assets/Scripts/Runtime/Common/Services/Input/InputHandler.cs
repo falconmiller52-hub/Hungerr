@@ -26,6 +26,7 @@ namespace Runtime.Common.Services.Input
 		public event Action CrouchInputPressed = delegate { };
 		public event Action DialogSkipInputPressed =  delegate { };
 		public event Action ExitInputPressed = delegate { };
+		public event Action InventoryTriggerPressed = delegate { };
 		public event Action<Vector2> PlayerMoveInputChanged = delegate { };
 		public event Action<bool> JumpInputPressed = delegate { };
 		public event Action<Vector2> RotateInputChanged = delegate { };
@@ -54,6 +55,8 @@ namespace Runtime.Common.Services.Input
 			Input.Player.DialogSkip.performed += _ => DialogSkipInputPressed?.Invoke();
 			
 			Input.Player.Exit.performed += _ => ExitInputPressed?.Invoke();
+			
+			Input.Player.InventoryTrigger.performed += _ => InventoryTriggerPressed?.Invoke();
 		}
 		
 		public void Enable()

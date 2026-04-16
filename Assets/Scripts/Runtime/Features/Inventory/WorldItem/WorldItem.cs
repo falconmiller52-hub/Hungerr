@@ -4,7 +4,7 @@ using Runtime.Features.Interactable;
 using Runtime.Features.Inventory; // если используешь UniTask, иначе замени на_coroutine
 
 [RequireComponent(typeof(MeshRenderer))]
-public class WorldItem : MonoBehaviour, IInteractable
+public class WorldItem : MonoBehaviour
 {
     [SerializeField] private InventoryItemData itemData;
     [SerializeField] private int amount = 1;
@@ -89,8 +89,4 @@ public class WorldItem : MonoBehaviour, IInteractable
     public InventoryItemData GetItemData() => itemData;
     public string GetDisplayName() => itemData.itemName;
     public string GetDescription() => itemData.description;
-    public void Interact()
-    {
-        
-    }
 }

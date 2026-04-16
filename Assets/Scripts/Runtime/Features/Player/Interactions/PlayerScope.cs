@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
 using Runtime.Features.Interactable;
+using Runtime.Features.Inventory;
 using Runtime.Features.Outline;
 using UnityEngine;
 using Zenject;
@@ -16,6 +17,9 @@ namespace Runtime.Features.Player.Interactions
 
 		[Space, SerializeField, Label("Raycasting Length")]
 		private float _rayLength;
+		
+		[Space, SerializeField, Label("Player Inventory")]
+		private PlayerInventory _playerInventory;
 
 		//Внутренние переменные
 		private RaycastHit _rayHit;
@@ -114,9 +118,16 @@ namespace Runtime.Features.Player.Interactions
 			var ray = _playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 			Physics.Raycast(ray, out var rayHit, _rayLength);
 
-			if (rayHit.collider && rayHit.collider.gameObject != _interactableObject && rayHit.collider.gameObject.TryGetComponent(out IInteractable interactable))
+			if (rayHit.collider && rayHit.collider.gameObject != _interactableObject)
 			{
-				interactable.Interact();
+				if (rayHit.collider.gameObject.TryGetComponent(out IInteractable interactable))
+					interactable.Interact();
+
+				if (rayHit.collider.gameObject.TryGetComponent(out WorldItem worldItem))
+				{
+					_playerInventory.AddItem(worldItem.Instance);
+					Destroy(worldItem.gameObject);
+				}
 			}
 		}
 	}

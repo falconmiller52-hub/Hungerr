@@ -1,6 +1,7 @@
 // PlayerInventory.cs
 
 using System;
+using Runtime.Common.Services.Input;
 using UnityEngine;
 using Zenject;
 
@@ -16,18 +17,39 @@ namespace Runtime.Features.Inventory
 		[SerializeField] private InventoryItemData _inventoryItemData;
 		[SerializeField] private InventoryItemData _inventoryItemDataTwo;
 		[SerializeField] private Vector2Int _pos = Vector2Int.one;
+
+		public event Action<bool> OnInventoryOpenStateChanged;
+		public event Action OnInventoryChanged;
+		
 		private InventoryWithCells _inventoryWithCells;
+		private IInputHandler _inputHandler;
 		private int width = 10;
 		private int height = 10;
-    
-		public event Action OnInventoryChanged;
-    
+		private bool _isOpened;
+		
 		[Inject]
-		private void Construct()
+		private void Construct(IInputHandler inputHandler)
+		{
+			_inputHandler = inputHandler;
+		}
+
+		private void Start()
 		{
 			_inventoryWithCells = new InventoryWithCells(width, height);
+			_inputHandler.InventoryTriggerPressed += OnInventoryTriggerPressed;
 		}
-    
+
+		private void OnDisable()
+		{
+			_inputHandler.InventoryTriggerPressed -= OnInventoryTriggerPressed;
+		}
+
+		private void OnInventoryTriggerPressed()
+		{
+			_isOpened = !_isOpened;
+			OnInventoryOpenStateChanged?.Invoke(_isOpened);
+		}
+
 		public bool AddItem(InventoryItem item, Vector2Int? position = null)
 		{
 			bool success = _inventoryWithCells.AddItem(item, position);
@@ -49,6 +71,8 @@ namespace Runtime.Features.Inventory
 			return false;
 		}
     
+		
+		
 		// public void DropItem(InventoryItem item, Vector3 worldPosition, Quaternion rotation)
 		// {
 		// 	RemoveItem(item._data, item._amount);
@@ -56,12 +80,11 @@ namespace Runtime.Features.Inventory
 		// 	// _itemWorldManager.SpawnItemInWorld(item._data, item._amount, worldPosition, rotation);
 		// 	OnInventoryChanged?.Invoke();
 		// }
+		
+		public InventoryWithCells GetInventory() => _inventoryWithCells;
     
 		
 		// DEBUG
-		
-		
-		public InventoryWithCells GetInventory() => _inventoryWithCells;
 
 		[ContextMenu("Add Item")]
 		public void AddItem()
