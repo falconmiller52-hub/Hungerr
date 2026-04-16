@@ -18,6 +18,10 @@ namespace Runtime.Features.Inventory.View.New
         public InventoryWithCells _model;
         private readonly Dictionary<int, InventoryItemView> _spawnedItems = new Dictionary<int, InventoryItemView>();
 
+        public Transform GridAchor => _gridAnchor;
+        public float CellSize => _cellSize;
+        public Transform ItemsContainer => _itemsContainer;
+        
         private void Start()
         {
             _model = _playerInventory.GetInventory();

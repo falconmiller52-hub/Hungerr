@@ -8,18 +8,18 @@
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Hungerr/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Hungerr/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Plugins/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Resources/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Player.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TaoLocationTestingScene.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TaoLocationTestingScene.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Common/Services/Input/IInputHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Common/Services/Input/IInputHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Common/Services/Input/InputHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Common/Services/Input/InputHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Inventory/View/EntryPoint/PlayerInventory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Inventory/View/EntryPoint/PlayerInventory.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Inventory/View/New/Inventory3DView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Inventory/View/New/Inventory3DView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Inventory/View/New/Item.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Inventory/View/New/Item.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Inventory/WorldItem/WorldItem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Inventory/WorldItem/WorldItem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Interactions/PlayerScope.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Player/Interactions/PlayerScope.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Settings/Input/PlayerInputActions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/Input/PlayerInputActions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Settings/Input/PlayerInputActions.inputactions" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Settings/Input/PlayerInputActions.inputactions" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/SO/InventoryItems/GridTransformGroup.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/SO/InventoryItems/GridTransformGroup.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/SO/InventoryItems/InventoryItemVisual.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/SO/InventoryItems/InventoryItemVisual.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/SO/InventoryItems/InventoryView.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/SO/InventoryItems/InventoryView.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/SO/InventoryItems/Materials.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/SO/InventoryItems/Materials/itemSlot.mat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Settings/SO/InventoryItems/Materials/itemSlot.mat.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,13 +116,15 @@
       <option name="useMixedMode" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="9880">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="9880" />
       <option name="projectPathOnTarget" />
       <option name="runtimes">
-        <list />
+        <list>
+          <MonoRuntime />
+        </list>
       </option>
       <option name="selectedOptions">
         <list />
@@ -179,6 +181,32 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Inventory/View/New/InventoryInputController.cs</url>
+          <line>83</line>
+          <properties documentPath="D:\Unity Projects\other\Hungerr\Assets\Scripts\Runtime\Features\Inventory\View\New\InventoryInputController.cs" containingFunctionPresentation="Method 'HandleSelection'">
+            <startOffsets>
+              <option value="2604" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2636" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Runtime/Features/Inventory/View/New/InventoryInputController.cs</url>
+          <line>66</line>
+          <properties documentPath="D:\Unity Projects\other\Hungerr\Assets\Scripts\Runtime\Features\Inventory\View\New\InventoryInputController.cs" containingFunctionPresentation="Method 'Update'">
+            <startOffsets>
+              <option value="2148" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2174" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
