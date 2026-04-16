@@ -1,256 +1,311 @@
 using System.Collections.Generic;
 using NaughtyAttributes;
 using Runtime.Common.Services.Input;
+using Runtime.Common.Services.Pause;
 using UnityEngine;
 using Zenject;
 
 namespace Runtime.Features.Player.Movement
 {
-    [RequireComponent(typeof(PlayerMovement))]
-    [RequireComponent(typeof(PlayerStance))]
-    public class PlayerCamera : MonoBehaviour
-    {
-        //Переменные инспектора
-        [SerializeField, Label("Player Camera Objects Assign")] private List<GameObject> _cameraObjects;
-        [SerializeField, Label("Player Transform Object")] private Transform _playerTransform;
+	[RequireComponent(typeof(PlayerMovement))]
+	[RequireComponent(typeof(PlayerStance))]
+	public class PlayerCamera : MonoBehaviour, IPausable
+	{
+		//Переменные инспектора
+		[SerializeField, Label("Player Camera Objects Assign")]
+		private List<GameObject> _cameraObjects;
 
-        [Space, SerializeField, Label("Camera Sensitivity of X and Y axis")] private Vector2 _xySensitivity = Vector2.one;
-        [SerializeField, Label("Minimum and Maximum Angle of Y axis"), MinMaxSlider(-90f, 90f)] private Vector2 _minMaxYAngle = Vector2.zero;
+		[SerializeField, Label("Player Transform Object")]
+		private Transform _playerTransform;
 
-        [Space, SerializeField, Label("Breathing Magnitude")] private float _breathingMagnitude = 0f;
-        [SerializeField, Label("Breathing Speed")] private float _breathingSpeed = 0f;
+		[Space, SerializeField, Label("Camera Sensitivity of X and Y axis")]
+		private Vector2 _xySensitivity = Vector2.one;
 
-        [Space, SerializeField, Label("Stepping Magnitude")] private float _steppingMagnitude = 0f;
-        [SerializeField, Label("Stepping Speed")] private float _steppingSpeed = 0f;
+		[SerializeField, Label("Minimum and Maximum Angle of Y axis"), MinMaxSlider(-90f, 90f)]
+		private Vector2 _minMaxYAngle = Vector2.zero;
 
-        [Space, SerializeField, Label("Camera FOV")] private float _cameraFov = 75f;
-        [SerializeField, Label("Running FOV Damping")] private float _runFovDamp = 1f;
-        [SerializeField, Label("Running FOV Multiplier")] private float _runFovMultiplier = 1f;
+		[Space, SerializeField, Label("Breathing Magnitude")]
+		private float _breathingMagnitude = 0f;
 
-        //Внутренние переменные
-        private float _xRotation, _yRotation;
-        private Vector2 _mouseRotationInputDirection;
-    
-        //Кэшированные переменные
-        private IInputHandler _inputHandler;
-        private PlayerStance _playerStance;
-        private Camera _camera;
+		[SerializeField, Label("Breathing Speed")]
+		private float _breathingSpeed = 0f;
 
+		[Space, SerializeField, Label("Stepping Magnitude")]
+		private float _steppingMagnitude = 0f;
 
-        [Inject]
-        private void Construct(IInputHandler inputHandler)
-        {
-            _inputHandler = inputHandler;
-        }
-    
-        private void Start()
-        {
-            _playerStance = GetComponent<PlayerStance>();
-            _camera = _cameraObjects[4].GetComponent<Camera>();
+		[SerializeField, Label("Stepping Speed")]
+		private float _steppingSpeed = 0f;
 
-            _xRotation = _cameraObjects[3].transform.localEulerAngles.x;
-            _yRotation = transform.localEulerAngles.y;
+		[Space, SerializeField, Label("Camera FOV")]
+		private float _cameraFov = 75f;
 
-            MouseToggle("-");
-        }
+		[SerializeField, Label("Running FOV Damping")]
+		private float _runFovDamp = 1f;
 
-        private void OnEnable()
-        {
-            if (_inputHandler == null)
-            {
-                Debug.LogError("PlayerCamera::OnEnable() No Input Handler was assigned");
-                return;
-            }
-        
-            _inputHandler.RotateInputChanged += SetNewMousePositionInput;
-        }
+		[SerializeField, Label("Running FOV Multiplier")]
+		private float _runFovMultiplier = 1f;
 
-        private void OnDisable()
-        {
-            if (_inputHandler == null)
-            {
-                Debug.LogError("PlayerCamera::OnDisable() No Input Handler was assigned");
-                return;
-            }
-        
-            _inputHandler.RotateInputChanged -= SetNewMousePositionInput;
-        }
+		//Внутренние переменные
+		private float _xRotation, _yRotation;
+		private Vector2 _mouseRotationInputDirection;
+		private bool _isCanRotate = true;
 
-        private void Update()
-        {
-            BreatheMove();
-            StepMove();
-            FovChange();
-        }
+		//Кэшированные переменные
+		private IInputHandler _inputHandler;
+		private IPauseController _pauseController;
+		private PlayerStance _playerStance;
+		private Camera _camera;
 
-        private void LateUpdate()
-        {
-            LookAt(CameraRotation);
-        }
+		[Inject]
+		private void Construct(IInputHandler inputHandler, IPauseController pauseController)
+		{
+			_inputHandler = inputHandler;
+			_pauseController = pauseController;
+		}
 
-        //Методы скрипта
+		private void Start()
+		{
+			_playerStance = GetComponent<PlayerStance>();
+			_camera = _cameraObjects[4].GetComponent<Camera>();
 
-        private void BreatheMove()
-        {
-            var nextBreathePosition = Vector3.up * Mathf.Sin(Time.time * _breathingSpeed) * _breathingMagnitude;
+			_xRotation = _cameraObjects[3].transform.localEulerAngles.x;
+			_yRotation = transform.localEulerAngles.y;
 
-            _cameraObjects[1].transform.localPosition = nextBreathePosition;
-        }
+			MouseToggle("-");
+		}
 
-        private void StepMove()
-        {
-            var playerCurrentStance = _playerStance.CurrentStance;
-            var playerCurrentSpeed = _playerStance.StanceSpeed(playerCurrentStance);
+		private void OnEnable()
+		{
+			if (_inputHandler == null)
+			{
+				Debug.LogError("PlayerCamera::OnEnable() No Input Handler was assigned");
+				return;
+			}
 
-            var playerMovingDirectionMagnitude = _playerTransform.forward.magnitude;
+			_inputHandler.RotateInputChanged += SetNewMousePositionInput;
 
-            var nextStepPosition = Vector3.up * Mathf.Sin(Time.time * _steppingSpeed * playerCurrentSpeed) * _steppingMagnitude * playerMovingDirectionMagnitude;
+			if (_pauseController == null)
+			{
+				Debug.LogError("PlayerCamera::OnEnable() No Pause controller was assigned");
+				return;
+			}
 
-            _cameraObjects[2].transform.localPosition = nextStepPosition;
-        }
+			_pauseController.Add(this);
+		}
 
-        private void FovChange()
-        {
-            var nextFov = _cameraFov * _runFovMultiplier;
-            _camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, _playerStance.CurrentStance == PlayerStance.Stance.Running && _playerTransform.forward.magnitude > 0f ? nextFov : _cameraFov, Time.deltaTime * _runFovDamp);
-        }
+		private void OnDisable()
+		{
+			if (_inputHandler == null)
+			{
+				Debug.LogError("PlayerCamera::OnDisable() No Input Handler was assigned");
+				return;
+			}
 
-        public void LookAt(Vector2 direction)
-        {
-            transform.localEulerAngles = new Vector3(0, direction.y, 0);
+			_inputHandler.RotateInputChanged -= SetNewMousePositionInput;
 
-            var angleChange = direction.x;
+			if (_pauseController == null)
+			{
+				Debug.LogError("PlayerCamera::OnDisable() No Pause controller was assigned");
+				return;
+			}
 
-            if (angleChange > 180f) angleChange -= 360f;
-            angleChange = Mathf.Clamp(angleChange, _minMaxYAngle.x, _minMaxYAngle.y);
+			_pauseController.Remove(this);
+		}
 
-            _cameraObjects[3].transform.localEulerAngles = new Vector3(angleChange, 0, 0);
-        }
+		private void Update()
+		{
+			BreatheMove();
+			StepMove();
+			FovChange();
+		}
 
-        public void MouseToggle(string state = "~")
-        {
-            bool visible = Cursor.visible;
-            CursorLockMode lockState = Cursor.lockState;
+		private void LateUpdate()
+		{
+			if (_isCanRotate)
+				LookAt(CameraRotation);
+		}
 
-            if (state == "~")
-            {
-                visible = !visible;
-                lockState = lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None;
-            }
-            else if (state == "-")
-            {
-                visible = false;
-                lockState = CursorLockMode.Locked;
-            }
-            else
-            {
-                visible = true;
-                lockState = CursorLockMode.None;
-            }
+		//Методы скрипта
+		public void Stop()
+			=> SetDisableRotation();
 
-            Cursor.visible = visible; Cursor.lockState = lockState;
-        }
+		public void Resume()
+			=> SetEnableRotation();
 
-        private void SetNewMousePositionInput(Vector2 input)
-        {
-            _mouseRotationInputDirection = input;
-        }
+		private void SetEnableRotation()
+			=> _isCanRotate = true;
 
-        private void CalculateRotation()
-        {
-            // Убираем лишние умножения, оставляем только одно для плавности
-            float mouseX = _mouseRotationInputDirection.x * _xySensitivity.x * Time.deltaTime;
-            float mouseY = _mouseRotationInputDirection.y * _xySensitivity.y * Time.deltaTime;
+		private void SetDisableRotation()
+			=> _isCanRotate = false;
+
+		private void BreatheMove()
+		{
+			var nextBreathePosition = Vector3.up * Mathf.Sin(Time.time * _breathingSpeed) * _breathingMagnitude;
+
+			_cameraObjects[1].transform.localPosition = nextBreathePosition;
+		}
+
+		private void StepMove()
+		{
+			var playerCurrentStance = _playerStance.CurrentStance;
+			var playerCurrentSpeed = _playerStance.StanceSpeed(playerCurrentStance);
+
+			var playerMovingDirectionMagnitude = _playerTransform.forward.magnitude;
+
+			var nextStepPosition = Vector3.up * Mathf.Sin(Time.time * _steppingSpeed * playerCurrentSpeed) *
+			                       _steppingMagnitude * playerMovingDirectionMagnitude;
+
+			_cameraObjects[2].transform.localPosition = nextStepPosition;
+		}
+
+		private void FovChange()
+		{
+			var nextFov = _cameraFov * _runFovMultiplier;
+			_camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView,
+							_playerStance.CurrentStance == PlayerStance.Stance.Running &&
+							_playerTransform.forward.magnitude > 0f
+											? nextFov
+											: _cameraFov, Time.deltaTime * _runFovDamp);
+		}
+
+		public void LookAt(Vector2 direction)
+		{
+			transform.localEulerAngles = new Vector3(0, direction.y, 0);
+
+			var angleChange = direction.x;
+
+			if (angleChange > 180f) angleChange -= 360f;
+			angleChange = Mathf.Clamp(angleChange, _minMaxYAngle.x, _minMaxYAngle.y);
+
+			_cameraObjects[3].transform.localEulerAngles = new Vector3(angleChange, 0, 0);
+		}
+
+		public void MouseToggle(string state = "~")
+		{
+			bool visible = Cursor.visible;
+			CursorLockMode lockState = Cursor.lockState;
+
+			if (state == "~")
+			{
+				visible = !visible;
+				lockState = lockState == CursorLockMode.None ? CursorLockMode.Locked : CursorLockMode.None;
+			}
+			else if (state == "-")
+			{
+				visible = false;
+				lockState = CursorLockMode.Locked;
+			}
+			else
+			{
+				visible = true;
+				lockState = CursorLockMode.None;
+			}
+
+			Cursor.visible = visible;
+			Cursor.lockState = lockState;
+		}
+
+		private void SetNewMousePositionInput(Vector2 input)
+		{
+			_mouseRotationInputDirection = input;
+		}
+
+		private void CalculateRotation()
+		{
+			// Убираем лишние умножения, оставляем только одно для плавности
+			float mouseX = _mouseRotationInputDirection.x * _xySensitivity.x * Time.deltaTime;
+			float mouseY = _mouseRotationInputDirection.y * _xySensitivity.y * Time.deltaTime;
 
 #if UNITY_EDITOR
-            mouseX *= 10f; // Оставляем твой фикс для редактора, если он нужен
-            mouseY *= 10f;
+			mouseX *= 10f; // Оставляем твой фикс для редактора, если он нужен
+			mouseY *= 10f;
 #endif
 
-            _yRotation += mouseX;
-            _xRotation -= mouseY;
-            _xRotation = Mathf.Clamp(_xRotation, _minMaxYAngle.x, _minMaxYAngle.y);
-        }
-        
-        //Геттеры и сеттеры
-        private Vector2 CameraRotation
-        {
-            get
-            {
-                _mouseRotationInputDirection *= Time.deltaTime;
+			_yRotation += mouseX;
+			_xRotation -= mouseY;
+			_xRotation = Mathf.Clamp(_xRotation, _minMaxYAngle.x, _minMaxYAngle.y);
+		}
+
+		//Геттеры и сеттеры
+		private Vector2 CameraRotation
+		{
+			get
+			{
+				_mouseRotationInputDirection *= Time.deltaTime;
 #if UNITY_EDITOR
-                _mouseRotationInputDirection *= 10f;
+				_mouseRotationInputDirection *= 10f;
 #endif
-    
-                var yAxis = _mouseRotationInputDirection.x;
-                var xAxis = _mouseRotationInputDirection.y;
-    
-                _yRotation += yAxis * _xySensitivity.x * Time.deltaTime;
-    
-                _xRotation -= xAxis * _xySensitivity.y * Time.deltaTime;
-                _xRotation = Mathf.Clamp(_xRotation, _minMaxYAngle.x, _minMaxYAngle.y);
-    
-                return new Vector2(_xRotation, _yRotation);
-            }
-        }
-        public List<GameObject> CameraObjects
-        {
-            get => _cameraObjects;
-            set => _cameraObjects = value;
-        }
 
-        public Vector2 Sensitivity
-        {
-            get => _xySensitivity;
-            set => _xySensitivity = value;
-        }
+				var yAxis = _mouseRotationInputDirection.x;
+				var xAxis = _mouseRotationInputDirection.y;
 
-        public Vector2 MinMaxYAngle
-        {
-            get => _minMaxYAngle;
-            set => _minMaxYAngle = value;
-        }
+				_yRotation += yAxis * _xySensitivity.x * Time.deltaTime;
 
-        public float BreathingMagnitude
-        {
-            get => _breathingMagnitude;
-            set => _breathingMagnitude = value;
-        }
+				_xRotation -= xAxis * _xySensitivity.y * Time.deltaTime;
+				_xRotation = Mathf.Clamp(_xRotation, _minMaxYAngle.x, _minMaxYAngle.y);
 
-        public float BreathingSpeed
-        {
-            get => _breathingSpeed;
-            set => _breathingSpeed = value;
-        }
+				return new Vector2(_xRotation, _yRotation);
+			}
+		}
 
-        public float SteppingMagnitude
-        {
-            get => _steppingMagnitude;
-            set => _steppingMagnitude = value;
-        }
+		public List<GameObject> CameraObjects
+		{
+			get => _cameraObjects;
+			set => _cameraObjects = value;
+		}
 
-        public float SteppingSpeed
-        {
-            get => _steppingSpeed;
-            set => _steppingSpeed = value;
-        }
+		public Vector2 Sensitivity
+		{
+			get => _xySensitivity;
+			set => _xySensitivity = value;
+		}
 
-        public float CameraFOV
-        {
-            get => _cameraFov;
-            set => _cameraFov = value;
-        }
+		public Vector2 MinMaxYAngle
+		{
+			get => _minMaxYAngle;
+			set => _minMaxYAngle = value;
+		}
 
-        public float RunningFOVDamp
-        {
-            get => _runFovDamp;
-            set => _runFovDamp = value;
-        }
+		public float BreathingMagnitude
+		{
+			get => _breathingMagnitude;
+			set => _breathingMagnitude = value;
+		}
 
-        public float RunningFOVMultiplier
-        {
-            get => _runFovMultiplier;
-            set => _runFovMultiplier = value;
-        }
-    }
+		public float BreathingSpeed
+		{
+			get => _breathingSpeed;
+			set => _breathingSpeed = value;
+		}
+
+		public float SteppingMagnitude
+		{
+			get => _steppingMagnitude;
+			set => _steppingMagnitude = value;
+		}
+
+		public float SteppingSpeed
+		{
+			get => _steppingSpeed;
+			set => _steppingSpeed = value;
+		}
+
+		public float CameraFOV
+		{
+			get => _cameraFov;
+			set => _cameraFov = value;
+		}
+
+		public float RunningFOVDamp
+		{
+			get => _runFovDamp;
+			set => _runFovDamp = value;
+		}
+
+		public float RunningFOVMultiplier
+		{
+			get => _runFovMultiplier;
+			set => _runFovMultiplier = value;
+		}
+	}
 }

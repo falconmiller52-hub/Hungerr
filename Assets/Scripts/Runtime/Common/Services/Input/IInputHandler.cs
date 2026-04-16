@@ -12,6 +12,8 @@ namespace Runtime.Common.Services.Input
 		event Action<bool> RunInputPressed;
 		event Action FlashlightInputPressed;
 		event Action CrouchInputPressed;
+		event Action DialogSkipInputPressed;
+		event Action ExitInputPressed;
 
 		void Enable();
 		void Disable();
