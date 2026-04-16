@@ -400,9 +400,8 @@ GameObject:
   - component: {fileID: 6932881113644446726}
   - component: {fileID: 6932881113644446727}
   - component: {fileID: 6932881113644446744}
-  - component: {fileID: 6932881113644446745}
-  - component: {fileID: 6932881113644446746}
   - component: {fileID: 6932881113644446747}
+  - component: {fileID: 3604826472852688645}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -488,50 +487,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6932881113644446745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6932881113644446749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6097491f395e8504088f4b7f261be9d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interactionEvents:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6932881113644446746}
-        m_TargetAssemblyTypeName: LocationChanger, Assembly-CSharp
-        m_MethodName: ChangeLocation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 100
-          m_StringArgument: Sus
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &6932881113644446746
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6932881113644446749}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c704e6fa871d8e34390e18ee0cec0c0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _theFuckingPlayerItself: {fileID: 0}
-  _nextPositionObject: {fileID: 6932881114291901272}
-  _transitionSpeed: {x: 0.0005, y: 0.5}
-  _startSound: {fileID: 8300000, guid: 09473890d956bf3418cb8541624d50d0, type: 3}
-  _endSound: {fileID: 8300000, guid: 6521f0295b21e4b41b7c12e1934c1525, type: 3}
 --- !u!82 &6932881113644446747
 AudioSource:
   m_ObjectHideFlags: 0
@@ -637,6 +592,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3604826472852688645
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6932881113644446749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae56e01847647142bb24f0431431af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nextPositionTransform: {fileID: 6932881114291901272}
 --- !u!1 &6932881113654518727
 GameObject:
   m_ObjectHideFlags: 0
@@ -2715,9 +2683,8 @@ GameObject:
   - component: {fileID: 6932881115133668845}
   - component: {fileID: 6932881115133668846}
   - component: {fileID: 6932881115133668847}
-  - component: {fileID: 6932881115133668832}
-  - component: {fileID: 6932881115133668833}
   - component: {fileID: 6932881115133668834}
+  - component: {fileID: 419366508}
   m_Layer: 0
   m_Name: Door (3)
   m_TagString: Untagged
@@ -2803,50 +2770,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6932881115133668832
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6932881115133668836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6097491f395e8504088f4b7f261be9d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _interactionEvents:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6932881115133668833}
-        m_TargetAssemblyTypeName: LocationChanger, Assembly-CSharp
-        m_MethodName: ChangeLocation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 100
-          m_StringArgument: Sus
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &6932881115133668833
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6932881115133668836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c704e6fa871d8e34390e18ee0cec0c0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _theFuckingPlayerItself: {fileID: 0}
-  _nextPositionObject: {fileID: 6932881113768698005}
-  _transitionSpeed: {x: 0.0005, y: 0.5}
-  _startSound: {fileID: 8300000, guid: 09473890d956bf3418cb8541624d50d0, type: 3}
-  _endSound: {fileID: 8300000, guid: 6521f0295b21e4b41b7c12e1934c1525, type: 3}
 --- !u!82 &6932881115133668834
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2952,6 +2875,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &419366508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6932881115133668836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae56e01847647142bb24f0431431af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _nextPositionTransform: {fileID: 6932881113768698005}
 --- !u!1 &6932881115148744966
 GameObject:
   m_ObjectHideFlags: 0
