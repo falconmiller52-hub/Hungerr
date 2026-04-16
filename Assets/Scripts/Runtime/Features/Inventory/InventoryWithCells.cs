@@ -115,7 +115,18 @@ namespace Runtime.Features.Inventory
 				return false;
 			}
 
-			// Ищем первое попавшееся подходящее место (может быть занято таким же преметом или быть пустым)
+			// Ищем первое попавшееся подходящее место
+			// (сначала проходим по инвентарю и ищем слоты с этим предметом чтоб стакнуть, если их нет, то ставим в первое свободное место)
+			foreach (var slot in slots.Values)
+			{
+				if (slot.CanStackWith(item))
+				{
+					PlaceItem(item, slot.position, slot.Id);
+					items.Add(item);
+					return true;
+				}
+			}
+			
 			for (int y = 0; y < height; y++)
 			{
 				for (int x = 0; x < width; x++)
