@@ -1056,13 +1056,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8771324163534789745}
-  m_Layer: 0
+  - component: {fileID: 1094388378423128803}
+  m_Layer: 6
   m_Name: InventoryContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8771324163534789745
 Transform:
   m_ObjectHideFlags: 0
@@ -1080,6 +1081,27 @@ Transform:
   - {fileID: 7114398255135709517}
   m_Father: {fileID: 1543247613158392260}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+--- !u!65 &1094388378423128803
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631163752615704621}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 0.1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1875221254108160551
 GameObject:
   m_ObjectHideFlags: 0
@@ -1786,7 +1808,7 @@ Transform:
   m_GameObject: {fileID: 3851059412846384325}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.085, z: 0.1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2059,8 +2081,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5492440104074323406}
-  - component: {fileID: 2224160621517800684}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: InventoryGridAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2083,27 +2104,6 @@ Transform:
   - {fileID: 5389591896590439944}
   m_Father: {fileID: 8771324163534789745}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2224160621517800684
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4544415476384297363}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4777180280061254142
 GameObject:
   m_ObjectHideFlags: 0
@@ -2115,7 +2115,7 @@ GameObject:
   - component: {fileID: 7114398255135709517}
   - component: {fileID: 7634411875801732943}
   - component: {fileID: 5724397582153962071}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: InventoryGridVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3068,7 +3068,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5389591896590439944}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ItemsContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
