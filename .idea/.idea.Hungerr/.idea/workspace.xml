@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="71d34e89-be79-468e-bcd8-89462007bd87" name="Changes" comment="" />
+    <list default="true" id="71d34e89-be79-468e-bcd8-89462007bd87" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Hungerr/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Hungerr/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/UI/Inventory/INV_bg_grid.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/UI/Inventory/INV_bg_grid.jpg.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/UI/Inventory/INV_grid.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/UI/Inventory/INV_grid.jpg.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Content/UI/Inventory/INV_slot.jpg.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Content/UI/Inventory/INV_slot.jpg.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Player.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Player.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/URPProjectSettings.asset" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,6 +38,9 @@
   &quot;associatedIndex&quot;: 0
 }</component>
   <component name="ProjectId" id="3BLUhwETS3osDrgRWUneY53PJSz" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -40,7 +51,7 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "new-unity-version",
+    "git-widget-placeholder": "inventory-system",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
