@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using Runtime.Common.Services.Input;
+using Runtime.Common.Services.Pause;
 using Runtime.Features.Interactable;
 using Runtime.Features.Outline;
 using UnityEngine;
@@ -7,7 +8,7 @@ using Zenject;
 
 namespace Runtime.Features.Player.Interactions
 {
-	public class PlayerScope : MonoBehaviour
+	public class PlayerScope : MonoBehaviour, IPausable
 	{
 		//Переменные инспектора
 		[SerializeField, Label("Player Camera")]
@@ -19,16 +20,18 @@ namespace Runtime.Features.Player.Interactions
 		//Внутренние переменные
 		private RaycastHit _rayHit;
 		private GameObject _interactableObject;
+		private bool _isCanInteract = true;
+		
+		//Кэшированные переменные
 		private IOutline _currentOutlineObject;
 		private IInputHandler _inputHandler;
-
-		//Кэшированные переменные
-
-
+		private IPauseController _pauseController;
+						
 		[Inject]
-		private void Construct(IInputHandler inputHandler)
+		private void Construct(IInputHandler inputHandler, IPauseController pauseController)
 		{
 			_inputHandler = inputHandler;
+			_pauseController = pauseController;
 		}
 
 		private void OnEnable()
@@ -40,6 +43,14 @@ namespace Runtime.Features.Player.Interactions
 			}
 
 			_inputHandler.InteractPerformed += Interact;
+			
+			if (_pauseController == null)
+			{
+				Debug.LogError("PlayerScope::OnEnable() No Pause Controller was assigned");
+				return;
+			}
+			
+			_pauseController.Add(this);
 		}
 
 		private void OnDisable()
@@ -51,6 +62,14 @@ namespace Runtime.Features.Player.Interactions
 			}
 
 			_inputHandler.InteractPerformed -= Interact;
+			
+			if (_pauseController == null)
+			{
+				Debug.LogError("PlayerScope::OnDisable() No Pause Controller was assigned");
+				return;
+			}
+			
+			_pauseController.Remove(this);
 		}
 
 		private void Update()
@@ -75,8 +94,23 @@ namespace Runtime.Features.Player.Interactions
 		}
 
 		//Методы скрипта
+
+		public void Stop()
+			=> SetDisableInteract();
+
+		public void Resume()
+			=> SetEnableInteract();
+
+		private void SetEnableInteract()
+			=> _isCanInteract = true;
+		
+		private void SetDisableInteract()
+			=> _isCanInteract = false;
+		
 		private void Interact()
 		{
+			if (!_isCanInteract) return;
+			
 			var ray = _playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 			Physics.Raycast(ray, out var rayHit, _rayLength);
 

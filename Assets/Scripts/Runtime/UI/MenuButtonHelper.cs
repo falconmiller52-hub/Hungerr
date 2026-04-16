@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,17 +9,29 @@ namespace Runtime.UI
 	{
 		[SerializeField] private GameObject _buttonSelectionTag;
 		[SerializeField] private RectTransform _buttonTransform;
-		
+
+		private void OnEnable()
+			=> HideHelper();
+
+		private void OnDisable()
+			=> HideHelper();
+
 		public void OnPointerEnter(PointerEventData eventData)
+			=> ShowHelper();
+
+		public void OnPointerExit(PointerEventData eventData)
+			=> HideHelper();
+
+		private void ShowHelper()
 		{
 			_buttonSelectionTag.SetActive(true);
-			
+
 			Vector3 newPos = _buttonSelectionTag.transform.position;
-			newPos.y = _buttonTransform.position.y; 
+			newPos.y = _buttonTransform.position.y;
 			_buttonSelectionTag.transform.position = newPos;
 		}
-		
-		public void OnPointerExit(PointerEventData eventData)
+
+		private void HideHelper()
 		{
 			_buttonSelectionTag.SetActive(false);
 		}
