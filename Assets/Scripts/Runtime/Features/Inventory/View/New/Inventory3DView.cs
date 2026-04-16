@@ -44,11 +44,11 @@ public class Inventory3DView : MonoBehaviour
             int id = pair.Key;
             Vector2Int topLeft = pair.Value.pos;
             InventoryItem itemData = pair.Value.item;
-            Vector3 targetPos = GridToLocal(topLeft);
+            Vector3 targetPos = GridToLocal(topLeft, pair.Value.item._data.width, pair.Value.item._data.height);
 
             if (!_spawnedItems.ContainsKey(id))
             {
-                var newItem = Instantiate(itemPrefab, itemsContainer);
+                var newItem = Instantiate(pair.Value.item._data.PrefabForInventory, itemsContainer).GetComponent<InventoryItemView>();
                 newItem.Setup(itemData);
                 newItem.UpdateVisualPosition(targetPos, true); // Мгновенно при спавне
                 _spawnedItems.Add(id, newItem);
@@ -86,10 +86,10 @@ public class Inventory3DView : MonoBehaviour
         return result;
     }
 
-    public Vector3 GridToLocal(Vector2Int gridPos)
+    public Vector3 GridToLocal(Vector2Int gridPos, float width, float height)
     {
         // Помним: в инвентаре Y идет вниз, в 3D это -Z
-        return new Vector3(gridPos.x * cellSize, 0, -gridPos.y * cellSize);
+        return new Vector3((gridPos.x + width / 2) * cellSize, 0, -(gridPos.y + height / 2) * cellSize);
     }
     
     private void OnDrawGizmos()

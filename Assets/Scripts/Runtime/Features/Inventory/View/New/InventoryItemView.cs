@@ -24,6 +24,9 @@ public class InventoryItemView : MonoBehaviour
 			return;
 		}
 
+		if (transform.localPosition == targetLocalPos)
+			return;
+		
 		// PrimeTween сам остановит предыдущий твин на этом трансформе
 		Tween.LocalPosition(transform, targetLocalPos, moveDuration, moveEase);
 	}

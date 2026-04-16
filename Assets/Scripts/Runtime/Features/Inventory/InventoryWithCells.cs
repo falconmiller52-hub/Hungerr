@@ -1,6 +1,7 @@
 // CellInventory.cs
 
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Runtime.Features.Inventory
@@ -138,6 +139,23 @@ namespace Runtime.Features.Inventory
 			}
 
 			return false;
+		}
+
+		public bool RemoveItemByPosition(Vector2Int pos, int amount = -1)
+		{
+			var slot = GetSlot(pos);
+
+			var neededSlots = slots.Values.Where(x => x.Id == slot.Id);
+
+			foreach (var neededSlot in neededSlots)
+			{
+				if (amount < 1)
+					neededSlot.RemoveItem(999); // типа удаляем весь айтем (калич)
+				else
+					neededSlot.RemoveItem(amount);
+			}
+
+			return true;
 		}
 
 		private void PlaceItem(InventoryItem item, Vector2Int topLeft, int id)

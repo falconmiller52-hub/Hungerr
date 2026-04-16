@@ -38,15 +38,16 @@ namespace Runtime.Features.Inventory
 			return success;
 		}
     
-		// public bool RemoveItem(InventoryItemData data, int amount = 1)
-		// {
-		// 	if (_inventoryWithCells.TryTakeItem(data, out var taken, amount))
-		// 	{
-		// 		OnInventoryChanged?.Invoke();
-		// 		return true;
-		// 	}
-		// 	return false;
-		// }
+		public bool RemoveItem(Vector2Int pos, int amount = 1)
+		{
+			if (_inventoryWithCells.RemoveItemByPosition(pos, amount))
+			{
+				OnInventoryChanged?.Invoke();
+				return true;
+			}
+			
+			return false;
+		}
     
 		// public void DropItem(InventoryItem item, Vector3 worldPosition, Quaternion rotation)
 		// {
@@ -56,6 +57,10 @@ namespace Runtime.Features.Inventory
 		// 	OnInventoryChanged?.Invoke();
 		// }
     
+		
+		// DEBUG
+		
+		
 		public InventoryWithCells GetInventory() => _inventoryWithCells;
 
 		[ContextMenu("Add Item")]
@@ -70,6 +75,13 @@ namespace Runtime.Features.Inventory
 		{
 			var s = new InventoryItem(_inventoryItemDataTwo);
 			AddItem(s);
+		}
+		
+		[ContextMenu("Remove Item")]
+		public void RemoveItem()
+		{
+			var s = new InventoryItem(_inventoryItemData);
+			RemoveItem(_pos);
 		}
 	}
 }
