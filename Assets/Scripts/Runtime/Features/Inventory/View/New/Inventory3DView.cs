@@ -81,6 +81,7 @@ namespace Runtime.Features.Inventory.View.New
                 }
                 else
                 {
+                    _spawnedItems[id].Setup(itemData);
                     _spawnedItems[id].UpdateVisualPosition(targetPos); // Плавно через PrimeTween
                 }
             }

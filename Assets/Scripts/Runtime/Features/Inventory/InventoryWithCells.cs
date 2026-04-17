@@ -171,6 +171,8 @@ namespace Runtime.Features.Inventory
 
 		private void PlaceItem(InventoryItem item, Vector2Int topLeft, int id)
 		{
+			bool increaseApplied = false;
+			
 			// в любом случае должно быть id != -1
 			for (int y = 0; y < item._data.height; y++)
 			{
@@ -184,9 +186,11 @@ namespace Runtime.Features.Inventory
 						slot.item = item;
 						slot.Id = id;
 					}
-					else if (slot.CanStackWith(item)) // а нужна ли вторая проверка? он проверяет это же в CanPlaceItem
+					else if (slot.CanStackWith(item) && !increaseApplied)
 					{
+						// увеличиваем  amount только один раз так как все слоты имеют ссылку на один айтем
 						slot.TryAddItem(item, id);
+						increaseApplied = true;
 					}
 				}
 			}

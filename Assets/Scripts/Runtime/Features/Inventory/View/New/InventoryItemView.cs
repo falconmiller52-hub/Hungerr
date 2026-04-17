@@ -1,6 +1,7 @@
 using UnityEngine;
 using PrimeTween;
 using Runtime.Features.Inventory;
+using TMPro;
 
 public class InventoryItemView : MonoBehaviour
 {
@@ -9,11 +10,12 @@ public class InventoryItemView : MonoBehaviour
 	[Header("Settings")]
 	[SerializeField] private float moveDuration = 0.2f;
 	[SerializeField] private Ease moveEase = Ease.OutQuad;
+	[SerializeField] private TMP_Text _amount;
 
 	public void Setup(InventoryItem item)
 	{
 		Item = item;
-		// Здесь можно обновить меш или текст, если нужно
+		_amount.text = $"x:{item._amount}"; 
 	}
 
 	public void UpdateVisualPosition(Vector3 targetLocalPos, bool immediate = false)
