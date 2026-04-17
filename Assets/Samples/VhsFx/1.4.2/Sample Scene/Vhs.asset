@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
   m_Name: ColorAdjustments
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   postExposure:
     m_OverrideState: 1
     m_Value: 0.3
   contrast:
     m_OverrideState: 1
-    m_Value: -20.5
+    m_Value: 16.8
   colorFilter:
     m_OverrideState: 1
     m_Value: {r: 0.9103774, g: 0.9200663, b: 1, a: 1}
@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Value: 0
   saturation:
     m_OverrideState: 1
-    m_Value: -12
+    m_Value: 8.5
 --- !u!114 &-4713384070230122667
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -43,25 +43,58 @@ MonoBehaviour:
   active: 1
   _weight:
     m_OverrideState: 1
-    m_Value: 0.335
-  _bleed:
-    m_OverrideState: 1
-    m_Value: 0.56
-  _rocking:
-    m_OverrideState: 1
-    m_Value: 0.023
+    m_Value: 0.671
   _tape:
     m_OverrideState: 1
-    m_Value: 0.09
-  _noise:
-    m_OverrideState: 1
-    m_Value: 0.541
-  _flickering:
+    m_Value: 0.05
+  _shades:
+    m_OverrideState: 0
+    m_Value: 2.25
+  _rocking:
     m_OverrideState: 1
     m_Value: 0
-  _glitch:
+  _squeeze:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: 0.025
+  _density:
+    m_OverrideState: 0
+    m_Value: 0
+  _intensity:
+    m_OverrideState: 0
+    m_Value: 0
+  _scale:
+    m_OverrideState: 0
+    m_Value: 1.16
+  _flickering:
+    m_OverrideState: 0
+    m_Value: -1
+  _lines:
+    m_OverrideState: 1
+    m_Value: 0
+  _color:
+    m_OverrideState: 1
+    m_Value: {r: 0.5660378, g: 0.5660378, b: 0.5660378, a: 1}
+  _bleed:
+    m_OverrideState: 0
+    m_Value: 0
+  _sl_count:
+    m_OverrideState: 0
+    m_Value: 0.7
+  _sl_intensity:
+    m_OverrideState: 0
+    m_Value: 0.215
+  _sl_move:
+    m_OverrideState: 0
+    m_Value: 0
+  _sl_flicker:
+    m_OverrideState: 0
+    m_Value: 0
+  _flow:
+    m_OverrideState: 0
+    m_Value: 1
+  _pulsation:
+    m_OverrideState: 0
+    m_Value: 14
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,7 +111,7 @@ MonoBehaviour:
   - {fileID: -4713384070230122667}
   - {fileID: -8370247920593371965}
   - {fileID: 2846570248330515628}
-  - {fileID: 8598829235155890516}
+  - {fileID: 6346891622372496007}
 --- !u!114 &2846570248330515628
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -97,19 +130,19 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.51
+    m_Value: 2.28
   intensity:
     m_OverrideState: 1
-    m_Value: 3.05
+    m_Value: 3.55
   scatter:
     m_OverrideState: 1
-    m_Value: 0.28
+    m_Value: 0.155
   clamp:
     m_OverrideState: 0
     m_Value: 65472
   tint:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0.9292453, g: 0.98701435, b: 1, a: 1}
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
@@ -126,7 +159,7 @@ MonoBehaviour:
   dirtIntensity:
     m_OverrideState: 0
     m_Value: 0
---- !u!114 &8598829235155890516
+--- !u!114 &6346891622372496007
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,7 +174,7 @@ MonoBehaviour:
   active: 1
   type:
     m_OverrideState: 1
-    m_Value: 9
+    m_Value: 5
   intensity:
     m_OverrideState: 1
     m_Value: 1

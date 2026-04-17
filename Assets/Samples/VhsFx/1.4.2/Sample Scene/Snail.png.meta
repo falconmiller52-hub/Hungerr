@@ -138,3 +138,10 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 270015
+  packageName: Vhs
+  packageVersion: 1.10.0
+  assetPath: Assets/Samples/VhsFx/1.4.2/Sample Scene/Snail.png
+  uploadId: 899856
