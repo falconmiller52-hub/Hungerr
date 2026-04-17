@@ -33,9 +33,9 @@ public class UIManager : MonoBehaviour
 		tooltipNameText.text = item.GetDisplayName();
 		tooltipDescriptionText.text = item.GetDescription();
         
-		if (item.Instance._amount > 1)
+		if (item.Instance.Amount > 1)
 		{
-			tooltipAmountText.text = $"x{item.Instance._amount}";
+			tooltipAmountText.text = $"x{item.Instance.Amount}";
 			tooltipAmountText.enabled = true;
 		}
 		else

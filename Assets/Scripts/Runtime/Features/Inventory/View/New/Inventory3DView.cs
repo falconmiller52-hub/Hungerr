@@ -64,11 +64,11 @@ namespace Runtime.Features.Inventory.View.New
                 int id = pair.Key;
                 Vector2Int topLeft = pair.Value.pos;
                 InventoryItem itemData = pair.Value.item;
-                Vector3 targetPos = GridToLocal(topLeft, pair.Value.item._data.width, pair.Value.item._data.height);
+                Vector3 targetPos = GridToLocal(topLeft, pair.Value.item.Data.Width, pair.Value.item.Data.Height);
 
                 if (!_spawnedItems.ContainsKey(id))
                 {
-                    var newItem = Instantiate(pair.Value.item._data.PrefabForInventory, _itemsContainer).GetComponent<InventoryItemView>();
+                    var newItem = Instantiate(pair.Value.item.Data.PrefabForInventory, _itemsContainer).GetComponent<InventoryItemView>();
                     if (newItem == null)
                     {
                         Debug.LogError($"Inventory3DView::InventoryChangeVisualState() {newItem.Item} not found");
@@ -98,7 +98,7 @@ namespace Runtime.Features.Inventory.View.New
 
                 if (!result.ContainsKey(slot.Id))
                 {
-                    result.Add(slot.Id, (kvp.Key, slot.item));
+                    result.Add(slot.Id, (kvp.Key, slot.Item));
                 }
                 else
                 {
@@ -106,7 +106,7 @@ namespace Runtime.Features.Inventory.View.New
                     var current = result[slot.Id];
                     if (kvp.Key.x <= current.Item1.x && kvp.Key.y <= current.Item1.y)
                     {
-                        result[slot.Id] = (kvp.Key, slot.item);
+                        result[slot.Id] = (kvp.Key, slot.Item);
                     }
                 }
             }

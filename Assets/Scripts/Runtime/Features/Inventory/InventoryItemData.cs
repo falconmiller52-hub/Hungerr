@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Runtime.Features.Inventory
@@ -6,22 +7,20 @@ namespace Runtime.Features.Inventory
 	public class InventoryItemData : ScriptableObject
 	{
 		[Header("Basic Info")]
-		public string itemName;
-		public Sprite icon;
-		public string description;
+		[field: SerializeField] public string ItemName { get; private set; } = String.Empty;
+		[field: SerializeField] public string Description { get; private set; } = String.Empty;
     
 		[Header("Stack Settings")]
-		public int maxStackSize = 64;
+		[field: SerializeField] public int MaxStackSize { get; private set; } = 64;
     
 		[Header("3D World")]
-		public GameObject worldPrefab; // 3D префаб предмета в мире
-		public GameObject PrefabForInventory; 
-    
+		[field: SerializeField] public GameObject WorldPrefab { get; private set; } 
+		[field: SerializeField] public GameObject PrefabForInventory { get; private set; }
 		
 		[Header("Item Size in Inventory")]
-		public int width = 1;  // ширина в ячейках
-		public int height = 1; // высота в ячейках
+		[field: SerializeField] public int Width { get; private set; } = 1;  // ширина в ячейках
+		[field: SerializeField] public int Height { get; private set; } = 1; // высота в ячейках
     
-		public bool IsStackable => maxStackSize > 1;
+		public bool IsStackable => MaxStackSize > 1;
 	}
 }

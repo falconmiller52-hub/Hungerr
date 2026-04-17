@@ -86,7 +86,7 @@ namespace Runtime.Features.Inventory.Control
                 var slot = _view._model.GetSlot(coords);
                 if (slot != null && !slot.IsEmpty)
                 {
-                    _selectedItem = slot.item;
+                    _selectedItem = slot.Item;
                     _originalPosition = FindTopLeftOfItem(_selectedItem, coords);
 
                     // Удаляем предмет из логики временно, чтобы он не мешал сам себе при проверке "CanPlace"
@@ -101,7 +101,7 @@ namespace Runtime.Features.Inventory.Control
         private void HandlePlacement(Vector2Int coords)
         {
             // Обновляем позицию "призрака" для предпросмотра
-            Vector3 targetPos = _view.GridToLocal(coords, _selectedItem._data.width, _selectedItem._data.height);
+            Vector3 targetPos = _view.GridToLocal(coords, _selectedItem.Data.Width, _selectedItem.Data.Height);
             _ghostItem.UpdateVisualPosition(targetPos, false);
 
             bool canPlace = _view._model.CanPlaceItem(_selectedItem, coords);
@@ -139,7 +139,7 @@ namespace Runtime.Features.Inventory.Control
         private void PrepareGhost(InventoryItem item)
         {
             // Можно просто заспавнить тот же префаб
-            GameObject ghostObj = Instantiate(item._data.PrefabForInventory, _view.ItemsContainer);
+            GameObject ghostObj = Instantiate(item.Data.PrefabForInventory, _view.ItemsContainer);
             _ghostItem = ghostObj.GetComponent<InventoryItemView>();
             
             // Делаем полупрозрачным (нужен шейдер с поддержкой прозрачности)
@@ -163,12 +163,12 @@ namespace Runtime.Features.Inventory.Control
 
         private void RemoveItemFromLogic(InventoryItem item, Vector2Int topLeft)
         {
-            for (int y = 0; y < item._data.height; y++)
+            for (int y = 0; y < item.Data.Height; y++)
             {
-                for (int x = 0; x < item._data.width; x++)
+                for (int x = 0; x < item.Data.Width; x++)
                 {
                     var slot = _view._model.GetSlot(new Vector2Int(topLeft.x + x, topLeft.y + y));
-                    slot.item = null;
+                    slot.Item = null;
                     slot.Id = -1;
                 }
             }

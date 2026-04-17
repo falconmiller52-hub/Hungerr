@@ -1,62 +1,52 @@
-// InventorySlot.cs
-
-using System;
 using UnityEngine;
 
 namespace Runtime.Features.Inventory
 {
-	[Serializable]
 	public class InventorySlot
 	{
-		public InventoryItem item;
-		public Vector2Int position; // позиция в инвентаре (x, y)
+		public InventoryItem Item;
+		public Vector2Int Position; // позиция в инвентаре (x, y)
 		public int Id;
-		public bool IsEmpty => item == null;
-    
+		
 		public InventorySlot(Vector2Int pos)
 		{
-			position = pos;
+			Position = pos;
 			Id = -1;
 		}
     
-		public bool CanPlaceItem(InventoryItem newItem)
-		{
-			if (IsEmpty)
-				return true;
-            
-			return CanStackWith(newItem);
-		}
+		public bool IsEmpty => Item == null;
     
 		public bool CanStackWith(InventoryItem other)
 		{
-			return !IsEmpty && item.CanStackWith(other);
+			return !IsEmpty && Item.CanStackWith(other);
 		}
     
 		public bool TryAddItem(InventoryItem newItem, int id)
 		{
 			if (IsEmpty)
 			{
-				item = newItem;
+				Item = newItem;
 				Id = id;
 				return true;
 			}
         
 			if (CanStackWith(newItem))
 			{
-				int space = item.SpaceAvailable();
-				if (newItem._amount <= space)
+				int space = Item.SpaceAvailable();
+				
+				if (newItem.Amount <= space)
 				{
-					item.Add(newItem._amount);
+					Item.Add(newItem.Amount);
 					Id = id;
+					
 					return true;
 				}
-				else
-				{
-					item.Add(space);
-					newItem.Remove(space);
-					Id = id;
-					return true;
-				}
+
+				Item.Add(space);
+				newItem.Remove(space);
+				Id = id;
+				
+				return true;
 			}
         
 			return false;
@@ -67,9 +57,9 @@ namespace Runtime.Features.Inventory
 			if (IsEmpty)
 				return 0;
             
-			int removed = item.Remove(amount);
-			if (item.IsEmpty())
-				item = null;
+			int removed = Item.Remove(amount);
+			if (Item.IsEmpty())
+				Item = null;
             
 			return removed;
 		}

@@ -15,7 +15,7 @@ public class InventoryItemView : MonoBehaviour
 	public void Setup(InventoryItem item)
 	{
 		Item = item;
-		_amount.text = $"x:{item._amount}"; 
+		_amount.text = $"x:{item.Amount}"; 
 	}
 
 	public void UpdateVisualPosition(Vector3 targetLocalPos, bool immediate = false)

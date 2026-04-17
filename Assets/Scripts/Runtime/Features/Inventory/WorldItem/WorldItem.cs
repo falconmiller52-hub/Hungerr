@@ -21,14 +21,6 @@ public class WorldItem : MonoBehaviour
         meshRenderer = GetComponent<MeshRenderer>();
         outline = GetComponent<Outline>();
         
-        // if (outline == null)
-        // {
-        //     outline = gameObject.AddComponent<Outline>();
-        //     outline.outlineMode = Outline.Mode.OutlineAll;
-        //     outline.outlineColor = Color.yellow;
-        //     outline.outlineWidth = 5f;
-        // }
-        
         instance = new InventoryItem(itemData, amount);
         HideOutline();
     }
@@ -39,9 +31,9 @@ public class WorldItem : MonoBehaviour
         amount = count;
         instance = new InventoryItem(data, count);
         
-        if (data.worldPrefab != null)
+        if (data.WorldPrefab != null)
         {
-            var prefab = Instantiate(data.worldPrefab, transform);
+            var prefab = Instantiate(data.WorldPrefab, transform);
             prefab.transform.localPosition = Vector3.zero;
         }
     }
@@ -87,6 +79,6 @@ public class WorldItem : MonoBehaviour
     }
     
     public InventoryItemData GetItemData() => itemData;
-    public string GetDisplayName() => itemData.itemName;
-    public string GetDescription() => itemData.description;
+    public string GetDisplayName() => itemData.ItemName;
+    public string GetDescription() => itemData.Description;
 }
