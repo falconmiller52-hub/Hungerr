@@ -1,8 +1,10 @@
 // PlayerInventory.cs
 
 using System;
+using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
+using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +17,9 @@ namespace Runtime.Features.Inventory
 	/// </summary>
 	public class PlayerInventory : MonoBehaviour
 	{
+		[SerializeField] private SoundData _openInventorySound;
+		
+		[Header("DEBUG")]
 		[SerializeField] private InventoryItemData _inventoryItemData;
 		[SerializeField] private InventoryItemData _inventoryItemDataTwo;
 		[SerializeField] private Vector2Int _pos = Vector2Int.one;
@@ -28,12 +33,14 @@ namespace Runtime.Features.Inventory
 		private int height = 10;
 		private bool _isOpened;
 		private IPauseController _pauseController;
+		private IAudioService _audioService;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, IPauseController pauseController)
+		private void Construct(IInputHandler inputHandler, IPauseController pauseController, IAudioService audioService)
 		{
 			_inputHandler = inputHandler;
 			_pauseController = pauseController;
+			_audioService = audioService;
 		}
 		
 		private void Start()
@@ -63,6 +70,8 @@ namespace Runtime.Features.Inventory
 				Cursor.visible = false;
 				_pauseController.PerformResume();
 			}
+			
+			_audioService.PlaySfx(_openInventorySound);
 			
 			OnInventoryOpenStateChanged?.Invoke(_isOpened);
 		}

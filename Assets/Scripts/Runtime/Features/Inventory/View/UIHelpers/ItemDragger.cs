@@ -1,9 +1,9 @@
 // ItemDragger.cs
 
-using Runtime.Common.Services.Pause;
+using Runtime.Common.Services.Audio;
 using Runtime.Features.Inventory.View.New;
+using Runtime.Features.Sounds;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using Zenject;
 
 namespace Runtime.Features.Inventory
@@ -19,12 +19,22 @@ namespace Runtime.Features.Inventory
         [SerializeField] private Inventory3DView _view;
         [SerializeField] private LayerMask _gridLayer;
         [SerializeField] private PlayerInventory _playerInventory;
-        [SerializeField] private bool _isDraggedItemTransparent = false;
+        [SerializeField] private SoundData _moveItemToNewSlotSound;
+
+        [Header("Settings")]
+        [SerializeField] private bool _isDraggedItemTransparent = true;
         
         private InventoryItem _selectedItem;
         private Vector2Int _originalPosition;
         private InventoryItemView _ghostItem;
+        private IAudioService _audioService;
 
+        [Inject]
+        private void Construct(IAudioService audioService)
+        {
+            _audioService = audioService;
+        }
+        
         void Update()
         {
             Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
