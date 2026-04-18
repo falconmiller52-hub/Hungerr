@@ -1,84 +1,50 @@
-// WorldItem.cs
 using UnityEngine;
-using Runtime.Features.Interactable;
-using Runtime.Features.Inventory; // если используешь UniTask, иначе замени на_coroutine
 
-[RequireComponent(typeof(MeshRenderer))]
-public class WorldItem : MonoBehaviour
+namespace Runtime.Features.Inventory.WorldItem
 {
-    [SerializeField] private InventoryItemData itemData;
-    [SerializeField] private int amount = 1;
-    
-    private InventoryItem instance;
-    private MeshRenderer meshRenderer;
-    private Outline outline;
-    private bool isHovered = false;
-    
-    public InventoryItem Instance => instance;
-    
-    private void Awake()
+    [RequireComponent(typeof(MeshRenderer))]
+    public class WorldItem : MonoBehaviour, IHoverable
     {
-        meshRenderer = GetComponent<MeshRenderer>();
-        outline = GetComponent<Outline>();
-        
-        instance = new InventoryItem(itemData, amount);
-        HideOutline();
-    }
-    
-    public void Initialize(InventoryItemData data, int count = 1)
-    {
-        itemData = data;
-        amount = count;
-        instance = new InventoryItem(data, count);
-        
-        if (data.WorldPrefab != null)
+        [SerializeField] private InventoryItemData _itemData;
+        [SerializeField] private int _amount = 1;
+
+        private InventoryItem _instance;
+        private bool _isHovered = false;
+
+        public InventoryItem Instance => _instance;
+
+        private void Awake()
         {
-            var prefab = Instantiate(data.WorldPrefab, transform);
-            prefab.transform.localPosition = Vector3.zero;
+            _instance = new InventoryItem(_itemData, _amount);
         }
-    }
-    
-    public void OnHoverEnter()
-    {
-        isHovered = true;
-        ShowOutline();
-        UIManager.Instance?.ShowTooltip(this);
-        UIManager.Instance?.ShowInteractPrompt("F ВЗЯТЬ");
-    }
-    
-    public void OnHoverExit()
-    {
-        isHovered = false;
-        HideOutline();
-        UIManager.Instance?.HideTooltip();
-        UIManager.Instance?.HideInteractPrompt();
-    }
-    
-    private void ShowOutline()
-    {
-        if (outline != null)
-            outline.enabled = true;
-    }
-    
-    private void HideOutline()
-    {
-        if (outline != null)
-            outline.enabled = false;
-    }
-    
-    public void Interact(GameObject player)
-    {
-        var inventoryComponent = player.GetComponent<PlayerInventory>();
-        if (inventoryComponent != null)
+
+        // метод для инициализации из кода, например если предмет с моба выпадет или с инвентаря
+        public void Initialize(InventoryItemData data, int count = 1)
         {
-            if (inventoryComponent.AddItem(instance))
+            _itemData = data;
+            _amount = count;
+            _instance = new InventoryItem(data, count);
+
+            if (data.WorldPrefab != null)
             {
-                Destroy(gameObject);
+                var prefab = Instantiate(data.WorldPrefab, transform);
+                prefab.transform.localPosition = Vector3.zero;
             }
         }
+
+        public void HoverEnter()
+        {
+            _isHovered = true;
+            TooltipController.Instance?.ShowTooltip(this);
+        }
+
+        public void HoverExit()
+        {
+            _isHovered = false;
+            TooltipController.Instance?.HideTooltip();
+        }
+
+        public string GetDisplayName() => _itemData.ItemName;
+        public string GetDescription() => _itemData.Description;
     }
-    
-    public InventoryItemData GetItemData() => itemData;
-    public string GetDisplayName() => itemData.ItemName;
-    public string GetDescription() => itemData.Description;
 }

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: -7641459703486997325}
   - component: {fileID: 8255308191636439011}
   - component: {fileID: 1048691957333025022}
-  - component: {fileID: 245894171661668537}
+  - component: {fileID: 2066010275714148580}
   m_Layer: 0
-  m_Name: Aid_WI
+  m_Name: Battery_WI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,7 +57,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9c950d5787ee2cb4eb1c32e9c547d7c8, type: 2}
+  - {fileID: 2100000, guid: 35f13ad444ced074ab57d537d6aabbde, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,7 +86,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3919629856071798191}
-  m_Mesh: {fileID: 4300000, guid: f1e23b961b99b0f47998f62461e8ef5a, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 93d40de23e9f66846a2cf095ec074662, type: 3}
 --- !u!114 &1048691957333025022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,9 +99,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bdeed6da37b55d42b7653e88fc02cdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: 4f32138dc1d494e4aad49e04a005848a, type: 2}
-  amount: 1
---- !u!65 &245894171661668537
+  _itemData: {fileID: 11400000, guid: e12de04d2be5aea4fb8493d09ace3687, type: 2}
+  _amount: 1
+--- !u!65 &2066010275714148580
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,5 +120,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.8154834, y: 0.3475596, z: 0.62949526}
-  m_Center: {x: -0.0068259835, y: 0.1600316, z: 0.0025842488}
+  m_Size: {x: 0.15340109, y: 0.280867, z: 0.15107058}
+  m_Center: {x: 0, y: 0.005438015, z: 0}

@@ -29,6 +29,9 @@ namespace Runtime.Features.Inventory.View.New
             _playerInventory.OnInventoryChanged += SyncVisuals;
             _playerInventory.OnInventoryOpenStateChanged += InventoryChangeVisualState;
         
+            // предполагаем что из начально инвентарь у нас закрыт
+            _inventoryContainer.SetActive(false);
+            
             SyncVisuals();
         }
     

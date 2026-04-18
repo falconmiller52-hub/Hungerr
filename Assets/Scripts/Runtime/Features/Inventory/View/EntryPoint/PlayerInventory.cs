@@ -2,6 +2,7 @@
 
 using System;
 using Runtime.Common.Services.Input;
+using Runtime.Common.Services.Pause;
 using UnityEngine;
 using Zenject;
 
@@ -26,13 +27,15 @@ namespace Runtime.Features.Inventory
 		private int width = 10;
 		private int height = 10;
 		private bool _isOpened;
-		
+		private IPauseController _pauseController;
+
 		[Inject]
-		private void Construct(IInputHandler inputHandler)
+		private void Construct(IInputHandler inputHandler, IPauseController pauseController)
 		{
 			_inputHandler = inputHandler;
+			_pauseController = pauseController;
 		}
-
+		
 		private void Start()
 		{
 			_inventoryWithCells = new InventoryWithCells(width, height);
@@ -47,6 +50,20 @@ namespace Runtime.Features.Inventory
 		private void OnInventoryTriggerPressed()
 		{
 			_isOpened = !_isOpened;
+			
+			if (_isOpened)
+			{
+				Cursor.lockState = CursorLockMode.None;
+				Cursor.visible = true;
+				_pauseController.PerformStop();
+			}
+			else
+			{
+				Cursor.lockState = CursorLockMode.Locked;
+				Cursor.visible = false;
+				_pauseController.PerformResume();
+			}
+			
 			OnInventoryOpenStateChanged?.Invoke(_isOpened);
 		}
 

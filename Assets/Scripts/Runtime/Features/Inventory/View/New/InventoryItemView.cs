@@ -1,35 +1,39 @@
-using UnityEngine;
 using PrimeTween;
-using Runtime.Features.Inventory;
 using TMPro;
+using UnityEngine;
 
-public class InventoryItemView : MonoBehaviour
+namespace Runtime.Features.Inventory.View.New
 {
-	public InventoryItem Item { get; private set; }
+	public class InventoryItemView : MonoBehaviour
+	{
+		public InventoryItem Item { get; private set; }
     
-	[Header("Settings")]
-	[SerializeField] private float moveDuration = 0.2f;
-	[SerializeField] private Ease moveEase = Ease.OutQuad;
-	[SerializeField] private TMP_Text _amount;
+		[Header("Settings")]
+		[SerializeField] private float _moveDuration = 0.2f;
+		[SerializeField] private Ease _moveEase = Ease.OutQuad;
+		[SerializeField] private TMP_Text _amount;
 
-	public void Setup(InventoryItem item)
-	{
-		Item = item;
-		_amount.text = $"x:{item.Amount}"; 
-	}
-
-	public void UpdateVisualPosition(Vector3 targetLocalPos, bool immediate = false)
-	{
-		if (immediate)
+		public void Setup(InventoryItem item)
 		{
-			transform.localPosition = targetLocalPos;
-			return;
+			Item = item;
+			_amount.text = $"x:{item.Amount}"; 
+		
+			transform.localScale = new Vector3(item.Data.Width, 1, item.Data.Height);
 		}
 
-		if (transform.localPosition == targetLocalPos)
-			return;
+		public void UpdateVisualPosition(Vector3 targetLocalPos, bool immediate = false)
+		{
+			if (immediate)
+			{
+				transform.localPosition = targetLocalPos;
+				return;
+			}
+
+			if (transform.localPosition == targetLocalPos)
+				return;
 		
-		// PrimeTween сам остановит предыдущий твин на этом трансформе
-		Tween.LocalPosition(transform, targetLocalPos, moveDuration, moveEase);
+			// PrimeTween сам остановит предыдущий твин на этом трансформе
+			Tween.LocalPosition(transform, targetLocalPos, _moveDuration, _moveEase);
+		}
 	}
 }
