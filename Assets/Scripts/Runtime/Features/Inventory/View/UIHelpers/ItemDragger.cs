@@ -1,5 +1,4 @@
 using Runtime.Common.Services.Audio;
-using Runtime.Features.Inventory.View.New;
 using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
@@ -40,7 +39,7 @@ namespace Runtime.Features.Inventory.View.UIHelpers
             if (Physics.Raycast(ray, out RaycastHit hit, 20f, _gridLayer))
             {
                 // Переводим точку хита в локальные координаты сетки
-                Vector3 localPos = _view.GridAchor.InverseTransformPoint(hit.point);
+                Vector3 localPos = _view.GridAnchor.InverseTransformPoint(hit.point);
                 Vector2Int hoveredCoords = LocalToGrid(localPos);
 
                 if (_selectedItem == null)
@@ -62,7 +61,7 @@ namespace Runtime.Features.Inventory.View.UIHelpers
         {
             if (Input.GetMouseButtonDown(0))
             {
-                var slot = _view._model.GetSlot(coords);
+                var slot = _view.Model.GetSlot(coords);
                 if (slot != null && !slot.IsEmpty)
                 {
                     _selectedItem = slot.Item;
@@ -83,7 +82,7 @@ namespace Runtime.Features.Inventory.View.UIHelpers
             Vector3 targetPos = _view.GridToLocal(coords, _selectedItem.Data.Width, _selectedItem.Data.Height);
             _ghostItem.UpdateVisualPosition(targetPos, false);
 
-            bool canPlace = _view._model.CanPlaceItem(_selectedItem, coords);
+            bool canPlace = _view.Model.CanPlaceItem(_selectedItem, coords);
             UpdateGhostColor(canPlace);
 
             if (Input.GetMouseButtonDown(0))
@@ -91,13 +90,13 @@ namespace Runtime.Features.Inventory.View.UIHelpers
                 if (canPlace)
                 {
                     // Подтверждаем установку
-                    _view._model.AddItem(_selectedItem, coords);
+                    _view.Model.AddItem(_selectedItem, coords);
                     ClearSelection();
                 }
                 else
                 {
                     // Возвращаем на место, если нельзя поставить
-                    _view._model.AddItem(_selectedItem, _originalPosition);
+                    _view.Model.AddItem(_selectedItem, _originalPosition);
                     ClearSelection();
                 }
             }
@@ -109,8 +108,8 @@ namespace Runtime.Features.Inventory.View.UIHelpers
             int y = Mathf.FloorToInt(-localPos.z / _view.CellSize);
             
             // Ограничиваем координатами сетки
-            x = Mathf.Clamp(x, 0, _view._model.Width - 1);
-            y = Mathf.Clamp(y, 0, _view._model.Height - 1);
+            x = Mathf.Clamp(x, 0, _view.Model.Width - 1);
+            y = Mathf.Clamp(y, 0, _view.Model.Height - 1);
             
             return new Vector2Int(x, y);
         }
@@ -151,7 +150,7 @@ namespace Runtime.Features.Inventory.View.UIHelpers
             {
                 for (int x = 0; x < item.Data.Width; x++)
                 {
-                    var slot = _view._model.GetSlot(new Vector2Int(topLeft.x + x, topLeft.y + y));
+                    var slot = _view.Model.GetSlot(new Vector2Int(topLeft.x + x, topLeft.y + y));
                     slot.Item = null;
                     slot.Id = -1;
                 }
@@ -166,10 +165,10 @@ namespace Runtime.Features.Inventory.View.UIHelpers
             // Поиск реального начала предмета по его ID
             // Можно реализовать через цикл по соседям или хранить ID в слоте
             // Для упрощения возьмем логику из твоего GetUniqueItemsWithTopLeft
-            int targetId = _view._model.GetSlot(startCoords).Id;
+            int targetId = _view.Model.GetSlot(startCoords).Id;
             Vector2Int min = startCoords;
 
-            foreach (var kvp in _view._model.Slots)
+            foreach (var kvp in _view.Model.Slots)
             {
                 if (kvp.Value.Id == targetId)
                 {
@@ -193,7 +192,7 @@ namespace Runtime.Features.Inventory.View.UIHelpers
         {
             if (_selectedItem != null)
             {
-                _view._model.AddItem(_selectedItem, _originalPosition);
+                _view.Model.AddItem(_selectedItem, _originalPosition);
                 ClearSelection();
             }
         }

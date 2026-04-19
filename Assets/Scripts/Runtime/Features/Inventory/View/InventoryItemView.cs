@@ -2,17 +2,17 @@ using PrimeTween;
 using TMPro;
 using UnityEngine;
 
-namespace Runtime.Features.Inventory.View.New
+namespace Runtime.Features.Inventory.View
 {
 	public class InventoryItemView : MonoBehaviour
 	{
-		public InventoryItem Item { get; private set; }
-    
 		[Header("Settings")]
 		[SerializeField] private float _moveDuration = 0.2f;
 		[SerializeField] private Ease _moveEase = Ease.OutQuad;
 		[SerializeField] private TMP_Text _amount;
 
+		public InventoryItem Item { get; private set; }
+		
 		public void Setup(InventoryItem item)
 		{
 			Item = item;

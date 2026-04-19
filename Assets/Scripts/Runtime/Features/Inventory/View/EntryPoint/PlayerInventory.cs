@@ -29,8 +29,8 @@ namespace Runtime.Features.Inventory
 		
 		private InventoryWithCells _inventoryWithCells;
 		private IInputHandler _inputHandler;
-		private int width = 10;
-		private int height = 10;
+		private int _width = 10;
+		private int _height = 10;
 		private bool _isOpened;
 		private IPauseController _pauseController;
 		private IAudioService _audioService;
@@ -45,7 +45,7 @@ namespace Runtime.Features.Inventory
 		
 		private void Start()
 		{
-			_inventoryWithCells = new InventoryWithCells(width, height);
+			_inventoryWithCells = new InventoryWithCells(_width, _height);
 			_inputHandler.InventoryTriggerPressed += OnInventoryTriggerPressed;
 		}
 
