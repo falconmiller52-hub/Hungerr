@@ -1058,7 +1058,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8771324163534789745}
   - component: {fileID: 1094388378423128803}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: InventoryContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2273,7 +2273,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5492440104074323406}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: InventoryGridAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2307,7 +2307,7 @@ GameObject:
   - component: {fileID: 7114398255135709517}
   - component: {fileID: 7634411875801732943}
   - component: {fileID: 5724397582153962071}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: InventoryGridVisual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3612,7 +3612,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5389591896590439944}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: ItemsContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
