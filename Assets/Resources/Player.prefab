@@ -3327,7 +3327,7 @@ MonoBehaviour:
   _view: {fileID: 8568539434929991093}
   _gridLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 128
   _playerInventory: {fileID: 1574870206258873081}
   _moveItemToNewSlotSound: {fileID: 11400000, guid: b598cb00f97a0b24b901881cc0fcc0e1, type: 2}
   _isDraggedItemTransparent: 0
