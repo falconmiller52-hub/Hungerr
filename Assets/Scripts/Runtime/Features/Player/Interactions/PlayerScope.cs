@@ -1,10 +1,12 @@
 using NaughtyAttributes;
+using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
 using Runtime.Features.Interactable;
 using Runtime.Features.Inventory;
 using Runtime.Features.Inventory.WorldItem;
 using Runtime.Features.Outline;
+using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -22,6 +24,8 @@ namespace Runtime.Features.Player.Interactions
 		[Space, SerializeField, Label("Player Inventory")]
 		private PlayerInventory _playerInventory;
 
+		[SerializeField] private SoundData _pickUpSound;
+
 		//Внутренние переменные
 		private RaycastHit _rayHit;
 		private GameObject _interactableObject;
@@ -32,12 +36,14 @@ namespace Runtime.Features.Player.Interactions
 		private IHoverable _currentHoveredObject;
 		private IInputHandler _inputHandler;
 		private IPauseController _pauseController;
+		private IAudioService _audioService;
 						
 		[Inject]
-		private void Construct(IInputHandler inputHandler, IPauseController pauseController)
+		private void Construct(IInputHandler inputHandler, IPauseController pauseController, IAudioService audioService)
 		{
 			_inputHandler = inputHandler;
 			_pauseController = pauseController;
+			_audioService = audioService;
 		}
 
 		private void OnEnable()
@@ -128,16 +134,18 @@ namespace Runtime.Features.Player.Interactions
 		
 			if (target.TryGetComponent(out WorldItem worldItem))
 			{
-				_playerInventory.AddItem(worldItem.Instance);
-		
-				// ВАЖНО: Сначала полностью очищаем всё состояние интерфейса
-				ClearCurrentTarget();
-		
-				// Отключаем объект немедленно, чтобы Raycast его больше не видел
-				target.SetActive(false); 
-				
-				// Удаляем в конце кадра
-				Destroy(target);
+				if (_playerInventory.AddItem(worldItem.Instance))
+				{
+					_audioService.PlaySfx(_pickUpSound);
+					// ВАЖНО: Сначала полностью очищаем всё состояние интерфейса
+					ClearCurrentTarget();
+
+					// Отключаем объект немедленно, чтобы Raycast его больше не видел
+					target.SetActive(false);
+
+					// Удаляем в конце кадра
+					Destroy(target);
+				}
 			}
 		}
 		

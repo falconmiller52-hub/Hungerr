@@ -1937,6 +1937,7 @@ MonoBehaviour:
   _playerCamera: {fileID: 3851059412846384345}
   _rayLength: 2
   _playerInventory: {fileID: 1574870206258873081}
+  _pickUpSound: {fileID: 11400000, guid: 5e0505e58e22d3e4db4990547cf095c9, type: 2}
 --- !u!114 &7221009674689892835
 MonoBehaviour:
   m_ObjectHideFlags: 0
