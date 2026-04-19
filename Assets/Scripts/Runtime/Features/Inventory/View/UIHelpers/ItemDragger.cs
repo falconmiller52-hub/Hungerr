@@ -1,12 +1,10 @@
-// ItemDragger.cs
-
 using Runtime.Common.Services.Audio;
 using Runtime.Features.Inventory.View.New;
 using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
 
-namespace Runtime.Features.Inventory
+namespace Runtime.Features.Inventory.View.UIHelpers
 {
 	/// <summary>
 	/// хендлит то если игрок мышью попытается взять предмет при открытом инвентаре
