@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Runtime.Features.Inventory.View.New
+namespace Runtime.Features.Inventory.View
 {
     public class Inventory3DView : MonoBehaviour
     {
@@ -15,10 +15,11 @@ namespace Runtime.Features.Inventory.View.New
         [SerializeField] private Transform _gridAnchor;
         [SerializeField] private Transform _itemsContainer;
 
-        public InventoryWithCells _model;
+        private InventoryWithCells _model;
         private readonly Dictionary<int, InventoryItemView> _spawnedItems = new Dictionary<int, InventoryItemView>();
 
-        public Transform GridAchor => _gridAnchor;
+        public InventoryWithCells Model => _model;
+        public Transform GridAnchor => _gridAnchor;
         public float CellSize => _cellSize;
         public Transform ItemsContainer => _itemsContainer;
         
@@ -48,7 +49,8 @@ namespace Runtime.Features.Inventory.View.New
 
         private void SyncVisuals()
         {
-            if (_model == null) return;
+            if (Model == null) 
+                return;
 
             // Находим реальный Top-Left для каждого предмета
             var itemsInLogic = GetUniqueItemsWithTopLeft();
@@ -94,23 +96,23 @@ namespace Runtime.Features.Inventory.View.New
         {
             var result = new Dictionary<int, (Vector2Int, InventoryItem)>();
 
-            foreach (var kvp in _model.Slots)
+            foreach (var kvp in Model.Slots)
             {
                 var slot = kvp.Value;
-                if (slot.IsEmpty || slot.Id == -1) continue;
+                
+                if (slot.IsEmpty || slot.Id == -1) 
+                    continue;
 
                 if (!result.ContainsKey(slot.Id))
-                {
                     result.Add(slot.Id, (kvp.Key, slot.Item));
-                }
                 else
                 {
                     // Ищем самый левый верхний угол (минимальные X и Y)
                     var current = result[slot.Id];
+                    
                     if (kvp.Key.x <= current.Item1.x && kvp.Key.y <= current.Item1.y)
-                    {
                         result[slot.Id] = (kvp.Key, slot.Item);
-                    }
+                    
                 }
             }
             return result;
@@ -126,8 +128,8 @@ namespace Runtime.Features.Inventory.View.New
         {
             // Если логика еще не инициализирована (в эдите), используем тестовые значения
             // или пытаемся достать их из ScriptableObject/полей
-            int drawWidth = (_model != null) ? _model.Width : 10; 
-            int drawHeight = (_model != null) ? _model.Height : 10;
+            int drawWidth = (Model != null) ? Model.Width : 10; 
+            int drawHeight = (Model != null) ? Model.Height : 10;
 
             Gizmos.matrix = _gridAnchor.localToWorldMatrix; // Учитываем поворот и позицию чемодана
 
