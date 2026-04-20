@@ -12,6 +12,8 @@ namespace Runtime.Features.Inventory.ItemSpawner
 		private void Start()
 		{
 			_spawnPoints = FindObjectsByType<ItemSpawnPoint>(FindObjectsSortMode.None);
+			
+			SpawnItems(); // for test
 		}
 
 		[ContextMenu("Spawn Items")]
