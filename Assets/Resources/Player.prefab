@@ -1836,7 +1836,7 @@ MonoBehaviour:
   - {fileID: 3851059411422752080}
   - {fileID: 3851059412846384325}
   _playerTransform: {fileID: 3851059412217318607}
-  _xySensitivity: {x: 400, y: 400}
+  _xySensitivity: {x: 0.5, y: 0.5}
   _minMaxYAngle: {x: -90, y: 90}
   _breathingMagnitude: 0.015
   _breathingSpeed: 2

@@ -15,7 +15,7 @@ MonoBehaviour:
   <ItemName>k__BackingField: Battery
   <Description>k__BackingField: ss
   <MaxStackSize>k__BackingField: 2
-  <WorldPrefab>k__BackingField: {fileID: 3919629856071798191, guid: bf507c3e9383de84da242ac1262d44af, type: 3}
+  <WorldPrefab>k__BackingField: {fileID: 3919629856071798191, guid: 969dacabe379e0841b402c8dd459a9bf, type: 3}
   <PrefabForInventory>k__BackingField: {fileID: 3919629856071798191, guid: bf507c3e9383de84da242ac1262d44af, type: 3}
   <Width>k__BackingField: 1
   <Height>k__BackingField: 1
