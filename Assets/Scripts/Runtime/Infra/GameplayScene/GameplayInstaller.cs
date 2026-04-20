@@ -3,6 +3,7 @@ using Runtime.Common.Services.Pause;
 using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Dialog;
 using Runtime.Features.Enemy;
+using Runtime.Features.Inventory.ItemSpawner;
 using Runtime.Features.Location;
 using UnityEngine;
 using Zenject;
@@ -16,7 +17,8 @@ namespace Runtime.Infra.GameplayScene
 		[SerializeField] private LocationChanger _locationChanger;
 		[SerializeField] private EnemiesBootstrap _enemiesBootstrap;
 		[SerializeField] private DialogSystem _dialogSystem;
-
+		[SerializeField] private ItemSpawner _itemSpawner;
+		
 		public override void InstallBindings()
 		{
 			BindGameplayStateMachine();
@@ -25,6 +27,7 @@ namespace Runtime.Infra.GameplayScene
 			BindEnemiesController();
 			BindDialogSystem();
 			BindPauseController();
+			BindItemSpawner();
 		}
 
 		private void BindPauseController()
@@ -50,6 +53,11 @@ namespace Runtime.Infra.GameplayScene
 		private void BindPhaseStateMachine()
 		{
 			Container.Bind<PhaseStateMachine>().FromInstance(_phaseStateMachine).AsSingle();
+		}
+		
+		private void BindItemSpawner()
+		{
+			Container.Bind<ItemSpawner>().FromInstance(_itemSpawner).AsSingle();
 		}
 
 		private void BindGameplayStateMachine()

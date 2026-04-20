@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad149e7783e9e594fa12bb5f99611174, type: 3}
-  m_Name: Tape_Item
+  m_Name: Empty_Item
   m_EditorClassIdentifier: 
-  <ItemName>k__BackingField: Tape
+  <ItemName>k__BackingField: Empty
   <Description>k__BackingField: 
   <MaxStackSize>k__BackingField: 1
-  <WorldPrefab>k__BackingField: {fileID: 3919629856071798191, guid: 3c13b8e79a2f5874aa73cb87dffdb041, type: 3}
-  <PrefabForInventory>k__BackingField: {fileID: 3919629856071798191, guid: 16df4cf753560374aa324ac6bf7af50c, type: 3}
+  <WorldPrefab>k__BackingField: {fileID: 0}
+  <PrefabForInventory>k__BackingField: {fileID: 0}
   <Width>k__BackingField: 1
   <Height>k__BackingField: 1

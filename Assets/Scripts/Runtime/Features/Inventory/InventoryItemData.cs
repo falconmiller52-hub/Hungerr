@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Runtime.Features.Inventory
 {
-	[CreateAssetMenu(fileName = "ItemData")]
+	[CreateAssetMenu(fileName = "ItemData",  menuName = "Inventory/Item Data")]
 	public class InventoryItemData : ScriptableObject
 	{
 		[Header("Basic Info")]
