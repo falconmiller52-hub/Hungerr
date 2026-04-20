@@ -122,7 +122,10 @@ namespace Runtime.Features.Player.Movement
 		private void LateUpdate()
 		{
 			if (_isCanRotate)
-				LookAt(CameraRotation);
+			{
+				UpdateRotationValues(); // Сначала считаем
+				LookAt(new Vector2(_xRotation, _yRotation)); // Потом применяем
+			}
 		}
 
 		//Методы скрипта
@@ -207,46 +210,32 @@ namespace Runtime.Features.Player.Movement
 
 		private void SetNewMousePositionInput(Vector2 input)
 		{
-			_mouseRotationInputDirection = input;
+			// Используем += вместо =, чтобы не терять промежуточные движения
+			// и корректно суммировать весь ввод, пришедший между кадрами
+			_mouseRotationInputDirection += input; 
 		}
-
-		private void CalculateRotation()
+		
+		private void UpdateRotationValues()
 		{
-			// Убираем лишние умножения, оставляем только одно для плавности
-			float mouseX = _mouseRotationInputDirection.x * _xySensitivity.x * Time.deltaTime;
-			float mouseY = _mouseRotationInputDirection.y * _xySensitivity.y * Time.deltaTime;
+			// Убираем dt. Чувствительность мыши обычно не должна зависеть от времени кадра,
+			// так как мышь выдает смещение в пикселях/пунктах именно за этот кадр.
+			float mouseX = _mouseRotationInputDirection.x * _xySensitivity.x;
+			float mouseY = _mouseRotationInputDirection.y * _xySensitivity.y;
 
 #if UNITY_EDITOR
-			mouseX *= 10f; // Оставляем твой фикс для редактора, если он нужен
-			mouseY *= 10f;
+			// Если в редакторе все еще слишком быстро, можно добавить коэффициент
+			// или проверить, не включен ли VSync в Game View
 #endif
 
 			_yRotation += mouseX;
 			_xRotation -= mouseY;
 			_xRotation = Mathf.Clamp(_xRotation, _minMaxYAngle.x, _minMaxYAngle.y);
+
+			_mouseRotationInputDirection = Vector2.zero;
 		}
 
-		//Геттеры и сеттеры
-		private Vector2 CameraRotation
-		{
-			get
-			{
-				_mouseRotationInputDirection *= Time.deltaTime;
-#if UNITY_EDITOR
-				_mouseRotationInputDirection *= 10f;
-#endif
-
-				var yAxis = _mouseRotationInputDirection.x;
-				var xAxis = _mouseRotationInputDirection.y;
-
-				_yRotation += yAxis * _xySensitivity.x * Time.deltaTime;
-
-				_xRotation -= xAxis * _xySensitivity.y * Time.deltaTime;
-				_xRotation = Mathf.Clamp(_xRotation, _minMaxYAngle.x, _minMaxYAngle.y);
-
-				return new Vector2(_xRotation, _yRotation);
-			}
-		}
+// Теперь это просто чистый геттер без вычислений
+		private Vector2 CameraRotation => new Vector2(_xRotation, _yRotation);
 
 		public List<GameObject> CameraObjects
 		{
