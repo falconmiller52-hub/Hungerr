@@ -1,6 +1,7 @@
 using System;
+using Runtime.Features.Inventory;
 
-namespace Runtime.Features.Inventory.ItemSpawner
+namespace Runtime.Features.ItemSpawner
 {
 	/// <summary>
 	/// Дата о весе какого-то предмета относительно других в рамках Tier

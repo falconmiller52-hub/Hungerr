@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Runtime.Features.Inventory.ItemSpawner
+namespace Runtime.Features.ItemSpawner
 {
 	public class ItemSpawnPoint : MonoBehaviour
 	{

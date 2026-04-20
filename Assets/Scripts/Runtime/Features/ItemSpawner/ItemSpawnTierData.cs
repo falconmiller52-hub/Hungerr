@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using Runtime.Features.Inventory;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Runtime.Features.Inventory.ItemSpawner
+namespace Runtime.Features.ItemSpawner
 {
 	[CreateAssetMenu(fileName = "Item Spawn Tier", menuName = "Inventory/Item Spawn Tier")]
 	public class ItemSpawnTierData : ScriptableObject

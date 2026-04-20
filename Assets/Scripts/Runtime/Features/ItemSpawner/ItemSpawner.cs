@@ -1,6 +1,7 @@
+using Runtime.Features.Inventory;
 using UnityEngine;
 
-namespace Runtime.Features.Inventory.ItemSpawner
+namespace Runtime.Features.ItemSpawner
 {
 	/// <summary>
 	/// Класс отвечающий за спавн предметов в мире по вызову метода

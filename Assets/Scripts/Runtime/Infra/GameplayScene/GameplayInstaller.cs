@@ -3,7 +3,7 @@ using Runtime.Common.Services.Pause;
 using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Dialog;
 using Runtime.Features.Enemy;
-using Runtime.Features.Inventory.ItemSpawner;
+using Runtime.Features.ItemSpawner;
 using Runtime.Features.Location;
 using UnityEngine;
 using Zenject;
