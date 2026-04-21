@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Battery_Item
   m_EditorClassIdentifier: 
   <ItemName>k__BackingField: Battery
-  <Description>k__BackingField: ss
+  <Description>k__BackingField: "\u041F\u0440\u043E\u0441\u0442\u043E \u0431\u0430\u0442\u0430\u0440\u0435\u0439\u043A\u0430,
+    \u043B\u043E\u043B"
   <MaxStackSize>k__BackingField: 2
   <WorldPrefab>k__BackingField: {fileID: 3919629856071798191, guid: 969dacabe379e0841b402c8dd459a9bf, type: 3}
   <PrefabForInventory>k__BackingField: {fileID: 3919629856071798191, guid: bf507c3e9383de84da242ac1262d44af, type: 3}
