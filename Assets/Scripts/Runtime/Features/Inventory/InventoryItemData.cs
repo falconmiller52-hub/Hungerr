@@ -22,5 +22,6 @@ namespace Runtime.Features.Inventory
 		[field: SerializeField] public int Height { get; private set; } = 1; // высота в ячейках
     
 		public bool IsStackable => MaxStackSize > 1;
+		public virtual EItemType ItemType => EItemType.Simple;
 	}
 }
