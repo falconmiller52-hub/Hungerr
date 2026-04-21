@@ -45,6 +45,15 @@ namespace Runtime.Features.Inventory.WorldItem
         }
 
         public string GetDisplayName() => _itemData.ItemName;
-        public string GetDescription() => _itemData.Description;
+        public string GetDescription()
+        {
+            switch (_itemData)
+            {
+                case FoodInventoryItemData food:
+                    return $"Сытость: {food.Satiety}";
+                default:
+                    return _itemData.Description;
+            }
+        }
     }
 }
