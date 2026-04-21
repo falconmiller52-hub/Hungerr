@@ -7,6 +7,7 @@ namespace Runtime.Features.Player.Other
 {
 	public class PlayerCamera : MonoBehaviour, IPausable
 	{
+		private CinemachinePOV _pov;
 		private CinemachineVirtualCamera _cinemachineVirtualCamera;
 		private IPauseController _pauseController;
 
@@ -19,14 +20,21 @@ namespace Runtime.Features.Player.Other
 		private void Awake()
 		{
 			_cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
+			_pov = _cinemachineVirtualCamera.GetCinemachineComponent<CinemachinePOV>();
 
 			_pauseController.Add(this);
 		}
 
 		public void Stop()
-			=> _cinemachineVirtualCamera.enabled = false;
+		{
+			_pov.m_HorizontalAxis.m_InputAxisName = "";
+			_pov.m_VerticalAxis.m_InputAxisName = "";
+		}
 
 		public void Resume()
-			=> _cinemachineVirtualCamera.enabled = true;
+		{
+			_pov.m_HorizontalAxis.m_InputAxisName = "Mouse X";
+			_pov.m_VerticalAxis.m_InputAxisName = "Mouse Y";
+		}
 	}
 }
