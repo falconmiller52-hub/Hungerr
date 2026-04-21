@@ -1990,7 +1990,7 @@ MonoBehaviour:
   _playerTransform: {fileID: 3851059412217318607}
   _playerPivotParentObj: {fileID: 3851059411422752080}
   _currentStance: 0
-  _stancesSpeeds: {x: 0.5, y: 4, z: 7}
+  _stancesSpeeds: {x: 1, y: 6, z: 10}
   _maxStamina: 1000000
   _staminaUsage: 0
   _staminaRegen: 20

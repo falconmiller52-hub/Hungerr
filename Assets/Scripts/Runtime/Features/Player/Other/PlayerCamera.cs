@@ -4,6 +4,6 @@ namespace Runtime.Features.Player.Other
 {
 	public class PlayerCamera :  MonoBehaviour
 	{
-		// TODO : Отключать курсор на старте 
+		// TODO: Отключать вращение при паузе
 	}
 }

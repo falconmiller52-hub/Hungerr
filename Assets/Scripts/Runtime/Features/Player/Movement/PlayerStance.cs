@@ -12,10 +12,10 @@ namespace Runtime.Features.Player.Movement
 	{
 		[Header("Components")] [SerializeField]
 		private Transform _playerTransform;
-		
+
 		[SerializeField] [Label("GameObject который регулирует позицию камеры")]
 		private GameObject _playerPivotParentObj;
-		
+
 		//Переменные инспектора
 		[Header("Settings")] [SerializeField, Label("Current Player Stance")]
 		private Stance _currentStance;
@@ -76,7 +76,7 @@ namespace Runtime.Features.Player.Movement
 		private IInputHandler _inputHandler;
 		private IAudioService _audioService;
 		private CharacterController _cc;
-		
+
 		[Inject]
 		private void Construct(IInputHandler inputHandler, IAudioService audioService)
 		{
@@ -219,7 +219,9 @@ namespace Runtime.Features.Player.Movement
 			_cc.center = Vector3.Lerp(_cc.center,
 							_currentStance == Stance.Crouching ? Vector3.up * -0.5f : Vector3.zero,
 							Time.deltaTime * _crouchingSpeed);
-			_playerPivotParentObj.transform.localPosition = Vector3.Lerp(_playerPivotParentObj.transform.localPosition, _currentStance == Stance.Crouching ? Vector3.zero: Vector3.up, Time.deltaTime * _crouchingSpeed);
+			_playerPivotParentObj.transform.localPosition = Vector3.Lerp(_playerPivotParentObj.transform.localPosition,
+							_currentStance == Stance.Crouching ? Vector3.zero : Vector3.up,
+							Time.deltaTime * _crouchingSpeed);
 		}
 
 		public float StanceSpeed(Stance stance)
