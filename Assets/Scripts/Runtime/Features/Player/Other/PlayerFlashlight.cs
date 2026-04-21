@@ -8,7 +8,6 @@ using Zenject;
 
 namespace Runtime.Features.Player.Other
 {
-	[RequireComponent(typeof(PlayerCamera))]
 	public class PlayerFlashlight : MonoBehaviour
 	{
 		[SerializeField, Label("Flashlight Object")]

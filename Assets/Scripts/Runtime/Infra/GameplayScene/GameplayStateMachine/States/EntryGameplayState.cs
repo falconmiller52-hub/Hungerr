@@ -45,6 +45,10 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 
 		public void Enter()
 		{
+			// Выключили курсор при старте игры
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
+			
 			// заглушка пока нет адресаблов
 			GameObject playerPrefab = _resourceLoader.Load<GameObject>("Player");
 

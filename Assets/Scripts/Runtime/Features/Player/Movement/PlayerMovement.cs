@@ -3,6 +3,7 @@ using Runtime.Common.Extensions;
 using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
+using Runtime.Features.Player.Other;
 using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
@@ -46,6 +47,7 @@ namespace Runtime.Features.Player.Movement
 		private bool _isCanMove = true;
 
 		//Кэшированные переменные
+		private Camera _playerCamera;
 		private CharacterController _cc;
 		private PlayerStance _playerStance;
 		private IInputHandler _inputHandler;
@@ -53,7 +55,7 @@ namespace Runtime.Features.Player.Movement
 		private IPauseController _pauseController;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, IAudioService audioService,  IPauseController pauseController)
+		private void Construct(IInputHandler inputHandler, IAudioService audioService, IPauseController pauseController)
 		{
 			_inputHandler = inputHandler;
 			_audioService = audioService;
@@ -64,7 +66,7 @@ namespace Runtime.Features.Player.Movement
 		{
 			_cc = GetComponent<CharacterController>();
 			_playerStance = GetComponent<PlayerStance>();
-
+			_playerCamera = Camera.main;
 			StanceUpdate();
 		}
 
@@ -84,7 +86,7 @@ namespace Runtime.Features.Player.Movement
 				Debug.LogError("PlayerMovement::OnEnable() No Pause Controller was assigned");
 				return;
 			}
-			
+
 			_pauseController.Add(this);
 		}
 
@@ -98,13 +100,13 @@ namespace Runtime.Features.Player.Movement
 
 			_inputHandler.PlayerMoveInputChanged -= SetNewMoveInputDirection;
 			_inputHandler.JumpInputPressed -= SetJumpInputPressed;
-			
+
 			if (_pauseController == null)
 			{
 				Debug.LogError("PlayerMovement::OnDisable() No Pause Controller was assigned");
 				return;
 			}
-			
+
 			_pauseController.Remove(this);
 		}
 
@@ -243,7 +245,8 @@ namespace Runtime.Features.Player.Movement
 		{
 			get
 			{
-				var moveDirection = transform.forward * _inputDirection.y + transform.right * _inputDirection.x;
+				var moveDirection = (_playerCamera.transform.forward * _inputDirection.y)
+				                    + (_playerCamera.transform.right * _inputDirection.x);
 				var directionResult = new Vector2(moveDirection.x, moveDirection.z);
 				return directionResult;
 			}
