@@ -214,7 +214,8 @@ namespace Runtime.Features.Player.Movement
 
 		private void CrouchChange()
 		{
-			_cc.height = Mathf.Lerp(_cc.height, _currentStance == Stance.Crouching ? 1f : 2f,
+			// Todo: ну тут пиздец, Я зарахкодил чтобы сейчас работало, но потом нужно менять
+			_cc.height = Mathf.Lerp(_cc.height, _currentStance == Stance.Crouching ? 1f : 1.7f,
 							Time.deltaTime * _crouchingSpeed);
 			_cc.center = Vector3.Lerp(_cc.center,
 							_currentStance == Stance.Crouching ? Vector3.up * -0.5f : Vector3.zero,
