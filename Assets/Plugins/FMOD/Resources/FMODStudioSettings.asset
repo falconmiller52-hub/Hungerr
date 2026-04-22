@@ -464,7 +464,7 @@ MonoBehaviour:
   HasSourceProject: 0
   HasPlatforms: 0
   sourceProjectPath: 
-  sourceBankPath: Assets/Content/Sounds/Banks
+  sourceBankPath: Assets/Content/Sounds/Banks/Desktop
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
@@ -487,7 +487,7 @@ MonoBehaviour:
   RealChannelSettings: []
   Plugins: []
   MasterBanks:
-  - Main
+  - Desktop/Main
   Banks: []
   BanksToLoad: []
   LiveUpdatePort: 9264

@@ -1,4 +1,5 @@
-﻿using Ink.Runtime;
+﻿using FMODUnity;
+using Ink.Runtime;
 using Runtime.Features.Player.Movement;
 using UnityEngine;
 using Zenject;
@@ -16,6 +17,9 @@ namespace Runtime.Features.Dialog
 
 		[SerializeField] [Tooltip("JSON файл диалога")]
 		private TextAsset _storyJson;
+
+		[SerializeField] [Tooltip("Звук игрока при монологе")]
+		private EventReference _playerMonologSound;
 
 		private DialogSystem _dialogSystem;
 		private Story _story;
@@ -41,7 +45,7 @@ namespace Runtime.Features.Dialog
 					return;
 				}
 
-				_dialogSystem.StartStory(_story, _isMonolog);
+				_dialogSystem.StartStory(_story, _playerMonologSound, _isMonolog);
 				if (_isOnce)
 					Destroy(this.gameObject);
 			}

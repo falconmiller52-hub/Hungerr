@@ -5671,6 +5671,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Path
+      value: event:/SFX/NPC/Butcher/butcher_talk1
+      objectReference: {fileID: 0}
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Guid.Data1
+      value: 1701439014
+      objectReference: {fileID: 0}
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Guid.Data2
+      value: 1152929589
+      objectReference: {fileID: 0}
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Guid.Data3
+      value: 1089470357
+      objectReference: {fileID: 0}
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Guid.Data4
+      value: -939924557
+      objectReference: {fileID: 0}
     - target: {fileID: 5887848117903106272, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.482
@@ -11639,6 +11659,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 285659397, guid: ad50ac11feb4bfc42a1058d8a8aed12a, type: 3}
+      propertyPath: <ChaseSounds>k__BackingField.Path
+      value: event:/SFX/Enemies/Slim/slim_active2
+      objectReference: {fileID: 0}
+    - target: {fileID: 285659397, guid: ad50ac11feb4bfc42a1058d8a8aed12a, type: 3}
+      propertyPath: <PatrolSounds>k__BackingField.Path
+      value: event:/SFX/Enemies/Slim/slim_inactive2
+      objectReference: {fileID: 0}
+    - target: {fileID: 285659397, guid: ad50ac11feb4bfc42a1058d8a8aed12a, type: 3}
+      propertyPath: <ChaseSounds>k__BackingField.Guid.Data1
+      value: 1873611316
+      objectReference: {fileID: 0}
+    - target: {fileID: 285659397, guid: ad50ac11feb4bfc42a1058d8a8aed12a, type: 3}
+      propertyPath: <ChaseSounds>k__BackingField.Guid.Data2
+      value: 1196139459
+      objectReference: {fileID: 0}
+    - target: {fileID: 285659397, guid: ad50ac11feb4bfc42a1058d8a8aed12a, type: 3}
+      propertyPath: <ChaseSounds>k__BackingField.Guid.Data3
+      value: 338496667
+      objectReference: {fileID: 0}
+    - target: {fileID: 285659397, guid: ad50ac11feb4bfc42a1058d8a8aed12a, type: 3}
+      propertyPath: <ChaseSounds>k__BackingField.Guid.Data4
+      value: 1849731719
+      objectReference: {fileID: 0}
+    - target: {fileID: 285659397, guid: ad50ac11feb4bfc42a1058d8a8aed12a, type: 3}
+      propertyPath: <PatrolSounds>k__BackingField.Guid.Data1
+      value: -381662410
+      objectReference: {fileID: 0}
+    - target: {fileID: 285659397, guid: ad50ac11feb4bfc42a1058d8a8aed12a, type: 3}
+      propertyPath: <PatrolSounds>k__BackingField.Guid.Data2
+      value: 1219824761
+      objectReference: {fileID: 0}
+    - target: {fileID: 285659397, guid: ad50ac11feb4bfc42a1058d8a8aed12a, type: 3}
+      propertyPath: <PatrolSounds>k__BackingField.Guid.Data3
+      value: -720914793
+      objectReference: {fileID: 0}
+    - target: {fileID: 285659397, guid: ad50ac11feb4bfc42a1058d8a8aed12a, type: 3}
+      propertyPath: <PatrolSounds>k__BackingField.Guid.Data4
+      value: -1211846011
+      objectReference: {fileID: 0}
     - target: {fileID: 2451931996166564488, guid: ad50ac11feb4bfc42a1058d8a8aed12a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -13800,6 +13860,26 @@ PrefabInstance:
     - target: {fileID: 7595042179824721689, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
       propertyPath: m_LocalPosition.z
       value: -2.39
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632384789657716642, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _startAmbientSound.Path
+      value: event:/OST/Day Home 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632384789657716642, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _startAmbientSound.Guid.Data1
+      value: -1066026311
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632384789657716642, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _startAmbientSound.Guid.Data2
+      value: 1125165660
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632384789657716642, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _startAmbientSound.Guid.Data3
+      value: -110804587
+      objectReference: {fileID: 0}
+    - target: {fileID: 7632384789657716642, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _startAmbientSound.Guid.Data4
+      value: -7778872
       objectReference: {fileID: 0}
     - target: {fileID: 8544952216374870976, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
       propertyPath: m_LocalPosition.z

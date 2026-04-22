@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using FMODUnity;
 using Ink.Runtime;
+using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
 using UnityEngine;
@@ -21,9 +23,12 @@ namespace Runtime.Features.Dialog
 		private IPauseController _pauseController;
 		private Story _story;
 		private IInputHandler _inputHandler;
+		private IAudioService _audioService;
 
 		private Coroutine _startDialogRoutine;
 		private Coroutine _typeWriterRoutine;
+
+		private EventReference _currentEventReference;
 
 		private int _choiceIndex = -1;
 		private string _currentLine;
@@ -32,10 +37,11 @@ namespace Runtime.Features.Dialog
 		private bool _isDialogText;
 
 		[Inject]
-		private void Construct(IPauseController pauseController, IInputHandler inputHandler)
+		private void Construct(IPauseController pauseController, IInputHandler inputHandler, IAudioService audioService)
 		{
 			_pauseController = pauseController;
 			_inputHandler = inputHandler;
+			_audioService = audioService;
 		}
 
 		private void OnEnable()
@@ -54,8 +60,10 @@ namespace Runtime.Features.Dialog
 			=> _choiceIndex = index;
 
 
-		public void StartStory(Story story, bool isMonolog = false)
+		public void StartStory(Story story, EventReference eventReference, bool isMonolog = false)
 		{
+			_currentEventReference = eventReference;
+
 			if (!isMonolog)
 			{
 				_pauseController.PerformStop();
@@ -181,6 +189,9 @@ namespace Runtime.Features.Dialog
 			foreach (char symbol in line)
 			{
 				currentLine += symbol;
+
+				if (!_currentEventReference.IsNull)
+					_audioService.PlayOneShot2D(_currentEventReference);
 
 				OnNewDialogLine?.Invoke(currentLine);
 
