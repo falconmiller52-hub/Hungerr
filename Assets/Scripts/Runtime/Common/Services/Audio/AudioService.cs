@@ -7,7 +7,7 @@ namespace Runtime.Common.Services.Audio
 {
 	public class AudioService : IAudioService
 	{
-		public EventInstance PlaySound(EventReference eventRef, Vector3 position)
+		public EventInstance PlaySound(EventReference eventRef, Vector3 position = default)
 		{
 			var instance = RuntimeManager.CreateInstance(eventRef);
 			instance.set3DAttributes(position.To3DAttributes());

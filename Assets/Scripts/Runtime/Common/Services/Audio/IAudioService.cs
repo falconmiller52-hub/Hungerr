@@ -7,7 +7,7 @@ namespace Runtime.Common.Services.Audio
 {
 	public interface IAudioService
 	{
-		EventInstance PlaySound(EventReference eventRef, Vector3 position);
+		EventInstance PlaySound(EventReference eventRef, Vector3 position = default);
 		void StopSound(EventInstance instance, STOP_MODE mode);
 	}
 }

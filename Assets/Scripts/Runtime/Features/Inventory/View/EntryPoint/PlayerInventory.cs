@@ -69,7 +69,7 @@ namespace Runtime.Features.Inventory
 				_pauseController.PerformResume();
 			}
 			
-			_audioService.PlaySfx(_openInventorySound);
+			_audioService.PlaySound(_openInventorySound, transform.position);
 			
 			OnInventoryOpenStateChanged?.Invoke(_isOpened);
 		}

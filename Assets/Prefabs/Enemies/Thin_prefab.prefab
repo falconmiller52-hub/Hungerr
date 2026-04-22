@@ -551,58 +551,22 @@ MonoBehaviour:
   <Agent>k__BackingField: {fileID: 285659396}
   <PatrolPoints>k__BackingField: []
   <PatrolSounds>k__BackingField:
-  - Guid:
+    Guid:
       Data1: -2096023248
       Data2: 1129951426
       Data3: -580151625
       Data4: 720998879
     Path: event:/SFX/Enemies/Slim/slim_inactive1
-  - Guid:
-      Data1: -381662410
-      Data2: 1219824761
-      Data3: -720914793
-      Data4: -1211846011
-    Path: event:/SFX/Enemies/Slim/slim_inactive2
-  - Guid:
-      Data1: -695651942
-      Data2: 1270810350
-      Data3: -1841743683
-      Data4: 491249937
-    Path: event:/SFX/Enemies/Slim/slim_inactive3
-  - Guid:
-      Data1: -223085341
-      Data2: 1224766076
-      Data3: -1316778599
-      Data4: -719854096
-    Path: event:/SFX/Enemies/Slim/slim_inactive4
   <PatrolSpeedMultiplier>k__BackingField: 1
   <ChaseSpeedMultiplier>k__BackingField: 2
   <DetectionRadius>k__BackingField: 11
   <ChaseSounds>k__BackingField:
-  - Guid:
+    Guid:
       Data1: -416055462
       Data2: 1117657559
       Data3: 593025687
       Data4: 746905815
     Path: event:/SFX/Enemies/Slim/slim_active1
-  - Guid:
-      Data1: 1873611316
-      Data2: 1196139459
-      Data3: 338496667
-      Data4: 1849731719
-    Path: event:/SFX/Enemies/Slim/slim_active2
-  - Guid:
-      Data1: -812189363
-      Data2: 1334220871
-      Data3: -14583379
-      Data4: -210515061
-    Path: event:/SFX/Enemies/Slim/slim_active3
-  - Guid:
-      Data1: 684746756
-      Data2: 1266544118
-      Data3: 697300869
-      Data4: 1073230375
-    Path: event:/SFX/Enemies/Slim/slim_active4
   <AttackRadius>k__BackingField: 2
   <AttackDamage>k__BackingField: 10
   <AttackCooldown>k__BackingField: 7

@@ -62,7 +62,7 @@ namespace Runtime.Features.Player.Other
 			_flashlightObject.intensity = _isEnabled ? _intensity : 0f;
 
 			var sound = _isEnabled ? _flashlightTurnOnSound : _flashlightTurnffSound;
-			_audioService.PlaySfx(sound, transform.position);
+			_audioService.PlaySound(sound, transform.position);
 		}
 	}
 }

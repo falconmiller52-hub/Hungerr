@@ -182,7 +182,7 @@ namespace Runtime.Features.Player.Movement
 
 		private void PlaySound()
 		{
-			_audioService.PlaySfx(_currentStepSoundData, transform.position);
+			_audioService.PlaySound(_currentStepSoundData, transform.position);
 		}
 
 		private void GroundSet(bool isGrounded)
@@ -206,7 +206,7 @@ namespace Runtime.Features.Player.Movement
 		{
 			_isGrounded = true;
 			_gravitySpeed = 0f;
-			_audioService.PlaySfx(_jumpEndSound, _groundCheck.position);
+			_audioService.PlaySound(_jumpEndSound, _groundCheck.position);
 		}
 
 		public void Move(Vector2 direction)
@@ -225,7 +225,7 @@ namespace Runtime.Features.Player.Movement
 			if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching)
 			{
 				_gravitySpeed = strength;
-				_audioService.PlaySfx(_jumpStartSound, _groundCheck.position);
+				_audioService.PlaySound(_jumpStartSound, _groundCheck.position);
 			}
 		}
 

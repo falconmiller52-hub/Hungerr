@@ -202,7 +202,7 @@ namespace Runtime.Features.Player.Movement
 				if (_currentStamina <= 0f)
 				{
 					_isExhausted = true;
-					_audioService.PlaySfx(_exhaustionStepSound, transform.position);
+					_audioService.PlaySound(_exhaustionStepSound, transform.position);
 				}
 			}
 			else

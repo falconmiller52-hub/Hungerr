@@ -136,7 +136,7 @@ namespace Runtime.Features.Player.Interactions
 			{
 				if (_playerInventory.AddItem(worldItem.Instance))
 				{
-					_audioService.PlaySfx(_pickUpSound);
+					_audioService.PlaySound(_pickUpSound, transform.position);
 					// ВАЖНО: Сначала полностью очищаем всё состояние интерфейса
 					ClearCurrentTarget();
 
