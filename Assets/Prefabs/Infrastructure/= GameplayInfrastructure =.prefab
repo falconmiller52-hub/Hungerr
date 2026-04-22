@@ -347,8 +347,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5128a0754338d684aa3907cb3476bc1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startAmbientSound: {fileID: 11400000, guid: 46b7dc1365fe9ef46a361ca60a8a0716, type: 2}
-  _ambientTwoSound: {fileID: 11400000, guid: bc999334aae868d45952ce72a4a6342c, type: 2}
+  _startAmbientSound:
+    Guid:
+      Data1: -1066026311
+      Data2: 1125165660
+      Data3: -110804587
+      Data4: -7778872
+    Path: event:/OST/Day Home 1
+  _ambientTwoSound:
+    Guid:
+      Data1: -522840805
+      Data2: 1252837787
+      Data3: -1091597405
+      Data4: -876153336
+    Path: event:/OST/Day Home 2
   _fadeDuration: 4
 --- !u!1 &5443520622243435521
 GameObject:

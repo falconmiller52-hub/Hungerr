@@ -1,3 +1,4 @@
+using FMODUnity;
 using NaughtyAttributes;
 using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
@@ -6,7 +7,6 @@ using Runtime.Features.Interactable;
 using Runtime.Features.Inventory;
 using Runtime.Features.Inventory.WorldItem;
 using Runtime.Features.Outline;
-using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -24,7 +24,7 @@ namespace Runtime.Features.Player.Interactions
 		[Space, SerializeField, Label("Player Inventory")]
 		private PlayerInventory _playerInventory;
 
-		[SerializeField] private SoundData _pickUpSound;
+		[SerializeField] private EventReference _pickUpSound;
 
 		//Внутренние переменные
 		private RaycastHit _rayHit;
@@ -136,7 +136,7 @@ namespace Runtime.Features.Player.Interactions
 			{
 				if (_playerInventory.AddItem(worldItem.Instance))
 				{
-					_audioService.PlaySfx(_pickUpSound);
+					_audioService.PlaySound(_pickUpSound, transform.position);
 					// ВАЖНО: Сначала полностью очищаем всё состояние интерфейса
 					ClearCurrentTarget();
 

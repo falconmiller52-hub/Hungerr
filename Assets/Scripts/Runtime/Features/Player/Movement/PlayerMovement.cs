@@ -1,3 +1,4 @@
+using FMODUnity;
 using NaughtyAttributes;
 using Runtime.Common.Extensions;
 using Runtime.Common.Services.Audio;
@@ -24,13 +25,13 @@ namespace Runtime.Features.Player.Movement
 		private float _jumpHeight = 1f;
 
 		[SerializeField, Label("Standard Step Sound")]
-		private SoundData _standartStepSound;
+		private EventReference _standartStepSound;
 
 		[SerializeField, Tooltip("Ground Sound On Start Jump")]
-		private SoundData _jumpStartSound;
+		private EventReference _jumpStartSound;
 
 		[SerializeField, Tooltip("Ground Sound After Jump")]
-		private SoundData _jumpEndSound;
+		private EventReference _jumpEndSound;
 
 		[Space, SerializeField, Label("Gravity Force")]
 		private float _gravityForce = 30f;
@@ -42,7 +43,7 @@ namespace Runtime.Features.Player.Movement
 		private RaycastHit _playerGroundHit;
 		private float _gravitySpeed = 0f;
 		private Vector2 _inputDirection;
-		private SoundData _currentStepSoundData;
+		private EventReference _currentStepSoundData;
 		private bool _isCanMove = true;
 
 		//Кэшированные переменные
@@ -181,7 +182,7 @@ namespace Runtime.Features.Player.Movement
 
 		private void PlaySound()
 		{
-			_audioService.PlaySfx(_currentStepSoundData, transform.position);
+			_audioService.PlaySound(_currentStepSoundData, transform.position);
 		}
 
 		private void GroundSet(bool isGrounded)
@@ -205,7 +206,7 @@ namespace Runtime.Features.Player.Movement
 		{
 			_isGrounded = true;
 			_gravitySpeed = 0f;
-			_audioService.PlaySfx(_jumpEndSound, _groundCheck.position);
+			_audioService.PlaySound(_jumpEndSound, _groundCheck.position);
 		}
 
 		public void Move(Vector2 direction)
@@ -224,7 +225,7 @@ namespace Runtime.Features.Player.Movement
 			if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching)
 			{
 				_gravitySpeed = strength;
-				_audioService.PlaySfx(_jumpStartSound, _groundCheck.position);
+				_audioService.PlaySound(_jumpStartSound, _groundCheck.position);
 			}
 		}
 

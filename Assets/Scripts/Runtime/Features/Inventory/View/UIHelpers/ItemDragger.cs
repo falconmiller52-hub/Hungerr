@@ -1,5 +1,5 @@
+using FMODUnity;
 using Runtime.Common.Services.Audio;
-using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -16,7 +16,7 @@ namespace Runtime.Features.Inventory.View.UIHelpers
         [SerializeField] private Inventory3DView _view;
         [SerializeField] private LayerMask _gridLayer;
         [SerializeField] private PlayerInventory _playerInventory;
-        [SerializeField] private SoundData _moveItemToNewSlotSound;
+        [SerializeField] private EventReference _moveItemToNewSlotSound;
 
         [Header("Settings")]
         [SerializeField] private bool _isDraggedItemTransparent = true;
