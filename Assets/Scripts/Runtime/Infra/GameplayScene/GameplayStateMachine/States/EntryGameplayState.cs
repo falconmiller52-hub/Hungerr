@@ -1,4 +1,3 @@
-using System;
 using Runtime.Common.Factories.StateFactory;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.ResourceLoad;
@@ -6,7 +5,6 @@ using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy;
 using Runtime.Features.Location;
 using Runtime.Features.Player.Other;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 using IState = Runtime.Common.Services.StateMachine.IState;
