@@ -1,14 +1,12 @@
 using NaughtyAttributes;
 using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
-using Runtime.Features.Player.Movement;
 using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
 
 namespace Runtime.Features.Player.Other
 {
-	[RequireComponent(typeof(PlayerCamera))]
 	public class PlayerFlashlight : MonoBehaviour
 	{
 		[SerializeField, Label("Flashlight Object")]
@@ -62,7 +60,7 @@ namespace Runtime.Features.Player.Other
 
 			// Устанавливаем интенсивность (если включен — берем конфиг, если нет — 0)
 			_flashlightObject.intensity = _isEnabled ? _intensity : 0f;
-			
+
 			var sound = _isEnabled ? _flashlightTurnOnSound : _flashlightTurnffSound;
 			_audioService.PlaySfx(sound, transform.position);
 		}

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Runtime.Common.Enums;
 
 namespace Runtime.Common.Services.EventBus
 {

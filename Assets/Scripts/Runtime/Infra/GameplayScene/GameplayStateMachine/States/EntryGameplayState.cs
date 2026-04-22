@@ -1,4 +1,3 @@
-using System;
 using Runtime.Common.Factories.StateFactory;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.ResourceLoad;
@@ -6,7 +5,6 @@ using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy;
 using Runtime.Features.Location;
 using Runtime.Features.Player.Other;
-using Unity.VisualScripting;
 using UnityEngine;
 using Zenject;
 using IState = Runtime.Common.Services.StateMachine.IState;
@@ -45,6 +43,10 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 
 		public void Enter()
 		{
+			// Выключили курсор при старте игры
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
+			
 			// заглушка пока нет адресаблов
 			GameObject playerPrefab = _resourceLoader.Load<GameObject>("Player");
 
