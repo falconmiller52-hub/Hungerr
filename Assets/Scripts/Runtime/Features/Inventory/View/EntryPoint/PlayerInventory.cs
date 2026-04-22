@@ -1,10 +1,8 @@
-// PlayerInventory.cs
-
 using System;
+using FMODUnity;
 using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
-using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -17,7 +15,7 @@ namespace Runtime.Features.Inventory
 	/// </summary>
 	public class PlayerInventory : MonoBehaviour
 	{
-		[SerializeField] private SoundData _openInventorySound;
+		[SerializeField] private EventReference _openInventorySound;
 		
 		[Header("DEBUG")]
 		[SerializeField] private InventoryItemData _inventoryItemData;

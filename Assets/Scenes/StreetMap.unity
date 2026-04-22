@@ -974,7 +974,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _materialSounds:
-  - {fileID: 11400000, guid: 165547486abab514898ef9e2e7530f6e, type: 2}
+  - Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
 --- !u!64 &150388121
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -4260,8 +4265,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _materialSounds:
-  - {fileID: 11400000, guid: 165547486abab514898ef9e2e7530f6e, type: 2}
-  - {fileID: 11400000, guid: 1c2a77a776a785847bd90869b7504b4d, type: 2}
+  - Guid:
+      Data1: 753262989
+      Data2: 1192397846
+      Data3: 1381036437
+      Data4: 562968933
+    Path: event:/SFX/Player_action/player_footsteps
 --- !u!65 &563048716
 BoxCollider:
   m_ObjectHideFlags: 0

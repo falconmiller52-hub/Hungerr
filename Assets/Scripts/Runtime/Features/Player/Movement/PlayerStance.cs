@@ -1,10 +1,10 @@
 using System.Collections;
+using FMODUnity;
 using NaughtyAttributes;
 using Runtime.Common.Enums;
 using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
-using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -59,7 +59,7 @@ namespace Runtime.Features.Player.Movement
 		private float _ceilingCheckDistance = 1f;
 
 		[SerializeField, Label("Exhaustion Sound")]
-		private SoundData _exhaustionStepSound;
+		private EventReference _exhaustionStepSound;
 
 		//Внутренние переменные
 		public enum Stance

@@ -1,3 +1,4 @@
+using FMODUnity;
 using NaughtyAttributes;
 using Runtime.Common.Extensions;
 using Runtime.Common.Services.Audio;
@@ -24,13 +25,13 @@ namespace Runtime.Features.Player.Movement
 		private float _jumpHeight = 1f;
 
 		[SerializeField, Label("Standard Step Sound")]
-		private SoundData _standartStepSound;
+		private EventReference _standartStepSound;
 
 		[SerializeField, Tooltip("Ground Sound On Start Jump")]
-		private SoundData _jumpStartSound;
+		private EventReference _jumpStartSound;
 
 		[SerializeField, Tooltip("Ground Sound After Jump")]
-		private SoundData _jumpEndSound;
+		private EventReference _jumpEndSound;
 
 		[Space, SerializeField, Label("Gravity Force")]
 		private float _gravityForce = 30f;
@@ -42,7 +43,7 @@ namespace Runtime.Features.Player.Movement
 		private RaycastHit _playerGroundHit;
 		private float _gravitySpeed = 0f;
 		private Vector2 _inputDirection;
-		private SoundData _currentStepSoundData;
+		private EventReference _currentStepSoundData;
 		private bool _isCanMove = true;
 
 		//Кэшированные переменные

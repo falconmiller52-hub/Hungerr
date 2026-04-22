@@ -1,3 +1,4 @@
+using FMODUnity;
 using Runtime.Common.Services.Audio;
 using UnityEngine;
 using Zenject;
@@ -6,8 +7,8 @@ namespace Runtime.Features.Sounds
 {
     public class GameplayAmbientPlayer : MonoBehaviour
     {
-        [SerializeField] private SoundData _startAmbientSound;
-        [SerializeField] private SoundData _ambientTwoSound;
+        [SerializeField] private EventReference _startAmbientSound;
+        [SerializeField] private EventReference _ambientTwoSound;
         [SerializeField] private float _fadeDuration = 1f;
     
         private IAudioService _audioService;

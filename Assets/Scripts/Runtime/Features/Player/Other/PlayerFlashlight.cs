@@ -1,7 +1,7 @@
+using FMODUnity;
 using NaughtyAttributes;
 using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
-using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -16,10 +16,10 @@ namespace Runtime.Features.Player.Other
 		private float _intensity = 1f;
 
 		[Space, SerializeField, Label("Flashlight ON Sound ")]
-		private SoundData _flashlightTurnOnSound;
+		private EventReference _flashlightTurnOnSound;
 
 		[Space, SerializeField, Label("Flashlight OFF Sound ")]
-		private SoundData _flashlightTurnffSound;
+		private EventReference _flashlightTurnffSound;
 
 		private IInputHandler _inputHandler;
 		private IAudioService _audioService;

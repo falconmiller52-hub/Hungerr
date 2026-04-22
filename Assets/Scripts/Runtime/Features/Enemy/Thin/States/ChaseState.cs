@@ -1,5 +1,5 @@
+using FMODUnity;
 using Runtime.Common.Extensions;
-using Runtime.Features.Sounds;
 using UnityEngine;
 
 namespace Runtime.Features.Enemy.Thin.States
@@ -10,7 +10,7 @@ namespace Runtime.Features.Enemy.Thin.States
 		private static readonly int Chase = Animator.StringToHash("Chase");
 	
 		private readonly ThinEnemyAI _ai;
-		private SoundData _currentSound;
+		private EventReference _currentSound;
 		private bool _isActive = false;
 		public ChaseState(ThinEnemyAI ai) => _ai = ai;
 
@@ -51,9 +51,9 @@ namespace Runtime.Features.Enemy.Thin.States
 			_ai.AudioService.StopPlaying(_currentSound);
 		}
 
-		private void SetNewSound(SoundData currentPlayedData)
+		private void SetNewSound(EventReference currentPlayedData)
 		{
-			if (!_isActive) 
+			if (_ai == null || !_isActive) 
 				return;
 			
 			_currentSound = _ai.ChaseSounds.RandomExcept(currentPlayedData);

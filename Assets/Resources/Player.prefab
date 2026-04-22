@@ -1969,9 +1969,27 @@ MonoBehaviour:
   _groundCheck: {fileID: 3123808519059337597}
   _groundCheckDistance: 0.2
   _jumpHeight: 0.2
-  _standartStepSound: {fileID: 11400000, guid: 165547486abab514898ef9e2e7530f6e, type: 2}
-  _jumpStartSound: {fileID: 11400000, guid: d0a27c4eb9ff12640a767a8861f59088, type: 2}
-  _jumpEndSound: {fileID: 11400000, guid: e2a4563da7422754a8c4f642a4bdfad8, type: 2}
+  _standartStepSound:
+    Guid:
+      Data1: 753262989
+      Data2: 1192397846
+      Data3: 1381036437
+      Data4: 562968933
+    Path: event:/SFX/Player_action/player_footsteps
+  _jumpStartSound:
+    Guid:
+      Data1: -1067796760
+      Data2: 1326276175
+      Data3: -1817600355
+      Data4: -690011161
+    Path: event:/SFX/Player_action/player_jump_begin
+  _jumpEndSound:
+    Guid:
+      Data1: -79019031
+      Data2: 1222560082
+      Data3: -1834122089
+      Data4: -1286697473
+    Path: event:/SFX/Player_action/player_jump_end
   _gravityForce: 0.07
 --- !u!114 &695208376743956962
 MonoBehaviour:
@@ -2000,7 +2018,13 @@ MonoBehaviour:
   _crouchingVolumes: {x: 0.25, y: 1}
   _ceilingCheck: {fileID: 8595511967646316936}
   _ceilingCheckDistance: 1
-  _exhaustionStepSound: {fileID: 11400000, guid: 2386d7123287fb44ca2ba19ff0fd62bd, type: 2}
+  _exhaustionStepSound:
+    Guid:
+      Data1: 1460792054
+      Data2: 1251142846
+      Data3: -2002973813
+      Data4: -1540936216
+    Path: event:/SFX/Player_status/heartbeat
 --- !u!114 &695208376743956961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2015,8 +2039,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _flashlightObject: {fileID: 3123808519904290215}
   _intensity: 50
-  _flashlightTurnOnSound: {fileID: 11400000, guid: 69552891bb96ee94c8d3a440abaa44f0, type: 2}
-  _flashlightTurnffSound: {fileID: 11400000, guid: 69552891bb96ee94c8d3a440abaa44f0, type: 2}
+  _flashlightTurnOnSound:
+    Guid:
+      Data1: 160243803
+      Data2: 1152174906
+      Data3: -1769027942
+      Data4: 1338607287
+    Path: event:/SFX/UI/click
+  _flashlightTurnffSound:
+    Guid:
+      Data1: 160243803
+      Data2: 1152174906
+      Data3: -1769027942
+      Data4: 1338607287
+    Path: event:/SFX/UI/click
 --- !u!114 &1791534461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2047,7 +2083,13 @@ MonoBehaviour:
   _playerCamera: {fileID: 3851059412846384345}
   _rayLength: 2
   _playerInventory: {fileID: 1574870206258873081}
-  _pickUpSound: {fileID: 11400000, guid: 5e0505e58e22d3e4db4990547cf095c9, type: 2}
+  _pickUpSound:
+    Guid:
+      Data1: -364484132
+      Data2: 1204442959
+      Data3: 1877899450
+      Data4: 1678767546
+    Path: event:/SFX/Inventory/inventory_open
 --- !u!114 &7221009674689892835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2078,7 +2120,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0860d32a60b51304ab6a7c08aace4dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _openInventorySound: {fileID: 11400000, guid: fc0b4f7c8b7d7a941aa311152cefa4e2, type: 2}
+  _openInventorySound:
+    Guid:
+      Data1: -364484132
+      Data2: 1204442959
+      Data3: 1877899450
+      Data4: 1678767546
+    Path: event:/SFX/Inventory/inventory_open
   _inventoryItemData: {fileID: 11400000, guid: e12de04d2be5aea4fb8493d09ace3687, type: 2}
   _inventoryItemDataTwo: {fileID: 11400000, guid: 8e74f84d05491e849bfa4f359af96220, type: 2}
   _pos: {x: 1, y: 1}
@@ -2095,6 +2143,7 @@ GameObject:
   - component: {fileID: 3851059412846384346}
   - component: {fileID: 3851059412846384347}
   - component: {fileID: 3853946251493512507}
+  - component: {fileID: -6788900748789295500}
   m_Layer: 0
   m_Name: CameraBrain
   m_TagString: MainCamera
@@ -2256,6 +2305,20 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &-6788900748789295500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3851059412846384325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &4086212274290396200
 GameObject:
   m_ObjectHideFlags: 0
@@ -3476,7 +3539,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _playerInventory: {fileID: 1574870206258873081}
-  _moveItemToNewSlotSound: {fileID: 11400000, guid: b598cb00f97a0b24b901881cc0fcc0e1, type: 2}
+  _moveItemToNewSlotSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   _isDraggedItemTransparent: 0
 --- !u!1 &7241486480862868086
 GameObject:
