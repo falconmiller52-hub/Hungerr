@@ -186,6 +186,7 @@ namespace Runtime.Features.Dialog
 		private IEnumerator TypeWriterRoutine(string line)
 		{
 			string currentLine = "";
+			
 			foreach (char symbol in line)
 			{
 				currentLine += symbol;
