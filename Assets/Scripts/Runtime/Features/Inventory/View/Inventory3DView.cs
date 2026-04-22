@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Runtime.Features.Inventory;
 using UnityEngine;
 
 namespace Runtime.Features.Inventory.View
@@ -11,6 +12,8 @@ namespace Runtime.Features.Inventory.View
 
         [Header("References")]
         [SerializeField] private PlayerInventory _playerInventory;
+        // Optional chest model bound at runtime to enable dual-inventory UI via drag/drop
+        [SerializeField] private InventoryWithCells _chestModel;
         [SerializeField] private GameObject _inventoryContainer;
         [SerializeField] private Transform _gridAnchor;
         [SerializeField] private Transform _itemsContainer;
@@ -19,6 +22,13 @@ namespace Runtime.Features.Inventory.View
         private readonly Dictionary<int, InventoryItemView> _spawnedItems = new Dictionary<int, InventoryItemView>();
 
         public InventoryWithCells Model => _model;
+        // Chest model accessor for drag/drop helpers
+        public InventoryWithCells ChestModel => _chestModel;
+        // Bind a chest model to this view (to be called by Chest UI controller)
+        public void BindChestInventory(InventoryWithCells chestModel)
+        {
+            _chestModel = chestModel;
+        }
         public Transform GridAnchor => _gridAnchor;
         public float CellSize => _cellSize;
         public Transform ItemsContainer => _itemsContainer;

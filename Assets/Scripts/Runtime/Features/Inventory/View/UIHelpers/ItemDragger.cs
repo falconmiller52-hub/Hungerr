@@ -1,5 +1,6 @@
 using Runtime.Common.Services.Audio;
 using Runtime.Features.Sounds;
+using Runtime.Features.Inventory;
 using UnityEngine;
 using Zenject;
 
@@ -16,6 +17,8 @@ namespace Runtime.Features.Inventory.View.UIHelpers
         [SerializeField] private Inventory3DView _view;
         [SerializeField] private LayerMask _gridLayer;
         [SerializeField] private PlayerInventory _playerInventory;
+        // Optional chest interaction: allow dragging into/out of a bound chest model
+        [SerializeField] private Runtime.Features.Inventory.View.Inventory3DView _viewChestCompat;
         [SerializeField] private SoundData _moveItemToNewSlotSound;
 
         [Header("Settings")]
@@ -61,17 +64,29 @@ namespace Runtime.Features.Inventory.View.UIHelpers
         {
             if (Input.GetMouseButtonDown(0))
             {
+                // Try taking from player inventory first
                 var slot = _view.Model.GetSlot(coords);
-                if (slot != null && !slot.IsEmpty)
+                bool takenFromPlayer = slot != null && !slot.IsEmpty;
+                if (takenFromPlayer)
                 {
                     _selectedItem = slot.Item;
                     _originalPosition = FindTopLeftOfItem(_selectedItem, coords);
-
-                    // Удаляем предмет из логики временно, чтобы он не мешал сам себе при проверке "CanPlace"
                     RemoveItemFromLogic(_selectedItem, _originalPosition);
-                    
-                    // Создаем призрака или берем существующий визуал
                     PrepareGhost(_selectedItem);
+                    return;
+                }
+                // If nothing in player's slot, try chest if available
+                if (_viewChestCompat != null && _viewChestCompat.ChestModel != null)
+                {
+                    var chestSlot = _viewChestCompat.ChestModel.GetSlot(coords);
+                    if (chestSlot != null && !chestSlot.IsEmpty)
+                    {
+                        _selectedItem = chestSlot.Item;
+                        _originalPosition = FindTopLeftOfItem(_selectedItem, coords);
+                        // Remove from chest logic (best effort)
+                        RemoveItemFromLogic(_selectedItem, _originalPosition);
+                        PrepareGhost(_selectedItem);
+                    }
                 }
             }
         }
@@ -89,8 +104,15 @@ namespace Runtime.Features.Inventory.View.UIHelpers
             {
                 if (canPlace)
                 {
-                    // Подтверждаем установку
+                    // Подтверждаем установку в текущий Inventory (Player)
                     _view.Model.AddItem(_selectedItem, coords);
+                    ClearSelection();
+                }
+                else if (_viewChestCompat != null && _viewChestCompat.ChestModel != null &&
+                         _viewChestCompat.ChestModel.CanPlaceItem(_selectedItem, coords))
+                {
+                    // Попытка разместить в сундук
+                    _viewChestCompat.ChestModel.AddItem(_selectedItem, coords);
                     ClearSelection();
                 }
                 else
