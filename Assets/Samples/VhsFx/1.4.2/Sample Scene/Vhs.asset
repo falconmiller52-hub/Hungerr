@@ -49,7 +49,7 @@ MonoBehaviour:
     m_Value: 0.05
   _shades:
     m_OverrideState: 0
-    m_Value: 2.25
+    m_Value: 0
   _rocking:
     m_OverrideState: 1
     m_Value: 0
@@ -57,7 +57,7 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 0.025
   _density:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   _intensity:
     m_OverrideState: 0
@@ -82,7 +82,7 @@ MonoBehaviour:
     m_Value: 0.7
   _sl_intensity:
     m_OverrideState: 0
-    m_Value: 0.215
+    m_Value: 1
   _sl_move:
     m_OverrideState: 0
     m_Value: 0
@@ -90,11 +90,11 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   _flow:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 24
   _pulsation:
-    m_OverrideState: 0
-    m_Value: 14
+    m_OverrideState: 1
+    m_Value: 12.16
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,6 +16,13 @@ namespace Runtime.Common.Enums
 	public enum EGameplayStateEvent
 	{
 		StartNightPhaseTrigger,
-		EndNightPhaseTrigger,
+		EndNightPhaseTrigger
+	}
+
+	public enum EPlayerStanceEvent
+	{
+		StartWalkState,
+		StartRunState,
+		StartCrouchState
 	}
 }

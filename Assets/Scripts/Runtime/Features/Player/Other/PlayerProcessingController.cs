@@ -21,7 +21,7 @@ namespace Runtime.Features.Player.Other
 		private float _nextVignetteStrength;
 		private float _nextDofStrength;
 
-		PlayerStance _playerStance;
+		private PlayerStance _playerStance;
 		private Vignette _vignette;
 		private DepthOfField _depthOfField;
 
@@ -38,11 +38,15 @@ namespace Runtime.Features.Player.Other
 
 		private void Update()
 		{
-			_nextVignetteStrength = _playerStance.CurrentStance == PlayerStance.Stance.Crouching ? _crouchVignetteStrength.y : _crouchVignetteStrength.x;
+			_nextVignetteStrength = _playerStance.CurrentStance == PlayerStance.Stance.Crouching
+							? _crouchVignetteStrength.y
+							: _crouchVignetteStrength.x;
 			_nextDofStrength = _playerStance.IsExhausted ? _exhaustionDofStrength.x : _exhaustionDofStrength.y;
 
-			_vignette.intensity.value = Mathf.Lerp(_vignette.intensity.value, _nextVignetteStrength, Time.deltaTime * _playerStance.CrouchSpeed);
-			_depthOfField.gaussianEnd.value = Mathf.Lerp(_depthOfField.gaussianEnd.value, _nextDofStrength, Time.deltaTime * _playerStance.ExhaustionDuration / 2);
+			_vignette.intensity.value = Mathf.Lerp(_vignette.intensity.value, _nextVignetteStrength,
+							Time.deltaTime * _playerStance.CrouchSpeed);
+			_depthOfField.gaussianEnd.value = Mathf.Lerp(_depthOfField.gaussianEnd.value, _nextDofStrength,
+							Time.deltaTime * _playerStance.ExhaustionDuration / 2);
 		}
 	}
 }
