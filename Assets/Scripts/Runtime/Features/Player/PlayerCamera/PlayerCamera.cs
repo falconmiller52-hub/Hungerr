@@ -3,8 +3,9 @@ using Runtime.Common.Services.Pause;
 using UnityEngine;
 using Zenject;
 
-namespace Runtime.Features.Player.Other
+namespace Runtime.Features.Player.PlayerCamera
 {
+	[RequireComponent(typeof(CinemachineVirtualCamera))]
 	public class PlayerCamera : MonoBehaviour, IPausable
 	{
 		private CinemachinePOV _pov;

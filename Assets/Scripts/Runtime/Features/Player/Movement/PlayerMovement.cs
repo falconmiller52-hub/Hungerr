@@ -3,7 +3,6 @@ using Runtime.Common.Extensions;
 using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
-using Runtime.Features.Player.Other;
 using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;

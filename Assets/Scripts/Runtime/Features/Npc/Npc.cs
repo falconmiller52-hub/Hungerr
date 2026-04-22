@@ -1,4 +1,3 @@
-using System;
 using Cinemachine;
 using Ink.Runtime;
 using Runtime.Features.Dialog;
@@ -52,7 +51,7 @@ namespace Runtime.Features.NPC
 
 		private void EnableNpcCamera()
 			=> _cinemachineVirtualCamera.Priority = 100;
-		
+
 		private void DisableNpcCamera()
 			=> _cinemachineVirtualCamera.Priority = 0;
 	}

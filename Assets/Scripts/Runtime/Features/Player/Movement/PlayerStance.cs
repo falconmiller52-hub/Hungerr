@@ -1,6 +1,8 @@
 using System.Collections;
 using NaughtyAttributes;
+using Runtime.Common.Enums;
 using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
 using Runtime.Features.Sounds;
 using UnityEngine;
@@ -76,12 +78,14 @@ namespace Runtime.Features.Player.Movement
 		private IInputHandler _inputHandler;
 		private IAudioService _audioService;
 		private CharacterController _cc;
+		private EventBus _eventBus;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, IAudioService audioService)
+		private void Construct(IInputHandler inputHandler, IAudioService audioService, EventBus eventBus)
 		{
 			_inputHandler = inputHandler;
 			_audioService = audioService;
+			_eventBus = eventBus;
 		}
 
 		private void Start()
@@ -137,35 +141,48 @@ namespace Runtime.Features.Player.Movement
 
 			var crouchCondition = _crouchingTimer >= _crouchingCooldown && !_isUnderCeiling;
 
+			// Run state
 			if (_currentStance == Stance.Running)
 			{
 				if (_crouchPress && crouchCondition)
 				{
+					_eventBus.Trigger(EPlayerStanceEvent.StartCrouchState);
+
 					_currentStance = Stance.Crouching;
 					_crouchingTimer = 0f;
 				}
 				else if (!_runPress || _currentStamina <= 0f)
 				{
+					_eventBus.Trigger(EPlayerStanceEvent.StartWalkState);
+
 					_currentStance = Stance.Walking;
 				}
 			}
+			// Crouch state
 			else if (_currentStance == Stance.Crouching)
 			{
 				if (_crouchPress && crouchCondition)
 				{
+					_eventBus.Trigger(EPlayerStanceEvent.StartWalkState);
+
 					_currentStance = Stance.Walking;
 					_crouchingTimer = 0f;
 				}
 			}
+			// Walk state
 			else
 			{
 				if (_crouchPress && crouchCondition)
 				{
+					_eventBus.Trigger(EPlayerStanceEvent.StartCrouchState);
+
 					_currentStance = Stance.Crouching;
 					_crouchingTimer = 0f;
 				}
 				else if (_runPress && !_isExhausted)
 				{
+					_eventBus.Trigger(EPlayerStanceEvent.StartRunState);
+
 					_currentStance = Stance.Running;
 				}
 			}
