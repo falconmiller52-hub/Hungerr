@@ -14,6 +14,7 @@ namespace Runtime.Common.Services.Input
 		event Action CrouchInputPressed;
 		event Action DialogSkipInputPressed;
 		event Action ExitInputPressed;
+		event Action InventoryTriggerPressed;
 
 		void Enable();
 		void Disable();

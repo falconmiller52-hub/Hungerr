@@ -107,6 +107,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""InventoryTrigger"",
+                    ""type"": ""Button"",
+                    ""id"": ""1f5ded23-1770-4dd6-b011-1ef034cc1e63"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -252,6 +261,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a4df8edd-046b-4611-89cf-e33c59c7bf8d"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""InventoryTrigger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -286,6 +306,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_DialogSkip = m_Player.FindAction("DialogSkip", throwIfNotFound: true);
         m_Player_Exit = m_Player.FindAction("Exit", throwIfNotFound: true);
+        m_Player_InventoryTrigger = m_Player.FindAction("InventoryTrigger", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -356,6 +377,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_DialogSkip;
     private readonly InputAction m_Player_Exit;
+    private readonly InputAction m_Player_InventoryTrigger;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -369,6 +391,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_Player_Look;
         public InputAction @DialogSkip => m_Wrapper.m_Player_DialogSkip;
         public InputAction @Exit => m_Wrapper.m_Player_Exit;
+        public InputAction @InventoryTrigger => m_Wrapper.m_Player_InventoryTrigger;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -405,6 +428,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Exit.started += instance.OnExit;
             @Exit.performed += instance.OnExit;
             @Exit.canceled += instance.OnExit;
+            @InventoryTrigger.started += instance.OnInventoryTrigger;
+            @InventoryTrigger.performed += instance.OnInventoryTrigger;
+            @InventoryTrigger.canceled += instance.OnInventoryTrigger;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -436,6 +462,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Exit.started -= instance.OnExit;
             @Exit.performed -= instance.OnExit;
             @Exit.canceled -= instance.OnExit;
+            @InventoryTrigger.started -= instance.OnInventoryTrigger;
+            @InventoryTrigger.performed -= instance.OnInventoryTrigger;
+            @InventoryTrigger.canceled -= instance.OnInventoryTrigger;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -473,5 +502,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnDialogSkip(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
+        void OnInventoryTrigger(InputAction.CallbackContext context);
     }
 }

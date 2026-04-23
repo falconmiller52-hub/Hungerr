@@ -1,3 +1,4 @@
+using Cinemachine;
 using Ink.Runtime;
 using Runtime.Features.Dialog;
 using Runtime.Features.Interactable;
@@ -7,10 +8,14 @@ using Zenject;
 namespace Runtime.Features.NPC
 {
 	// Тестовая вариация NPC для тестов диалоговой системы
+	[SelectionBase]
 	public class Npc : MonoBehaviour, IInteractable
 	{
 		[SerializeField] [Tooltip("Файл с диалогом NPC")]
 		private TextAsset _dialogJson;
+
+		[SerializeField] [Tooltip("Камера на которую будет смещен фокус при старте диалога")]
+		private CinemachineVirtualCamera _cinemachineVirtualCamera;
 
 		private DialogSystem _dialogSystem;
 		private Story _story;
@@ -24,6 +29,13 @@ namespace Runtime.Features.NPC
 		private void Start()
 		{
 			_story = new Story(_dialogJson.text);
+
+			_dialogSystem.OnStoryEnded += DisableNpcCamera;
+		}
+
+		private void OnDestroy()
+		{
+			_dialogSystem.OnStoryEnded -= DisableNpcCamera;
 		}
 
 		public void Interact()
@@ -31,6 +43,16 @@ namespace Runtime.Features.NPC
 			StartDialog();
 		}
 
-		private void StartDialog() => _dialogSystem.StartStory(_story);
+		private void StartDialog()
+		{
+			_dialogSystem.StartStory(_story);
+			EnableNpcCamera();
+		}
+
+		private void EnableNpcCamera()
+			=> _cinemachineVirtualCamera.Priority = 100;
+
+		private void DisableNpcCamera()
+			=> _cinemachineVirtualCamera.Priority = 0;
 	}
 }

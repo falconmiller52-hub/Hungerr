@@ -1,3 +1,4 @@
+using FMODUnity;
 using NaughtyAttributes;
 using Runtime.Common.Extensions;
 using Runtime.Common.Services.Audio;
@@ -24,13 +25,13 @@ namespace Runtime.Features.Player.Movement
 		private float _jumpHeight = 1f;
 
 		[SerializeField, Label("Standard Step Sound")]
-		private SoundData _standartStepSound;
+		private EventReference _standartStepSound;
 
 		[SerializeField, Tooltip("Ground Sound On Start Jump")]
-		private SoundData _jumpStartSound;
+		private EventReference _jumpStartSound;
 
 		[SerializeField, Tooltip("Ground Sound After Jump")]
-		private SoundData _jumpEndSound;
+		private EventReference _jumpEndSound;
 
 		[Space, SerializeField, Label("Gravity Force")]
 		private float _gravityForce = 30f;
@@ -42,10 +43,11 @@ namespace Runtime.Features.Player.Movement
 		private RaycastHit _playerGroundHit;
 		private float _gravitySpeed = 0f;
 		private Vector2 _inputDirection;
-		private SoundData _currentStepSoundData;
+		private EventReference _currentStepSoundData;
 		private bool _isCanMove = true;
 
 		//Кэшированные переменные
+		private Camera _playerCamera;
 		private CharacterController _cc;
 		private PlayerStance _playerStance;
 		private IInputHandler _inputHandler;
@@ -53,7 +55,7 @@ namespace Runtime.Features.Player.Movement
 		private IPauseController _pauseController;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, IAudioService audioService,  IPauseController pauseController)
+		private void Construct(IInputHandler inputHandler, IAudioService audioService, IPauseController pauseController)
 		{
 			_inputHandler = inputHandler;
 			_audioService = audioService;
@@ -64,7 +66,7 @@ namespace Runtime.Features.Player.Movement
 		{
 			_cc = GetComponent<CharacterController>();
 			_playerStance = GetComponent<PlayerStance>();
-
+			_playerCamera = Camera.main;
 			StanceUpdate();
 		}
 
@@ -84,7 +86,7 @@ namespace Runtime.Features.Player.Movement
 				Debug.LogError("PlayerMovement::OnEnable() No Pause Controller was assigned");
 				return;
 			}
-			
+
 			_pauseController.Add(this);
 		}
 
@@ -98,13 +100,13 @@ namespace Runtime.Features.Player.Movement
 
 			_inputHandler.PlayerMoveInputChanged -= SetNewMoveInputDirection;
 			_inputHandler.JumpInputPressed -= SetJumpInputPressed;
-			
+
 			if (_pauseController == null)
 			{
 				Debug.LogError("PlayerMovement::OnDisable() No Pause Controller was assigned");
 				return;
 			}
-			
+
 			_pauseController.Remove(this);
 		}
 
@@ -180,7 +182,7 @@ namespace Runtime.Features.Player.Movement
 
 		private void PlaySound()
 		{
-			_audioService.PlaySfx(_currentStepSoundData, transform.position);
+			_audioService.PlaySound(_currentStepSoundData, transform.position);
 		}
 
 		private void GroundSet(bool isGrounded)
@@ -204,7 +206,7 @@ namespace Runtime.Features.Player.Movement
 		{
 			_isGrounded = true;
 			_gravitySpeed = 0f;
-			_audioService.PlaySfx(_jumpEndSound, _groundCheck.position);
+			_audioService.PlaySound(_jumpEndSound, _groundCheck.position);
 		}
 
 		public void Move(Vector2 direction)
@@ -223,7 +225,7 @@ namespace Runtime.Features.Player.Movement
 			if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching)
 			{
 				_gravitySpeed = strength;
-				_audioService.PlaySfx(_jumpStartSound, _groundCheck.position);
+				_audioService.PlaySound(_jumpStartSound, _groundCheck.position);
 			}
 		}
 
@@ -243,7 +245,8 @@ namespace Runtime.Features.Player.Movement
 		{
 			get
 			{
-				var moveDirection = transform.forward * _inputDirection.y + transform.right * _inputDirection.x;
+				var moveDirection = (_playerCamera.transform.forward * _inputDirection.y)
+				                    + (_playerCamera.transform.right * _inputDirection.x);
 				var directionResult = new Vector2(moveDirection.x, moveDirection.z);
 				return directionResult;
 			}

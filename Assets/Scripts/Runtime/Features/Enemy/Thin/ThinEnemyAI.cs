@@ -1,6 +1,6 @@
+using FMODUnity;
 using Runtime.Common.Services.Audio;
 using Runtime.Features.Enemy.Thin.States;
-using Runtime.Features.Sounds;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
@@ -16,13 +16,13 @@ namespace Runtime.Features.Enemy.Thin
 		
 		[field: Header("Patrol Settings")]
 		[field: SerializeField] public Transform[] PatrolPoints { get; private set; }
-		[field: SerializeField] public SoundData[] PatrolSounds { get; private set; }
+		[field: SerializeField] public EventReference PatrolSounds { get; private set; }
 		[field: SerializeField] public float PatrolSpeedMultiplier { get; private set; }
 
 		[field: Header("Chase Settings")]
 		[field: SerializeField] public float ChaseSpeedMultiplier { get; private set; }
 		[field: SerializeField] public float DetectionRadius { get; private set; } = 10f;
-		[field: SerializeField] public SoundData[] ChaseSounds { get; private set; }
+		[field: SerializeField] public EventReference ChaseSounds { get; private set; }
 
 		[field: Header("Attack Settings")]
 		[field: SerializeField] public float AttackRadius { get; private set; } = 2f;
