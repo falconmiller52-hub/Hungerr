@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Runtime.Features.Dialog
+namespace Runtime.Features.Dialog.View
 {
 	public class DialogUI : MonoBehaviour
 	{
