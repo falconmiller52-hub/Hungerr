@@ -1,7 +1,5 @@
 using FMODUnity;
 using Runtime.Common.Services.Audio;
-using Runtime.Features.Sounds;
-using Runtime.Features.Inventory;
 using UnityEngine;
 using Zenject;
 
@@ -9,7 +7,7 @@ namespace Runtime.Features.Inventory.View.UIHelpers
 {
 	/// <summary>
 	/// хендлит то если игрок мышью попытается взять предмет при открытом инвентаре
-	/// мб должен лежать как компонент вместе с инвентарем
+	/// должен лежать как компонент вместе с инвентарем
 	/// </summary>
 	public class ItemDragger : MonoBehaviour
 	{

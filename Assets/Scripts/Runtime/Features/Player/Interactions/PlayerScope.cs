@@ -6,7 +6,7 @@ using Runtime.Common.Services.Pause;
 using Runtime.Features.Interactable;
 using Runtime.Features.Inventory;
 using Runtime.Features.Inventory.View;
-using Runtime.Features.Inventory.View.Chest;
+using Runtime.Features.Inventory.View.EntryPoint;
 using Runtime.Features.Inventory.WorldItem;
 using Runtime.Features.Outline;
 using UnityEngine;

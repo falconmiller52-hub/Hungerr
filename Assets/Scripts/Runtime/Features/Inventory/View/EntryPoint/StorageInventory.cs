@@ -1,20 +1,15 @@
 using Cinemachine;
 using FMODUnity;
 using Runtime.Common.Services.Audio;
-using Runtime.Features.Inventory.View.EntryPoint;
 using UnityEngine;
 using Zenject;
 
-namespace Runtime.Features.Inventory.View.Chest
+namespace Runtime.Features.Inventory.View.EntryPoint
 {
 	public class StorageInventory : InventoryController
 	{
 		[SerializeField] private EventReference _openInventorySound;
 		[SerializeField] private CinemachineVirtualCamera _cinemachineVirtualCamera;
-		
-		[Header("Settings")]
-		[SerializeField] private int _width = 10;
-		[SerializeField] private int _height = 10;
 		
 		[Header("DEBUG")]
 		[SerializeField] private InventoryItemData _inventoryItemData;
@@ -23,6 +18,8 @@ namespace Runtime.Features.Inventory.View.Chest
 		
 		private InventoryWithCells _inventoryWithCells;
 		private bool _isOpened;
+		private int _width = 10;
+		private int _height = 10;
 		private IAudioService _audioService;
 
 		[Inject]
