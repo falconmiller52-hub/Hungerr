@@ -1,14 +1,12 @@
+using FMODUnity;
 using NaughtyAttributes;
 using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Input;
-using Runtime.Features.Player.Movement;
-using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
 
 namespace Runtime.Features.Player.Other
 {
-	[RequireComponent(typeof(PlayerCamera))]
 	public class PlayerFlashlight : MonoBehaviour
 	{
 		[SerializeField, Label("Flashlight Object")]
@@ -18,10 +16,10 @@ namespace Runtime.Features.Player.Other
 		private float _intensity = 1f;
 
 		[Space, SerializeField, Label("Flashlight ON Sound ")]
-		private SoundData _flashlightTurnOnSound;
+		private EventReference _flashlightTurnOnSound;
 
 		[Space, SerializeField, Label("Flashlight OFF Sound ")]
-		private SoundData _flashlightTurnffSound;
+		private EventReference _flashlightTurnffSound;
 
 		private IInputHandler _inputHandler;
 		private IAudioService _audioService;
@@ -62,9 +60,9 @@ namespace Runtime.Features.Player.Other
 
 			// Устанавливаем интенсивность (если включен — берем конфиг, если нет — 0)
 			_flashlightObject.intensity = _isEnabled ? _intensity : 0f;
-			
+
 			var sound = _isEnabled ? _flashlightTurnOnSound : _flashlightTurnffSound;
-			_audioService.PlaySfx(sound, transform.position);
+			_audioService.PlaySound(sound, transform.position);
 		}
 	}
 }
