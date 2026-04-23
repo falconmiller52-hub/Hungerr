@@ -32,8 +32,7 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 		{
 			_inventoryWithCells = new InventoryWithCells(_width, _height);
 		}
-
-
+		
 		public void InventoryOpenStateChanged(bool openState)
 		{
 			_audioService.PlaySound(_openInventorySound, transform.position);
