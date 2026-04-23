@@ -5,6 +5,8 @@ using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
 using Runtime.Features.Interactable;
 using Runtime.Features.Inventory;
+using Runtime.Features.Inventory.View;
+using Runtime.Features.Inventory.View.Chest;
 using Runtime.Features.Inventory.WorldItem;
 using Runtime.Features.Outline;
 using UnityEngine;
@@ -23,6 +25,9 @@ namespace Runtime.Features.Player.Interactions
 
 		[Space, SerializeField, Label("Player Inventory")]
 		private PlayerInventory _playerInventory;
+		
+		[Space, SerializeField, Label("Player Inventories Controller")]
+		private PlayerInventoriesController _playerInventoriesController;
 
 		[SerializeField] private EventReference _pickUpSound;
 
@@ -146,6 +151,12 @@ namespace Runtime.Features.Player.Interactions
 					// Удаляем в конце кадра
 					Destroy(target);
 				}
+			}
+
+			if (target.TryGetComponent(out StorageInventory chestInventory))
+			{
+				Inventory3DView view = target.transform.GetComponentInChildren<Inventory3DView>();
+				_playerInventoriesController.OpenStorage(chestInventory, view);
 			}
 		}
 

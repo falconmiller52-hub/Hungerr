@@ -1,3 +1,4 @@
+using FMODUnity;
 using Runtime.Common.Services.Audio;
 using Runtime.Features.Sounds;
 using Runtime.Features.Inventory;
@@ -16,16 +17,14 @@ namespace Runtime.Features.Inventory.View.UIHelpers
         [SerializeField] private Camera _mainCamera;
         [SerializeField] private Inventory3DView _view;
         [SerializeField] private LayerMask _gridLayer;
-        [SerializeField] private PlayerInventory _playerInventory;
-        // Optional chest interaction: allow dragging into/out of a bound chest model
-        [SerializeField] private Runtime.Features.Inventory.View.Inventory3DView _viewChestCompat;
-        [SerializeField] private SoundData _moveItemToNewSlotSound;
+        [SerializeField] private EventReference _moveItemToNewSlotSound;
 
         [Header("Settings")]
         [SerializeField] private bool _isDraggedItemTransparent = true;
         
+        private Inventory3DView _viewChestCompat;
         private InventoryItem _selectedItem;
-        private Vector2Int _originalPosition;
+        private (Vector2Int, Inventory3DView) _originalPositionInInventory;
         private InventoryItemView _ghostItem;
         private IAudioService _audioService;
 
@@ -33,6 +32,16 @@ namespace Runtime.Features.Inventory.View.UIHelpers
         private void Construct(IAudioService audioService)
         {
             _audioService = audioService;
+        }
+
+        public void OpenChest(Inventory3DView view)
+        {
+            _viewChestCompat = view;
+        }
+
+        public void CloseChest()
+        {
+            _viewChestCompat = null;
         }
         
         void Update()
@@ -47,7 +56,7 @@ namespace Runtime.Features.Inventory.View.UIHelpers
 
                 if (_selectedItem == null)
                 {
-                    HandleSelection(hoveredCoords);
+                    HandleSelection(hoveredCoords, hit.point);
                 }
                 else
                 {
@@ -60,7 +69,7 @@ namespace Runtime.Features.Inventory.View.UIHelpers
             }
         }
 
-        private void HandleSelection(Vector2Int coords)
+        private void HandleSelection(Vector2Int coords, Vector3 point)
         {
             if (Input.GetMouseButtonDown(0))
             {
@@ -70,21 +79,26 @@ namespace Runtime.Features.Inventory.View.UIHelpers
                 if (takenFromPlayer)
                 {
                     _selectedItem = slot.Item;
-                    _originalPosition = FindTopLeftOfItem(_selectedItem, coords);
-                    RemoveItemFromLogic(_selectedItem, _originalPosition);
+                    _originalPositionInInventory.Item1 = FindTopLeftOfItem(_selectedItem, coords, _view);
+                    _originalPositionInInventory.Item2 = _view;
+                    RemoveItemFromLogic(_selectedItem, _originalPositionInInventory.Item1, _originalPositionInInventory.Item2);
                     PrepareGhost(_selectedItem);
                     return;
                 }
                 // If nothing in player's slot, try chest if available
-                if (_viewChestCompat != null && _viewChestCompat.ChestModel != null)
+                if (_viewChestCompat != null && _viewChestCompat.Model != null)
                 {
-                    var chestSlot = _viewChestCompat.ChestModel.GetSlot(coords);
+                    Vector3 localPos = _viewChestCompat.GridAnchor.InverseTransformPoint(point);
+                    coords = LocalToGrid(localPos);
+                    
+                    var chestSlot = _viewChestCompat.Model.GetSlot(coords);
                     if (chestSlot != null && !chestSlot.IsEmpty)
                     {
                         _selectedItem = chestSlot.Item;
-                        _originalPosition = FindTopLeftOfItem(_selectedItem, coords);
+                        _originalPositionInInventory.Item1 = FindTopLeftOfItem(_selectedItem, coords, _viewChestCompat);
+                        _originalPositionInInventory.Item2 = _viewChestCompat;
                         // Remove from chest logic (best effort)
-                        RemoveItemFromLogic(_selectedItem, _originalPosition);
+                        RemoveItemFromLogic(_selectedItem, _originalPositionInInventory.Item1, _originalPositionInInventory.Item2);
                         PrepareGhost(_selectedItem);
                     }
                 }
@@ -108,17 +122,18 @@ namespace Runtime.Features.Inventory.View.UIHelpers
                     _view.Model.AddItem(_selectedItem, coords);
                     ClearSelection();
                 }
-                else if (_viewChestCompat != null && _viewChestCompat.ChestModel != null &&
-                         _viewChestCompat.ChestModel.CanPlaceItem(_selectedItem, coords))
+                else if (_viewChestCompat != null && _viewChestCompat.Model != null &&
+                         _viewChestCompat.Model.CanPlaceItem(_selectedItem, coords))
                 {
                     // Попытка разместить в сундук
-                    _viewChestCompat.ChestModel.AddItem(_selectedItem, coords);
+                    _viewChestCompat.Model.AddItem(_selectedItem, coords);
                     ClearSelection();
                 }
                 else
                 {
                     // Возвращаем на место, если нельзя поставить
-                    _view.Model.AddItem(_selectedItem, _originalPosition);
+                    var currentView = _originalPositionInInventory.Item2;
+                    currentView.Model.AddItem(_selectedItem, _originalPositionInInventory.Item1);
                     ClearSelection();
                 }
             }
@@ -166,31 +181,36 @@ namespace Runtime.Features.Inventory.View.UIHelpers
             // _ghostItem.SetHighlight(canPlace ? Color.green : Color.red);
         }
 
-        private void RemoveItemFromLogic(InventoryItem item, Vector2Int topLeft)
+        private void RemoveItemFromLogic(InventoryItem item, Vector2Int topLeft, Inventory3DView view)
         {
+            if (view == null)
+                return;
+            
             for (int y = 0; y < item.Data.Height; y++)
             {
                 for (int x = 0; x < item.Data.Width; x++)
                 {
-                    var slot = _view.Model.GetSlot(new Vector2Int(topLeft.x + x, topLeft.y + y));
+                    var slot = view.Model.GetSlot(new Vector2Int(topLeft.x + x, topLeft.y + y));
                     slot.Item = null;
                     slot.Id = -1;
                 }
             }
             // Вызываем событие обновления визуала, чтобы основной меш исчез
             // (Так как мы создали ghost, а основной SyncVisuals его удалит из-за отсутствия в логике)
-            _view.Invoke("SyncVisuals", 0); 
+            view.Invoke("SyncVisuals", 0); 
         }
 
-        private Vector2Int FindTopLeftOfItem(InventoryItem item, Vector2Int startCoords)
+        private Vector2Int FindTopLeftOfItem(InventoryItem item, Vector2Int startCoords, Inventory3DView view)
         {
+            if (view == null)
+                return Vector2Int.zero;
             // Поиск реального начала предмета по его ID
             // Можно реализовать через цикл по соседям или хранить ID в слоте
             // Для упрощения возьмем логику из твоего GetUniqueItemsWithTopLeft
-            int targetId = _view.Model.GetSlot(startCoords).Id;
+            int targetId = view.Model.GetSlot(startCoords).Id;
             Vector2Int min = startCoords;
 
-            foreach (var kvp in _view.Model.Slots)
+            foreach (var kvp in view.Model.Slots)
             {
                 if (kvp.Value.Id == targetId)
                 {
@@ -208,13 +228,15 @@ namespace Runtime.Features.Inventory.View.UIHelpers
             _ghostItem = null;
             // Обновляем визуал, чтобы меш встал на место
             _view.Invoke("SyncVisuals", 0);
+            _viewChestCompat?.Invoke("SyncVisuals", 0);
         }
 
         private void CancelDragging()
         {
             if (_selectedItem != null)
             {
-                _view.Model.AddItem(_selectedItem, _originalPosition);
+                var currentView = _originalPositionInInventory.Item2;
+                currentView.Model.AddItem(_selectedItem, _originalPositionInInventory.Item1);
                 ClearSelection();
             }
         }

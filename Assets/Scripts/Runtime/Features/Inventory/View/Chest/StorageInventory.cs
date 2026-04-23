@@ -4,14 +4,9 @@ using Runtime.Features.Inventory.View.EntryPoint;
 using UnityEngine;
 using Zenject;
 
-namespace Runtime.Features.Inventory
+namespace Runtime.Features.Inventory.View.Chest
 {
-	/// <summary>
-	/// это точка входа для инвентаря, такая штука может быть у сундуков или вот игрок
-	/// тут мы создаем инвентарь и имеются методы с ккоторыми взаимодействуют другие скрипты игрока
-	/// (например PlayerInteract мб чтоб взять предмет и положить)
-	/// </summary>
-	public class PlayerInventory : InventoryController
+	public class StorageInventory : InventoryController
 	{
 		[SerializeField] private EventReference _openInventorySound;
 		
@@ -21,8 +16,8 @@ namespace Runtime.Features.Inventory
 		[SerializeField] private Vector2Int _pos = Vector2Int.one;
 		
 		private InventoryWithCells _inventoryWithCells;
-		private int _width = 10;
-		private int _height = 10;
+		private int _width = 5;
+		private int _height = 5;
 		private bool _isOpened;
 		private IAudioService _audioService;
 
