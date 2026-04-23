@@ -18,7 +18,7 @@ namespace Runtime.Features.Player.Interactions
 	{
 		//Переменные инспектора
 		[SerializeField, Label("Player Camera")]
-		private UnityEngine.Camera _playerCamera;
+		private Camera _playerCamera;
 
 		[Space, SerializeField, Label("Raycasting Length")]
 		private float _rayLength;
@@ -156,6 +156,10 @@ namespace Runtime.Features.Player.Interactions
 			if (target.TryGetComponent(out StorageInventory chestInventory))
 			{
 				Inventory3DView view = target.transform.GetComponentInChildren<Inventory3DView>();
+				
+				if (view == null)
+					return;
+				
 				_playerInventoriesController.OpenStorage(chestInventory, view);
 			}
 		}
