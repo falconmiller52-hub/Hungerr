@@ -1,3 +1,4 @@
+using Cinemachine;
 using FMODUnity;
 using Runtime.Common.Services.Audio;
 using Runtime.Features.Inventory.View.EntryPoint;
@@ -9,6 +10,11 @@ namespace Runtime.Features.Inventory.View.Chest
 	public class StorageInventory : InventoryController
 	{
 		[SerializeField] private EventReference _openInventorySound;
+		[SerializeField] private CinemachineVirtualCamera _cinemachineVirtualCamera;
+		
+		[Header("Settings")]
+		[SerializeField] private int _width = 10;
+		[SerializeField] private int _height = 10;
 		
 		[Header("DEBUG")]
 		[SerializeField] private InventoryItemData _inventoryItemData;
@@ -16,8 +22,6 @@ namespace Runtime.Features.Inventory.View.Chest
 		[SerializeField] private Vector2Int _pos = Vector2Int.one;
 		
 		private InventoryWithCells _inventoryWithCells;
-		private int _width = 5;
-		private int _height = 5;
 		private bool _isOpened;
 		private IAudioService _audioService;
 
@@ -38,8 +42,19 @@ namespace Runtime.Features.Inventory.View.Chest
 			_audioService.PlaySound(_openInventorySound, transform.position);
 			
 			OnInventoryOpenStateChanged?.Invoke(openState);
+
+			if (openState)
+				EnableStorageCamera();
+			else
+				DisableStorageCamera();
 		}
 
+		private void EnableStorageCamera()
+			=> _cinemachineVirtualCamera.Priority = 100;
+
+		private void DisableStorageCamera()
+			=> _cinemachineVirtualCamera.Priority = 0;
+		
 		public bool AddItem(InventoryItem item, Vector2Int? position = null)
 		{
 			bool success = _inventoryWithCells.AddItem(item, position);
