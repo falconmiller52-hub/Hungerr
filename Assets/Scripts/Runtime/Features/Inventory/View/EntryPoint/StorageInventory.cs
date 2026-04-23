@@ -1,18 +1,15 @@
+using Cinemachine;
 using FMODUnity;
 using Runtime.Common.Services.Audio;
-using Runtime.Features.Inventory.View.EntryPoint;
 using UnityEngine;
 using Zenject;
 
-namespace Runtime.Features.Inventory
+namespace Runtime.Features.Inventory.View.EntryPoint
 {
-	/// <summary>
-	/// это controller инвентаря, такая штука может быть у сундуков или у игрока
-	/// тут мы создаем модель инвентаря и имеются методы для работы с инвентарем
-	/// </summary>
-	public class PlayerInventory : InventoryController
+	public class StorageInventory : InventoryController
 	{
 		[SerializeField] private EventReference _openInventorySound;
+		[SerializeField] private CinemachineVirtualCamera _cinemachineVirtualCamera;
 		
 		[Header("DEBUG")]
 		[SerializeField] private InventoryItemData _inventoryItemData;
@@ -20,9 +17,9 @@ namespace Runtime.Features.Inventory
 		[SerializeField] private Vector2Int _pos = Vector2Int.one;
 		
 		private InventoryWithCells _inventoryWithCells;
+		private bool _isOpened;
 		private int _width = 10;
 		private int _height = 10;
-		private bool _isOpened;
 		private IAudioService _audioService;
 
 		[Inject]
@@ -31,19 +28,29 @@ namespace Runtime.Features.Inventory
 			_audioService = audioService;
 		}
 		
-		private void Start()
+		private void Awake()
 		{
 			_inventoryWithCells = new InventoryWithCells(_width, _height);
 		}
-
-
+		
 		public void InventoryOpenStateChanged(bool openState)
 		{
 			_audioService.PlaySound(_openInventorySound, transform.position);
 			
 			OnInventoryOpenStateChanged?.Invoke(openState);
+
+			if (openState)
+				EnableStorageCamera();
+			else
+				DisableStorageCamera();
 		}
 
+		private void EnableStorageCamera()
+			=> _cinemachineVirtualCamera.Priority = 100;
+
+		private void DisableStorageCamera()
+			=> _cinemachineVirtualCamera.Priority = 0;
+		
 		public bool AddItem(InventoryItem item, Vector2Int? position = null)
 		{
 			bool success = _inventoryWithCells.AddItem(item, position);
