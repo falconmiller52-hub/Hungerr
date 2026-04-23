@@ -28,7 +28,7 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 			_audioService = audioService;
 		}
 		
-		private void Start()
+		private void Awake()
 		{
 			_inventoryWithCells = new InventoryWithCells(_width, _height);
 		}
