@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scripts/UI.meta
+guid: 6085c075fb6d8d24a8eb678941a2919c
+========
 guid: ead7211ad1662514287dfcb8ba7244e2
+>>>>>>>> main:Assets/Plugins/FMOD/Cache.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
