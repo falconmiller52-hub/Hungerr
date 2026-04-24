@@ -5722,6 +5722,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Path
+      value: event:/SFX/NPC/Butcher/butcher_talk
+      objectReference: {fileID: 0}
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Guid.Data1
+      value: 1701439014
+      objectReference: {fileID: 0}
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Guid.Data2
+      value: 1152929589
+      objectReference: {fileID: 0}
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Guid.Data3
+      value: 1089470357
+      objectReference: {fileID: 0}
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Guid.Data4
+      value: -939924557
+      objectReference: {fileID: 0}
     - target: {fileID: 5527001693839589377, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
       propertyPath: m_IsActive
       value: 1
