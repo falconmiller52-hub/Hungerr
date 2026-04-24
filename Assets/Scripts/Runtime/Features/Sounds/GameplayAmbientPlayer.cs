@@ -8,7 +8,6 @@ namespace Runtime.Features.Sounds
 	public class GameplayAmbientPlayer : MonoBehaviour
 	{
 		[SerializeField] private EventReference _startAmbientSound;
-		[SerializeField] private float _fadeDuration = 1f;
 
 		private IAudioService _audioService;
 
