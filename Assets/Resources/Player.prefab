@@ -2083,7 +2083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerCamera: {fileID: 3851059412846384345}
-  _rayLength: 2
+  _rayLength: 4
   _playerInventory: {fileID: 1574870206258873081}
   _playerInventoriesController: {fileID: 2579760495121860576}
   _pickUpSound:

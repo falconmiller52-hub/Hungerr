@@ -13,11 +13,7 @@ MonoBehaviour:
   m_Name: First_Tier
   m_EditorClassIdentifier: 
   _items:
-  - ItemData: {fileID: 11400000, guid: 8e74f84d05491e849bfa4f359af96220, type: 2}
+  - ItemData: {fileID: 11400000, guid: 9e0ee0863cdf5ab40a745c30991e749b, type: 2}
     Weight: 1
   - ItemData: {fileID: 11400000, guid: e12de04d2be5aea4fb8493d09ace3687, type: 2}
     Weight: 1
-  - ItemData: {fileID: 11400000, guid: 4f32138dc1d494e4aad49e04a005848a, type: 2}
-    Weight: 1
-  - ItemData: {fileID: 11400000, guid: 4700cf21929f81d48afcc3881a636e1e, type: 2}
-    Weight: 4

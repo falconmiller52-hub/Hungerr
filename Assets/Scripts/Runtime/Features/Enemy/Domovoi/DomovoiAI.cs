@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NaughtyAttributes;
 using Runtime.Common.Enums;
 using Runtime.Common.Extensions;
 using Runtime.Common.Services.EventBus;
@@ -11,38 +12,15 @@ using Zenject;
 
 namespace Runtime.Features.Enemy.Domovoi
 {
-    [Serializable]
-    public class DomovoiLevelData
-    {
-        [Tooltip("Уровень (ни на что не влияет)")] 
-        public int Level;
-        
-        [Tooltip("Максимальная сытость")] 
-        public int MaxSatiety;
-        
-        [Tooltip("C какого дня активируется уровень")] 
-        public int MinDayForLevel;
-        
-        [Tooltip("Насколько уменьшается голод с каждой ночью")] 
-        public int DailySatietyLoss;
-        
-        [Tooltip("Уровень сытости при котором (и ниже) начинается активация")] 
-        public int SatietyTreshholdForActivation;
-        
-        [Tooltip("Паттерны поведения при текущем уровне (если активация при низкой сытости есть)")] 
-        public List<DomovoiPattern> Patterns;
-    }
-    
     public class DomovoiAI : MonoBehaviour
     {
         [SerializeField] private StorageInventory _storage; // хранилище с едой
         [SerializeField] private DomovoiLevelData[] _domovoiLevelData;
 
+        [SerializeField, ReadOnly] private int _satiety;
+        [SerializeField, ReadOnly] private DomovoiLevelData _currentLevelData;
         private EventBus _eventBus;
-        private DomovoiLevelData _currentLevelData;
         private InventoryWithCells _inventory;
-        private int _satiety;
-        private int _currentDay = 1;
 
         [Inject]
         private void Construct(EventBus eventBus)
@@ -87,38 +65,33 @@ namespace Runtime.Features.Enemy.Domovoi
             var pattern = _currentLevelData.Patterns.Random();
             
             pattern.Trigger();
+            
+            // кидаем ивент в зависимости от уровня сытости, если мало (по текущему уровню) то будет больно
+            if (_satiety < _currentLevelData.SatietyTreshholdForActivation)
+                _eventBus.Trigger(EDomovoiSatietyLevel.Critical);
+            else
+                _eventBus.Trigger(EDomovoiSatietyLevel.Normal);
         }
 
         private void OnStartNightPhaseHandler(int currentDay)
         {
-            // проверяем еду в сундуке
-            // обновляем голод
-            // проверяем день и переходим на новый уровень если надо
-            // выбираем паттерн
-            // кидает ивент о уровне сытости
-
             if (_inventory == null)
                 _inventory = _storage.GetInventory();
 
-            _currentDay += 1;
-
+            // проверяем день и переходим на некст уровень если надо
             foreach (DomovoiLevelData levelData in _domovoiLevelData)
             {
-                if (_currentDay >= levelData.MinDayForLevel && levelData != _currentLevelData)
+                if (currentDay >= levelData.MinDayForLevel && levelData != _currentLevelData)
                     _currentLevelData = levelData;
             }
             
             List<FoodInventoryItemData> foodItems = _inventory.GetItems<FoodInventoryItemData>();
             int totalSatietyFromInventory = foodItems.Sum(foodItem => foodItem.Satiety); // считаем всю сытость от еды в сундуке
 
-            _satiety += Math.Min(totalSatietyFromInventory, 0); // добавляем либо еду либо 0
-            _satiety -= _currentLevelData.DailySatietyLoss; // отнимаем ежедвненую потерю
-            
-            // кидаем ивент в зависимости от уровня сытости, если мало (по текущему уровню) то будет больно днем
-            if (_satiety < _currentLevelData.SatietyTreshholdForActivation)
-                _eventBus.Trigger(EDomovoiSatietyLevel.Critical);
-            else
-                _eventBus.Trigger(EDomovoiSatietyLevel.Normal);
+            int delta = Math.Max(totalSatietyFromInventory, 0) - Math.Max(_currentLevelData.DailySatietyLoss, 0);
+            _satiety = Math.Max(_satiety + delta, 0);
+
+            _inventory.RemoveAllItemsByType<FoodInventoryItemData>();
         }
     }
 }

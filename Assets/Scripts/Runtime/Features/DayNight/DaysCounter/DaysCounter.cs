@@ -1,4 +1,3 @@
-using System;
 using PrimeTween;
 using Runtime.Common.Enums;
 using Runtime.Common.Services.EventBus;
@@ -56,8 +55,7 @@ namespace Runtime.Features.DayNight.DaysCounter
             
             _fadeSequence.Stop();
             _dayText.text = $"Night: {currentDay}";
-
-            // Создаем последовательность анимации
+            
             _fadeSequence = Sequence.Create()
                 // Появление (Альфа от текущей до 1)
                 .Chain(Tween.Alpha(_dayText, startValue: 0, endValue: 1, duration: _fadeDuration))

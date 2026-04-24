@@ -19,3 +19,4 @@ MonoBehaviour:
   <PrefabForInventory>k__BackingField: {fileID: 3919629856071798191, guid: 686768d9f643beb488009df1e26287c9, type: 3}
   <Width>k__BackingField: 1
   <Height>k__BackingField: 1
+  <Satiety>k__BackingField: 4
