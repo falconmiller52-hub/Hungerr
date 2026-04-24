@@ -24,7 +24,7 @@ namespace Runtime.Features.DayNight.StateMachine
 			Debug.Log("--- Наступила НОЧЬ ---");
 			
 			_timeProgress = 0f;
-			_timeCounterUI = Object.FindObjectOfType<TimeCounterUI>();
+			_timeCounterUI = Object.FindAnyObjectByType<TimeCounterUI>();
 			
 			if (_timeCounterUI != null)
 			{

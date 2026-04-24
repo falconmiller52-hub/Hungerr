@@ -1,6 +1,5 @@
 using System.Collections;
 using Runtime.Common.Services.LoadingCurtain;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -14,7 +13,6 @@ namespace Runtime.Features.MainMenu
 	{
 		[SerializeField] private Button _startPressButton;
 		[SerializeField] private CanvasGroup _startPanelGroup;
-		[SerializeField] private float _startPanelFadeSpeed = 1f;
 
 		private ILoadingCurtain _curtain;
 

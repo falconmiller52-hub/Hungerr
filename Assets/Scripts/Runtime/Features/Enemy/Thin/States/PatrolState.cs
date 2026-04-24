@@ -1,6 +1,4 @@
 using FMOD.Studio;
-using FMODUnity;
-using Runtime.Common.Extensions;
 using UnityEngine;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
@@ -12,14 +10,11 @@ namespace Runtime.Features.Enemy.Thin.States
 		
 		private readonly ThinEnemyAI _ai;
 		private EventInstance _currentSound;
-		private bool _isActive = false;
 
 		public PatrolState(ThinEnemyAI ai) => _ai = ai;
 
 		public void Enter()
 		{
-			_isActive = true;
-			
 			_ai.Animator.SetFloat(WalkSpeed, _ai.PatrolSpeedMultiplier);
 			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed) * _ai.transform.lossyScale.x;
 			
@@ -35,14 +30,11 @@ namespace Runtime.Features.Enemy.Thin.States
 			}
 
 			if (!_ai.Agent.pathPending && _ai.Agent.remainingDistance <= _ai.Agent.stoppingDistance)
-			{
 				_ai.SetNewAgentPoint();
-			}
 		}
 
 		public void Exit()
 		{
-			_isActive = false;
 			_ai.AudioService.StopSound(_currentSound, STOP_MODE.ALLOWFADEOUT);
 		}
 	}

@@ -13,14 +13,11 @@ namespace Runtime.Features.Enemy.Thin.States
 	
 		private readonly ThinEnemyAI _ai;
 		private EventInstance _currentSound;
-		private bool _isActive = false;
 		
 		public ChaseState(ThinEnemyAI ai) => _ai = ai;
 
 		public void Enter()
 		{
-			_isActive = true;
-			
 			_ai.Animator.SetFloat(WalkSpeed, _ai.ChaseSpeedMultiplier);
 			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed) * _ai.transform.lossyScale.x;
 		
@@ -48,7 +45,6 @@ namespace Runtime.Features.Enemy.Thin.States
 
 		public void Exit()
 		{
-			_isActive = false;
 			_ai.Animator.SetBool(Chase, false);
 			_ai.AudioService.StopSound(_currentSound, STOP_MODE.ALLOWFADEOUT);
 		}
