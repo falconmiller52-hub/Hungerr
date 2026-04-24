@@ -46,6 +46,7 @@ namespace Runtime.Features.Dialog
 				}
 
 				_dialogSystem.StartStory(_story, _playerMonologSound, _isMonolog);
+				
 				if (_isOnce)
 					Destroy(this.gameObject);
 			}

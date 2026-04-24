@@ -112,9 +112,7 @@ namespace Runtime.Features.Dialog
 				if (_story.currentChoices.Count > 0)
 				{
 					if (_typeWriterRoutine != null)
-					{
 						StopTypeWriterEffect();
-					}
 
 					OnNewDialogChoices?.Invoke(_story.currentChoices);
 
@@ -202,9 +200,7 @@ namespace Runtime.Features.Dialog
 			// Когда эффект печатанья закончился, если следующая строка это выбор, то показываем её сразу, 
 			// не дожидаясь когда игрок нажмёт MouseInteract
 			if (!_story.canContinue)
-			{
 				_canSkip = true;
-			}
 
 			_typeWriterRoutine = null;
 		}
