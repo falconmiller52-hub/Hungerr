@@ -12,11 +12,14 @@ namespace Runtime.Features.DayNight.StateMachine
 	public class NightPhaseState : GamePhaseState
 	{
 		private float _timeProgress;
+		private int _currentDay;
 		private bool _isTimerActive;
 		private TimeCounterUI _timeCounterUI = null;
 		
 		public NightPhaseState(PhaseStateMachine owner, EventBus eventBus, ILoadingCurtain curtain, IInputHandler inputHandler, LocationChanger locationChanger) : base(owner, eventBus, curtain, inputHandler, locationChanger)
 		{
+			// пока даты игрока нет, будем считать что начинается с 1 дня (обновление в Enter)
+			_currentDay = 0;
 		}
 
 		public override void Enter()
@@ -24,6 +27,7 @@ namespace Runtime.Features.DayNight.StateMachine
 			Debug.Log("--- Наступила НОЧЬ ---");
 			
 			_timeProgress = 0f;
+			_currentDay += 1;
 			_timeCounterUI = Object.FindAnyObjectByType<TimeCounterUI>();
 			
 			if (_timeCounterUI != null)
@@ -34,12 +38,12 @@ namespace Runtime.Features.DayNight.StateMachine
 			
 			Curtain.Show(0.01f, onEnd: OnCurtainShowEnded);
 			
-			EventBus.Subscribe(EGameplayStateEvent.EndNightPhaseTrigger, EndNightPhase);
+			EventBus.Subscribe(EGameplayChangeStateTriggerEvent.EndNightPhaseTrigger, EndNightPhase);
 		}
 
 		public override void Exit()
 		{
-			EventBus.Unsubscribe(EGameplayStateEvent.EndNightPhaseTrigger, EndNightPhase);
+			EventBus.Unsubscribe(EGameplayChangeStateTriggerEvent.EndNightPhaseTrigger, EndNightPhase);
 		}
 		
 		private void EndNightPhase()
@@ -59,6 +63,8 @@ namespace Runtime.Features.DayNight.StateMachine
 		{
 			LocationChanger.ChangeLocation(Owner.NightStartLocationtransform, needCurtain: false);
 			Owner.DayCycleVisualChanger.SetNight();
+			
+			EventBus.Trigger(EGameplayChangedStateEvent.OnStartNightPhase, _currentDay);
 			
 			_isTimerActive = true;
 			

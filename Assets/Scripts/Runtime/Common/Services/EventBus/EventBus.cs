@@ -3,66 +3,67 @@ using System.Collections.Generic;
 
 namespace Runtime.Common.Services.EventBus
 {
-	/// <summary>
-	///     Lightweight event bus used to publish and subscribe to global events.
-	/// </summary>
 	public class EventBus : IDisposable
 	{
-		private readonly Dictionary<(Type, object), Action> _events = new();
+		// Используем Delegate вместо Action, чтобы хранить и Action, и Action<TData>
+		private readonly Dictionary<(Type, object), Delegate> _events = new();
 
-		/// <summary>
-		///     Clears all registered event handlers.
-		/// </summary>
 		public void Dispose()
 		{
 			_events.Clear();
 		}
 
-		/// <summary>
-		///     Subscribes an action to the specified event type.
-		/// </summary>
-		/// <param name="eventType">Type of the event to subscribe to.</param>
-		/// <param name="action">Action to invoke when the event is triggered.</param>
+		// --- ОБЫЧНЫЕ ИВЕНТЫ (без данных) ---
 		public void Subscribe<T>(T eventType, Action action) where T : Enum
 		{
 			var key = (typeof(T), (object)eventType);
-
-			if (!_events.ContainsKey(key))
-				_events[key] = delegate { };
-
-			_events[key] += action;
+			_events[key] = Delegate.Combine(_events.GetValueOrDefault(key), action);
 		}
 
-		/// <summary>
-		///     Unsubscribes an action from the specified event type.
-		/// </summary>
-		/// <param name="eventType">Type of the event to unsubscribe from.</param>
-		/// <param name="action">Action to remove.</param>
 		public void Unsubscribe<T>(T eventType, Action action) where T : Enum
 		{
 			var key = (typeof(T), (object)eventType);
-
-			if (_events.ContainsKey(key))
+			if (_events.TryGetValue(key, out var del))
 			{
-				_events[key] -= action;
-
-				// Опционально: удаляем ключ, если подписчиков не осталось
-				if (_events[key] == null || _events[key].Method.Name == "b__0")
-					_events.Remove(key);
+				var newDel = Delegate.Remove(del, action);
+				if (newDel == null) _events.Remove(key);
+				else _events[key] = newDel;
 			}
 		}
 
-		/// <summary>
-		///     Triggers the specified event, invoking all subscribed actions if any.
-		/// </summary>
-		/// <param name="eventType">Event to trigger.</param>
 		public void Trigger<T>(T eventType) where T : Enum
 		{
 			var key = (typeof(T), (object)eventType);
-
-			if (_events.TryGetValue(key, out var action))
+			if (_events.TryGetValue(key, out var del) && del is Action action)
 			{
-				action?.Invoke();
+				action.Invoke();
+			}
+		}
+
+		// --- ИВЕНТЫ С ДАННЫМИ (Action<TData>) ---
+		public void Subscribe<T, TData>(T eventType, Action<TData> action) where T : Enum
+		{
+			var key = (typeof(T), (object)eventType);
+			_events[key] = Delegate.Combine(_events.GetValueOrDefault(key), action);
+		}
+
+		public void Unsubscribe<T, TData>(T eventType, Action<TData> action) where T : Enum
+		{
+			var key = (typeof(T), (object)eventType);
+			if (_events.TryGetValue(key, out var del))
+			{
+				var newDel = Delegate.Remove(del, action);
+				if (newDel == null) _events.Remove(key);
+				else _events[key] = newDel;
+			}
+		}
+
+		public void Trigger<T, TData>(T eventType, TData data) where T : Enum
+		{
+			var key = (typeof(T), (object)eventType);
+			if (_events.TryGetValue(key, out var del) && del is Action<TData> action)
+			{
+				action.Invoke(data);
 			}
 		}
 	}

@@ -19,7 +19,7 @@ namespace Runtime.Features.DayNight.StateMachine
 			
 			Curtain.Show(0.01f, onEnd: OnCurtainShowEnded);
 			
-			EventBus.Subscribe(EGameplayStateEvent.StartNightPhaseTrigger, StartNightPhase);
+			EventBus.Subscribe(EGameplayChangeStateTriggerEvent.StartNightPhaseTrigger, StartNightPhase);
 		}
 
 		private void StartNightPhase()
@@ -32,13 +32,15 @@ namespace Runtime.Features.DayNight.StateMachine
 			LocationChanger.ChangeLocation(Owner.DayStartLocationtransform, needCurtain: false);
 			Owner.DayCycleVisualChanger.SetDay();
 			
+			EventBus.Trigger(EGameplayChangedStateEvent.OnEndNightPhase);
+			
 			Curtain.Hide(0.01f);
 			InputHandler.Enable();
 		}
 		
 		public override void Exit()
 		{
-			EventBus.Unsubscribe(EGameplayStateEvent.StartNightPhaseTrigger, StartNightPhase);
+			EventBus.Unsubscribe(EGameplayChangeStateTriggerEvent.StartNightPhaseTrigger, StartNightPhase);
 		}
 	}
 }

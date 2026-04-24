@@ -44,6 +44,19 @@ namespace Runtime.Features.Inventory
 			return slot;
 		}
 
+		public List<T> GetItems<T>() where T : InventoryItemData
+		{
+			List<T> items = new List<T>();
+			
+			foreach (var slot in Slots.Values)
+			{
+				if (slot.Item.Data is T)
+					items.Add((T)slot.Item.Data);
+			}
+			
+			return items;
+		}
+
 		public bool CanPlaceItem(InventoryItem item, Vector2Int topLeftPosition)
 		{
 			if (item == null)
