@@ -25,7 +25,7 @@ namespace Runtime.Features.Enemy
 				return;
 			}
 
-			var enemyAis = FindObjectsOfType<ThinEnemyAI>();
+			ThinEnemyAI[] enemyAis = FindObjectsByType<ThinEnemyAI>(FindObjectsSortMode.None);
 
 			if (enemyAis == null)
 			{

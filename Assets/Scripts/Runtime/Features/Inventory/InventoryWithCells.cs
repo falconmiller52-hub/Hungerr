@@ -44,6 +44,19 @@ namespace Runtime.Features.Inventory
 			return slot;
 		}
 
+		public List<T> GetItems<T>() where T : InventoryItemData
+		{
+			List<T> items = new List<T>();
+			
+			foreach (var slot in Slots.Values)
+			{
+				if (!slot.IsEmpty && slot.Item.Data is T data)
+					items.Add(data);
+			}
+			
+			return items;
+		}
+
 		public bool CanPlaceItem(InventoryItem item, Vector2Int topLeftPosition)
 		{
 			if (item == null)
@@ -159,6 +172,16 @@ namespace Runtime.Features.Inventory
 			}
 
 			return true;
+		}
+
+		public void RemoveAllItemsByType<T>() where T : InventoryItemData
+		{
+			IEnumerable<InventorySlot> neededSlots = _slots.Values.Where(x => !x.IsEmpty && x.Item.Data is T);
+
+			foreach (InventorySlot neededSlot in neededSlots)
+			{
+				neededSlot.RemoveItem(999); // типа удаляем весь айтем (калич)
+			}
 		}
 
 		private void PlaceItem(InventoryItem item, Vector2Int topLeft, int id)

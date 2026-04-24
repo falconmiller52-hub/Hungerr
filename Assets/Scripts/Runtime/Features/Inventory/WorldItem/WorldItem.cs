@@ -9,7 +9,6 @@ namespace Runtime.Features.Inventory.WorldItem
         [SerializeField] private int _amount = 1;
 
         private InventoryItem _instance;
-        private bool _isHovered = false;
 
         public InventoryItem Instance => _instance;
 
@@ -34,13 +33,11 @@ namespace Runtime.Features.Inventory.WorldItem
 
         public void HoverEnter()
         {
-            _isHovered = true;
             TooltipController.Instance?.ShowTooltip(this);
         }
 
         public void HoverExit()
         {
-            _isHovered = false;
             TooltipController.Instance?.HideTooltip();
         }
 
