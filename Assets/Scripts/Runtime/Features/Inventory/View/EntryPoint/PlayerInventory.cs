@@ -1,19 +1,16 @@
-using System;
 using FMODUnity;
 using Runtime.Common.Services.Audio;
-using Runtime.Common.Services.Input;
-using Runtime.Common.Services.Pause;
+using Runtime.Features.Inventory.View.EntryPoint;
 using UnityEngine;
 using Zenject;
 
 namespace Runtime.Features.Inventory
 {
 	/// <summary>
-	/// это точка входа для инвентаря, такая штука может быть у сундуков или вот игрок
-	/// тут мы создаем инвентарь и имеются методы с ккоторыми взаимодействуют другие скрипты игрока
-	/// (например PlayerInteract мб чтоб взять предмет и положить)
+	/// это controller инвентаря, такая штука может быть у сундуков или у игрока
+	/// тут мы создаем модель инвентаря и имеются методы для работы с инвентарем
 	/// </summary>
-	public class PlayerInventory : MonoBehaviour
+	public class PlayerInventory : InventoryController
 	{
 		[SerializeField] private EventReference _openInventorySound;
 		
@@ -21,57 +18,30 @@ namespace Runtime.Features.Inventory
 		[SerializeField] private InventoryItemData _inventoryItemData;
 		[SerializeField] private InventoryItemData _inventoryItemDataTwo;
 		[SerializeField] private Vector2Int _pos = Vector2Int.one;
-
-		public event Action<bool> OnInventoryOpenStateChanged;
-		public event Action OnInventoryChanged;
 		
 		private InventoryWithCells _inventoryWithCells;
-		private IInputHandler _inputHandler;
 		private int _width = 10;
 		private int _height = 10;
 		private bool _isOpened;
-		private IPauseController _pauseController;
 		private IAudioService _audioService;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, IPauseController pauseController, IAudioService audioService)
+		private void Construct(IAudioService audioService)
 		{
-			_inputHandler = inputHandler;
-			_pauseController = pauseController;
 			_audioService = audioService;
 		}
 		
 		private void Start()
 		{
 			_inventoryWithCells = new InventoryWithCells(_width, _height);
-			_inputHandler.InventoryTriggerPressed += OnInventoryTriggerPressed;
 		}
 
-		private void OnDisable()
-		{
-			_inputHandler.InventoryTriggerPressed -= OnInventoryTriggerPressed;
-		}
 
-		private void OnInventoryTriggerPressed()
+		public void InventoryOpenStateChanged(bool openState)
 		{
-			_isOpened = !_isOpened;
-			
-			if (_isOpened)
-			{
-				Cursor.lockState = CursorLockMode.None;
-				Cursor.visible = true;
-				_pauseController.PerformStop();
-			}
-			else
-			{
-				Cursor.lockState = CursorLockMode.Locked;
-				Cursor.visible = false;
-				_pauseController.PerformResume();
-			}
-			
 			_audioService.PlaySound(_openInventorySound, transform.position);
 			
-			OnInventoryOpenStateChanged?.Invoke(_isOpened);
+			OnInventoryOpenStateChanged?.Invoke(openState);
 		}
 
 		public bool AddItem(InventoryItem item, Vector2Int? position = null)
@@ -94,18 +64,8 @@ namespace Runtime.Features.Inventory
 			
 			return false;
 		}
-    
 		
-		
-		// public void DropItem(InventoryItem item, Vector3 worldPosition, Quaternion rotation)
-		// {
-		// 	RemoveItem(item._data, item._amount);
-		// 	// тут типа спавн выброшенного предмета в 3д мир и тд
-		// 	// _itemWorldManager.SpawnItemInWorld(item._data, item._amount, worldPosition, rotation);
-		// 	OnInventoryChanged?.Invoke();
-		// }
-		
-		public InventoryWithCells GetInventory() => _inventoryWithCells;
+		public override InventoryWithCells GetInventory() => _inventoryWithCells;
     
 		
 		// DEBUG

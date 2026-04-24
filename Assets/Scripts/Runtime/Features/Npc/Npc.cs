@@ -1,4 +1,5 @@
 using Cinemachine;
+using FMODUnity;
 using Ink.Runtime;
 using Runtime.Features.Dialog;
 using Runtime.Features.Interactable;
@@ -16,6 +17,9 @@ namespace Runtime.Features.NPC
 
 		[SerializeField] [Tooltip("Камера на которую будет смещен фокус при старте диалога")]
 		private CinemachineVirtualCamera _cinemachineVirtualCamera;
+
+		[SerializeField] [Tooltip("Звук диалога NPC")]
+		private EventReference _npcDialogSound;
 
 		private DialogSystem _dialogSystem;
 		private Story _story;
@@ -45,7 +49,7 @@ namespace Runtime.Features.NPC
 
 		private void StartDialog()
 		{
-			_dialogSystem.StartStory(_story);
+			_dialogSystem.StartStory(_story, _npcDialogSound);
 			EnableNpcCamera();
 		}
 

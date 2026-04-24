@@ -811,7 +811,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1901,6 +1901,7 @@ GameObject:
   - component: {fileID: 2021880616}
   - component: {fileID: 7221009674689892835}
   - component: {fileID: 1574870206258873081}
+  - component: {fileID: 2579760495121860576}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2083,6 +2084,7 @@ MonoBehaviour:
   _playerCamera: {fileID: 3851059412846384345}
   _rayLength: 2
   _playerInventory: {fileID: 1574870206258873081}
+  _playerInventoriesController: {fileID: 2579760495121860576}
   _pickUpSound:
     Guid:
       Data1: -364484132
@@ -2130,6 +2132,20 @@ MonoBehaviour:
   _inventoryItemData: {fileID: 11400000, guid: e12de04d2be5aea4fb8493d09ace3687, type: 2}
   _inventoryItemDataTwo: {fileID: 11400000, guid: 8e74f84d05491e849bfa4f359af96220, type: 2}
   _pos: {x: 1, y: 1}
+--- !u!114 &2579760495121860576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3851059412217318600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a14df2063ce61e644be2231c847e19e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerInventory: {fileID: 1574870206258873081}
+  _itemDragger: {fileID: 6233526023256119681}
 --- !u!1 &3851059412846384325
 GameObject:
   m_ObjectHideFlags: 0
@@ -2650,7 +2666,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3497,9 +3513,9 @@ Transform:
   m_GameObject: {fileID: 7208353116985913883}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -0.3, y: 0, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8771324163534789745}
   m_Father: {fileID: 3851059412846384324}
@@ -3517,7 +3533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cellSize: 1
-  _playerInventory: {fileID: 1574870206258873081}
+  _inventoryController: {fileID: 1574870206258873081}
   _inventoryContainer: {fileID: 1631163752615704621}
   _gridAnchor: {fileID: 5492440104074323406}
   _itemsContainer: {fileID: 5389591896590439944}
@@ -3538,14 +3554,13 @@ MonoBehaviour:
   _gridLayer:
     serializedVersion: 2
     m_Bits: 128
-  _playerInventory: {fileID: 1574870206258873081}
   _moveItemToNewSlotSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 371593444
+      Data2: 1232261866
+      Data3: -713183864
+      Data4: -1848698329
+    Path: event:/SFX/Crate/crate_close
   _isDraggedItemTransparent: 0
 --- !u!1 &7241486480862868086
 GameObject:
@@ -4153,6 +4168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3363114807946963775}
   - component: {fileID: 2959378878592556557}
+  - component: {fileID: 8747423005676767658}
   m_Layer: 5
   m_Name: DialogUI
   m_TagString: Untagged
@@ -4194,6 +4210,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialogPanel: {fileID: 1325316613408896530}
   _dialogTmp: {fileID: 8844132547239668702}
+  _dialogButtons:
+  - {fileID: 533604018229577403}
+  - {fileID: 7195648682554643570}
+  - {fileID: 1198476217392473702}
+  - {fileID: 8639776646270148400}
+--- !u!114 &8747423005676767658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7972972129369983845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da38635d72244186951339ac950ef158, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _buttonHoverSound:
+    Guid:
+      Data1: 728293617
+      Data2: 1135558396
+      Data3: -2118363774
+      Data4: -1167666111
+    Path: event:/SFX/UI/Dialogue/dialogue_hover
+  _buttonSelectSound:
+    Guid:
+      Data1: 273615210
+      Data2: 1235888306
+      Data3: -1297269341
+      Data4: 261778980
+    Path: event:/SFX/UI/Dialogue/dialogue_click
   _dialogButtons:
   - {fileID: 533604018229577403}
   - {fileID: 7195648682554643570}
