@@ -4,16 +4,13 @@ using Runtime.Features.Player.Movement;
 using UnityEngine;
 using Zenject;
 
-namespace Runtime.Features.Dialog
+namespace Runtime.Features._Story.Monolog
 {
 	[RequireComponent(typeof(Collider))]
-	public class DialogTrigger : MonoBehaviour
+	public class MonologTrigger : MonoBehaviour
 	{
 		[SerializeField] [Tooltip("Ставить если диалог/монолог должен проиграть один раз")]
 		private bool _isOnce;
-
-		[SerializeField] [Tooltip("True если должен начаться монолог")]
-		private bool _isMonolog = true;
 
 		[SerializeField] [Tooltip("JSON файл диалога")]
 		private TextAsset _storyJson;
@@ -21,13 +18,13 @@ namespace Runtime.Features.Dialog
 		[SerializeField] [Tooltip("Звук игрока при монологе")]
 		private EventReference _playerMonologSound;
 
-		private DialogSystem _dialogSystem;
+		private StorySystem _storySystem;
 		private Story _story;
 
 		[Inject]
-		public void Construct(DialogSystem dialogSystem)
+		public void Construct(StorySystem storySystem)
 		{
-			_dialogSystem = dialogSystem;
+			_storySystem = storySystem;
 		}
 
 		private void Start()
@@ -45,8 +42,8 @@ namespace Runtime.Features.Dialog
 					return;
 				}
 
-				_dialogSystem.StartStory(_story, _playerMonologSound, _isMonolog);
-				
+				_storySystem.StartStory(_story, _playerMonologSound, true);
+
 				if (_isOnce)
 					Destroy(this.gameObject);
 			}

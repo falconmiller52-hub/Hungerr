@@ -9,15 +9,16 @@ using Runtime.Common.Services.Pause;
 using UnityEngine;
 using Zenject;
 
-namespace Runtime.Features.Dialog
+namespace Runtime.Features._Story
 {
-	public class DialogSystem : MonoBehaviour
+	public class StorySystem : MonoBehaviour
 	{
 		[SerializeField] private float _typeWriterSpeed;
 
-		public event Action<string> OnNewDialogLine;
+		public event Action<string> OnNewStoryLine;
 		public event Action<List<Choice>> OnNewDialogChoices;
-		public event Action OnStoryStarted;
+		public event Action OnDialogStoryStarted;
+		public event Action OnMonologStoryStarted;
 		public event Action OnStoryEnded;
 
 		private IPauseController _pauseController;
@@ -34,7 +35,7 @@ namespace Runtime.Features.Dialog
 		private string _currentLine;
 		private bool _isStoryStart;
 		private bool _canSkip;
-		private bool _isDialogText;
+		private bool _isStoryText;
 
 		[Inject]
 		private void Construct(IPauseController pauseController, IInputHandler inputHandler, IAudioService audioService)
@@ -59,7 +60,6 @@ namespace Runtime.Features.Dialog
 		public void SetChoiceIndex(int index)
 			=> _choiceIndex = index;
 
-
 		public void StartStory(Story story, EventReference eventReference, bool isMonolog = false)
 		{
 			_currentEventReference = eventReference;
@@ -77,7 +77,11 @@ namespace Runtime.Features.Dialog
 			if (_startDialogRoutine == null)
 			{
 				_startDialogRoutine = StartCoroutine(DialogRoutine());
-				OnStoryStarted?.Invoke();
+
+				if (isMonolog)
+					OnMonologStoryStarted?.Invoke();
+				else
+					OnDialogStoryStarted?.Invoke();
 			}
 			else
 				Debug.Log("<color=red>Диалог пытался запуститься в то время пока другой ещё не закончился</color>");
@@ -91,22 +95,21 @@ namespace Runtime.Features.Dialog
 				// Показываем текст диалога, ждём пока пользователь не нажмёт на ЛКМ
 				while (_story.canContinue)
 				{
-					_isDialogText = true;
+					_isStoryText = true;
+
 					if (_typeWriterRoutine == null)
 					{
 						_currentLine = _story.Continue();
 						_typeWriterRoutine = StartCoroutine((TypeWriterRoutine(_currentLine)));
 					}
 					else
-					{
 						StopTypeWriterEffect();
-					}
 
 					yield return new WaitUntil(() => _canSkip);
 					_canSkip = false;
 				}
 
-				_isDialogText = false;
+				_isStoryText = false;
 
 				// Когда текст закончился показываем варианты выбора
 				if (_story.currentChoices.Count > 0)
@@ -123,6 +126,13 @@ namespace Runtime.Features.Dialog
 				// Когда ни текста ни выборов больше нет заканчиваем диалог.
 				else
 				{
+					_isStoryText = true;
+
+					yield return new WaitUntil(() => _canSkip);
+
+					_canSkip = false;
+					_isStoryText = false;
+
 					EndStory();
 					_startDialogRoutine = null;
 					break;
@@ -133,7 +143,7 @@ namespace Runtime.Features.Dialog
 		private void GetMouseInteract()
 		{
 			// Если мы в диалоги и в диалоге есть ещё строки, а не выборы
-			if (_isStoryStart && _isDialogText)
+			if (_isStoryStart && _isStoryText)
 				_canSkip = true;
 		}
 
@@ -143,7 +153,7 @@ namespace Runtime.Features.Dialog
 			{
 				StopCoroutine(_typeWriterRoutine);
 
-				OnNewDialogLine?.Invoke(_currentLine);
+				OnNewStoryLine?.Invoke(_currentLine);
 
 				_typeWriterRoutine = null;
 			}
@@ -171,8 +181,10 @@ namespace Runtime.Features.Dialog
 		private void EndStory()
 		{
 			Debug.Log("=== END OF STORY ===");
+
 			_story = null;
 			_isStoryStart = false;
+
 			_pauseController.PerformResume();
 			OnStoryEnded?.Invoke();
 			StopTypeWriterEffect();
@@ -184,7 +196,7 @@ namespace Runtime.Features.Dialog
 		private IEnumerator TypeWriterRoutine(string line)
 		{
 			string currentLine = "";
-			
+
 			foreach (char symbol in line)
 			{
 				currentLine += symbol;
@@ -192,7 +204,7 @@ namespace Runtime.Features.Dialog
 				if (!_currentEventReference.IsNull)
 					_audioService.PlayOneShot2D(_currentEventReference);
 
-				OnNewDialogLine?.Invoke(currentLine);
+				OnNewStoryLine?.Invoke(currentLine);
 
 				yield return new WaitForSeconds(_typeWriterSpeed);
 			}

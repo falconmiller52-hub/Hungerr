@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Runtime.Features.Dialog.View
+namespace Runtime.Features._Story.Dialog.View
 {
 	public class DialogUiButtonSound : MonoBehaviour, IPointerEnterHandler
 	{

@@ -1,7 +1,7 @@
 using Runtime.Common.Factories.StateFactory;
 using Runtime.Common.Services.Pause;
+using Runtime.Features._Story;
 using Runtime.Features.DayNight.StateMachine;
-using Runtime.Features.Dialog;
 using Runtime.Features.Enemy;
 using Runtime.Features.ItemSpawner;
 using Runtime.Features.Location;
@@ -16,7 +16,7 @@ namespace Runtime.Infra.GameplayScene
 		[SerializeField] private PhaseStateMachine _phaseStateMachine;
 		[SerializeField] private LocationChanger _locationChanger;
 		[SerializeField] private EnemiesBootstrap _enemiesBootstrap;
-		[SerializeField] private DialogSystem _dialogSystem;
+		[SerializeField] private StorySystem _storySystem;
 		[SerializeField] private ItemSpawner _itemSpawner;
 		
 		public override void InstallBindings()
@@ -37,7 +37,7 @@ namespace Runtime.Infra.GameplayScene
 
 		private void BindDialogSystem()
 		{
-			Container.Bind<DialogSystem>().FromInstance(_dialogSystem).AsSingle();
+			Container.Bind<StorySystem>().FromInstance(_storySystem).AsSingle();
 		}
 
 		private void BindEnemiesController()

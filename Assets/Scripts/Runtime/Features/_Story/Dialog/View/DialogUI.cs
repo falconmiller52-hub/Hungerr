@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace Runtime.Features.Dialog.View
+namespace Runtime.Features._Story.Dialog.View
 {
 	public class DialogUI : MonoBehaviour
 	{
@@ -13,20 +13,20 @@ namespace Runtime.Features.Dialog.View
 		[SerializeField] private TextMeshProUGUI _dialogTmp;
 		[SerializeField] private List<Button> _dialogButtons;
 
-		private DialogSystem _dialogSystem;
+		private StorySystem _storySystem;
 
 		[Inject]
-		public void Construct(DialogSystem dialogSystem)
+		public void Construct(StorySystem storySystem)
 		{
-			_dialogSystem = dialogSystem;
+			_storySystem = storySystem;
 		}
 
 		private void OnEnable()
 		{
-			_dialogSystem.OnNewDialogLine += SetText;
-			_dialogSystem.OnNewDialogChoices += SetChoices;
-			_dialogSystem.OnStoryEnded += HideDialog;
-			_dialogSystem.OnStoryStarted += ShowDialog;
+			_storySystem.OnNewStoryLine += SetText;
+			_storySystem.OnNewDialogChoices += SetChoices;
+			_storySystem.OnStoryEnded += HideStory;
+			_storySystem.OnDialogStoryStarted += ShowStory;
 
 			foreach (var dialogButton in _dialogButtons)
 			{
@@ -36,10 +36,10 @@ namespace Runtime.Features.Dialog.View
 
 		public void OnDisable()
 		{
-			_dialogSystem.OnNewDialogLine -= SetText;
-			_dialogSystem.OnNewDialogChoices -= SetChoices;
-			_dialogSystem.OnStoryEnded -= HideDialog;
-			_dialogSystem.OnStoryStarted -= ShowDialog;
+			_storySystem.OnNewStoryLine -= SetText;
+			_storySystem.OnNewDialogChoices -= SetChoices;
+			_storySystem.OnStoryEnded -= HideStory;
+			_storySystem.OnDialogStoryStarted -= ShowStory;
 
 			foreach (var button in _dialogButtons)
 			{
@@ -68,11 +68,11 @@ namespace Runtime.Features.Dialog.View
 
 		private void MakeChoice(int index)
 		{
-			_dialogSystem.SetChoiceIndex(index);
+			_storySystem.SetChoiceIndex(index);
 			HideButtons();
 		}
 
-		private void ShowDialog()
+		private void ShowStory()
 		{
 			_dialogTmp.text = "";
 
@@ -87,7 +87,7 @@ namespace Runtime.Features.Dialog.View
 			}
 		}
 
-		private void HideDialog()
+		private void HideStory()
 		{
 			_dialogPanel.SetActive(false);
 			_dialogTmp.text = "";
