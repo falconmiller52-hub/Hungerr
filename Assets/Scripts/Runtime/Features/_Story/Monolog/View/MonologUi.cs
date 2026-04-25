@@ -39,7 +39,7 @@ namespace Runtime.Features._Story.Monolog.View
 
 			_monologPanel.SetActive(true);
 		}
-		
+
 		private void HideMonolog()
 		{
 			_monologPanel.SetActive(false);

@@ -36,7 +36,7 @@ VAR randomMetting = ""
 = q4
 Ну... Я не про это. Слушай, если нужна еда - у меня ее полно! И мясо мое - высший сорт! Так что если пришел торговаться, показывай что есть
 + [Поторгуем]
-# NPC:trade
+# Trade:OpenTrade
     -> DONE
 
 === BaseDialog ===
@@ -45,10 +45,10 @@ VAR randomMetting = ""
 
 === BaseChoices ===
 + [Поторгуем?]
-    # NPC:trade
+    # Trade:OpenTrade
     -> Ending
 + [Мне пора]
-    # Player:Exit
+    # Dialog:Exit
     -> Ending
 + [Я хочу кое о чём спросить...]
     Выкладывай

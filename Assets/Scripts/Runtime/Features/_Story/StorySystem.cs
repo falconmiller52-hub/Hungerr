@@ -21,10 +21,12 @@ namespace Runtime.Features._Story
 		public event Action OnMonologStoryStarted;
 		public event Action OnStoryEnded;
 
-		private IPauseController _pauseController;
 		private Story _story;
+		private StoryTagSystem _storyTagSystem;
+
 		private IInputHandler _inputHandler;
 		private IAudioService _audioService;
+		private IPauseController _pauseController;
 
 		private Coroutine _startDialogRoutine;
 		private Coroutine _typeWriterRoutine;
@@ -38,23 +40,27 @@ namespace Runtime.Features._Story
 		private bool _isStoryText;
 
 		[Inject]
-		private void Construct(IPauseController pauseController, IInputHandler inputHandler, IAudioService audioService)
+		private void Construct(IPauseController pauseController, IInputHandler inputHandler, IAudioService audioService
+						, StoryTagSystem storyTagSystem)
 		{
 			_pauseController = pauseController;
 			_inputHandler = inputHandler;
 			_audioService = audioService;
+			_storyTagSystem = storyTagSystem;
 		}
 
 		private void OnEnable()
 		{
 			_inputHandler.DialogSkipInputPressed += GetMouseInteract;
 			_inputHandler.ExitInputPressed += StopDialog;
+			_storyTagSystem.OnTagStoryEnd += EndStory;
 		}
 
 		private void OnDisable()
 		{
 			_inputHandler.DialogSkipInputPressed -= GetMouseInteract;
 			_inputHandler.ExitInputPressed -= StopDialog;
+			_storyTagSystem.OnTagStoryEnd -= EndStory;
 		}
 
 		public void SetChoiceIndex(int index)
@@ -100,6 +106,10 @@ namespace Runtime.Features._Story
 					if (_typeWriterRoutine == null)
 					{
 						_currentLine = _story.Continue();
+
+						if (_story.currentTags.Count > 0)
+							_storyTagSystem.ParseTag(_story.currentTags);
+
 						_typeWriterRoutine = StartCoroutine((TypeWriterRoutine(_currentLine)));
 					}
 					else
@@ -165,10 +175,10 @@ namespace Runtime.Features._Story
 			{
 				StopTypeWriterEffect();
 
-				EndStory();
-
 				StopCoroutine(_startDialogRoutine);
 				_startDialogRoutine = null;
+
+				EndStory();
 			}
 		}
 
@@ -184,6 +194,12 @@ namespace Runtime.Features._Story
 
 			_story = null;
 			_isStoryStart = false;
+
+			if (_startDialogRoutine != null)
+			{
+				StopCoroutine(_startDialogRoutine);
+				_startDialogRoutine = null;
+			}
 
 			_pauseController.PerformResume();
 			OnStoryEnded?.Invoke();
@@ -211,8 +227,12 @@ namespace Runtime.Features._Story
 
 			// Когда эффект печатанья закончился, если следующая строка это выбор, то показываем её сразу, 
 			// не дожидаясь когда игрок нажмёт MouseInteract
-			if (!_story.canContinue)
-				_canSkip = true;
+
+			if (_story != null)
+			{
+				if (!_story.canContinue)
+					_canSkip = true;
+			}
 
 			_typeWriterRoutine = null;
 		}
