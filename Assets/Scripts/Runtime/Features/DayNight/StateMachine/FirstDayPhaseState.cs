@@ -22,7 +22,6 @@ namespace Runtime.Features.DayNight.StateMachine
 			
 			Owner.DayCycleVisualChanger.SetDay();
 			EventBus.Subscribe<EGameplayChangedPhaseEvent, StartNightEventData>(EGameplayChangedPhaseEvent.NightStarted, OnStartNightPhase);
-			
 		}
 
 		private void OnStartNightPhase(StartNightEventData data)

@@ -24,7 +24,7 @@ namespace Runtime.Features.Enemy.Domovoi
 		private int _notFedDaysCount;
 		private bool _needToTriggerDontFeed;
 		private EDomovoiSatietyLevel _satietyLevel;
-		
+
 		[Inject]
 		private void Construct(EventBus eventBus)
 		{
@@ -63,13 +63,13 @@ namespace Runtime.Features.Enemy.Domovoi
 			var pattern = _currentLevelData.Patterns.Random();
 
 			pattern.Trigger();
-			
+
 			// кидаем ивент в зависимости от уровня сытости, если мало (по текущему уровню) то будет больно
 			if (_satiety < _currentLevelData.SatietyTreshholdForActivation)
 				_satietyLevel = EDomovoiSatietyLevel.Critical;
 			else
 				_satietyLevel = EDomovoiSatietyLevel.Normal;
-			
+
 			if (_needToTriggerDontFeed)
 			{
 				// ставим false, высчитываем каждую ночь и сбрасываем каждый день

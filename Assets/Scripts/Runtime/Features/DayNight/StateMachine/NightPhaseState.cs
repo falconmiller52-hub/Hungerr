@@ -47,8 +47,8 @@ namespace Runtime.Features.DayNight.StateMachine
 		public override void Update()
 		{
 			if (!_isTimerActive)
-				return;
 			
+				return;
 			_timeProgress += Time.deltaTime / Owner.NightDuration;
 
 			if (_timeProgress >= 1f)

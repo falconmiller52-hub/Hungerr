@@ -34,12 +34,6 @@ namespace Runtime.Common.Enums
 		StartRunState,
 		StartCrouchState
 	}
-
-	public enum ESupervisionTriggerEvent
-	{
-		NightLate = 0,
-		DomovoiDontFeeded
-	}
 	
 	public enum EDomovoiSatietyLevel
 	{

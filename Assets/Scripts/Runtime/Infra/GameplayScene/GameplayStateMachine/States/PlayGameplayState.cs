@@ -24,14 +24,14 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		private readonly LocationChanger _locationChanger;
 		private readonly EventBus _eventBus;
 		private readonly ILoadingCurtain _curtain;
-		
+
 		private DomovoiAI _domovoiAI;
 		private SupervisionController _supervisionController;
-		
+
 		private int _currentDay;
 
 		[Inject]
-		public PlayGameplayState(SceneStateMachine sceneStateMachine, PhaseStateMachine phaseStateMachine, 
+		public PlayGameplayState(SceneStateMachine sceneStateMachine, PhaseStateMachine phaseStateMachine,
 			InputHandler inputHandler, LocationChanger locationChanger, EventBus eventBus, ILoadingCurtain curtain)
 		{
 			_sceneStateMachine = sceneStateMachine;
@@ -44,11 +44,12 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			// пока даты игрока нет, будем считать что начинается с 1 дня
 			_currentDay = 1;
 		}
+
 		public void Enter()
 		{
 			_domovoiAI = Object.FindAnyObjectByType<DomovoiAI>();
 			_supervisionController = Object.FindAnyObjectByType<SupervisionController>();
-			
+
 			_eventBus.Subscribe<EGameplayChangePhaseTriggerEvent, StartDayTriggerEventData>(EGameplayChangePhaseTriggerEvent.StartDayTrigger, StartDayPhaseTriggered);
 			_eventBus.Subscribe(EGameplayChangePhaseTriggerEvent.StartNightTrigger, StartNightPhaseTriggered);
 		}
@@ -58,7 +59,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		/// - включает визуал дня
 		/// - высчитывает есть ли наказания
 		/// - перемещает игрока на точку (если нет наказаний)
-		/// - 
+		/// - триггерим что день начался и все могут колбеком делать штуки
 		/// </summary>
 		/// <param name="data"></param>
 		private void StartDayPhaseTriggered(StartDayTriggerEventData data)
@@ -67,24 +68,24 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			_inputHandler.Disable();
 			// ВКЛючаем шторку
 			_curtain.Show(onEnd: OnStartDayPhaseTriggered);
-			
+
 			void OnStartDayPhaseTriggered()
 			{
 				_phaseStateMachine.EnterIn<DayPhaseState>();
-			
+
 				(bool, EDomovoiSatietyLevel) domovoiData = _domovoiAI.StartDayPhaseHandler();
 
 				if (data.ForceNightEnd)
 				{
 					_supervisionController.OnLateAtNight();
-					
+
 					// mock, пока нет наказания
 					_locationChanger.ChangeLocation(_phaseStateMachine.DayStartLocationtransform, needCurtain: false);
 				}
 				else if (domovoiData.Item1)
 				{
 					_supervisionController.OnDomovoiDontFed();
-				
+
 					// mock, пока нет наказания
 					_locationChanger.ChangeLocation(_phaseStateMachine.DayStartLocationtransform, needCurtain: false);
 				}
@@ -93,9 +94,9 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 					_locationChanger.ChangeLocation(_phaseStateMachine.DayStartLocationtransform, needCurtain: false);
 					_eventBus.Trigger(domovoiData.Item2);
 				}
-			
+
 				_eventBus.Trigger(EGameplayChangedPhaseEvent.DayStarted);
-			
+
 				// ВЫКЛючаем шторку
 				_curtain.Hide();
 				// ВКЛючаем инпут
@@ -103,29 +104,33 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			}
 		}
 
+		/// <summary>
+		/// хендлит начало ночной фазы:
+		/// - перемещает игрока на точку спавна ночью
+		/// - включает визуал ночи
+		/// - триггерим что ночь началась и все могут колбеком делать штуки
+		/// </summary>
 		private void StartNightPhaseTriggered()
 		{
 			// ВЫКЛючаем инпут
 			_inputHandler.Disable();
 			// ВКЛючаем шторку
 			_curtain.Show(onEnd: OnStartNightPhaseTriggered);
-			
+
 			void OnStartNightPhaseTriggered()
 			{
 				_currentDay++;
 				_domovoiAI.StartNightPhaseHandler(_currentDay);
-			
-				_phaseStateMachine.EnterIn<NightPhaseState>();
 
-				var startPhaseData = new StartNightEventData(); 
+				var startPhaseData = new StartNightEventData();
 				startPhaseData.CurrentDay = _currentDay;
 
 				_locationChanger.ChangeLocation(_phaseStateMachine.NightStartLocationtransform, needCurtain: false);
 
-				// _currentNightTriggerEventData = null;
-			
+				_phaseStateMachine.EnterIn<NightPhaseState>();
+
 				_eventBus.Trigger(EGameplayChangedPhaseEvent.NightStarted, startPhaseData);
-			
+
 				// ВЫКЛючаем шторку
 				_curtain.Hide();
 				// ВКЛючаем инпут
