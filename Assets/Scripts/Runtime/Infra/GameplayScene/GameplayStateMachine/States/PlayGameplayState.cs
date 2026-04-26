@@ -135,6 +135,8 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 
 		public void Exit()
 		{
+			_eventBus.Unsubscribe<EGameplayChangePhaseTriggerEvent, StartDayTriggerEventData>(EGameplayChangePhaseTriggerEvent.StartDayTrigger, StartDayPhaseTriggered);
+			_eventBus.Unsubscribe(EGameplayChangePhaseTriggerEvent.StartNightTrigger, StartNightPhaseTriggered);
 		}
 	}
 }
