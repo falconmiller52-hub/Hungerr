@@ -68,6 +68,12 @@ namespace Runtime.Features._Story
 
 		public void StartStory(Story story, EventReference eventReference, bool isMonolog = false)
 		{
+			if (_startDialogRoutine != null)
+			{
+				Debug.Log("<color=red>Диалог пытался запуститься в то время пока другой ещё не закончился</color>");
+				return;
+			}
+			
 			_currentEventReference = eventReference;
 
 			if (!isMonolog)
@@ -89,8 +95,6 @@ namespace Runtime.Features._Story
 				else
 					OnDialogStoryStarted?.Invoke();
 			}
-			else
-				Debug.Log("<color=red>Диалог пытался запуститься в то время пока другой ещё не закончился</color>");
 		}
 
 		private IEnumerator DialogRoutine()

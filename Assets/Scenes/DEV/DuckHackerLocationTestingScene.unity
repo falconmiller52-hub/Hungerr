@@ -2456,11 +2456,11 @@ MonoBehaviour:
   _storyJson: {fileID: 4900000, guid: 164279099d9085b4a91c44758f8c52a1, type: 3}
   _playerMonologSound:
     Guid:
-      Data1: 1701439014
-      Data2: 1152929589
-      Data3: 1089470357
-      Data4: -939924557
-    Path: event:/SFX/NPC/Butcher/butcher_talk
+      Data1: -618754976
+      Data2: 1249185519
+      Data3: -1524527435
+      Data4: -1815652833
+    Path: event:/SFX/Player_action/player_dialogue
 --- !u!1001 &2706023828363385955
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2554,6 +2554,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Path
+      value: event:/SFX/NPC/Butcher/butcher_talk
+      objectReference: {fileID: 0}
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Guid.Data1
+      value: 1701439014
+      objectReference: {fileID: 0}
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Guid.Data2
+      value: 1152929589
+      objectReference: {fileID: 0}
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Guid.Data3
+      value: 1089470357
+      objectReference: {fileID: 0}
+    - target: {fileID: 303867065913031482, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
+      propertyPath: _npcDialogSound.Guid.Data4
+      value: -939924557
+      objectReference: {fileID: 0}
     - target: {fileID: 5887848117903106272, guid: 716ebd6cb8e2d294cbc5832f021b59d9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -19.92

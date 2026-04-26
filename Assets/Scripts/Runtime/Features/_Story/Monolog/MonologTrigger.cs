@@ -1,5 +1,6 @@
 ﻿using FMODUnity;
 using Ink.Runtime;
+using NaughtyAttributes;
 using Runtime.Features.Player.Movement;
 using UnityEngine;
 using Zenject;
@@ -27,11 +28,6 @@ namespace Runtime.Features._Story.Monolog
 			_storySystem = storySystem;
 		}
 
-		private void Start()
-		{
-			_story = new Story(_storyJson.text);
-		}
-
 		private void OnTriggerEnter(Collider other)
 		{
 			if (other.GetComponent<PlayerMovement>() != null)
@@ -41,12 +37,24 @@ namespace Runtime.Features._Story.Monolog
 					Debug.LogError($"{name}: Story JSON is missing");
 					return;
 				}
-
+				
+				_story = new Story(_storyJson.text);
+				
 				_storySystem.StartStory(_story, _playerMonologSound, true);
 
 				if (_isOnce)
 					Destroy(this.gameObject);
 			}
+		}
+		
+		// Debug
+
+		[Button]
+		public void StartMonolog()
+		{
+			_story = new Story(_storyJson.text);
+				
+			_storySystem.StartStory(_story, _playerMonologSound, true);
 		}
 	}
 }
