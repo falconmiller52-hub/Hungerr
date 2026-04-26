@@ -1,4 +1,5 @@
 using FMODUnity;
+using Runtime.Features.Player.Movement;
 using UnityEngine;
 using Zenject;
 
@@ -18,7 +19,7 @@ namespace Runtime.Common.Services.Audio.Ost
 
 		private void OnTriggerEnter(Collider other)
 		{
-			if (other.CompareTag("Player"))
+			if (other.GetComponent<PlayerMovement>())
 			{
 				_ostService.StartOst(_eventReference);
 			}
