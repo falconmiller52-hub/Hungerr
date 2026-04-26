@@ -1,6 +1,4 @@
 using FMOD.Studio;
-using FMODUnity;
-using Runtime.Common.Extensions;
 using UnityEngine;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 

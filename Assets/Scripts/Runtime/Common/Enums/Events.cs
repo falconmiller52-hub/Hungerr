@@ -40,4 +40,9 @@ namespace Runtime.Common.Enums
 		Normal = 0,
 		Critical
 	}
+
+	public enum EGameOver
+	{
+		PlayerOnZeroHealth
+	}
 }
