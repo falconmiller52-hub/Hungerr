@@ -12,86 +12,118 @@ using Zenject;
 
 namespace Runtime.Features.Enemy.Domovoi
 {
-    public class DomovoiAI : MonoBehaviour
-    {
-        [SerializeField] private StorageInventory _storage; // хранилище с едой
-        [SerializeField] private DomovoiLevelData[] _domovoiLevelData;
+	public class DomovoiAI : MonoBehaviour
+	{
+		[SerializeField] private StorageInventory _storage; // хранилище с едой
+		[SerializeField] private DomovoiLevelData[] _domovoiLevelData;
 
-        [SerializeField, ReadOnly] private int _satiety;
-        [SerializeField, ReadOnly] private DomovoiLevelData _currentLevelData;
-        private EventBus _eventBus;
-        private InventoryWithCells _inventory;
+		[SerializeField, ReadOnly] private int _satiety;
+		[SerializeField, ReadOnly] private DomovoiLevelData _currentLevelData;
+		private EventBus _eventBus;
+		private InventoryWithCells _inventory;
+		private int _notFedDaysCount;
+		private bool _needToTriggerDontFeed;
+		private EDomovoiSatietyLevel _satietyLevel;
 
-        [Inject]
-        private void Construct(EventBus eventBus)
-        {
-            _eventBus = eventBus;
-        }
+		[Inject]
+		private void Construct(EventBus eventBus)
+		{
+			_eventBus = eventBus;
+		}
 
-        private void Start()
-        {
-            // если нет сохранений состояния
-            if (_domovoiLevelData == null || _domovoiLevelData.Length == 0)
-            {
-                Debug.LogError("DomovoiAI::Start() Domovoi level data is null");
-                return;
-            }
-            
-            if (_eventBus == null)
-            {
-                Debug.LogError("DomovoiAI::Start() EventBus is null");
-                return;
-            }
-            
-            _currentLevelData = _domovoiLevelData[0];
-            _satiety = _currentLevelData.MaxSatiety;
-            
-            _inventory = _storage.GetInventory();
-            
-            // _eventBus.Subscribe(EGameplayStateEvent.StartNightPhaseTrigger, OnStartNightPhaseTrigger);
-            _eventBus.Subscribe<EGameplayChangedStateEvent, int>(EGameplayChangedStateEvent.OnStartNightPhase, OnStartNightPhaseHandler);
-            _eventBus.Subscribe(EGameplayChangedStateEvent.OnEndNightPhase, OnEndNightPhaseHandler);
-        }
-        
-        private void OnDisable()
-        {
-            _eventBus.Unsubscribe<EGameplayChangedStateEvent, int>(EGameplayChangedStateEvent.OnStartNightPhase, OnStartNightPhaseHandler);
-            _eventBus.Unsubscribe(EGameplayChangedStateEvent.OnEndNightPhase, OnEndNightPhaseHandler);
-        }
-        
-        private void OnEndNightPhaseHandler()
-        {
-            // выбираем рандомный паттерн
-            var pattern = _currentLevelData.Patterns.Random();
-            
-            pattern.Trigger();
-            
-            // кидаем ивент в зависимости от уровня сытости, если мало (по текущему уровню) то будет больно
-            if (_satiety < _currentLevelData.SatietyTreshholdForActivation)
-                _eventBus.Trigger(EDomovoiSatietyLevel.Critical);
-            else
-                _eventBus.Trigger(EDomovoiSatietyLevel.Normal);
-        }
+		private void Start()
+		{
+			// если нет сохранений состояния
+			if (_domovoiLevelData == null || _domovoiLevelData.Length == 0)
+			{
+				Debug.LogError("DomovoiAI::Start() Domovoi level data is null");
+				return;
+			}
 
-        private void OnStartNightPhaseHandler(int currentDay)
-        {
-            if (_inventory == null)
-                _inventory = _storage.GetInventory();
+			if (_eventBus == null)
+			{
+				Debug.LogError("DomovoiAI::Start() EventBus is null");
+				return;
+			}
 
-            // проверяем день и переходим на некст уровень если надо
-            foreach (DomovoiLevelData levelData in _domovoiLevelData)
-            {
-                if (currentDay >= levelData.MinDayForLevel && levelData != _currentLevelData)
-                    _currentLevelData = levelData;
-            }
-            
-            List<FoodInventoryItemData> foodItems = _inventory.GetItems<FoodInventoryItemData>();
-            int totalSatietyFromInventory = foodItems.Sum(foodItem => foodItem.Satiety); // считаем всю сытость от еды в сундуке
+			_currentLevelData = _domovoiLevelData[0];
+			_satiety = _currentLevelData.MaxSatiety;
+			_notFedDaysCount = 0;
 
-            int delta = Math.Max(totalSatietyFromInventory, 0) - Math.Max(_currentLevelData.DailySatietyLoss, 0);
-            _satiety = Math.Max(_satiety + delta, 0);
+			_inventory = _storage.GetInventory();
+		}
 
-            _inventory.RemoveAllItemsByType<FoodInventoryItemData>();
-        }
-    }
+		/// <summary>
+		/// метод высчета логики для домового днем
+		/// </summary>
+		/// <returns>bool as NeedToTriggerDontFeed | EDomovoiSatietyLevel as level of satiety</returns>
+		public (bool, EDomovoiSatietyLevel) StartDayPhaseHandler()
+		{
+			// выбираем рандомный паттерн поведения на сейчас
+			var pattern = _currentLevelData.Patterns.Random();
+
+			pattern.Trigger();
+
+			// кидаем ивент в зависимости от уровня сытости, если мало (по текущему уровню) то будет больно
+			if (_satiety < _currentLevelData.SatietyTreshholdForActivation)
+				_satietyLevel = EDomovoiSatietyLevel.Critical;
+			else
+				_satietyLevel = EDomovoiSatietyLevel.Normal;
+
+			if (_needToTriggerDontFeed)
+			{
+				// ставим false, высчитываем каждую ночь и сбрасываем каждый день
+				_needToTriggerDontFeed = false;
+				return (true, _satietyLevel);
+			}
+
+			return (false, _satietyLevel);
+		}
+
+		/// <summary>
+		/// высчет логики и обновление голода домового ночью
+		/// </summary>
+		/// <param name="currentDay">int текущего дня</param>
+		public void StartNightPhaseHandler(int currentDay)
+		{
+			if (_inventory == null)
+				_inventory = _storage.GetInventory();
+
+			// проверяем день и переходим на некст уровень если надо
+			foreach (DomovoiLevelData levelData in _domovoiLevelData)
+			{
+				if (currentDay >= levelData.MinDayForLevel && levelData != _currentLevelData)
+					_currentLevelData = levelData;
+			}
+
+			UpdateSatietyStatus();
+
+			_inventory.RemoveAllItemsByType<FoodInventoryItemData>();
+		}
+
+		private void UpdateSatietyStatus()
+		{
+			List<FoodInventoryItemData> foodItems = _inventory.GetItems<FoodInventoryItemData>();
+			int totalSatietyFromInventory = foodItems.Sum(foodItem => foodItem.Satiety); // считаем всю сытость от еды в сундуке
+
+			int delta = Math.Max(totalSatietyFromInventory, 0) - Math.Max(_currentLevelData.DailySatietyLoss, 0);
+			_satiety = Math.Max(_satiety + delta, 0);
+
+			// если нет еды то увеличиваем счтечик дней без еды для Домового, иначе сбрасываем его
+			if (totalSatietyFromInventory <= 0)
+			{
+				_notFedDaysCount++;
+
+				if (_notFedDaysCount >= _currentLevelData.NotFeededDaysAvailableBeforePunishment)
+				{
+					_needToTriggerDontFeed = true;
+					_notFedDaysCount = 0;
+				}
+			}
+			else
+			{
+				_notFedDaysCount = 0;
+			}
+		}
+	}
 }

@@ -4,6 +4,6 @@ namespace Runtime.Common.Constants
     {
         public const string Boot = "Boot"; 
         public const string MenuName = "MainMenu"; 
-        public const string GameplayScene = "DuckHackerLocationTestingScene"; 
+        public const string GameplayScene = "StreetMap"; 
     }
 }
