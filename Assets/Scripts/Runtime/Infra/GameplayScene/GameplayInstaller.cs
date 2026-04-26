@@ -3,6 +3,8 @@ using Runtime.Common.Services.Pause;
 using Runtime.Features._Story;
 using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy;
+using Runtime.Features.GameOver;
+using Runtime.Features.GameOver.View;
 using Runtime.Features.ItemSpawner;
 using Runtime.Features.Location;
 using Runtime.Features.Trade;
@@ -19,6 +21,7 @@ namespace Runtime.Infra.GameplayScene
 		[SerializeField] private EnemiesBootstrap _enemiesBootstrap;
 		[SerializeField] private StorySystem _storySystem;
 		[SerializeField] private ItemSpawner _itemSpawner;
+		[SerializeField] private GameOverCurtain _gameOverCurtain;
 
 		public override void InstallBindings()
 		{
@@ -29,8 +32,14 @@ namespace Runtime.Infra.GameplayScene
 			BindStorySystem();
 			BindPauseController();
 			BindItemSpawner();
-
 			BindTradeSystem();
+			BindGameOver();
+		}
+
+		private void BindGameOver()
+		{
+			Container.Bind<GameOverTriggerHandler>().AsSingle().NonLazy();
+			Container.Bind<IGameOverCurtain>().To<GameOverCurtain>().FromComponentInNewPrefab(_gameOverCurtain).AsSingle();
 		}
 
 		private void BindTradeSystem()

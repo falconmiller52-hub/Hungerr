@@ -1846,6 +1846,10 @@ PrefabInstance:
       propertyPath: _typeWriterSpeed
       value: 0.01
       objectReference: {fileID: 0}
+    - target: {fileID: 4321713732498059519, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _gameOverCurtain
+      value: 
+      objectReference: {fileID: 8153974036587686912, guid: 57e03d98103315d4ca07ee820115a7f8, type: 3}
     - target: {fileID: 4321713733929099052, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
       propertyPath: m_Name
       value: = GameplayInfrastructure =

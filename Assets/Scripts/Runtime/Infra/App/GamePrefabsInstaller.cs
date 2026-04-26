@@ -1,5 +1,6 @@
 using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.LoadingCurtain;
+using Runtime.Features.GameOver.View;
 using UnityEngine;
 using Zenject;
 
@@ -18,9 +19,9 @@ namespace Runtime.Infra.App
 		private void BindLoadingCurtain()
 		{
 			Container
-				.BindInterfacesAndSelfTo<Curtain>()
-				.FromComponentInNewPrefab(_loadingCurtainPrefab)
-				.AsSingle();
+							.BindInterfacesAndSelfTo<Curtain>()
+							.FromComponentInNewPrefab(_loadingCurtainPrefab)
+							.AsSingle();
 		}
 
 		public void BindAudioService()
