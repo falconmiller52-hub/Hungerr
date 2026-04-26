@@ -78,19 +78,14 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				if (data.ForceNightEnd)
 				{
 					_supervisionController.OnLateAtNight();
-
-					// mock, пока нет наказания
-					_locationChanger.ChangeLocation(_phaseStateMachine.DayStartLocationtransform, needCurtain: false);
 				}
 				else if (domovoiData.Item1)
 				{
 					_supervisionController.OnDomovoiDontFed();
-
-					// mock, пока нет наказания
-					_locationChanger.ChangeLocation(_phaseStateMachine.DayStartLocationtransform, needCurtain: false);
 				}
 				else
 				{
+					_supervisionController.ClearAllPunishObjects();
 					_locationChanger.ChangeLocation(_phaseStateMachine.DayStartLocationtransform, needCurtain: false);
 					_eventBus.Trigger(domovoiData.Item2);
 				}

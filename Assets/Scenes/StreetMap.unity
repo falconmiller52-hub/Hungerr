@@ -4585,6 +4585,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 701648784134825961, guid: 5538bf4e2ba0f8a42a937c575d00330b, type: 3}
   m_PrefabInstance: {fileID: 1247087358}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &613365443 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3024562624641939705, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+  m_PrefabInstance: {fileID: 1794706512}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &615273223
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13830,7 +13835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 274316078477398296, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
       propertyPath: _typeWriterSpeed
-      value: 0.01
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3211192612648936225, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13888,6 +13893,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4840547291163256260, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _bloodPuddle
+      value: 
+      objectReference: {fileID: 613365443}
+    - target: {fileID: 4840547291163256260, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _homeSpawnPoint
+      value: 
+      objectReference: {fileID: 1155320545}
+    - target: {fileID: 4840547291163256260, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _domovoiRoomSpawnPoint
+      value: 
+      objectReference: {fileID: 1794706515}
+    - target: {fileID: 5137366995108968696, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.732
+      objectReference: {fileID: 0}
+    - target: {fileID: 5137366995108968696, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 7.771
+      objectReference: {fileID: 0}
+    - target: {fileID: 5137366995108968696, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -7.101936
+      objectReference: {fileID: 0}
+    - target: {fileID: 7068875415173604028, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _storage
+      value: 
+      objectReference: {fileID: 575982412}
+    - target: {fileID: 7068875415173604028, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _domovoiLevelData.Array.data[0].NotFeededDaysAvailableBeforePunishment
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7200213144691405948, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
+    - target: {fileID: 7435694777528967458, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: <NightDuration>k__BackingField
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7435694777528967458, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
       propertyPath: <DayStartLocationtransform>k__BackingField
       value: 
@@ -13905,13 +13950,19 @@ PrefabInstance:
       value: -16.72
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 1232742803484567733, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
 --- !u!108 &1794706513 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 5231901035533860236, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+  m_PrefabInstance: {fileID: 1794706512}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1794706515 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5137366995108968696, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
   m_PrefabInstance: {fileID: 1794706512}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1796999913

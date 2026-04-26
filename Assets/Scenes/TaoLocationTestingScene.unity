@@ -694,6 +694,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &591727725 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3024562624641939705, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+  m_PrefabInstance: {fileID: 1653941966}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &658322831
 GameObject:
   m_ObjectHideFlags: 0
@@ -1942,6 +1947,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4840547291163256260, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _bloodPuddle
+      value: 
+      objectReference: {fileID: 591727725}
+    - target: {fileID: 4840547291163256260, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _homeSpawnPoint
+      value: 
+      objectReference: {fileID: 1316625235}
+    - target: {fileID: 4840547291163256260, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: _domovoiRoomSpawnPoint
+      value: 
+      objectReference: {fileID: 1753514799}
     - target: {fileID: 7435694777528967458, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
       propertyPath: <DayStartLocationtransform>k__BackingField
       value: 
@@ -1966,6 +1983,11 @@ PrefabInstance:
 --- !u!108 &1653941967 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 5231901035533860236, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+  m_PrefabInstance: {fileID: 1653941966}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1753514799 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5137366995108968696, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
   m_PrefabInstance: {fileID: 1653941966}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1778265184
