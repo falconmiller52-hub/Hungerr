@@ -17,7 +17,6 @@ namespace Runtime.Infra.App
 			BindGlobalEntryPoint();
 			BindResourceLoader();
 			BindAudio();
-			
 		}
 
 		private void BindResourceLoader()
@@ -39,11 +38,10 @@ namespace Runtime.Infra.App
 
 		private void BindEventBus() =>
 						Container.Bind<EventBus>().AsSingle();
-		
+
 		public void BindAudio()
 		{
 			Container.BindInterfacesAndSelfTo<AudioService>().AsSingle();
-			Container.Bind<OstService>().AsSingle();
 		}
 	}
 }
