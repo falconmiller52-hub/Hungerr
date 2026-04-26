@@ -3,13 +3,12 @@ using Runtime.Common.Services.Pause;
 using Runtime.Features._Story;
 using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy;
-using Runtime.Features.GameOver;
 using Runtime.Features.GameOver.View;
 using Runtime.Features.ItemSpawner;
 using Runtime.Features.Location;
 using Runtime.Features.Trade;
 using UnityEngine;
-using Zenject;
+using Zenject;	
 
 namespace Runtime.Infra.GameplayScene
 {
@@ -38,8 +37,8 @@ namespace Runtime.Infra.GameplayScene
 
 		private void BindGameOver()
 		{
-			Container.Bind<GameOverTriggerHandler>().AsSingle().NonLazy();
-			Container.Bind<IGameOverCurtain>().To<GameOverCurtain>().FromComponentInNewPrefab(_gameOverCurtainPrefab).AsSingle();
+			Container.Bind<IGameOverCurtain>().To<GameOverCurtain>().FromComponentInNewPrefab(_gameOverCurtainPrefab)
+							.AsSingle();
 		}
 
 		private void BindTradeSystem()
