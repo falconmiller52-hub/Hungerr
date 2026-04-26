@@ -47,10 +47,8 @@ namespace Runtime.Common.Services.Audio.Ost
 		private IEnumerator OstFadeRoutine(EventReference eventReference)
 		{
 			_currentOstInstance.stop(STOP_MODE.ALLOWFADEOUT);
-			Debug.Log("Старый остановлен, запускаем новый");
 
 			var newOstInstance = _soundService.PlaySound(eventReference);
-			Debug.Log("Новый запущен");
 
 			PLAYBACK_STATE state;
 
@@ -59,8 +57,6 @@ namespace Runtime.Common.Services.Audio.Ost
 				_currentOstInstance.getPlaybackState(out state);
 				yield return null;
 			} while (state != PLAYBACK_STATE.STOPPED);
-
-			Debug.Log("Старый полностью остановился");
 
 			_currentOstInstance.release();
 			_currentOstInstance = newOstInstance;
