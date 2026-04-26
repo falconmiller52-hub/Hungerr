@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using FMODUnity;
 using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.Audio.Sound;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,12 +19,12 @@ namespace Runtime.Features._Story.Dialog.View
 
 		[SerializeField] private List<Button> _dialogButtons;
 
-		private IAudioService _audioService;
+		private ISoundService _soundService;
 
 		[Inject]
-		private void Construct(IAudioService audioService)
+		private void Construct(ISoundService soundService)
 		{
-			_audioService = audioService;
+			_soundService = soundService;
 		}
 
 		private void OnEnable()
@@ -44,10 +45,10 @@ namespace Runtime.Features._Story.Dialog.View
 
 		public void OnPointerEnter(PointerEventData eventData)
 		{
-			_audioService.PlayOneShot2D(_buttonHoverSound);
+			_soundService.PlayOneShot2D(_buttonHoverSound);
 		}
 
 		private void PlaySoundButtonSelected()
-			=> _audioService.PlayOneShot2D(_buttonSelectSound);
+			=> _soundService.PlayOneShot2D(_buttonSelectSound);
 	}
 }

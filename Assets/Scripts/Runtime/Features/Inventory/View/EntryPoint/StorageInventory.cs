@@ -1,6 +1,7 @@
 using Cinemachine;
 using FMODUnity;
 using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.Audio.Sound;
 using UnityEngine;
 using Zenject;
 
@@ -20,12 +21,12 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 		private bool _isOpened;
 		private int _width = 10;
 		private int _height = 10;
-		private IAudioService _audioService;
+		private ISoundService _soundService;
 
 		[Inject]
-		private void Construct(IAudioService audioService)
+		private void Construct(ISoundService soundService)
 		{
-			_audioService = audioService;
+			_soundService = soundService;
 		}
 		
 		private void Awake()
@@ -35,7 +36,7 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 		
 		public void InventoryOpenStateChanged(bool openState)
 		{
-			_audioService.PlaySound(_openInventorySound, transform.position);
+			_soundService.PlaySound(_openInventorySound, transform.position);
 			
 			OnInventoryOpenStateChanged?.Invoke(openState);
 

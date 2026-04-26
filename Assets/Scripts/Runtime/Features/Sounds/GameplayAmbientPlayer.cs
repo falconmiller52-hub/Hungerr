@@ -1,5 +1,6 @@
 using FMODUnity;
 using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.Audio.Ost;
 using UnityEngine;
 using Zenject;
 
@@ -9,17 +10,17 @@ namespace Runtime.Features.Sounds
 	{
 		[SerializeField] private EventReference _startAmbientSound;
 
-		private IAudioService _audioService;
+		private OstService _ostService;
 
 		[Inject]
-		private void Construct(IAudioService audioService)
+		private void Construct(OstService ostService)
 		{
-			_audioService = audioService;
+			_ostService = ostService;
 		}
 
 		private void Start()
 		{
-			_audioService.PlaySound(_startAmbientSound);
+			_ostService.StartOst(_startAmbientSound);
 		}
 	}
 }

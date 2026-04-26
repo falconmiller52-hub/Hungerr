@@ -21,7 +21,7 @@ namespace Runtime.Features.Enemy.Thin.States
 		
 			_ai.Animator.SetBool(Chase, true);
 			
-			_currentSound = _ai.AudioService.PlaySound(_ai.ChaseSounds, _ai.transform.position);
+			_currentSound = _ai.SoundService.PlaySound(_ai.ChaseSounds, _ai.transform.position);
 		}
 
 		public void Execute()
@@ -44,7 +44,7 @@ namespace Runtime.Features.Enemy.Thin.States
 		public void Exit()
 		{
 			_ai.Animator.SetBool(Chase, false);
-			_ai.AudioService.StopSound(_currentSound, STOP_MODE.ALLOWFADEOUT);
+			_ai.SoundService.StopSound(_currentSound, STOP_MODE.ALLOWFADEOUT);
 		}
 	}
 }
