@@ -2,6 +2,7 @@ using FMODUnity;
 using NaughtyAttributes;
 using Runtime.Common.Extensions;
 using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
 using Runtime.Features.Sounds;
@@ -51,14 +52,14 @@ namespace Runtime.Features.Player.Movement
 		private CharacterController _cc;
 		private PlayerStance _playerStance;
 		private IInputHandler _inputHandler;
-		private IAudioService _audioService;
+		private ISoundService _soundService;
 		private IPauseController _pauseController;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, IAudioService audioService, IPauseController pauseController)
+		private void Construct(IInputHandler inputHandler, ISoundService soundService, IPauseController pauseController)
 		{
 			_inputHandler = inputHandler;
-			_audioService = audioService;
+			_soundService = soundService;
 			_pauseController = pauseController;
 		}
 
@@ -182,7 +183,7 @@ namespace Runtime.Features.Player.Movement
 
 		private void PlaySound()
 		{
-			_audioService.PlaySound(_currentStepSoundData, transform.position);
+			_soundService.PlaySound(_currentStepSoundData, transform.position);
 		}
 
 		private void GroundSet(bool isGrounded)
@@ -206,7 +207,7 @@ namespace Runtime.Features.Player.Movement
 		{
 			_isGrounded = true;
 			_gravitySpeed = 0f;
-			_audioService.PlaySound(_jumpEndSound, _groundCheck.position);
+			_soundService.PlaySound(_jumpEndSound, _groundCheck.position);
 		}
 
 		public void Move(Vector2 direction)
@@ -225,7 +226,7 @@ namespace Runtime.Features.Player.Movement
 			if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching)
 			{
 				_gravitySpeed = strength;
-				_audioService.PlaySound(_jumpStartSound, _groundCheck.position);
+				_soundService.PlaySound(_jumpStartSound, _groundCheck.position);
 			}
 		}
 

@@ -3,6 +3,7 @@ using FMODUnity;
 using NaughtyAttributes;
 using Runtime.Common.Enums;
 using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
 using UnityEngine;
@@ -76,15 +77,15 @@ namespace Runtime.Features.Player.Movement
 
 		//Кэшированные переменные
 		private IInputHandler _inputHandler;
-		private IAudioService _audioService;
+		private ISoundService _soundService;
 		private CharacterController _cc;
 		private EventBus _eventBus;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, IAudioService audioService, EventBus eventBus)
+		private void Construct(IInputHandler inputHandler, ISoundService soundService, EventBus eventBus)
 		{
 			_inputHandler = inputHandler;
-			_audioService = audioService;
+			_soundService = soundService;
 			_eventBus = eventBus;
 		}
 
@@ -202,7 +203,7 @@ namespace Runtime.Features.Player.Movement
 				if (_currentStamina <= 0f)
 				{
 					_isExhausted = true;
-					_audioService.PlaySound(_exhaustionStepSound, transform.position);
+					_soundService.PlaySound(_exhaustionStepSound, transform.position);
 				}
 			}
 			else

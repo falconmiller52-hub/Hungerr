@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using FMODUnity;
 using Ink.Runtime;
 using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
 using UnityEngine;
@@ -25,7 +26,7 @@ namespace Runtime.Features._Story
 		private StoryTagSystem _storyTagSystem;
 
 		private IInputHandler _inputHandler;
-		private IAudioService _audioService;
+		private ISoundService _soundService;
 		private IPauseController _pauseController;
 
 		private Coroutine _startDialogRoutine;
@@ -40,12 +41,12 @@ namespace Runtime.Features._Story
 		private bool _isStoryText;
 
 		[Inject]
-		private void Construct(IPauseController pauseController, IInputHandler inputHandler, IAudioService audioService
+		private void Construct(IPauseController pauseController, IInputHandler inputHandler, ISoundService soundService
 						, StoryTagSystem storyTagSystem)
 		{
 			_pauseController = pauseController;
 			_inputHandler = inputHandler;
-			_audioService = audioService;
+			_soundService = soundService;
 			_storyTagSystem = storyTagSystem;
 		}
 
@@ -222,7 +223,7 @@ namespace Runtime.Features._Story
 				currentLine += symbol;
 
 				if (!_currentEventReference.IsNull)
-					_audioService.PlayOneShot2D(_currentEventReference);
+					_soundService.PlayOneShot2D(_currentEventReference);
 
 				OnNewStoryLine?.Invoke(currentLine);
 

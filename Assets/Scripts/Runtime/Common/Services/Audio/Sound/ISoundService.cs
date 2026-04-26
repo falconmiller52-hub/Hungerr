@@ -3,9 +3,9 @@ using FMODUnity;
 using UnityEngine;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
-namespace Runtime.Common.Services.Audio
+namespace Runtime.Common.Services.Audio.Sound
 {
-	public interface IAudioService
+	public interface ISoundService
 	{
 		void PlayOneShotAt(EventReference eventRef, Vector3 position = default);
 		void PlayOneShot2D(EventReference eventRef);

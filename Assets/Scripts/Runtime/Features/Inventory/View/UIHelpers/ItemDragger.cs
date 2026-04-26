@@ -1,5 +1,6 @@
 using FMODUnity;
 using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.Audio.Sound;
 using UnityEngine;
 using Zenject;
 
@@ -24,12 +25,12 @@ namespace Runtime.Features.Inventory.View.UIHelpers
 		private InventoryItem _selectedItem;
 		private (Vector2Int, Inventory3DView) _originalPositionInInventory;
 		private InventoryItemView _ghostItem;
-		private IAudioService _audioService;
+		private ISoundService _soundService;
 
 		[Inject]
-		private void Construct(IAudioService audioService)
+		private void Construct(ISoundService soundService)
 		{
-			_audioService = audioService;
+			_soundService = soundService;
 		}
 
 		public void OpenChest(Inventory3DView view)

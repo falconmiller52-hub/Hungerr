@@ -18,7 +18,7 @@ namespace Runtime.Features.Enemy.Thin.States
 			_ai.Animator.SetFloat(WalkSpeed, _ai.PatrolSpeedMultiplier);
 			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed) * _ai.transform.lossyScale.x;
 			
-			_currentSound = _ai.AudioService.PlaySound(_ai.PatrolSounds, _ai.transform.position);
+			_currentSound = _ai.SoundService.PlaySound(_ai.PatrolSounds, _ai.transform.position);
 		}
 
 		public void Execute()
@@ -35,7 +35,7 @@ namespace Runtime.Features.Enemy.Thin.States
 
 		public void Exit()
 		{
-			_ai.AudioService.StopSound(_currentSound, STOP_MODE.ALLOWFADEOUT);
+			_ai.SoundService.StopSound(_currentSound, STOP_MODE.ALLOWFADEOUT);
 		}
 	}
 }

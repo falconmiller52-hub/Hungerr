@@ -1,6 +1,7 @@
 using FMODUnity;
 using NaughtyAttributes;
 using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
 using Runtime.Features.Interactable;
@@ -41,14 +42,14 @@ namespace Runtime.Features.Player.Interactions
 		private IHoverable _currentHoveredObject;
 		private IInputHandler _inputHandler;
 		private IPauseController _pauseController;
-		private IAudioService _audioService;
+		private ISoundService _soundService;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, IPauseController pauseController, IAudioService audioService)
+		private void Construct(IInputHandler inputHandler, IPauseController pauseController, ISoundService soundService)
 		{
 			_inputHandler = inputHandler;
 			_pauseController = pauseController;
-			_audioService = audioService;
+			_soundService = soundService;
 		}
 
 		private void OnEnable()
@@ -141,7 +142,7 @@ namespace Runtime.Features.Player.Interactions
 			{
 				if (_playerInventory.AddItem(worldItem.Instance))
 				{
-					_audioService.PlaySound(_pickUpSound, transform.position);
+					_soundService.PlaySound(_pickUpSound, transform.position);
 					// ВАЖНО: Сначала полностью очищаем всё состояние интерфейса
 					ClearCurrentTarget();
 

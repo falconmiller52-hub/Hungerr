@@ -3,9 +3,9 @@ using FMODUnity;
 using UnityEngine;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
-namespace Runtime.Common.Services.Audio
+namespace Runtime.Common.Services.Audio.Sound
 {
-	public class AudioService : IAudioService
+	public class SoundService : ISoundService
 	{
 		public void PlayOneShotAt(EventReference eventRef, Vector3 position = default)
 			=> RuntimeManager.PlayOneShot(eventRef, position);
@@ -16,7 +16,10 @@ namespace Runtime.Common.Services.Audio
 		public EventInstance PlaySound(EventReference eventRef, Vector3 position = default)
 		{
 			var instance = RuntimeManager.CreateInstance(eventRef);
-			instance.set3DAttributes(position.To3DAttributes());
+
+			if (position != default)
+				instance.set3DAttributes(position.To3DAttributes());
+
 			instance.start();
 
 			return instance;

@@ -1,5 +1,6 @@
 using FMODUnity;
 using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.Audio.Sound;
 using Runtime.Features.Enemy.Thin.States;
 using UnityEngine;
 using UnityEngine.AI;
@@ -33,18 +34,18 @@ namespace Runtime.Features.Enemy.Thin
 		private int _currentTargetIndex = -1;
 		private Vector2 _smoothDeltaPosition;
 		private Vector2 _velocity;
-		private IAudioService _audioService;
+		private ISoundService _soundService;
 
 		[Inject]
-		private void Construct(IAudioService audioService)
+		private void Construct(ISoundService soundService)
 		{
-			_audioService = audioService;
+			_soundService = soundService;
 		}
 		
 		public void InitPlayer(GameObject player) => Target = player.transform;
 		
 		public Transform Target { get; private set; }
-		public IAudioService AudioService => _audioService;
+		public ISoundService SoundService => _soundService;
 
 		private void Awake()
 		{

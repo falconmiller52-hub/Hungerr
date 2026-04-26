@@ -1,5 +1,6 @@
 using Runtime.Common.Factories.StateFactory;
 using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.ResourceLoad;
@@ -41,7 +42,7 @@ namespace Runtime.Infra.App
 
 		public void BindAudio()
 		{
-			Container.BindInterfacesAndSelfTo<AudioService>().AsSingle();
+			Container.BindInterfacesAndSelfTo<SoundService>().AsSingle();
 		}
 	}
 }
