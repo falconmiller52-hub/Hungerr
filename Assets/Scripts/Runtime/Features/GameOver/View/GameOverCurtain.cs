@@ -1,6 +1,6 @@
-using System;
 using Runtime.Infra.App.GlobalStateMachine;
-using Runtime.Infra.App.GlobalStateMachine.States;
+using Runtime.Infra.GameplayScene.GameplayStateMachine;
+using Runtime.Infra.GameplayScene.GameplayStateMachine.States;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -12,12 +12,12 @@ namespace Runtime.Features.GameOver.View
 		[SerializeField] private GameObject _gameOverPanel;
 		[SerializeField] private Button _backToMenu;
 
-		private GlobalStateMachine _globalStateMachine;
+		private SceneStateMachine _sceneStateMachine;
 
 		[Inject]
-		private void Construct(GlobalStateMachine globalStateMachine)
+		private void Construct(SceneStateMachine sceneStateMachine)
 		{
-			_globalStateMachine = globalStateMachine;
+			_sceneStateMachine = sceneStateMachine;
 		}
 
 		private void OnEnable()
@@ -37,7 +37,7 @@ namespace Runtime.Features.GameOver.View
 		
 		private void BackToMenu()
 		{
-			_globalStateMachine.EnterIn<GameMenuState>();
+			_sceneStateMachine.EnterIn<ExitGameplayState>();
 		}
 	}
 }

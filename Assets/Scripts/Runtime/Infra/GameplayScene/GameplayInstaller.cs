@@ -21,7 +21,7 @@ namespace Runtime.Infra.GameplayScene
 		[SerializeField] private EnemiesBootstrap _enemiesBootstrap;
 		[SerializeField] private StorySystem _storySystem;
 		[SerializeField] private ItemSpawner _itemSpawner;
-		[SerializeField] private GameOverCurtain _gameOverCurtain;
+		[SerializeField] private GameOverCurtain _gameOverCurtainPrefab;
 
 		public override void InstallBindings()
 		{
@@ -39,7 +39,7 @@ namespace Runtime.Infra.GameplayScene
 		private void BindGameOver()
 		{
 			Container.Bind<GameOverTriggerHandler>().AsSingle().NonLazy();
-			Container.Bind<IGameOverCurtain>().To<GameOverCurtain>().FromComponentInNewPrefab(_gameOverCurtain).AsSingle();
+			Container.Bind<IGameOverCurtain>().To<GameOverCurtain>().FromComponentInNewPrefab(_gameOverCurtainPrefab).AsSingle();
 		}
 
 		private void BindTradeSystem()
