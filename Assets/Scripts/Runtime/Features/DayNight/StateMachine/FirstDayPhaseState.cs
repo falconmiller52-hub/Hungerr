@@ -1,12 +1,10 @@
-using System;
 using Runtime.Common.Enums;
+using Runtime.Common.Helpers;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.LoadingCurtain;
 using Runtime.Features.Location;
-using Runtime.Features.Player.Other;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Runtime.Features.DayNight.StateMachine
 {
@@ -22,10 +20,12 @@ namespace Runtime.Features.DayNight.StateMachine
 			
 			Curtain.Show(0.01f, onEnd: OnCurtainShowEnded);
 			
-			EventBus.Subscribe(EGameplayChangeStateTriggerEvent.StartNightPhaseTrigger, StartNightPhase);
+			Owner.DayCycleVisualChanger.SetDay();
+			EventBus.Subscribe<EGameplayChangedPhaseEvent, StartNightEventData>(EGameplayChangedPhaseEvent.NightStarted, OnStartNightPhase);
+			
 		}
 
-		private void StartNightPhase()
+		private void OnStartNightPhase(StartNightEventData data)
 		{
 			Owner.EnterIn<NightPhaseState>();
 		}
@@ -40,7 +40,7 @@ namespace Runtime.Features.DayNight.StateMachine
 		
 		public override void Exit()
 		{
-			EventBus.Unsubscribe(EGameplayChangeStateTriggerEvent.StartNightPhaseTrigger, StartNightPhase);
+			EventBus.Unsubscribe<EGameplayChangedPhaseEvent, StartNightEventData>(EGameplayChangedPhaseEvent.NightStarted, OnStartNightPhase);
 		}
 	}
 }

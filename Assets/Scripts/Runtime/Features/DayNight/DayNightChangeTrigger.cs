@@ -1,4 +1,5 @@
 using Runtime.Common.Enums;
+using Runtime.Common.Helpers;
 using Runtime.Common.Services.EventBus;
 using Runtime.Features.Interactable;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Runtime.Features.DayNight
     /// </summary>
     public class DayNightChangeTrigger : MonoBehaviour, IInteractable
     {
-        [SerializeField] private EGameplayChangeStateTriggerEvent triggerEventType;
+        [SerializeField] private EGameplayChangePhaseTriggerEvent triggerEventType;
     
         private EventBus _eventBus;
 
@@ -23,7 +24,20 @@ namespace Runtime.Features.DayNight
 
         public void Interact()
         {
-            _eventBus.Trigger(triggerEventType);
+            switch (triggerEventType)
+            {
+                case EGameplayChangePhaseTriggerEvent.StartDayTrigger:
+                    var data = new StartDayTriggerEventData();
+                    data.ForceNightEnd = false;
+                    
+                    _eventBus.Trigger(triggerEventType, data);
+                    break;
+                
+                case EGameplayChangePhaseTriggerEvent.StartNightTrigger:
+                    _eventBus.Trigger(triggerEventType);
+                    
+                    break;
+            }
         }
     }
 }

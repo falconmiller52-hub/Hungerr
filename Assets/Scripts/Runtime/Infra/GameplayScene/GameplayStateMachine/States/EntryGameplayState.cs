@@ -77,7 +77,6 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			FirstDayPhaseState firstDayPhaseState = _stateFactory.Create<FirstDayPhaseState>();
 			_phaseStateMachine.RegisterState(firstDayPhaseState);
 			
-			
 			_phaseStateMachine.EnterIn<FirstDayPhaseState>();
 			
 			// Enter in main Gameplay State

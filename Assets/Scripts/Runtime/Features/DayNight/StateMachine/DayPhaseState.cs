@@ -1,4 +1,5 @@
 using Runtime.Common.Enums;
+using Runtime.Common.Helpers;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.LoadingCurtain;
@@ -17,30 +18,18 @@ namespace Runtime.Features.DayNight.StateMachine
 		{
 			Debug.Log("--- Наступил ДЕНЬ ---");
 			
-			Curtain.Show(0.01f, onEnd: OnCurtainShowEnded);
-			
-			EventBus.Subscribe(EGameplayChangeStateTriggerEvent.StartNightPhaseTrigger, StartNightPhase);
+			Owner.DayCycleVisualChanger.SetDay();
+			EventBus.Subscribe<EGameplayChangedPhaseEvent, StartNightEventData>(EGameplayChangedPhaseEvent.NightStarted, StartNightPhase);
 		}
 
-		private void StartNightPhase()
+		private void StartNightPhase(StartNightEventData data)
 		{
 			Owner.EnterIn<NightPhaseState>();
-		}
-
-		private void OnCurtainShowEnded()
-		{
-			LocationChanger.ChangeLocation(Owner.DayStartLocationtransform, needCurtain: false);
-			Owner.DayCycleVisualChanger.SetDay();
-			
-			EventBus.Trigger(EGameplayChangedStateEvent.OnEndNightPhase);
-			
-			Curtain.Hide(0.01f);
-			InputHandler.Enable();
 		}
 		
 		public override void Exit()
 		{
-			EventBus.Unsubscribe(EGameplayChangeStateTriggerEvent.StartNightPhaseTrigger, StartNightPhase);
+			EventBus.Unsubscribe<EGameplayChangedPhaseEvent, StartNightEventData>(EGameplayChangedPhaseEvent.NightStarted, StartNightPhase);
 		}
 	}
 }

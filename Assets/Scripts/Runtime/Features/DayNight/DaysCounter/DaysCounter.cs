@@ -1,5 +1,6 @@
 using PrimeTween;
 using Runtime.Common.Enums;
+using Runtime.Common.Helpers;
 using Runtime.Common.Services.EventBus;
 using TMPro;
 using UnityEngine;
@@ -30,12 +31,12 @@ namespace Runtime.Features.DayNight.DaysCounter
             if (_dayText != null) 
                 _dayText.alpha = 0;
             
-            _eventBus.Subscribe<EGameplayChangedStateEvent, int>(EGameplayChangedStateEvent.OnStartNightPhase, StartNightPhaseHandler);
+            _eventBus.Subscribe<EGameplayChangedPhaseEvent, StartNightEventData>(EGameplayChangedPhaseEvent.NightStarted, StartNightPhaseHandler);
         }
 
         private void OnDisable()
         {
-            _eventBus.Unsubscribe<EGameplayChangedStateEvent, int>(EGameplayChangedStateEvent.OnStartNightPhase, StartNightPhaseHandler);
+            _eventBus.Unsubscribe<EGameplayChangedPhaseEvent, StartNightEventData>(EGameplayChangedPhaseEvent.NightStarted, StartNightPhaseHandler);
         }
 
         private void OnDestroy()
@@ -43,9 +44,9 @@ namespace Runtime.Features.DayNight.DaysCounter
             _fadeSequence.Stop();
         }
         
-        private void StartNightPhaseHandler(int currentDay)
+        private void StartNightPhaseHandler(StartNightEventData data)
         {
-            UpdateVisual(currentDay);
+            UpdateVisual(data.CurrentDay);
         }
 
         private void UpdateVisual(int currentDay)

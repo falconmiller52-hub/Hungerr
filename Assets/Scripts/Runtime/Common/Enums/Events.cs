@@ -13,28 +13,34 @@ namespace Runtime.Common.Enums
 	/// <summary>
 	/// ивент о триггере для смены геймплейной фазы (дня или ночи)
 	/// </summary>
-	public enum EGameplayChangeStateTriggerEvent
+	public enum EGameplayChangePhaseTriggerEvent
 	{
-		StartNightPhaseTrigger,
-		EndNightPhaseTrigger,
+		StartNightTrigger = 0,
+		StartDayTrigger,
 	}
 	
 	/// <summary>
 	/// ивент о смене новой геймплейной фазы (дня или ночи)
 	/// </summary>
-	public enum EGameplayChangedStateEvent
+	public enum EGameplayChangedPhaseEvent
 	{
-		OnStartNightPhase,
-		OnEndNightPhase,
+		NightStarted = 0,
+		DayStarted,
 	}
 
 	public enum EPlayerStanceEvent
 	{
-		StartWalkState,
+		StartWalkState = 0,
 		StartRunState,
 		StartCrouchState
 	}
 
+	public enum ESupervisionTriggerEvent
+	{
+		NightLate = 0,
+		DomovoiDontFeeded
+	}
+	
 	public enum EDomovoiSatietyLevel
 	{
 		Normal = 0,
