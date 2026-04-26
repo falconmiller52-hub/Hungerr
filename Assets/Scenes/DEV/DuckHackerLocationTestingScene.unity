@@ -341,7 +341,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2506014e875b8342aea9e0b478c1a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _eventType: 0
+  triggerEventType: 0
 --- !u!23 &326087268
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -891,7 +891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2506014e875b8342aea9e0b478c1a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _eventType: 1
+  triggerEventType: 0
 --- !u!23 &789576961
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1081,8 +1081,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _materialSounds:
-  - {fileID: 11400000, guid: e1a1a20461912b541a85aead2f4cdded, type: 2}
-  - {fileID: 11400000, guid: 499b3a6bf93673e4ba56cdb5d99b8d2e, type: 2}
+  - Guid:
+      Data1: 753262989
+      Data2: 1192397846
+      Data3: 1381036437
+      Data4: 562968933
+    Path: event:/SFX/Player_action/player_footsteps
+  - Guid:
+      Data1: 753262989
+      Data2: 1192397846
+      Data3: 1381036437
+      Data4: 562968933
+    Path: event:/SFX/Player_action/player_footsteps
 --- !u!95 &818432570
 Animator:
   serializedVersion: 7
@@ -1691,8 +1701,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _materialSounds:
-  - {fileID: 11400000, guid: 165547486abab514898ef9e2e7530f6e, type: 2}
-  - {fileID: 11400000, guid: 1c2a77a776a785847bd90869b7504b4d, type: 2}
+  - Guid:
+      Data1: 753262989
+      Data2: 1192397846
+      Data3: 1381036437
+      Data4: 562968933
+    Path: event:/SFX/Player_action/player_footsteps
+  - Guid:
+      Data1: 753262989
+      Data2: 1192397846
+      Data3: 1381036437
+      Data4: 562968933
+    Path: event:/SFX/Player_action/player_footsteps
 --- !u!1001 &1360060355
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2433,8 +2453,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isOnce: 1
-  _isMonolog: 1
   _storyJson: {fileID: 4900000, guid: 164279099d9085b4a91c44758f8c52a1, type: 3}
+  _playerMonologSound:
+    Guid:
+      Data1: 1701439014
+      Data2: 1152929589
+      Data3: 1089470357
+      Data4: -939924557
+    Path: event:/SFX/NPC/Butcher/butcher_talk
 --- !u!1001 &2706023828363385955
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,9 +1,8 @@
-using System;
 using FMODUnity;
 using Ink.Runtime;
 using Runtime.Common.Enums;
 using Runtime.Common.Services.EventBus;
-using Runtime.Features.Dialog;
+using Runtime.Features._Story;
 using UnityEngine;
 using Zenject;
 
@@ -18,13 +17,13 @@ namespace Runtime.Features.Enemy.Domovoi
         private EventReference _playerMonologSound;
         
         private EventBus _eventBus;
-        private DialogSystem _dialogSystem;
+        private StorySystem _storySystem;
 
         [Inject]
-        private void Construct(EventBus eventBus, DialogSystem dialogSystem)
+        private void Construct(EventBus eventBus, StorySystem storySystem)
         {
             _eventBus = eventBus;
-            _dialogSystem = dialogSystem;
+            _storySystem = storySystem;
         }
 
         private void Start()
@@ -46,7 +45,7 @@ namespace Runtime.Features.Enemy.Domovoi
             
             Story monolog = new Story(_normalSatietyLevelMonologText.text);
 
-            _dialogSystem.StartStory(monolog, _playerMonologSound, isMonolog: true);
+            _storySystem.StartStory(monolog, _playerMonologSound, isMonolog: true);
         }
         
         private void OnCriticalDomovoiSatietyLevelTriggered()
@@ -56,7 +55,7 @@ namespace Runtime.Features.Enemy.Domovoi
             
             Story monolog = new Story(_criticalSatietyLevelMonologText.text);
 
-            _dialogSystem.StartStory(monolog, _playerMonologSound, isMonolog: true);
+            _storySystem.StartStory(monolog, _playerMonologSound, isMonolog: true);
         }
         
     }
