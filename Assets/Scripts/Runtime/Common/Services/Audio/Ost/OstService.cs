@@ -11,7 +11,7 @@ namespace Runtime.Common.Services.Audio.Ost
 	// TODO: как то переходы работают не так, нужно послушать и подумать как сделать правильнее
 	public class OstService : MonoBehaviour
 	{
-		private SoundService _soundService;
+		private ISoundService _soundService;
 
 		private EventInstance _currentOstInstance;
 		private EventInstance _newOstInstance;
@@ -19,11 +19,15 @@ namespace Runtime.Common.Services.Audio.Ost
 		private Coroutine _ostFadeRoutine;
 
 		[Inject]
-		private void Construct(SoundService soundService)
+		private void Construct(ISoundService soundService)
 		{
 			_soundService = soundService;
 		}
-
+		
+		/// <summary>
+		/// Меняем Ost звук. Старый плавно затухает, новый плавно нарастает
+		/// </summary>
+		/// <param name="eventReference">Ost который нужно запустить</param>
 		public void StartOst(EventReference eventReference)
 		{
 			_currentOstInstance.getPlaybackState(out PLAYBACK_STATE state);
