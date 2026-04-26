@@ -1,4 +1,3 @@
-using Runtime.Infra.App.GlobalStateMachine;
 using Runtime.Infra.GameplayScene.GameplayStateMachine;
 using Runtime.Infra.GameplayScene.GameplayStateMachine.States;
 using UnityEngine;
@@ -34,7 +33,7 @@ namespace Runtime.Features.GameOver.View
 		{
 			_gameOverPanel.SetActive(true);
 		}
-		
+
 		private void BackToMenu()
 		{
 			_sceneStateMachine.EnterIn<ExitGameplayState>();

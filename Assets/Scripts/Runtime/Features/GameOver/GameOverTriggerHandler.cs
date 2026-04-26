@@ -21,9 +21,11 @@ namespace Runtime.Features.GameOver
 
 			_eventBus.Subscribe(EGameOver.PlayerOnZeroHealth, PlayerZeroHealthGameOver);
 		}
-		
+
 		private void PlayerZeroHealthGameOver()
 		{
+			_eventBus.Unsubscribe(EGameOver.PlayerOnZeroHealth, PlayerZeroHealthGameOver);
+
 			_gameOverCurtain.ShowCurtain();
 			GameOver();
 		}
@@ -32,7 +34,7 @@ namespace Runtime.Features.GameOver
 		{
 			Cursor.lockState = CursorLockMode.None;
 			Cursor.visible = true;
-			
+
 			_pauseController.PerformStop();
 		}
 	}
