@@ -31,10 +31,7 @@ namespace Runtime.Common.Services.Audio.Ost
 			if (state == PLAYBACK_STATE.PLAYING)
 			{
 				if (_ostFadeRoutine == null)
-				{
 					_ostFadeRoutine = StartCoroutine(OstFadeRoutine(eventReference));
-					//_currentOstInstance.stop(STOP_MODE.ALLOWFADEOUT);		
-				}
 				else
 					Debug.LogError("Ost попытался запуститься пока другой ost тоже пытался запуститься");
 
