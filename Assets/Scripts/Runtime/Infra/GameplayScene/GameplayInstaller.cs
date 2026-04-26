@@ -1,10 +1,11 @@
 using Runtime.Common.Factories.StateFactory;
 using Runtime.Common.Services.Pause;
+using Runtime.Features._Story;
 using Runtime.Features.DayNight.StateMachine;
-using Runtime.Features.Dialog;
 using Runtime.Features.Enemy;
 using Runtime.Features.ItemSpawner;
 using Runtime.Features.Location;
+using Runtime.Features.Trade;
 using UnityEngine;
 using Zenject;
 
@@ -16,18 +17,26 @@ namespace Runtime.Infra.GameplayScene
 		[SerializeField] private PhaseStateMachine _phaseStateMachine;
 		[SerializeField] private LocationChanger _locationChanger;
 		[SerializeField] private EnemiesBootstrap _enemiesBootstrap;
-		[SerializeField] private DialogSystem _dialogSystem;
+		[SerializeField] private StorySystem _storySystem;
 		[SerializeField] private ItemSpawner _itemSpawner;
-		
+
 		public override void InstallBindings()
 		{
 			BindGameplayStateMachine();
 			BindPhaseStateMachine();
 			BindLocationChanger();
 			BindEnemiesController();
-			BindDialogSystem();
+			BindStorySystem();
 			BindPauseController();
 			BindItemSpawner();
+
+			BindTradeSystem();
+		}
+
+		private void BindTradeSystem()
+		{
+			Container.Bind<ITrade>().To<Trade>().AsSingle();
+			Container.Bind<TradeTagHandler>().AsSingle();
 		}
 
 		private void BindPauseController()
@@ -35,9 +44,10 @@ namespace Runtime.Infra.GameplayScene
 			Container.Bind<IPauseController>().To<PauseController>().AsSingle();
 		}
 
-		private void BindDialogSystem()
+		private void BindStorySystem()
 		{
-			Container.Bind<DialogSystem>().FromInstance(_dialogSystem).AsSingle();
+			Container.Bind<StorySystem>().FromInstance(_storySystem).AsSingle();
+			Container.Bind<StoryTagSystem>().AsSingle();
 		}
 
 		private void BindEnemiesController()
@@ -54,7 +64,7 @@ namespace Runtime.Infra.GameplayScene
 		{
 			Container.Bind<PhaseStateMachine>().FromInstance(_phaseStateMachine).AsSingle();
 		}
-		
+
 		private void BindItemSpawner()
 		{
 			Container.Bind<ItemSpawner>().FromInstance(_itemSpawner).AsSingle();

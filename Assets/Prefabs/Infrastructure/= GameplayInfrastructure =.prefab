@@ -269,7 +269,7 @@ MonoBehaviour:
   _phaseStateMachine: {fileID: 7435694777528967458}
   _locationChanger: {fileID: 1908752502828135830}
   _enemiesBootstrap: {fileID: 8264645752893384828}
-  _dialogSystem: {fileID: 274316078477398296}
+  _storySystem: {fileID: 274316078477398296}
   _itemSpawner: {fileID: 5004936188988711940}
 --- !u!1 &4321713733802562588
 GameObject:
@@ -598,7 +598,7 @@ GameObject:
   - component: {fileID: 1903292228514625195}
   - component: {fileID: 274316078477398296}
   m_Layer: 0
-  m_Name: = DialogSystem =
+  m_Name: = StorySystem =
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
