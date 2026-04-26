@@ -13,7 +13,6 @@ namespace Runtime.Infra.App
 		public override void InstallBindings()
 		{
 			BindLoadingCurtain();
-			BindAudioService();
 		}
 
 		private void BindLoadingCurtain()
@@ -22,11 +21,6 @@ namespace Runtime.Infra.App
 							.BindInterfacesAndSelfTo<Curtain>()
 							.FromComponentInNewPrefab(_loadingCurtainPrefab)
 							.AsSingle();
-		}
-
-		public void BindAudioService()
-		{
-			Container.BindInterfacesAndSelfTo<AudioService>().AsSingle();
 		}
 	}
 }
