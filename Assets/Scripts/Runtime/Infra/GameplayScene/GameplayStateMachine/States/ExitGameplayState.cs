@@ -23,7 +23,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			// save game
 			// clear subscriptions
 			// release the addressables assets
-			
+
 			_eventBus.Trigger(EGameEvent.EndGameplay);
 		}
 

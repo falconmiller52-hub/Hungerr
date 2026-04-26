@@ -3,6 +3,7 @@ using Runtime.Common.Services.Input;
 using Runtime.Common.Services.ResourceLoad;
 using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy;
+using Runtime.Features.GameOver;
 using Runtime.Features.Location;
 using Runtime.Features.Player.Other;
 using UnityEngine;
@@ -25,11 +26,14 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		private readonly LocationChanger _locationChanger;
 		private readonly DiContainer _container;
 		private readonly EnemiesBootstrap _enemiesBootstrap;
+		
+		private GameOverTriggerHandler _gameOverTriggerHandler;
 
 		[Inject]
-		public EntryGameplayState(SceneStateMachine sceneStateMachine, PhaseStateMachine phaseStateMachine, 
-			StateFactory stateFactory, InputHandler inputHandler, IResourceLoader resourceLoader, LocationChanger locationChanger,
-			DiContainer diContainer, EnemiesBootstrap enemiesBootstrap)
+		public EntryGameplayState(SceneStateMachine sceneStateMachine, PhaseStateMachine phaseStateMachine,
+						StateFactory stateFactory, InputHandler inputHandler, IResourceLoader resourceLoader,
+						LocationChanger locationChanger,
+						DiContainer diContainer, EnemiesBootstrap enemiesBootstrap)
 		{
 			_sceneStateMachine = sceneStateMachine;
 			_phaseStateMachine = phaseStateMachine;
@@ -46,43 +50,47 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			// Выключили курсор при старте игры
 			Cursor.lockState = CursorLockMode.Locked;
 			Cursor.visible = false;
-			
+
 			// заглушка пока нет адресаблов
 			GameObject playerPrefab = _resourceLoader.Load<GameObject>("Player");
 
 			PlayerSpawnPoint playerSpawnPoint = Object.FindFirstObjectByType<PlayerSpawnPoint>();
-			
+
 			if (playerSpawnPoint == null)
 			{
 				Debug.LogError("EntryGameplayState::Enter() playerSpawnPoint is NULL");
 			}
 
-			GameObject playerInstance = _container.InstantiatePrefab(playerPrefab, 
-				playerSpawnPoint ? playerSpawnPoint.transform.position : Vector3.one, 
-				Quaternion.identity, 
-				null);
-			
+			GameObject playerInstance = _container.InstantiatePrefab(playerPrefab,
+							playerSpawnPoint ? playerSpawnPoint.transform.position : Vector3.one,
+							Quaternion.identity,
+							null);
+
 			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
-			
+
 			_inputHandler.Init();
 			_enemiesBootstrap.Init(playerInstance);
-			
+
+			_container.Instantiate<GameOverTriggerHandler>();
+
 			// init PhaseStateMachine
 			DayPhaseState dayPhaseState = _stateFactory.Create<DayPhaseState>();
 			_phaseStateMachine.RegisterState(dayPhaseState);
-			
+
 			NightPhaseState nightPhaseState = _stateFactory.Create<NightPhaseState>();
 			_phaseStateMachine.RegisterState(nightPhaseState);
-			
+
 			FirstDayPhaseState firstDayPhaseState = _stateFactory.Create<FirstDayPhaseState>();
 			_phaseStateMachine.RegisterState(firstDayPhaseState);
-			
+
+
 			_phaseStateMachine.EnterIn<FirstDayPhaseState>();
-			
+
 			// Enter in main Gameplay State
 			_sceneStateMachine.EnterIn<PlayGameplayState>();
+			
 		}
-		
+
 		public void Exit()
 		{
 		}
