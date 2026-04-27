@@ -59,16 +59,19 @@ namespace Runtime.Features.Enemy.Domovoi
 		/// <returns>bool as NeedToTriggerDontFeed | EDomovoiSatietyLevel as level of satiety</returns>
 		public (bool, EDomovoiSatietyLevel) StartDayPhaseHandler()
 		{
-			// выбираем рандомный паттерн поведения на сейчас
-			var pattern = _currentLevelData.Patterns.Random();
-
-			pattern.Trigger();
-
 			// кидаем ивент в зависимости от уровня сытости, если мало (по текущему уровню) то будет больно
 			if (_satiety < _currentLevelData.SatietyTreshholdForActivation)
 				_satietyLevel = EDomovoiSatietyLevel.Critical;
 			else
 				_satietyLevel = EDomovoiSatietyLevel.Normal;
+			
+			// выбираем рандомный паттерн поведения на сейчас если уровень сытости - критический
+			if (_satietyLevel == EDomovoiSatietyLevel.Critical)
+			{
+				var pattern = _currentLevelData.Patterns.Random();
+	
+				pattern.Trigger();
+			}
 
 			if (_needToTriggerDontFeed)
 			{
