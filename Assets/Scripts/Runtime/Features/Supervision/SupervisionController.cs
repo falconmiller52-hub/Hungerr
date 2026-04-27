@@ -112,6 +112,10 @@ namespace Runtime.Features.Supervision
 		private void TriggerBadEnding()
 		{
 			Debug.Log("BAD ENDING TRIGGERED");
+			
+			// пока смерть через фатальное кол-во дамага
+			if (_playerHealth != null)
+				_playerHealth.ApplyDamage(9999);
 		}
 	}
 }
