@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bd48263934a4664bbbb6c05fb42340d, type: 3}
   m_Name: Food_Test_Item
   m_EditorClassIdentifier: 
+  <Id>k__BackingField: 3
   <ItemName>k__BackingField: Food
   <Description>k__BackingField: 
   <MaxStackSize>k__BackingField: 64
