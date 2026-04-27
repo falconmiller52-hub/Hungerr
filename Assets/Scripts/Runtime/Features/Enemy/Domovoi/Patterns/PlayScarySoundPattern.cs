@@ -32,6 +32,9 @@ namespace Runtime.Features.Enemy.Domovoi.Patterns
 		private void Start()
 		{
 			_pointToStartRandomSound = transform;
+			
+			if (!_randomSoundPoints.Contains(_pointToStartRandomSound))
+				_randomSoundPoints.Add(_pointToStartRandomSound);
 		}
 
 		private void OnDisable()
@@ -61,7 +64,7 @@ namespace Runtime.Features.Enemy.Domovoi.Patterns
 			while (true)
 			{
 				if (_randomSoundPoints.Count > 0)
-					_pointToStartRandomSound = _randomSoundPoints.Random();
+					_pointToStartRandomSound = _randomSoundPoints.RandomExcept(_pointToStartRandomSound);
 				
 				_soundService.PlayOneShotAt(_randomSoundEvent, _pointToStartRandomSound.position);
 
