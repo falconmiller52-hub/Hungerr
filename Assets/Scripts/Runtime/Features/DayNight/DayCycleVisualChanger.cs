@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-
 namespace Runtime.Features.DayNight
 {
 	/// <summary>
@@ -11,7 +10,6 @@ namespace Runtime.Features.DayNight
 	public class DayCycleVisualChanger : MonoBehaviour
 	{
 		[SerializeField] private Light _directionalLight;
-
 		[SerializeField] private Light _moon;
 		
 		[Header("Day Settings")] [SerializeField]
@@ -23,7 +21,7 @@ namespace Runtime.Features.DayNight
 
 		[Header("Night Gradient Settings")] 
 		[SerializeField] private float _nightStartLightXRotation = -90f;
-		[SerializeField]  private float _nightStartLightXRotationMoon = 90f;
+		[SerializeField] private float _nightStartLightXRotationMoon = 90f;
 		[SerializeField] private float _startMoonIntensity = 4.0f;
 
 		[SerializeField] private Material _nightSkybox;
