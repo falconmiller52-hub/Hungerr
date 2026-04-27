@@ -27,9 +27,7 @@ namespace Runtime.Common.Services.SaveLoad
 		public GameStateData LoadData()
 		{
 			if (!File.Exists(_filePath))
-			{
 				return null;
-			}
 
 			BinaryFormatter binaryFormatter = new BinaryFormatter();
 			FileStream fileStream = new FileStream(_filePath, FileMode.Open);
