@@ -1,9 +1,15 @@
+using System.Collections.Generic;
 using Runtime.Common.Factories.StateFactory;
 using Runtime.Common.Services.Input;
+using Runtime.Common.Services.ItemsIdentifier;
 using Runtime.Common.Services.ResourceLoad;
+using Runtime.Common.Services.SaveLoad;
 using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy;
 using Runtime.Features.GameOver;
+using Runtime.Features.Health;
+using Runtime.Features.Inventory;
+using Runtime.Features.Inventory.View.EntryPoint;
 using Runtime.Features.Location;
 using Runtime.Features.Player.Movement;
 using Runtime.Features.Player.Other;
@@ -27,6 +33,8 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		private readonly LocationChanger _locationChanger;
 		private readonly DiContainer _container;
 		private readonly EnemiesBootstrap _enemiesBootstrap;
+		private readonly ISaveLoadService _saveLoadService;
+		private readonly ItemsIdentifierSO _identifierSO;
 		
 		private GameOverTriggerHandler _gameOverTriggerHandler;
 
@@ -34,7 +42,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		public EntryGameplayState(SceneStateMachine sceneStateMachine, PhaseStateMachine phaseStateMachine,
 						StateFactory stateFactory, InputHandler inputHandler, IResourceLoader resourceLoader,
 						LocationChanger locationChanger,
-						DiContainer diContainer, EnemiesBootstrap enemiesBootstrap)
+						DiContainer diContainer, EnemiesBootstrap enemiesBootstrap, ISaveLoadService saveLoadService, ItemsIdentifierSO itemsIdentifierSO)
 		{
 			_sceneStateMachine = sceneStateMachine;
 			_phaseStateMachine = phaseStateMachine;
@@ -44,6 +52,8 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			_locationChanger = locationChanger;
 			_container = diContainer;
 			_enemiesBootstrap = enemiesBootstrap;
+			_saveLoadService = saveLoadService;
+			_identifierSO = itemsIdentifierSO;
 		}
 
 		public void Enter()
@@ -54,19 +64,21 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 
 			// заглушка пока нет адресаблов
 			GameObject playerPrefab = _resourceLoader.Load<GameObject>("Player");
-
 			PlayerSpawnPoint playerSpawnPoint = Object.FindFirstObjectByType<PlayerSpawnPoint>();
 
 			if (playerSpawnPoint == null)
-			{
 				Debug.LogError("EntryGameplayState::Enter() playerSpawnPoint is NULL");
-			}
 
 			GameObject playerInstance = _container.InstantiatePrefab(playerPrefab,
 							playerSpawnPoint ? playerSpawnPoint.transform.position : Vector3.one,
 							Quaternion.identity,
 							null);
-
+			
+			GameStateData loadedData = _saveLoadService.LoadData();
+			
+			if (loadedData != null && playerInstance != null)
+				ApplyLoadedData(loadedData, playerInstance);
+			
 			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
 
 			_inputHandler.Init();
@@ -90,6 +102,27 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			// Enter in main Gameplay State
 			_sceneStateMachine.EnterIn<PlayGameplayState>();
 			
+		}
+
+		private void ApplyLoadedData(GameStateData loadedData, GameObject playerInstance)
+		{
+			if (loadedData.Slots != null && loadedData.Slots.Count > 0)
+			{
+				PlayerInventory playerInventory = playerInstance.GetComponentInChildren<PlayerInventory>();
+				// убеждаемся что инвентарь точно есть
+				playerInventory.InitInventoryModel();
+				foreach (var slot in loadedData.Slots)
+				{
+					var item = new InventoryItem(_identifierSO.GetItemDataById(slot.ItemDataID), slot.Amount);
+					playerInventory.AddItem(item, slot.Position.ToVector());
+				}
+			}
+
+			if (loadedData.Health > 0)
+			{
+				var playerHealth = playerInstance.GetComponentInChildren<PlayerHealth>();
+				playerHealth.SetHealth(loadedData.Health);
+			}
 		}
 
 		public void Exit()

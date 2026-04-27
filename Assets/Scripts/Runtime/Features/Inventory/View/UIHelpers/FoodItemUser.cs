@@ -1,5 +1,6 @@
 using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.Input;
+using Runtime.Features.Inventory.View.EntryPoint;
 using Runtime.Features.Player.Other;
 using UnityEngine;
 using Zenject;
