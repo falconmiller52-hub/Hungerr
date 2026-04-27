@@ -28,7 +28,6 @@ namespace Runtime.Common.Services.SaveLoad
 		{
 			if (!File.Exists(_filePath))
 			{
-				Debug.LogError("Save file not found!");
 				return null;
 			}
 
