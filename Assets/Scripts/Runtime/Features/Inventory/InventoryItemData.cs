@@ -3,9 +3,12 @@ using UnityEngine;
 
 namespace Runtime.Features.Inventory
 {
+	[Serializable]
 	[CreateAssetMenu(fileName = "ItemData",  menuName = "Inventory/Item Data")]
 	public class InventoryItemData : ScriptableObject
 	{
+		[field: SerializeField] public int Id { get; private set; }
+		
 		[Header("Basic Info")]
 		[field: SerializeField] public string ItemName { get; private set; } = String.Empty;
 		[field: SerializeField] public string Description { get; private set; } = String.Empty;

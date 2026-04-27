@@ -29,10 +29,10 @@ namespace Runtime.Features.Health
 			_eventBus = eventBus;
 		}
 
-		private float CurrentHealth
+		public float CurrentHealth
 		{
 			get => _currentHealth;
-			set
+			private set
 			{
 				_currentHealth = Mathf.Clamp(value, 0, _maxHealth);
 			}
@@ -58,6 +58,11 @@ namespace Runtime.Features.Health
 			_counterUI.UpdateUI(_currentHealth, _maxHealth);
 			
 			ShakeCameraOnDamage();
+		}
+
+		public void SetHealth(float value)
+		{
+			CurrentHealth = value;
 		}
 		
 		private void ShakeCameraOnDamage()

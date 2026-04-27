@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad149e7783e9e594fa12bb5f99611174, type: 3}
   m_Name: Battery_Item
   m_EditorClassIdentifier: 
+  <Id>k__BackingField: 1
   <ItemName>k__BackingField: Battery
   <Description>k__BackingField: "\u041F\u0440\u043E\u0441\u0442\u043E \u0431\u0430\u0442\u0430\u0440\u0435\u0439\u043A\u0430,
     \u043B\u043E\u043B"
