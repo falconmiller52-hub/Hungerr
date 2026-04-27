@@ -1,5 +1,8 @@
+using Runtime.Common.Services.Audio.Sound;
+using Runtime.Common.Services.Input;
 using Runtime.Features.Player.Other;
 using UnityEngine;
+using Zenject;
 
 namespace Runtime.Features.Inventory.View.UIHelpers
 {
@@ -7,33 +10,48 @@ namespace Runtime.Features.Inventory.View.UIHelpers
 	{
 		[Header("References")] 
 		[SerializeField] private PlayerFoodController _playerFoodController;
-
 		[SerializeField] private PlayerInventory _playerInventory;
-		[Header("Settings")] [SerializeField] private Inventory3DView _view;
+		
+		[Header("Settings")] 
+		[SerializeField] private Inventory3DView _view;
 		[SerializeField] private Camera _mainCamera;
 		[SerializeField] private LayerMask _gridLayer;
 
-		// Update is called once per frame
-		void Update()
+		private IInputHandler _inputHandler;
+
+		[Inject]
+		private void Construct(ISoundService soundService, IInputHandler inputHandler)
 		{
-			if (Input.GetMouseButtonDown(1))
-			{
-				Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
+			_inputHandler = inputHandler;
+		}
+
+		private void Start()
+		{
+			_inputHandler.InventoryUsePressed += OnInventoryUsePressed;
+		}
+
+		private void OnDisable()
+		{
+			_inputHandler.InventoryUsePressed -= OnInventoryUsePressed;
+		}
+
+		private void OnInventoryUsePressed()
+		{
+			Ray ray = _mainCamera.ScreenPointToRay(Input.mousePosition);
 				
-				if (Physics.Raycast(ray, out RaycastHit hit, 20f, _gridLayer))
+			if (Physics.Raycast(ray, out RaycastHit hit, 20f, _gridLayer))
+			{
+				Vector3 localPos = _view.GridAnchor.InverseTransformPoint(hit.point);
+				Vector2Int hoveredCoords = LocalToGrid(localPos, _view);
+				var slot = _view.Model.GetSlot(hoveredCoords);
+
+				if (slot == null || slot.IsEmpty)
+					return;
+
+				if (slot.Item.Data is FoodInventoryItemData data)
 				{
-					Vector3 localPos = _view.GridAnchor.InverseTransformPoint(hit.point);
-					Vector2Int hoveredCoords = LocalToGrid(localPos, _view);
-					var slot = _view.Model.GetSlot(hoveredCoords);
-
-					if (slot == null || slot.IsEmpty)
-						return;
-
-					if (slot.Item.Data is FoodInventoryItemData data)
-					{
-						_playerFoodController.ApplyFoodIncrease(data.Satiety);
-						_playerInventory.RemoveItem(hoveredCoords);
-					}
+					_playerFoodController.ApplyFoodIncrease(data.Satiety);
+					_playerInventory.RemoveItem(hoveredCoords);
 				}
 			}
 		}
