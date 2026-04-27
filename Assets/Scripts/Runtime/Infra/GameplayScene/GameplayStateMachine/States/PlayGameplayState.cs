@@ -91,7 +91,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				else
 				{
 					_supervisionController.ClearAllPunishObjects();
-					_locationChanger.ChangeLocation(_phaseStateMachine.DayStartLocationtransform, needCurtain: false);
+					_locationChanger.ChangeLocation(_phaseStateMachine.DayStartLocationtransform);
 					_eventBus.Trigger(domovoiData.Item2);
 				}
 
@@ -125,7 +125,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				var startPhaseData = new StartNightEventData();
 				startPhaseData.CurrentDay = _currentDay;
 
-				_locationChanger.ChangeLocation(_phaseStateMachine.NightStartLocationtransform, needCurtain: false);
+				_locationChanger.ChangeLocation(_phaseStateMachine.NightStartLocationtransform);
 
 				_phaseStateMachine.EnterIn<NightPhaseState>();
 

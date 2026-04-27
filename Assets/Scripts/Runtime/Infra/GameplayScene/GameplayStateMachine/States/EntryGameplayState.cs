@@ -11,6 +11,7 @@ using Runtime.Features.Health;
 using Runtime.Features.Inventory;
 using Runtime.Features.Inventory.View.EntryPoint;
 using Runtime.Features.Location;
+using Runtime.Features.Player.Movement;
 using Runtime.Features.Player.Other;
 using UnityEngine;
 using Zenject;

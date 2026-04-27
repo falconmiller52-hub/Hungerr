@@ -74,7 +74,7 @@ namespace Runtime.Features.Supervision
 		private void HandleFirstLateNight()
 		{
 			// Телепорт домой
-			_locationChanger.ChangeLocation(_homeSpawnPoint, needCurtain: false);
+			_locationChanger.ChangeLocation(_homeSpawnPoint);
 
 			// Эффекты
 			// PlayAlarmSound();
@@ -87,7 +87,7 @@ namespace Runtime.Features.Supervision
 		private void HandleSeverePunishment(int count)
 		{
 			// Телепорт в комнату Домового
-			_locationChanger.ChangeLocation(_domovoiRoomSpawnPoint, needCurtain: false);
+			_locationChanger.ChangeLocation(_domovoiRoomSpawnPoint);
 
 			// Понижение ХП 
 			if (_playerHealth != null)
