@@ -1,4 +1,3 @@
-using NaughtyAttributes;
 using PrimeTween;
 using Runtime.Common.Enums;
 using Runtime.Common.Services.EventBus;
@@ -19,9 +18,8 @@ namespace Runtime.Features.Health
 		[SerializeField, Tooltip("Сила тряски по осям (вращение)")] private Vector3 _shakeStrength = new Vector3(5f, 5f, 2f); 
 		[SerializeField, Tooltip("Насколько часто будет дергаться камера")] private int _vibrato = 10; 
 		
-		private float _currentHealth;
-
 		private EventBus _eventBus;
+		private float _currentHealth;
 
 		[Inject]
 		private void Construct(EventBus eventBus)
@@ -45,15 +43,12 @@ namespace Runtime.Features.Health
 			_counterUI.UpdateUI(_currentHealth, _maxHealth);
 		}
 		
-		
 		public void ApplyDamage(int value)
 		{
 			CurrentHealth -= value;
 
 			if (CurrentHealth <= 0)
-			{
 				_eventBus.Trigger(EGameOver.PlayerOnZeroHealth);
-			}
 			
 			_counterUI.UpdateUI(_currentHealth, _maxHealth);
 			
