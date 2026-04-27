@@ -5,6 +5,7 @@ using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy;
 using Runtime.Features.GameOver;
 using Runtime.Features.Location;
+using Runtime.Features.Player.Movement;
 using Runtime.Features.Player.Other;
 using UnityEngine;
 using Zenject;
@@ -66,7 +67,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 							Quaternion.identity,
 							null);
 
-			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
+			_locationChanger.Init(playerInstance.GetComponentInChildren<PlayerMovement>(), playerInstance.GetComponentInChildren<CharacterController>());
 
 			_inputHandler.Init();
 			_enemiesBootstrap.Init(playerInstance);

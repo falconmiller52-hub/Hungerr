@@ -1,4 +1,6 @@
-using System;
+using System.Collections;
+using Runtime.Common.Services.LoadingCurtain;
+using Runtime.Common.Services.Pause;
 using Runtime.Features.Interactable;
 using UnityEngine;
 using Zenject;
@@ -15,16 +17,29 @@ namespace Runtime.Features.Location
 		[SerializeField] private LocationChangerData _locationChangerData;
 		
 		private LocationChanger _locationChanger;
+		private ILoadingCurtain _curtain;
+		private IPauseController _pauseController;
 
 		[Inject]
-		private void Construct(LocationChanger locationChanger)
+		private void Construct(LocationChanger locationChanger, ILoadingCurtain loadingCurtain, IPauseController pauseController)
 		{
 			_locationChanger = locationChanger;
+			_curtain = loadingCurtain;
+			_pauseController = pauseController;
 		}
 
 		public void Interact()
 		{
-			_locationChanger.ChangeLocation(_nextPositionTransform, _locationChangerData);
+			_pauseController.PerformStop();
+			_curtain.Show(_locationChangerData.FadeInSpeed, onEnd: Teleport);
+		}
+
+		private void Teleport()
+		{
+			_locationChanger.ChangeLocation(_nextPositionTransform);
+			_curtain.Hide(_locationChangerData.FadeOutSpeed);
+			
+			_pauseController.PerformResume();
 		}
 	}
 }
