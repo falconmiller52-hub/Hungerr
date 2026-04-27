@@ -7,7 +7,6 @@ using Runtime.Common.Services.StateMachine;
 using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy.Domovoi;
 using Runtime.Features.Location;
-using Runtime.Features.Player.Other;
 using Runtime.Features.Supervision;
 using UnityEngine;
 using Zenject;
@@ -28,7 +27,6 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 
 		private DomovoiAI _domovoiAI;
 		private SupervisionController _supervisionController;
-		private PlayerFoodController _playerFoodController;
 
 		private int _currentDay;
 
@@ -51,7 +49,6 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		{
 			_domovoiAI = Object.FindAnyObjectByType<DomovoiAI>();
 			_supervisionController = Object.FindAnyObjectByType<SupervisionController>();
-			_playerFoodController = Object.FindAnyObjectByType<PlayerFoodController>();
 
 			_eventBus.Subscribe<EGameplayChangePhaseTriggerEvent, StartDayTriggerEventData>(EGameplayChangePhaseTriggerEvent.StartDayTrigger, StartDayPhaseTriggered);
 			_eventBus.Subscribe(EGameplayChangePhaseTriggerEvent.StartNightTrigger, StartNightPhaseTriggered);
@@ -67,8 +64,6 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		/// <param name="data"></param>
 		private void StartDayPhaseTriggered(StartDayTriggerEventData data)
 		{
-			_playerFoodController.SetActiveFoodDrain(false);
-			
 			// ВЫКЛючаем инпут
 			_inputHandler.Disable();
 			// ВКЛючаем шторку
@@ -91,7 +86,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				else
 				{
 					_supervisionController.ClearAllPunishObjects();
-					_locationChanger.ChangeLocation(_phaseStateMachine.DayStartLocationtransform);
+					_locationChanger.ChangeLocation(_phaseStateMachine.DayStartLocationtransform, needCurtain: false);
 					_eventBus.Trigger(domovoiData.Item2);
 				}
 
@@ -125,7 +120,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				var startPhaseData = new StartNightEventData();
 				startPhaseData.CurrentDay = _currentDay;
 
-				_locationChanger.ChangeLocation(_phaseStateMachine.NightStartLocationtransform);
+				_locationChanger.ChangeLocation(_phaseStateMachine.NightStartLocationtransform, needCurtain: false);
 
 				_phaseStateMachine.EnterIn<NightPhaseState>();
 
@@ -135,8 +130,6 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				_curtain.Hide();
 				// ВКЛючаем инпут
 				_inputHandler.Enable();
-				
-				_playerFoodController.SetActiveFoodDrain(true);
 			}
 		}
 

@@ -1,9 +1,7 @@
 using UnityEngine;
 
-
 namespace Runtime.Features.Inventory
 {
-	[System.Serializable]
 	public class InventorySlot
 	{
 		public InventoryItem Item;

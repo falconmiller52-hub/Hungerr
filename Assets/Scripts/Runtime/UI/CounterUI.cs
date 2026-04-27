@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,9 +16,9 @@ namespace Runtime.UI
 				_image.gameObject.SetActive(false);
 		}
 
-		public void UpdateUI(float currentValue, float maxValue, string type = "")
+		public void UpdateUI(float currentValue, float maxValue)
 		{
-			_currentValueTextObject.text = currentValue.ToString(type);
+			_currentValueTextObject.text = currentValue.ToString();
 			_maxValueTextObject.text = $"/{maxValue}";
 		}
 	}

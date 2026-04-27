@@ -34,26 +34,21 @@ namespace Runtime.Features.DayNight.StateMachine
 			}
 			
 			Owner.DayCycleVisualChanger.SetNight();
+			EventBus.Subscribe(EGameplayChangedPhaseEvent.DayStarted, EndNightPhase);
 			
 			_isTimerActive = true;
 		}
 
 		public override void Exit()
 		{
-			_isTimerActive = false;
-			
-			if (_timeCounterUI != null)
-			{
-				_timeCounterUI.SetTimeState(false);
-				_timeCounterUI = null;
-			}
+			EventBus.Unsubscribe(EGameplayChangedPhaseEvent.DayStarted, EndNightPhase);
 		}
 		
 		public override void Update()
 		{
 			if (!_isTimerActive)
-				return;
 			
+				return;
 			_timeProgress += Time.deltaTime / Owner.NightDuration;
 
 			if (_timeProgress >= 1f)
@@ -67,6 +62,19 @@ namespace Runtime.Features.DayNight.StateMachine
 			
 			if (_timeCounterUI != null)
 				_timeCounterUI.SetTime(_timeProgress);
+		}
+		
+		private void EndNightPhase()
+		{
+			_isTimerActive = false;
+			
+			if (_timeCounterUI != null)
+			{
+				_timeCounterUI.SetTimeState(false);
+				_timeCounterUI = null;
+			}
+
+			Owner.EnterIn<DayPhaseState>();
 		}
 
 		private void TriggerForceNightEnd()

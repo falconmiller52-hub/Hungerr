@@ -19,10 +19,17 @@ namespace Runtime.Features.DayNight.StateMachine
 			Debug.Log("--- Наступил ДЕНЬ ---");
 			
 			Owner.DayCycleVisualChanger.SetDay();
+			EventBus.Subscribe<EGameplayChangedPhaseEvent, StartNightEventData>(EGameplayChangedPhaseEvent.NightStarted, StartNightPhase);
+		}
+
+		private void StartNightPhase(StartNightEventData data)
+		{
+			Owner.EnterIn<NightPhaseState>();
 		}
 		
 		public override void Exit()
 		{
+			EventBus.Unsubscribe<EGameplayChangedPhaseEvent, StartNightEventData>(EGameplayChangedPhaseEvent.NightStarted, StartNightPhase);
 		}
 	}
 }

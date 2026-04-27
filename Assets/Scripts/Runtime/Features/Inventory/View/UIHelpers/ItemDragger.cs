@@ -1,6 +1,6 @@
 using FMODUnity;
+using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Audio.Sound;
-using Runtime.Common.Services.Input;
 using UnityEngine;
 using Zenject;
 
@@ -12,8 +12,8 @@ namespace Runtime.Features.Inventory.View.UIHelpers
 	/// </summary>
 	public class ItemDragger : MonoBehaviour
 	{
-		[Header("References")] 
-		[SerializeField] private Camera _mainCamera;
+		[Header("References")] [SerializeField]
+		private Camera _mainCamera;
 
 		[SerializeField] private Inventory3DView _view;
 		[SerializeField] private LayerMask _gridLayer;
@@ -26,13 +26,11 @@ namespace Runtime.Features.Inventory.View.UIHelpers
 		private (Vector2Int, Inventory3DView) _originalPositionInInventory;
 		private InventoryItemView _ghostItem;
 		private ISoundService _soundService;
-		private IInputHandler _inputHandler;
 
 		[Inject]
-		private void Construct(ISoundService soundService, IInputHandler inputHandler)
+		private void Construct(ISoundService soundService)
 		{
 			_soundService = soundService;
-			_inputHandler = inputHandler;
 		}
 
 		public void OpenChest(Inventory3DView view)

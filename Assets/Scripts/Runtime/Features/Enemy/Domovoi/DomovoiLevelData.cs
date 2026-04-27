@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Runtime.Features.Enemy.Domovoi.Patterns;
 using UnityEngine;
 
 namespace Runtime.Features.Enemy.Domovoi
