@@ -1,9 +1,9 @@
 using Runtime.Common.Factories.StateFactory;
-using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.ResourceLoad;
+using Runtime.Common.Services.SaveLoad;
 using Zenject;
 
 namespace Runtime.Infra.App
@@ -18,6 +18,7 @@ namespace Runtime.Infra.App
 			BindGlobalEntryPoint();
 			BindResourceLoader();
 			BindAudio();
+			BindSaveLoadService();
 		}
 
 		private void BindResourceLoader()
@@ -40,9 +41,10 @@ namespace Runtime.Infra.App
 		private void BindEventBus() =>
 						Container.Bind<EventBus>().AsSingle();
 
-		public void BindAudio()
-		{
+		public void BindAudio() => 
 			Container.BindInterfacesAndSelfTo<SoundService>().AsSingle();
-		}
+		
+		public void BindSaveLoadService() => 
+			Container.BindInterfacesAndSelfTo<SaveLoadService>().AsSingle();
 	}
 }
