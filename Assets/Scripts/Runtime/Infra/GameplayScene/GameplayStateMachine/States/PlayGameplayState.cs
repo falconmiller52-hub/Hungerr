@@ -7,6 +7,7 @@ using Runtime.Common.Services.StateMachine;
 using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy.Domovoi;
 using Runtime.Features.Location;
+using Runtime.Features.Player.Other;
 using Runtime.Features.Supervision;
 using UnityEngine;
 using Zenject;
@@ -27,6 +28,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 
 		private DomovoiAI _domovoiAI;
 		private SupervisionController _supervisionController;
+		private PlayerFoodController _playerFoodController;
 
 		private int _currentDay;
 
@@ -49,6 +51,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		{
 			_domovoiAI = Object.FindAnyObjectByType<DomovoiAI>();
 			_supervisionController = Object.FindAnyObjectByType<SupervisionController>();
+			_playerFoodController = Object.FindAnyObjectByType<PlayerFoodController>();
 
 			_eventBus.Subscribe<EGameplayChangePhaseTriggerEvent, StartDayTriggerEventData>(EGameplayChangePhaseTriggerEvent.StartDayTrigger, StartDayPhaseTriggered);
 			_eventBus.Subscribe(EGameplayChangePhaseTriggerEvent.StartNightTrigger, StartNightPhaseTriggered);
@@ -64,6 +67,8 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		/// <param name="data"></param>
 		private void StartDayPhaseTriggered(StartDayTriggerEventData data)
 		{
+			_playerFoodController.SetActiveFoodDrain(false);
+			
 			// ВЫКЛючаем инпут
 			_inputHandler.Disable();
 			// ВКЛючаем шторку
@@ -130,6 +135,8 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				_curtain.Hide();
 				// ВКЛючаем инпут
 				_inputHandler.Enable();
+				
+				_playerFoodController.SetActiveFoodDrain(true);
 			}
 		}
 
