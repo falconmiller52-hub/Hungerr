@@ -1,11 +1,10 @@
+using System;
 using FMODUnity;
-using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Audio.Sound;
-using Runtime.Features.Inventory.View.EntryPoint;
 using UnityEngine;
 using Zenject;
 
-namespace Runtime.Features.Inventory
+namespace Runtime.Features.Inventory.View.EntryPoint
 {
 	/// <summary>
 	/// это controller инвентаря, такая штука может быть у сундуков или у игрока
@@ -31,10 +30,16 @@ namespace Runtime.Features.Inventory
 		{
 			_soundService = soundService;
 		}
-		
+
 		private void Start()
 		{
-			_inventoryWithCells = new InventoryWithCells(_width, _height);
+			InitInventoryModel();
+		}
+
+		public void InitInventoryModel()
+		{
+			if (_inventoryWithCells == null)
+				_inventoryWithCells = new InventoryWithCells(_width, _height);
 		}
 
 

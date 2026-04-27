@@ -1266,6 +1266,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
   m_PrefabInstance: {fileID: 161812369}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &163941387 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2030096683444185372, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+  m_PrefabInstance: {fileID: 1794706512}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcffa8b89cee2b84381c542bf631dde1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &168695027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3052,6 +3063,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388349930}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &404488646 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2441796189808230803, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+  m_PrefabInstance: {fileID: 1794706512}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &421326442
 GameObject:
   m_ObjectHideFlags: 0
@@ -4977,6 +4993,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
   m_PrefabInstance: {fileID: 665516615}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &706950807 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7225304837398234103, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+  m_PrefabInstance: {fileID: 1794706512}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &707634382
 GameObject:
   m_ObjectHideFlags: 0
@@ -5319,6 +5340,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
   m_PrefabInstance: {fileID: 722962294}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &740898303 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4456957405879155120, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+  m_PrefabInstance: {fileID: 1794706512}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &744931744
 PrefabInstance:
@@ -10607,6 +10633,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
+--- !u!4 &1352148462 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3971059397973185683, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+  m_PrefabInstance: {fileID: 1794706512}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1362572568 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
@@ -13804,6 +13835,22 @@ PrefabInstance:
       propertyPath: _typeWriterSpeed
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 2030096683444185372, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: '_randomSoundPoints.Array.data[4]'
+      value: 
+      objectReference: {fileID: 740898303}
+    - target: {fileID: 2030096683444185372, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: '_randomSoundPoints.Array.data[5]'
+      value: 
+      objectReference: {fileID: 404488646}
+    - target: {fileID: 2030096683444185372, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: '_randomSoundPoints.Array.data[6]'
+      value: 
+      objectReference: {fileID: 1352148462}
+    - target: {fileID: 2030096683444185372, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
+      propertyPath: '_randomSoundPoints.Array.data[7]'
+      value: 
+      objectReference: {fileID: 706950807}
     - target: {fileID: 3211192612648936225, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
       propertyPath: m_LocalPosition.y
       value: 9.2
@@ -13889,9 +13936,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 575982412}
     - target: {fileID: 7068875415173604028, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
-      propertyPath: _domovoiLevelData.Array.data[0].NotFeededDaysAvailableBeforePunishment
-      value: 3
-      objectReference: {fileID: 0}
+      propertyPath: '_domovoiLevelData.Array.data[0].Patterns.Array.data[0]'
+      value: 
+      objectReference: {fileID: 163941387}
     - target: {fileID: 7200213144691405948, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
       propertyPath: m_Icon
       value: 

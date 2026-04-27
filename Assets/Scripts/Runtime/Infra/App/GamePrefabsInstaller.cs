@@ -9,8 +9,8 @@ namespace Runtime.Infra.App
 	public class GamePrefabsInstaller : MonoInstaller
 	{
 		[SerializeField] private Curtain _loadingCurtainPrefab;
-		[SerializeField] private OstService _ostService;
-
+		[SerializeField] private OstService _ostServicePrefab;
+		
 		public override void InstallBindings()
 		{
 			BindLoadingCurtain();
@@ -20,7 +20,7 @@ namespace Runtime.Infra.App
 
 		private void BindOst()
 		{
-			Container.Bind<OstService>().FromComponentInNewPrefab(_ostService).AsSingle();
+			Container.Bind<OstService>().FromComponentInNewPrefab(_ostServicePrefab).AsSingle();
 		}
 
 		private void BindLoadingCurtain()
