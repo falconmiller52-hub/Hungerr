@@ -91,8 +91,11 @@ namespace Runtime.Features.Enemy.Domovoi
 		public void StartNightPhaseHandler(int currentDay)
 		{
 			// пытаемся очистить паттерн домового если есть возможность
-			_currentDomovoiPattern.Clear();
-			_currentDomovoiPattern = null;
+			if (_currentDomovoiPattern != null)
+			{
+				_currentDomovoiPattern.Clear();
+				_currentDomovoiPattern = null;
+			}
 			
 			if (_inventory == null)
 				_inventory = _storage.GetInventory();
