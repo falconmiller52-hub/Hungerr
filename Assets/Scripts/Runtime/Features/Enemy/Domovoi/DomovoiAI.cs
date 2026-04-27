@@ -5,6 +5,7 @@ using NaughtyAttributes;
 using Runtime.Common.Enums;
 using Runtime.Common.Extensions;
 using Runtime.Common.Services.EventBus;
+using Runtime.Features.Enemy.Domovoi.Patterns;
 using Runtime.Features.Inventory;
 using Runtime.Features.Inventory.View.EntryPoint;
 using UnityEngine;
@@ -24,6 +25,7 @@ namespace Runtime.Features.Enemy.Domovoi
 		private int _notFedDaysCount;
 		private bool _needToTriggerDontFeed;
 		private EDomovoiSatietyLevel _satietyLevel;
+		private DomovoiPattern _currentDomovoiPattern;
 
 		[Inject]
 		private void Construct(EventBus eventBus)
@@ -68,9 +70,8 @@ namespace Runtime.Features.Enemy.Domovoi
 			// выбираем рандомный паттерн поведения на сейчас если уровень сытости - критический
 			if (_satietyLevel == EDomovoiSatietyLevel.Critical)
 			{
-				var pattern = _currentLevelData.Patterns.Random();
-	
-				pattern.Trigger();
+				_currentDomovoiPattern = _currentLevelData.Patterns.Random();
+				_currentDomovoiPattern.Trigger();
 			}
 
 			if (_needToTriggerDontFeed)
@@ -89,6 +90,10 @@ namespace Runtime.Features.Enemy.Domovoi
 		/// <param name="currentDay">int текущего дня</param>
 		public void StartNightPhaseHandler(int currentDay)
 		{
+			// пытаемся очистить паттерн домового если есть возможность
+			_currentDomovoiPattern.Clear();
+			_currentDomovoiPattern = null;
+			
 			if (_inventory == null)
 				_inventory = _storage.GetInventory();
 
