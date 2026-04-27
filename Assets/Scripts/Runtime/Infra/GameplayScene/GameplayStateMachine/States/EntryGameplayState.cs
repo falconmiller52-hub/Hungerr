@@ -67,7 +67,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 							Quaternion.identity,
 							null);
 
-			_locationChanger.Init(playerInstance.GetComponentInChildren<PlayerMovement>(), playerInstance.GetComponentInChildren<CharacterController>());
+			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
 
 			_inputHandler.Init();
 			_enemiesBootstrap.Init(playerInstance);
