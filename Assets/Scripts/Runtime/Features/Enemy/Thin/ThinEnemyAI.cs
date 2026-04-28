@@ -20,7 +20,6 @@ namespace Runtime.Features.Enemy.Thin
 		[field: SerializeField] public NavMeshAgent Agent { get; private set; }
 		
 		[field: Header("Patrol Settings")]
-		[field: SerializeField] public Transform[] PatrolPoints { get; private set; }
 		[field: SerializeField] public EventReference PatrolSounds { get; private set; }
 		[field: SerializeField] public float PatrolSpeedMultiplier { get; private set; }
 
@@ -42,6 +41,7 @@ namespace Runtime.Features.Enemy.Thin
 		private ISoundService _soundService;
 
 		public Transform Target { get; private set; }
+		public Transform[] PatrolPoints { get; private set; }
 		public ISoundService SoundService => _soundService;
 		
 		[Inject]
@@ -67,7 +67,7 @@ namespace Runtime.Features.Enemy.Thin
 			SynchronizeAnimatorAndAgent();
 		}
 		
-		public void Init(GameObject target)
+		public void Init(GameObject target, Transform[] patrolPoints)
 		{
 			Target = target.transform;
 			
@@ -75,6 +75,9 @@ namespace Runtime.Features.Enemy.Thin
 			RegisterState(new ChaseState(this));
 			RegisterState(new LostPlayerState(this));
 			RegisterState(new AttackState(this));
+			
+			if (patrolPoints.Length > 0)
+				PatrolPoints = patrolPoints;
 		}
 		
 		public void RegisterState<TState>(TState state) where TState : IEnemyState

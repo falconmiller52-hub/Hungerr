@@ -54,7 +54,7 @@ namespace Runtime.Features.Enemy
 
 				thinAi.Agent.Warp(spawnPoint.transform.position);
 				
-				thinAi.Init(targetPlayer);
+				thinAi.Init(targetPlayer, spawnPoint.PatrolPoints);
 				thinAi.ChangeState<PatrolState>();
 				
 				_enemiesMap.Add(thinAi, spawnPoint);
