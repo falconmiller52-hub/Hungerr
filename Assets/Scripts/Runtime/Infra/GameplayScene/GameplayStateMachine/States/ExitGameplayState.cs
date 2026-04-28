@@ -40,6 +40,9 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 
 		private void SaveGameStateData()
 		{
+			GameStateData data = new GameStateData();
+			
+			
 			GameObject playerInstance = Object.FindAnyObjectByType<PlayerMovement>().gameObject;
 
 			if (playerInstance == null)
@@ -47,9 +50,8 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				Debug.LogError("ExitGameplayState::SaveGameStateData() playerInstance is null");
 				return;
 			}
-
-			GameStateData data = new GameStateData();
 			
+			//// сохраняем предметы игрока
 			PlayerInventory playerInventory = playerInstance.GetComponentInChildren<PlayerInventory>();
 
 			if (playerInventory == null)
@@ -67,9 +69,31 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				item.Position = new SerializableVector2Int(slot.Key);
 				item.ItemDataID = slot.Value.Item.Data.Id;
 				item.Amount = slot.Value.Item.Amount;
-				data.Slots.Add(item);
+				data.PlayerInventoryItems.Add(item);
+			}
+
+			//// сохраняем предметы хранилища домового
+			StorageInventory storageInventory = Object.FindAnyObjectByType<StorageInventory>();
+
+			if (storageInventory == null)
+			{
+				Debug.LogError("ExitGameplayState::SaveGameStateData() storageInventory is null");
+				return;
+			}
+
+			foreach (var slot in storageInventory.GetInventory().Slots)
+			{
+				if (slot.Value.IsEmpty || slot.Value.Id == -1)
+					continue;
+				
+				var item = new InventoryItemSaveData();
+				item.Position = new SerializableVector2Int(slot.Key);
+				item.ItemDataID = slot.Value.Item.Data.Id;
+				item.Amount = slot.Value.Item.Amount;
+				data.StorageInventoryItems.Add(item);
 			}
 			
+			//// сохраняем здоровье игрока
 			PlayerHealth playerHealth = playerInstance.GetComponentInChildren<PlayerHealth>();
 
 			if (playerHealth == null)
@@ -80,6 +104,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			
 			data.Health = playerHealth.CurrentHealth;
 
+			//// сохраняем предметы в мире из спавнеров
 			ItemSpawner itemsSpawner = Object.FindAnyObjectByType<ItemSpawner>();
 
 			if (itemsSpawner == null)

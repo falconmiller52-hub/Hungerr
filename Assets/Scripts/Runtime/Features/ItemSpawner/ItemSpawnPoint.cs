@@ -13,6 +13,5 @@ namespace Runtime.Features.ItemSpawner
 		public ItemSpawnTierData TierData => _tierData;
 		public Vector3 ItemScale => _itemScale;
 		public int ID => gameObject.scene.name.GetHashCode() + gameObject.name.GetHashCode();
-		// gameObject.GetHasCode();
 	}
 }

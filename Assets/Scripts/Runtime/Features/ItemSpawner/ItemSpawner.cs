@@ -18,7 +18,7 @@ namespace Runtime.Features.ItemSpawner
 		// <int - InstanceId of spawnPoint, int - ID in InventoryItemData >
 		private Dictionary<WorldItem, int> _spawnPointsMap;
 		private ItemsIdentifierSO _itemsIdentifier;
-		private bool _isInited = false;
+		private bool _isInitialized;
 		
 		[Inject]
 		private void Construct(ItemsIdentifierSO itemsIdentifierSO)
@@ -32,7 +32,7 @@ namespace Runtime.Features.ItemSpawner
 		[ContextMenu("Spawn Items")]
 		public void SpawnItems()
 		{
-			if (_isInited)
+			if (_isInitialized)
 				return;
 
 			_spawnPointsMap = new Dictionary<WorldItem, int>();
@@ -64,7 +64,7 @@ namespace Runtime.Features.ItemSpawner
 				}
 			}
 			
-			_isInited = true;
+			_isInitialized = true;
 		}
 
 		/// <summary>
@@ -73,7 +73,7 @@ namespace Runtime.Features.ItemSpawner
 		/// <param name="spawnPointsData">int - pointId, int - item config id</param>
 		public void SpawnItems(Dictionary<int, int> spawnPointsData)
 		{
-			if (_isInited)
+			if (_isInitialized)
 				return;
 			
 			_spawnPointsMap = new Dictionary<WorldItem, int>();
@@ -105,7 +105,7 @@ namespace Runtime.Features.ItemSpawner
 				}
 			}
 			
-			_isInited = true;
+			_isInitialized = true;
 		}
 
 		public Dictionary<int, int> GetSpawnPointsData()

@@ -77,10 +77,13 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			
 			ItemSpawner itemSpawner = Object.FindAnyObjectByType<ItemSpawner>();
 			
+			StorageInventory storageInventory = Object.FindAnyObjectByType<StorageInventory>();
+			storageInventory.InitModel();
+			
 			GameStateData loadedData = _saveLoadService.LoadData();
 			
 			if (loadedData != null && playerInstance != null)
-				ApplyLoadedData(loadedData, playerInstance, itemSpawner);
+				ApplyLoadedData(loadedData, playerInstance, itemSpawner, storageInventory);
 			
 			itemSpawner.SpawnItems();
 			
@@ -108,30 +111,47 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			_sceneStateMachine.EnterIn<PlayGameplayState>();
 			
 		}
+		
+		public void Exit()
+		{
+		}
 
-		private void ApplyLoadedData(GameStateData loadedData, GameObject playerInstance, ItemSpawner itemSpawner)
+		private void ApplyLoadedData(GameStateData loadedData, GameObject playerInstance, ItemSpawner itemSpawner, StorageInventory storageInventory)
 		{
 			if (loadedData == null)
 				return;
 			
-			if (loadedData.Slots != null && loadedData.Slots.Count > 0 && playerInstance != null)
+			// проверяем и загружаем предметы игрока
+			if (loadedData.PlayerInventoryItems != null && loadedData.PlayerInventoryItems.Count > 0 && playerInstance != null)
 			{
 				PlayerInventory playerInventory = playerInstance.GetComponentInChildren<PlayerInventory>();
 				// убеждаемся что инвентарь точно есть
 				playerInventory.InitInventoryModel();
-				foreach (var slot in loadedData.Slots)
+				foreach (var saveItem in loadedData.PlayerInventoryItems)
 				{
-					var item = new InventoryItem(_identifierSO.GetItemDataById(slot.ItemDataID), slot.Amount);
-					playerInventory.AddItem(item, slot.Position.ToVector());
+					var item = new InventoryItem(_identifierSO.GetItemDataById(saveItem.ItemDataID), saveItem.Amount);
+					playerInventory.AddItem(item, saveItem.Position.ToVector());
 				}
 			}
 
+			// проверяем и загружаем предметы в хранилище для домового
+			if (loadedData.StorageInventoryItems != null && loadedData.StorageInventoryItems.Count > 0)
+			{
+				foreach (var saveItem in loadedData.StorageInventoryItems)
+				{
+					var item = new InventoryItem(_identifierSO.GetItemDataById(saveItem.ItemDataID), saveItem.Amount);
+					storageInventory.AddItem(item, saveItem.Position.ToVector());
+				}
+			}
+
+			// проверяем и загружаем состояние здоровья
 			if (loadedData.Health > 0)
 			{
 				var playerHealth = playerInstance.GetComponentInChildren<PlayerHealth>();
 				playerHealth.SetHealth(loadedData.Health);
 			}
 			
+			// проверяем и загружаем предметы на спавн поинтах
 			if (loadedData.SpawnPoints != null && itemSpawner != null)
 			{
 				Dictionary<int, int> dict = loadedData.SpawnPoints.ToDictionary(
@@ -141,10 +161,6 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				
 				itemSpawner.SpawnItems(dict);
 			}
-		}
-		
-		public void Exit()
-		{
 		}
 	}
 }
