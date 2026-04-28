@@ -22,6 +22,7 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 		private int _width = 10;
 		private int _height = 10;
 		private ISoundService _soundService;
+		private bool _isInitialized;
 
 		[Inject]
 		private void Construct(ISoundService soundService)
