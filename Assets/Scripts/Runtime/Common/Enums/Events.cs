@@ -43,6 +43,7 @@ namespace Runtime.Common.Enums
 
 	public enum EGameOver
 	{
-		PlayerOnZeroHealth
+		PlayerOnZeroHealth = 0,
+		PlayerOnZeroFood,
 	}
 }
