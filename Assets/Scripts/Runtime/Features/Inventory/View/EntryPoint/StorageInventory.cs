@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Cinemachine;
 using FMODUnity;
 using Runtime.Common.Services.Audio.Sound;
@@ -17,10 +18,11 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 		[SerializeField] private Vector2Int _pos = Vector2Int.one;
 		
 		private InventoryWithCells _inventoryWithCells;
+		private ISoundService _soundService;
 		private bool _isOpened;
+		private bool _isInitialized;
 		private int _width = 10;
 		private int _height = 10;
-		private ISoundService _soundService;
 
 		[Inject]
 		private void Construct(ISoundService soundService)
@@ -28,9 +30,16 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 			_soundService = soundService;
 		}
 		
-		private void Awake()
+		public void InitModel()
 		{
-			_inventoryWithCells = new InventoryWithCells(_width, _height);
+			if (!_isInitialized)
+			{
+				_inventoryWithCells = new InventoryWithCells(_width, _height);
+				_isInitialized = true;
+				
+				Width = _width;
+				Height = _height;
+			}
 		}
 		
 		public void InventoryOpenStateChanged(bool openState)
@@ -71,9 +80,25 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 			
 			return false;
 		}
+
+		public void RemoveAllItemsByType<T>() where T : InventoryItemData
+		{
+			_inventoryWithCells.RemoveAllItemsByType<T>();
+			
+			OnInventoryChanged?.Invoke();
+		}
+
+		public List<T> GetItems<T>() where T : InventoryItemData
+		{
+			return _inventoryWithCells.GetItems<T>();
+		}
 		
 		public override InventoryWithCells GetInventory() => _inventoryWithCells;
     
+		public override Dictionary<Vector2Int, InventorySlot> GetSlots()
+		{
+			return _inventoryWithCells.Slots;
+		}
 		
 		// DEBUG
 

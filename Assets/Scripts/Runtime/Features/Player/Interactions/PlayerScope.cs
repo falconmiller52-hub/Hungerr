@@ -140,7 +140,7 @@ namespace Runtime.Features.Player.Interactions
 
 			if (target.TryGetComponent(out WorldItem worldItem))
 			{
-				if (_playerInventory.AddItem(worldItem.Instance))
+				if (_playerInventory.AddItem(worldItem.GetItem()))
 				{
 					_soundService.PlaySound(_pickUpSound, transform.position);
 					// ВАЖНО: Сначала полностью очищаем всё состояние интерфейса
@@ -150,7 +150,7 @@ namespace Runtime.Features.Player.Interactions
 					target.SetActive(false);
 
 					// Удаляем в конце кадра
-					Destroy(target);
+					worldItem.DestroyWorldItem();
 				}
 			}
 

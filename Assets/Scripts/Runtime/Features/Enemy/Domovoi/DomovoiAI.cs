@@ -21,7 +21,6 @@ namespace Runtime.Features.Enemy.Domovoi
 		[SerializeField, ReadOnly] private int _satiety;
 		[SerializeField, ReadOnly] private DomovoiLevelData _currentLevelData;
 		private EventBus _eventBus;
-		private InventoryWithCells _inventory;
 		private int _notFedDaysCount;
 		private bool _needToTriggerDontFeed;
 		private EDomovoiSatietyLevel _satietyLevel;
@@ -51,8 +50,6 @@ namespace Runtime.Features.Enemy.Domovoi
 			_currentLevelData = _domovoiLevelData[0];
 			_satiety = _currentLevelData.MaxSatiety;
 			_notFedDaysCount = 0;
-
-			_inventory = _storage.GetInventory();
 		}
 
 		/// <summary>
@@ -97,9 +94,6 @@ namespace Runtime.Features.Enemy.Domovoi
 				_currentDomovoiPattern = null;
 			}
 			
-			if (_inventory == null)
-				_inventory = _storage.GetInventory();
-
 			// проверяем день и переходим на некст уровень если надо
 			foreach (DomovoiLevelData levelData in _domovoiLevelData)
 			{
@@ -109,12 +103,12 @@ namespace Runtime.Features.Enemy.Domovoi
 
 			UpdateSatietyStatus();
 
-			_inventory.RemoveAllItemsByType<FoodInventoryItemData>();
+			_storage.RemoveAllItemsByType<FoodInventoryItemData>();
 		}
 
 		private void UpdateSatietyStatus()
 		{
-			List<FoodInventoryItemData> foodItems = _inventory.GetItems<FoodInventoryItemData>();
+			List<FoodInventoryItemData> foodItems = _storage.GetItems<FoodInventoryItemData>();
 			int totalSatietyFromInventory = foodItems.Sum(foodItem => foodItem.Satiety); // считаем всю сытость от еды в сундуке
 
 			int delta = Math.Max(totalSatietyFromInventory, 0) - Math.Max(_currentLevelData.DailySatietyLoss, 0);

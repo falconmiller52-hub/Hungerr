@@ -1,7 +1,7 @@
 namespace Runtime.Common.Services.SaveLoad
 {
 	[System.Serializable]
-	public struct SlotSaveData
+	public struct InventoryItemSaveData
 	{
 		public SerializableVector2Int Position;
 		public int ItemDataID;
