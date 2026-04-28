@@ -3,8 +3,11 @@ using Runtime.Common.Helpers;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.LoadingCurtain;
+using Runtime.Common.Services.SaveLoad;
 using Runtime.Common.Services.StateMachine;
+using Runtime.Features.DayNight.DaysCounter;
 using Runtime.Features.DayNight.StateMachine;
+using Runtime.Features.Enemy;
 using Runtime.Features.Enemy.Domovoi;
 using Runtime.Features.Location;
 using Runtime.Features.Player.Other;
@@ -25,6 +28,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		private readonly LocationChanger _locationChanger;
 		private readonly EventBus _eventBus;
 		private readonly ILoadingCurtain _curtain;
+		private readonly EnemiesController _enemiesController;
 
 		private DomovoiAI _domovoiAI;
 		private SupervisionController _supervisionController;
@@ -34,17 +38,15 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 
 		[Inject]
 		public PlayGameplayState(SceneStateMachine sceneStateMachine, PhaseStateMachine phaseStateMachine,
-			InputHandler inputHandler, LocationChanger locationChanger, EventBus eventBus, ILoadingCurtain curtain)
+			InputHandler inputHandler, LocationChanger locationChanger, EventBus eventBus, ILoadingCurtain curtain, EnemiesController enemiesController)
 		{
 			_sceneStateMachine = sceneStateMachine;
 			_phaseStateMachine = phaseStateMachine;
 			_inputHandler = inputHandler;
 			_locationChanger = locationChanger;
 			_eventBus = eventBus;
+			_enemiesController = enemiesController;
 			_curtain = curtain;
-
-			// пока даты игрока нет, будем считать что начинается с 1 дня
-			_currentDay = 1;
 		}
 
 		public void Enter()
@@ -53,6 +55,9 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			_supervisionController = Object.FindAnyObjectByType<SupervisionController>();
 			_playerFoodController = Object.FindAnyObjectByType<PlayerFoodController>();
 
+			CurrentDayController currentDayController = Object.FindAnyObjectByType<CurrentDayController>();
+			_currentDay = currentDayController.CurrentDay;
+			
 			_eventBus.Subscribe<EGameplayChangePhaseTriggerEvent, StartDayTriggerEventData>(EGameplayChangePhaseTriggerEvent.StartDayTrigger, StartDayPhaseTriggered);
 			_eventBus.Subscribe(EGameplayChangePhaseTriggerEvent.StartNightTrigger, StartNightPhaseTriggered);
 		}
@@ -95,6 +100,8 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 					_eventBus.Trigger(domovoiData.Item2);
 				}
 
+				_enemiesController.SetAllEnemiesToSpawnPoint();
+				
 				_eventBus.Trigger(EGameplayChangedPhaseEvent.DayStarted);
 
 				// ВЫКЛючаем шторку

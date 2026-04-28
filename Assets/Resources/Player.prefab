@@ -2223,6 +2223,7 @@ GameObject:
   - component: {fileID: 1574870206258873081}
   - component: {fileID: 2579760495121860576}
   - component: {fileID: 4076023983911967388}
+  - component: {fileID: 8580609847667149802}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2482,6 +2483,19 @@ MonoBehaviour:
   _counterUI: {fileID: 5322249095550989364}
   _maxFood: 100
   _foodDrainPerSecond: 1
+--- !u!114 &8580609847667149802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3851059412217318600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99d27dae6527b3e4bbc6d09320558489, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _dayCounter: {fileID: 7495219298041930133}
 --- !u!1 &3851059412846384325
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,7 +25,7 @@ namespace Runtime.Features.Enemy.Thin.States
 		{
 			if (_ai.CanSeePlayer())
 			{
-				_ai.ChangeState(new ChaseState(_ai));
+				_ai.ChangeState<ChaseState>();
 				return;
 			}
 

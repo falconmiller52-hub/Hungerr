@@ -18,11 +18,11 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 		[SerializeField] private Vector2Int _pos = Vector2Int.one;
 		
 		private InventoryWithCells _inventoryWithCells;
+		private ISoundService _soundService;
 		private bool _isOpened;
+		private bool _isInitialized;
 		private int _width = 10;
 		private int _height = 10;
-		private ISoundService _soundService;
-		private bool _isInitialized;
 
 		[Inject]
 		private void Construct(ISoundService soundService)
@@ -30,7 +30,7 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 			_soundService = soundService;
 		}
 		
-		private void Awake()
+		public void InitModel()
 		{
 			if (!_isInitialized)
 			{

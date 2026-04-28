@@ -17,7 +17,7 @@ namespace Runtime.Infra.GameplayScene
 		// монобехи для инсталла
 		[SerializeField] private PhaseStateMachine _phaseStateMachine;
 		[SerializeField] private LocationChanger _locationChanger;
-		[SerializeField] private EnemiesBootstrap _enemiesBootstrap;
+		[SerializeField] private EnemiesController enemiesController;
 		[SerializeField] private StorySystem _storySystem;
 		[SerializeField] private ItemSpawner _itemSpawner;
 		[SerializeField] private GameOverCurtain _gameOverCurtainPrefab;
@@ -60,7 +60,7 @@ namespace Runtime.Infra.GameplayScene
 
 		private void BindEnemiesController()
 		{
-			Container.Bind<EnemiesBootstrap>().FromInstance(_enemiesBootstrap).AsSingle();
+			Container.Bind<EnemiesController>().FromInstance(enemiesController).AsSingle();
 		}
 
 		private void BindLocationChanger()
