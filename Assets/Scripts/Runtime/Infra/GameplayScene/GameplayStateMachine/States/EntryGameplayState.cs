@@ -75,6 +75,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 							Quaternion.identity,
 							null);
 			
+			
 			ItemSpawner itemSpawner = Object.FindAnyObjectByType<ItemSpawner>();
 			
 			StorageInventory storageInventory = Object.FindAnyObjectByType<StorageInventory>();
@@ -86,6 +87,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				ApplyLoadedData(loadedData, playerInstance, itemSpawner, storageInventory);
 			
 			itemSpawner.SpawnItems();
+			
 			
 			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
 
