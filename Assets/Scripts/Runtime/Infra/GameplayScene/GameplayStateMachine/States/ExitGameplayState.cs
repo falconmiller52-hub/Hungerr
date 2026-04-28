@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using Runtime.Common.Enums;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.SaveLoad;
 using Runtime.Common.Services.StateMachine;
 using Runtime.Features.Health;
-using Runtime.Features.Inventory;
 using Runtime.Features.Inventory.View.EntryPoint;
+using Runtime.Features.ItemSpawner;
 using Runtime.Features.Player.Movement;
 using UnityEngine;
 using Zenject;
@@ -50,13 +51,19 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			GameStateData data = new GameStateData();
 			
 			PlayerInventory playerInventory = playerInstance.GetComponentInChildren<PlayerInventory>();
+
+			if (playerInventory == null)
+			{
+				Debug.LogError("ExitGameplayState::SaveGameStateData() playerInventory is null");
+				return;
+			}
 			
 			foreach (var slot in playerInventory.GetInventory().Slots)
 			{
 				if (slot.Value.IsEmpty || slot.Value.Id == -1)
 					continue;
-				
-				var item = new SlotSaveData();
+
+				var item = new InventoryItemSaveData();
 				item.Position = new SerializableVector2Int(slot.Key);
 				item.ItemDataID = slot.Value.Item.Data.Id;
 				item.Amount = slot.Value.Item.Amount;
@@ -64,7 +71,31 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			}
 			
 			PlayerHealth playerHealth = playerInstance.GetComponentInChildren<PlayerHealth>();
+
+			if (playerHealth == null)
+			{
+				Debug.LogError("ExitGameplayState::SaveGameStateData() playerHealth is null");
+				return;
+			}
+			
 			data.Health = playerHealth.CurrentHealth;
+
+			ItemSpawner itemsSpawner = Object.FindAnyObjectByType<ItemSpawner>();
+
+			if (itemsSpawner == null)
+			{
+				Debug.LogError("ExitGameplayState::SaveGameStateData() itemSpawer is null");
+				return;
+			}
+			
+			foreach (KeyValuePair<int, int> spawnPointData in itemsSpawner.GetSpawnPointsData())
+			{
+				var pointSaveData = new ItemSpawnPointSaveData();
+				pointSaveData.ID = spawnPointData.Key;
+				pointSaveData.ItemConfigId = spawnPointData.Value;
+
+				data.SpawnPoints.Add(pointSaveData);
+			}
 			
 			_saveLoadService.SaveData(data);
 		}

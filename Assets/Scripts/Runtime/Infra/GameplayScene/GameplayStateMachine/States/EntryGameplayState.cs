@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Runtime.Common.Factories.StateFactory;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.ItemsIdentifier;
@@ -10,8 +11,8 @@ using Runtime.Features.GameOver;
 using Runtime.Features.Health;
 using Runtime.Features.Inventory;
 using Runtime.Features.Inventory.View.EntryPoint;
+using Runtime.Features.ItemSpawner;
 using Runtime.Features.Location;
-using Runtime.Features.Player.Movement;
 using Runtime.Features.Player.Other;
 using UnityEngine;
 using Zenject;
@@ -74,10 +75,14 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 							Quaternion.identity,
 							null);
 			
+			ItemSpawner itemSpawner = Object.FindAnyObjectByType<ItemSpawner>();
+			
 			GameStateData loadedData = _saveLoadService.LoadData();
 			
 			if (loadedData != null && playerInstance != null)
-				ApplyLoadedData(loadedData, playerInstance);
+				ApplyLoadedData(loadedData, playerInstance, itemSpawner);
+			
+			itemSpawner.SpawnItems();
 			
 			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
 
@@ -104,9 +109,12 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			
 		}
 
-		private void ApplyLoadedData(GameStateData loadedData, GameObject playerInstance)
+		private void ApplyLoadedData(GameStateData loadedData, GameObject playerInstance, ItemSpawner itemSpawner)
 		{
-			if (loadedData.Slots != null && loadedData.Slots.Count > 0)
+			if (loadedData == null)
+				return;
+			
+			if (loadedData.Slots != null && loadedData.Slots.Count > 0 && playerInstance != null)
 			{
 				PlayerInventory playerInventory = playerInstance.GetComponentInChildren<PlayerInventory>();
 				// убеждаемся что инвентарь точно есть
@@ -123,8 +131,18 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				var playerHealth = playerInstance.GetComponentInChildren<PlayerHealth>();
 				playerHealth.SetHealth(loadedData.Health);
 			}
+			
+			if (loadedData.SpawnPoints != null && itemSpawner != null)
+			{
+				Dictionary<int, int> dict = loadedData.SpawnPoints.ToDictionary(
+					rvp => rvp.ID,
+					rvp => rvp.ItemConfigId
+				);
+				
+				itemSpawner.SpawnItems(dict);
+			}
 		}
-
+		
 		public void Exit()
 		{
 		}

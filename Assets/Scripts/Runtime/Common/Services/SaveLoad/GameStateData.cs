@@ -5,8 +5,8 @@ namespace Runtime.Common.Services.SaveLoad
 	[System.Serializable]
 	public class GameStateData
 	{
-		
-		public List<SlotSaveData> Slots = new List<SlotSaveData>();
+		public List<InventoryItemSaveData> Slots = new List<InventoryItemSaveData>();
+		public List<ItemSpawnPointSaveData> SpawnPoints = new List<ItemSpawnPointSaveData>();
 		public float Health;
 	}
 }

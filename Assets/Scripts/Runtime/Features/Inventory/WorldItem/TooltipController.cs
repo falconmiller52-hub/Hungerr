@@ -31,9 +31,9 @@ namespace Runtime.Features.Inventory.WorldItem
 			_tooltipNameText.text = item.GetDisplayName();
 			_tooltipDescriptionText.text = item.GetDescription();
         
-			if (item.Instance.Amount > 1)
+			if (item.GetItem().Amount > 1)
 			{
-				_tooltipAmountText.text = $"x{item.Instance.Amount}";
+				_tooltipAmountText.text = $"x{item.GetItem().Amount}";
 				_tooltipAmountText.enabled = true;
 			}
 			else
