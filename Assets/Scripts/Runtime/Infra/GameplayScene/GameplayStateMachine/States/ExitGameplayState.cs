@@ -3,6 +3,7 @@ using Runtime.Common.Enums;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.SaveLoad;
 using Runtime.Common.Services.StateMachine;
+using Runtime.Features.DayNight.DaysCounter;
 using Runtime.Features.Health;
 using Runtime.Features.Inventory.View.EntryPoint;
 using Runtime.Features.ItemSpawner;
@@ -121,6 +122,17 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 
 				data.SpawnPoints.Add(pointSaveData);
 			}
+			
+			//// сохраняем текущий день
+			CurrentDayController currentDayController = Object.FindAnyObjectByType<CurrentDayController>();
+
+			if (currentDayController == null)
+			{
+				Debug.LogError("ExitGameplayState::SaveGameStateData() currentDayController is null");
+				return;
+			}
+			
+			data.CurrentDay = currentDayController.CurrentDay;
 			
 			_saveLoadService.SaveData(data);
 		}

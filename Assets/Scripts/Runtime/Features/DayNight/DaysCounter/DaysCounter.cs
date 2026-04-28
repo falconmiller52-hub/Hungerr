@@ -1,10 +1,6 @@
 using PrimeTween;
-using Runtime.Common.Enums;
-using Runtime.Common.Helpers;
-using Runtime.Common.Services.EventBus;
 using TMPro;
 using UnityEngine;
-using Zenject;
 
 namespace Runtime.Features.DayNight.DaysCounter
 {
@@ -15,28 +11,15 @@ namespace Runtime.Features.DayNight.DaysCounter
 		[Header("Fade Settings")] [SerializeField]
 		private float _fadeDuration = 0.5f;
 
-		[SerializeField] private float _displayDuration = 2f;
-
-		private EventBus _eventBus;
+		[SerializeField] 
+		private float _displayDuration = 2f;
+		
 		private Sequence _fadeSequence;
-
-		[Inject]
-		private void Construct(EventBus eventBus)
-		{
-			_eventBus = eventBus;
-		}
-
+		
 		private void Start()
 		{
 			if (_dayText != null)
 				_dayText.alpha = 0;
-
-			_eventBus.Subscribe<EGameplayChangedPhaseEvent, StartNightEventData>(EGameplayChangedPhaseEvent.NightStarted, StartNightPhaseHandler);
-		}
-
-		private void OnDisable()
-		{
-			_eventBus.Unsubscribe<EGameplayChangedPhaseEvent, StartNightEventData>(EGameplayChangedPhaseEvent.NightStarted, StartNightPhaseHandler);
 		}
 
 		private void OnDestroy()
@@ -44,12 +27,7 @@ namespace Runtime.Features.DayNight.DaysCounter
 			_fadeSequence.Stop();
 		}
 
-		private void StartNightPhaseHandler(StartNightEventData data)
-		{
-			UpdateVisual(data.CurrentDay);
-		}
-
-		private void UpdateVisual(int currentDay)
+		public void UpdateVisual(int currentDay)
 		{
 			if (_dayText == null)
 				return;

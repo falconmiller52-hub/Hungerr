@@ -5,6 +5,7 @@ using Runtime.Common.Services.Input;
 using Runtime.Common.Services.ItemsIdentifier;
 using Runtime.Common.Services.ResourceLoad;
 using Runtime.Common.Services.SaveLoad;
+using Runtime.Features.DayNight.DaysCounter;
 using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy;
 using Runtime.Features.GameOver;
@@ -38,7 +39,12 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		private readonly ItemsIdentifierSO _identifierSO;
 		
 		private GameOverTriggerHandler _gameOverTriggerHandler;
-
+		
+		// saved data refs
+		Dictionary<int, int> _spawnPointsSaveData = new Dictionary<int, int>();
+		int _currentDay = 0;
+		
+		
 		[Inject]
 		public EntryGameplayState(SceneStateMachine sceneStateMachine, PhaseStateMachine phaseStateMachine,
 						StateFactory stateFactory, InputHandler inputHandler, IResourceLoader resourceLoader,
@@ -75,19 +81,23 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 							Quaternion.identity,
 							null);
 			
+			////
 			
 			ItemSpawner itemSpawner = Object.FindAnyObjectByType<ItemSpawner>();
-			
 			StorageInventory storageInventory = Object.FindAnyObjectByType<StorageInventory>();
 			storageInventory.InitModel();
 			
 			GameStateData loadedData = _saveLoadService.LoadData();
 			
 			if (loadedData != null && playerInstance != null)
-				ApplyLoadedData(loadedData, playerInstance, itemSpawner, storageInventory);
+				ApplyLoadedData(loadedData, playerInstance, storageInventory);
 			
-			itemSpawner.SpawnItems();
+			if (_spawnPointsSaveData.Count > 0)
+				itemSpawner.SpawnItems(_spawnPointsSaveData);
+			else
+				itemSpawner.SpawnItems();
 			
+			////
 			
 			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
 
@@ -105,20 +115,21 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 
 			FirstDayPhaseState firstDayPhaseState = _stateFactory.Create<FirstDayPhaseState>();
 			_phaseStateMachine.RegisterState(firstDayPhaseState);
-
-
-			_phaseStateMachine.EnterIn<FirstDayPhaseState>();
-
+			
+			if (_currentDay == 0)
+				_phaseStateMachine.EnterIn<FirstDayPhaseState>();
+			else
+				_phaseStateMachine.EnterIn<DayPhaseState>();
+			
 			// Enter in main Gameplay State
 			_sceneStateMachine.EnterIn<PlayGameplayState>();
-			
 		}
 		
 		public void Exit()
 		{
 		}
 
-		private void ApplyLoadedData(GameStateData loadedData, GameObject playerInstance, ItemSpawner itemSpawner, StorageInventory storageInventory)
+		private void ApplyLoadedData(GameStateData loadedData, GameObject playerInstance, StorageInventory storageInventory)
 		{
 			if (loadedData == null)
 				return;
@@ -154,15 +165,21 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			}
 			
 			// проверяем и загружаем предметы на спавн поинтах
-			if (loadedData.SpawnPoints != null && itemSpawner != null)
+			if (loadedData.SpawnPoints != null && _spawnPointsSaveData != null)
 			{
-				Dictionary<int, int> dict = loadedData.SpawnPoints.ToDictionary(
+				_spawnPointsSaveData = loadedData.SpawnPoints.ToDictionary(
 					rvp => rvp.ID,
 					rvp => rvp.ItemConfigId
 				);
-				
-				itemSpawner.SpawnItems(dict);
 			}
+
+			CurrentDayController currentDayController = Object.FindAnyObjectByType<CurrentDayController>();
+
+			if (currentDayController != null)
+				currentDayController.Init(loadedData.CurrentDay);
+			else
+				Debug.LogError("EntryGameplayState::Enter() currentDayController is null");
+			
 		}
 	}
 }

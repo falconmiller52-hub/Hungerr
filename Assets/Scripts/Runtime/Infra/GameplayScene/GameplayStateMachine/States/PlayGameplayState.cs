@@ -3,7 +3,9 @@ using Runtime.Common.Helpers;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.LoadingCurtain;
+using Runtime.Common.Services.SaveLoad;
 using Runtime.Common.Services.StateMachine;
+using Runtime.Features.DayNight.DaysCounter;
 using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy.Domovoi;
 using Runtime.Features.Location;
@@ -42,9 +44,6 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			_locationChanger = locationChanger;
 			_eventBus = eventBus;
 			_curtain = curtain;
-
-			// пока даты игрока нет, будем считать что начинается с 1 дня
-			_currentDay = 1;
 		}
 
 		public void Enter()
@@ -53,6 +52,9 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			_supervisionController = Object.FindAnyObjectByType<SupervisionController>();
 			_playerFoodController = Object.FindAnyObjectByType<PlayerFoodController>();
 
+			CurrentDayController currentDayController = Object.FindAnyObjectByType<CurrentDayController>();
+			_currentDay = currentDayController.CurrentDay;
+			
 			_eventBus.Subscribe<EGameplayChangePhaseTriggerEvent, StartDayTriggerEventData>(EGameplayChangePhaseTriggerEvent.StartDayTrigger, StartDayPhaseTriggered);
 			_eventBus.Subscribe(EGameplayChangePhaseTriggerEvent.StartNightTrigger, StartNightPhaseTriggered);
 		}

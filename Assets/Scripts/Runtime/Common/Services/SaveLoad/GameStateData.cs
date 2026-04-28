@@ -5,9 +5,10 @@ namespace Runtime.Common.Services.SaveLoad
 	[System.Serializable]
 	public class GameStateData
 	{
-		public List<InventoryItemSaveData> PlayerInventoryItems = new List<InventoryItemSaveData>();
-		public List<InventoryItemSaveData> StorageInventoryItems = new List<InventoryItemSaveData>();
-		public List<ItemSpawnPointSaveData> SpawnPoints = new List<ItemSpawnPointSaveData>();
+		public List<InventoryItemSaveData> PlayerInventoryItems = new();
+		public List<InventoryItemSaveData> StorageInventoryItems = new();
+		public List<ItemSpawnPointSaveData> SpawnPoints = new();
 		public float Health;
+		public int CurrentDay;
 	}
 }
