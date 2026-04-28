@@ -54,12 +54,7 @@ namespace Runtime.Features.Enemy
 
 				thinAi.Agent.Warp(spawnPoint.transform.position);
 				
-				thinAi.RegisterState(new PatrolState(thinAi));
-				thinAi.RegisterState(new ChaseState(thinAi));
-				thinAi.RegisterState(new LostPlayerState(thinAi));
-				thinAi.RegisterState(new AttackState(thinAi));
-				
-				thinAi.InitPlayer(targetPlayer);
+				thinAi.Init(targetPlayer);
 				thinAi.ChangeState<PatrolState>();
 				
 				_enemiesMap.Add(thinAi, spawnPoint);

@@ -67,9 +67,14 @@ namespace Runtime.Features.Enemy.Thin
 			SynchronizeAnimatorAndAgent();
 		}
 		
-		public void InitPlayer(GameObject player)
+		public void Init(GameObject target)
 		{
-			Target = player.transform;
+			Target = target.transform;
+			
+			RegisterState(new PatrolState(this));
+			RegisterState(new ChaseState(this));
+			RegisterState(new LostPlayerState(this));
+			RegisterState(new AttackState(this));
 		}
 		
 		public void RegisterState<TState>(TState state) where TState : IEnemyState
