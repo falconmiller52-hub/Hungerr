@@ -336,10 +336,6 @@ PrefabInstance:
       value: 5stagehouse (26)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -386,26 +382,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -30.618
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -857,10 +833,6 @@ PrefabInstance:
       value: 5stagehouse (58)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -907,26 +879,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1013,10 +965,6 @@ PrefabInstance:
       value: 5stagehouse (50)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -1063,26 +1011,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -30.618
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2944,10 +2872,6 @@ PrefabInstance:
       value: 5stagehouse (18)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -2994,26 +2918,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3534,10 +3438,6 @@ PrefabInstance:
       value: 5stagehouse (6)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -3584,26 +3484,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4471,10 +4351,6 @@ PrefabInstance:
       value: 5stagehouse (52)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -4521,26 +4397,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -30.618
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4819,10 +4675,6 @@ PrefabInstance:
       value: 5stagehouse (33)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -4869,26 +4721,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -30.618
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6425,10 +6257,6 @@ PrefabInstance:
       value: 5stagehouse (31)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -6475,26 +6303,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -30.618
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6870,10 +6678,6 @@ PrefabInstance:
       value: 5stagehouse (45)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -6920,26 +6724,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -30.618
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9022,10 +8806,6 @@ PrefabInstance:
       value: 5stagehouse (13)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -9072,26 +8852,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -30.618
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -9484,10 +9244,6 @@ PrefabInstance:
       value: 5stagehouse (19)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -9534,26 +9290,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -30.618
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10548,10 +10284,6 @@ PrefabInstance:
       value: 5stagehouse (44)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -10598,26 +10330,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12866,10 +12578,6 @@ PrefabInstance:
       value: 5stagehouse (39)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -12916,26 +12624,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -30.618
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13928,10 +13616,6 @@ PrefabInstance:
       value: 5stagehouse (32)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -13978,26 +13662,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16528,10 +16192,6 @@ PrefabInstance:
       value: 5stagehouse (57)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -16578,26 +16238,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18017,10 +17657,6 @@ PrefabInstance:
       value: 5stagehouse (12)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -18067,26 +17703,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18632,7 +18248,7 @@ PrefabInstance:
       objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 7435694777528967458, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
       propertyPath: <NightDuration>k__BackingField
-      value: 30
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 7435694777528967458, guid: 9ed75f64e84c5324bb26d6d05577ae42, type: 3}
       propertyPath: <DayStartLocationtransform>k__BackingField
@@ -18796,10 +18412,6 @@ PrefabInstance:
       value: 5stagehouse (25)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -18846,26 +18458,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20917,10 +20509,6 @@ PrefabInstance:
       value: 5stagehouse (38)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -20967,26 +20555,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21196,10 +20764,6 @@ PrefabInstance:
       value: 5stagehouse (9)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -21246,26 +20810,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -30.618
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21762,10 +21306,6 @@ PrefabInstance:
       value: 5stagehouse (24)
       objectReference: {fileID: 0}
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_RootOrder
-      value: 28
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalScale.y
       value: 1.46
       objectReference: {fileID: 0}
@@ -21812,26 +21352,6 @@ PrefabInstance:
     - target: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -30.618
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.13
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -202.68
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 3482704952174419875, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 47.112
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
