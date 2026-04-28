@@ -65,7 +65,7 @@ namespace Runtime.Features.Enemy.Domovoi
 				_satietyLevel = EDomovoiSatietyLevel.Normal;
 			
 			// выбираем рандомный паттерн поведения на сейчас если уровень сытости - критический
-			if (_satietyLevel == EDomovoiSatietyLevel.Critical)
+			if (_satietyLevel == EDomovoiSatietyLevel.Critical &&  _currentLevelData.Patterns != null && _currentLevelData.Patterns.Count > 0)
 			{
 				_currentDomovoiPattern = _currentLevelData.Patterns.Random();
 				_currentDomovoiPattern.Trigger();
