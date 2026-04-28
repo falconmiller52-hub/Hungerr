@@ -4,7 +4,7 @@ using Runtime.Common.Services.SaveLoad;
 
 public class ClearSpawnPointsMenu : Editor
 {
-	[MenuItem("Game Tools/Clear SpawnPoints from Save", false, 1)]
+	[MenuItem("Game Tools/Clear Item SpawnPoints Data from Save", false, 1)]
 	static void ClearSpawnPoints()
 	{
 		SaveLoadService service = new SaveLoadService();
@@ -21,6 +21,6 @@ public class ClearSpawnPointsMenu : Editor
         
 		// Сохраняем обратно
 		service.SaveData(data);
-		Debug.Log("Save updated - SpawnPoints cleared!");
+		Debug.Log("Save updated - Item SpawnPoints cleared!");
 	}
 }

@@ -34,7 +34,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		private readonly IResourceLoader _resourceLoader;
 		private readonly LocationChanger _locationChanger;
 		private readonly DiContainer _container;
-		private readonly EnemiesBootstrap _enemiesBootstrap;
+		private readonly EnemiesController _enemiesController;
 		private readonly ISaveLoadService _saveLoadService;
 		private readonly ItemsIdentifierSO _identifierSO;
 		
@@ -49,7 +49,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		public EntryGameplayState(SceneStateMachine sceneStateMachine, PhaseStateMachine phaseStateMachine,
 						StateFactory stateFactory, InputHandler inputHandler, IResourceLoader resourceLoader,
 						LocationChanger locationChanger,
-						DiContainer diContainer, EnemiesBootstrap enemiesBootstrap, ISaveLoadService saveLoadService, ItemsIdentifierSO itemsIdentifierSO)
+						DiContainer diContainer, EnemiesController enemiesController, ISaveLoadService saveLoadService, ItemsIdentifierSO itemsIdentifierSO)
 		{
 			_sceneStateMachine = sceneStateMachine;
 			_phaseStateMachine = phaseStateMachine;
@@ -58,7 +58,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			_resourceLoader = resourceLoader;
 			_locationChanger = locationChanger;
 			_container = diContainer;
-			_enemiesBootstrap = enemiesBootstrap;
+			_enemiesController = enemiesController;
 			_saveLoadService = saveLoadService;
 			_identifierSO = itemsIdentifierSO;
 		}
@@ -102,7 +102,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
 
 			_inputHandler.Init();
-			_enemiesBootstrap.Init(playerInstance);
+			_enemiesController.Init(playerInstance);
 
 			_container.Instantiate<GameOverTriggerHandler>();
 

@@ -28,13 +28,13 @@ namespace Runtime.Features.Enemy.Thin.States
 		{
 			if (!_ai.CanSeePlayer())
 			{
-				_ai.ChangeState(new LostPlayerState(_ai));
+				_ai.ChangeState<LostPlayerState>();
 				return;
 			}
 
 			if (_ai.CanAttackPlayer())
 			{
-				_ai.ChangeState(new AttackState(_ai));
+				_ai.ChangeState<AttackState>();
 				return;
 			}
 		

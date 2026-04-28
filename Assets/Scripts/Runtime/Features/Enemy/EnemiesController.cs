@@ -1,0 +1,84 @@
+using System.Collections.Generic;
+using Runtime.Features.Enemy.Thin;
+using Runtime.Features.Enemy.Thin.States;
+using Unity.AI.Navigation;
+using UnityEngine;
+using Zenject;
+
+namespace Runtime.Features.Enemy
+{
+	/// <summary>
+	/// скрипт который инитит всех врагов на сцене, задает их таргета - игрока
+	/// </summary>
+	public class EnemiesController : MonoBehaviour
+	{
+		[SerializeField] private NavMeshSurface _navMeshSurface;
+		[SerializeField] private ThinEnemyAI _thinAIPrefab;
+		
+		private Dictionary<ThinEnemyAI, ThinSpawnPoint> _enemiesMap;
+		private DiContainer _container;
+
+		[Inject]
+		private void Construct(DiContainer diContainer)
+		{
+			_container = diContainer;
+		}
+		
+		public void Init(GameObject targetPlayer)
+		{
+			if (_navMeshSurface == null)
+				_navMeshSurface = FindAnyObjectByType<NavMeshSurface>();
+
+			if (_navMeshSurface.navMeshData == null)
+				_navMeshSurface.BuildNavMesh();
+
+			if (targetPlayer == null)
+			{
+				Debug.LogError("EnemiesController::Init() Player is null");
+				return;
+			}
+
+			_enemiesMap = new Dictionary<ThinEnemyAI, ThinSpawnPoint>();
+
+			var thinSpawnPoints = FindObjectsByType<ThinSpawnPoint>(FindObjectsSortMode.None);
+
+			if (thinSpawnPoints == null)
+			{
+				Debug.LogError("EnemiesController::Init() No spawnPoints found");
+				return;
+			}
+
+			foreach (var spawnPoint in thinSpawnPoints)
+			{
+				ThinEnemyAI thinAi = _container.InstantiatePrefabForComponent<ThinEnemyAI>(_thinAIPrefab, spawnPoint.transform);
+
+				thinAi.Agent.Warp(spawnPoint.transform.position);
+				
+				thinAi.RegisterState(new PatrolState(thinAi));
+				thinAi.RegisterState(new ChaseState(thinAi));
+				thinAi.RegisterState(new LostPlayerState(thinAi));
+				thinAi.RegisterState(new AttackState(thinAi));
+				
+				thinAi.InitPlayer(targetPlayer);
+				thinAi.ChangeState<PatrolState>();
+				
+				_enemiesMap.Add(thinAi, spawnPoint);
+			}
+		}
+
+		public void SetAllEnemiesToSpawnPoint()
+		{
+			if (_enemiesMap == null)
+			{
+				Debug.LogError("EnemiesController::SetAllEnemiesToPatrol() Enemies is null");
+				return;
+			}
+
+			foreach (var ai in _enemiesMap.Keys)
+			{
+				ai.Agent.Warp(_enemiesMap[ai].transform.position);
+				ai.ChangeState<PatrolState>();
+			}
+		}
+	}
+}

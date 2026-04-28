@@ -1,10 +1,14 @@
+using System;
+using System.Collections.Generic;
 using FMODUnity;
 using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Audio.Sound;
+using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy.Thin.States;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace Runtime.Features.Enemy.Thin
 {
@@ -30,32 +34,31 @@ namespace Runtime.Features.Enemy.Thin
 		[field: SerializeField] public int AttackDamage { get; private set; } = 10;
 		[field: SerializeField] public float AttackCooldown { get; private set; } = 1.5f; // Время отдыха
 
+		private Dictionary<Type, IEnemyState> _states = new();
 		private IEnemyState _currentState;
 		private int _currentTargetIndex = -1;
 		private Vector2 _smoothDeltaPosition;
 		private Vector2 _velocity;
 		private ISoundService _soundService;
 
+		public Transform Target { get; private set; }
+		public ISoundService SoundService => _soundService;
+		
 		[Inject]
 		private void Construct(ISoundService soundService)
 		{
 			_soundService = soundService;
 		}
 		
-		public void InitPlayer(GameObject player) => Target = player.transform;
-		
-		public Transform Target { get; private set; }
-		public ISoundService SoundService => _soundService;
-
 		private void Awake()
 		{
 			Agent.updatePosition = false;
 			Agent.updateRotation = true;
 		}
-
-		private void Start()
+		
+		private void OnDisable()
 		{
-			ChangeState(new PatrolState(this));
+			_states.Clear();
 		}
 
 		private void Update()
@@ -63,12 +66,28 @@ namespace Runtime.Features.Enemy.Thin
 			_currentState?.Execute();
 			SynchronizeAnimatorAndAgent();
 		}
-
-		public void ChangeState(IEnemyState newState)
+		
+		public void InitPlayer(GameObject player)
 		{
-			_currentState?.Exit();
-			_currentState = newState;
-			_currentState.Enter();
+			Target = player.transform;
+		}
+		
+		public void RegisterState<TState>(TState state) where TState : IEnemyState
+		{
+			if (_states.ContainsKey(typeof(TState)))
+				throw new ArgumentException("State already existing in States Map: " + typeof(TState));
+
+			_states.Add(typeof(TState), state);
+		}
+
+		public void ChangeState<TState>() where TState : IEnemyState
+		{
+			if (_states.TryGetValue(typeof(TState), out var state))
+			{
+				_currentState?.Exit();
+				_currentState = state;
+				_currentState.Enter();
+			}
 		}
 
 		public bool CanSeePlayer() =>

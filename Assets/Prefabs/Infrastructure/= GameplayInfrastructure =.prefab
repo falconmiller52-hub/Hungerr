@@ -44,9 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c704e6fa871d8e34390e18ee0cec0c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultFadeInDuration: 0.2
-  _defaultStayBlackDuration: 0.5
-  _defaultFadeOutDuration: 0.5
   _isProcessing: 0
 --- !u!1 &2885667111179619530
 GameObject:
@@ -59,7 +56,7 @@ GameObject:
   - component: {fileID: 2372862246219275689}
   - component: {fileID: 8264645752893384828}
   m_Layer: 0
-  m_Name: EnemiesBootstrap
+  m_Name: EnemiesController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,6 +90,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshSurface: {fileID: 1011562054728227795}
+  _thinAIPrefab: {fileID: 285659397, guid: ad50ac11feb4bfc42a1058d8a8aed12a, type: 3}
 --- !u!1 &3024562624641939705
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _phaseStateMachine: {fileID: 7435694777528967458}
   _locationChanger: {fileID: 1908752502828135830}
-  _enemiesBootstrap: {fileID: 8264645752893384828}
+  enemiesController: {fileID: 8264645752893384828}
   _storySystem: {fileID: 274316078477398296}
   _itemSpawner: {fileID: 5004936188988711940}
   _gameOverCurtainPrefab: {fileID: 8153974036587686912, guid: 57e03d98103315d4ca07ee820115a7f8, type: 3}
