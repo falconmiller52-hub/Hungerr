@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Cinemachine;
 using FMODUnity;
 using Runtime.Common.Services.Audio.Sound;
@@ -35,6 +36,9 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 			{
 				_inventoryWithCells = new InventoryWithCells(_width, _height);
 				_isInitialized = true;
+				
+				Width = _width;
+				Height = _height;
 			}
 		}
 		
@@ -76,9 +80,25 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 			
 			return false;
 		}
+
+		public void RemoveAllItemsByType<T>() where T : InventoryItemData
+		{
+			_inventoryWithCells.RemoveAllItemsByType<T>();
+			
+			OnInventoryChanged?.Invoke();
+		}
+
+		public List<T> GetItems<T>() where T : InventoryItemData
+		{
+			return _inventoryWithCells.GetItems<T>();
+		}
 		
 		public override InventoryWithCells GetInventory() => _inventoryWithCells;
     
+		public override Dictionary<Vector2Int, InventorySlot> GetSlots()
+		{
+			return _inventoryWithCells.Slots;
+		}
 		
 		// DEBUG
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using FMODUnity;
 using Runtime.Common.Services.Audio.Sound;
 using UnityEngine;
@@ -40,9 +41,11 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 		{
 			if (_inventoryWithCells == null)
 				_inventoryWithCells = new InventoryWithCells(_width, _height);
+			
+			Width = _width;
+			Height = _height;
 		}
-
-
+		
 		public void InventoryOpenStateChanged(bool openState)
 		{
 			_soundService.PlaySound(_openInventorySound, transform.position);
@@ -71,9 +74,26 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 			return false;
 		}
 		
-		public override InventoryWithCells GetInventory() => _inventoryWithCells;
-    
+		public void RemoveAllItemsByType<T>() where T : InventoryItemData
+		{
+			_inventoryWithCells.RemoveAllItemsByType<T>();
+			
+			OnInventoryChanged?.Invoke();
+		}
+
+		public List<T> GetItems<T>() where T : InventoryItemData
+		{
+			return _inventoryWithCells.GetItems<T>();
+		}
 		
+		public override InventoryWithCells GetInventory() => _inventoryWithCells;
+		
+		public override Dictionary<Vector2Int, InventorySlot> GetSlots()
+		{
+			return _inventoryWithCells.Slots;
+		}
+
+
 		// DEBUG
 
 		[ContextMenu("Add Item")]
