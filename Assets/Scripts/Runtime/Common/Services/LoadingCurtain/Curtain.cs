@@ -24,7 +24,7 @@ namespace Runtime.Common.Services.LoadingCurtain
 		/// <summary>
 		/// Метод, который затемняет экран и показывает загрузочный экран
 		/// </summary>
-		/// <param name="duration">Время между итерациями затемнения</param>
+		/// <param name="duration">длительность показа</param>
 		/// <param name="needText">Флаг - показывать или нет текст "Loading"</param>
 		/// <param name="onEnd">! Коллбек который выполняется сразу после полного затемнения экрана !</param>
 		public void Show(float duration = -1, bool needText = true, Action onEnd = null)
@@ -47,7 +47,7 @@ namespace Runtime.Common.Services.LoadingCurtain
 		/// <summary>
 		/// Метод, который рассветляет экран
 		/// </summary>
-		/// <param name="duration">Время между итерациями рассветления</param>
+		/// <param name="duration">длительность исчезания</param>
 		/// <param name="needText">Флаг - показывать или нет текст "Loading"</param>
 		/// <param name="onEnd">! Коллбек который выполняется сразу после полного рассветления экрана !</param>
 		public void Hide(float duration = -1, bool needText = true, Action onEnd = null)
