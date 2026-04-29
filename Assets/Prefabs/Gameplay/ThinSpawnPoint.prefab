@@ -60,5 +60,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8139c0af14f642688791b0b83f30a9e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _thinData: {fileID: 11400000, guid: 2c486c399bce957429b316f54fb6615d, type: 2}
+  _enemySettingData: {fileID: 11400000, guid: 2c486c399bce957429b316f54fb6615d, type: 2}
   _enemyType: 0

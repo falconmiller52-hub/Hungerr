@@ -12,29 +12,29 @@ namespace Runtime.Features.DayNight
 	/// </summary>
 	public class DayNightChangeTrigger : MonoBehaviour, IInteractable
 	{
-		[SerializeField] private EGameplayChangePhaseTriggerEvent triggerEventType;
+		[SerializeField] private EGameplayChangePhaseTriggerEvent _triggerEventType;
 
 		private EventBus _eventBus;
 
 		[Inject]
 		private void Construct(EventBus eventBus)
 		{
-			_eventBus = eventBus;
+			_eventBus = eventBus;	
 		}
 
 		public void Interact()
 		{
-			switch (triggerEventType)
+			switch (_triggerEventType)
 			{
 				case EGameplayChangePhaseTriggerEvent.StartDayTrigger:
 					var data = new StartDayTriggerEventData();
 					data.ForceNightEnd = false;
 
-					_eventBus.Trigger(triggerEventType, data);
+					_eventBus.Trigger(_triggerEventType, data);
 					break;
 
 				case EGameplayChangePhaseTriggerEvent.StartNightTrigger:
-					_eventBus.Trigger(triggerEventType);
+					_eventBus.Trigger(_triggerEventType);
 
 					break;
 			}

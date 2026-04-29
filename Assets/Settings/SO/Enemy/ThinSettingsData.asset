@@ -14,21 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <PatrolSounds>k__BackingField:
     Guid:
-      Data1: -2096023248
-      Data2: 1129951426
-      Data3: -580151625
-      Data4: 720998879
-    Path: event:/SFX/Enemies/Slim/slim_inactive1
+      Data1: -157867537
+      Data2: 1188708561
+      Data3: 1158433956
+      Data4: 1555799162
+    Path: event:/SFX/Enemies/Slim/slim_active
   <PatrolSpeedMultiplier>k__BackingField: 1
   <ChaseSpeedMultiplier>k__BackingField: 2
   <DetectionRadius>k__BackingField: 10
   <ChaseSounds>k__BackingField:
     Guid:
-      Data1: -416055462
-      Data2: 1117657559
-      Data3: 593025687
-      Data4: 746905815
-    Path: event:/SFX/Enemies/Slim/slim_active1
+      Data1: -377094780
+      Data2: 1127330545
+      Data3: 2143468936
+      Data4: 1783118150
+    Path: event:/SFX/Enemies/Slim/slim_inactive
   <AttackRadius>k__BackingField: 2
   <AttackDamage>k__BackingField: 10
   <AttackCooldown>k__BackingField: 1.5
