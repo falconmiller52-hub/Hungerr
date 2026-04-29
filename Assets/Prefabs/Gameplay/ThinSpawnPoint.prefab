@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28872668cd301fe49bd68761c3274c99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <PatrolPoints>k__BackingField: []

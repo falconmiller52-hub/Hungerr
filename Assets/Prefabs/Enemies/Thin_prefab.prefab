@@ -558,7 +558,7 @@ MonoBehaviour:
     Path: event:/SFX/Enemies/Slim/slim_inactive1
   <PatrolSpeedMultiplier>k__BackingField: 1
   <ChaseSpeedMultiplier>k__BackingField: 2
-  <DetectionRadius>k__BackingField: 11
+  <DetectionRadius>k__BackingField: 10
   <ChaseSounds>k__BackingField:
     Guid:
       Data1: -416055462
