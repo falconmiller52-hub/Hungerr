@@ -1,4 +1,3 @@
-using System.Collections;
 using Runtime.Common.Services.LoadingCurtain;
 using Runtime.Common.Services.Pause;
 using Runtime.Features.Interactable;
@@ -31,7 +30,7 @@ namespace Runtime.Features.Location
 		public void Interact()
 		{
 			_pauseController.PerformStop();
-			_curtain.Show(_locationChangerData.FadeInSpeed, onEnd: Teleport);
+			_curtain.Show(_locationChangerData.FadeInDuration, onEnd: Teleport);
 		}
 
 		private void Teleport()

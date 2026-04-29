@@ -9,11 +9,11 @@ namespace Runtime.Common.Services.LoadingCurtain
 		[SerializeField] private CanvasGroup _curtain;
 		[SerializeField] private GameObject _textObject;
 
-		[SerializeField] [Range(0.005f, 0.07f)]
-		private float _fadeInSpeed;
+		[SerializeField]
+		private float _fadeInDefaultDuraion = 0.5f;
 
-		[SerializeField] [Range(0.001f, 0.07f)]
-		private float _fadeOutSpeed;
+		[SerializeField]
+		private float _fadeOutDefaultDuration = 0.5f;
 
 		void Awake()
 		{
@@ -24,71 +24,83 @@ namespace Runtime.Common.Services.LoadingCurtain
 		/// <summary>
 		/// Метод, который затемняет экран и показывает загрузочный экран
 		/// </summary>
-		/// <param name="customTime">Время между итерациями затемнения</param>
+		/// <param name="duration">длительность показа</param>
 		/// <param name="needText">Флаг - показывать или нет текст "Loading"</param>
 		/// <param name="onEnd">! Коллбек который выполняется сразу после полного затемнения экрана !</param>
-		public void Show(float customTime = -1, bool needText = true, Action onEnd = null)
+		public void Show(float duration = -1, bool needText = true, Action onEnd = null)
 		{
 			gameObject.SetActive(true);
 
-			float tempFadeOutSpeed = _fadeOutSpeed;
+			float tempFadeOutDuration = _fadeOutDefaultDuration;
 
-			if (customTime > -1)
-				tempFadeOutSpeed = customTime;
+			if (duration > -1)
+				tempFadeOutDuration = duration;
 
 			if (needText)
 				_textObject.SetActive(true);
 			else
 				_textObject.SetActive(false);
 
-			StartCoroutine(DoFadeOut(tempFadeOutSpeed, onEnd));
+			StartCoroutine(DoFadeOut(tempFadeOutDuration, onEnd));
 		}
 
 		/// <summary>
 		/// Метод, который рассветляет экран
 		/// </summary>
-		/// <param name="customTime">Время между итерациями рассветления</param>
+		/// <param name="duration">длительность исчезания</param>
 		/// <param name="needText">Флаг - показывать или нет текст "Loading"</param>
 		/// <param name="onEnd">! Коллбек который выполняется сразу после полного рассветления экрана !</param>
-		public void Hide(float customTime = -1, bool needText = true, Action onEnd = null)
+		public void Hide(float duration = -1, bool needText = true, Action onEnd = null)
 		{
 			gameObject.SetActive(true);
 
-			float tempFadeInSpeed = _fadeInSpeed;
+			float tempFadeInDuration = _fadeInDefaultDuraion;
 
-			if (customTime > -1)
-				tempFadeInSpeed = customTime;
+			if (duration > -1)
+				tempFadeInDuration = duration;
 
 			if (needText)
 				_textObject.SetActive(true);
 			else
 				_textObject.SetActive(false);
 			
-			StartCoroutine(DoFadeIn(tempFadeInSpeed, onEnd));
+			StartCoroutine(DoFadeIn(tempFadeInDuration, onEnd));
 		}
 
-		IEnumerator DoFadeIn(float fadeInSpeed, Action onEnd)
+		IEnumerator DoFadeIn(float duration, Action onEnd)
 		{
-			while (_curtain.alpha > 0)
+			float elapsed = 0f;
+			float startAlpha = _curtain.alpha;
+
+			while (elapsed < duration)
 			{
-				_curtain.alpha -= 0.03f;
-				yield return new WaitForSeconds(fadeInSpeed);
+				elapsed += Time.deltaTime;
+				_curtain.alpha = Mathf.Lerp(startAlpha, 0f, elapsed / duration);
+				
+				yield return null;
 			}
 
+			_curtain.alpha = 0f;
 			gameObject.SetActive(false);
 			onEnd?.Invoke();
 		}
 
-		IEnumerator DoFadeOut(float fadeOutSpeed, Action onEnd)
+		IEnumerator DoFadeOut(float duration, Action onEnd)
 		{
 			gameObject.SetActive(true);
+    
+			float elapsed = 0f;
+			float startAlpha = _curtain.alpha;
 
-			while (_curtain.alpha < 1)
+			while (elapsed < duration)
 			{
-				_curtain.alpha += 0.03f;
-				yield return new WaitForSeconds(fadeOutSpeed);
+				elapsed += Time.deltaTime;
+				_curtain.alpha = Mathf.Lerp(startAlpha, 1f, elapsed / duration);
+				
+				yield return null;
 			}
-			
+
+			_curtain.alpha = 1f;
 			onEnd?.Invoke();
 		}
 	}
