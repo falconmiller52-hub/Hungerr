@@ -1,13 +1,14 @@
 using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.Pause;
-using Runtime.Common.Services.StateMachine;
 using Runtime.Features.Enemy.Thin.States;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
 using Debug = UnityEngine.Debug;
 using IState = Runtime.Common.Services.StateMachine.IState;
 using Random = UnityEngine.Random;
+using StateMachine = Runtime.Common.Services.StateMachine.StateMachine;
 
 namespace Runtime.Features.Enemy.Thin
 {
@@ -19,7 +20,7 @@ namespace Runtime.Features.Enemy.Thin
 		[field: SerializeField] public NavMeshAgent Agent { get; private set; }
 
 		public ISoundService SoundService => _soundService;
-		public StateMachine Machine { get; set; }
+		public StateMachine Machine { get; private set; }
 		public EnemySettingData EnemySettingData;
 
 		private ISoundService _soundService;
@@ -38,13 +39,11 @@ namespace Runtime.Features.Enemy.Thin
 		{
 			_soundService = soundService;
 			_pauseController = pauseController;
-			
-			_pauseController.Add(this);
 		}
 
 		private void Awake()
 		{
-			Machine = new StateMachine();
+			_pauseController.Add(this);
 			
 			Agent.updatePosition = false;
 			Agent.updateRotation = true;
@@ -60,6 +59,8 @@ namespace Runtime.Features.Enemy.Thin
 		{
 			Target = target.transform;
 
+			Machine = new StateMachine();
+			
 			Machine.RegisterState(new PatrolState(this));
 			Machine.RegisterState(new ChaseState(this));
 			Machine.RegisterState(new LostPlayerState(this));
@@ -80,7 +81,10 @@ namespace Runtime.Features.Enemy.Thin
 
 		public void Stop()
 		{
-			Debug.Log("Stopping...");
+			if(Machine.CurrentState is PauseState)
+				return;
+			
+			_lastState = Machine.CurrentState;
 			
 			Machine.EnterIn<PauseState>();
 		}

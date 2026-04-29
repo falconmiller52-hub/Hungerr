@@ -14,7 +14,6 @@ namespace Runtime.Common.Services.StateMachine
 
 		public StateMachine()
 		{
-			Debug.Log("Initializing StateMachine");
 			_states = new Dictionary<Type, IState>();
 		}
 
