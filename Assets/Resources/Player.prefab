@@ -2329,10 +2329,10 @@ MonoBehaviour:
   _playerTransform: {fileID: 3851059412217318607}
   _playerPivotParentObj: {fileID: 3851059411422752080}
   _currentStance: 0
-  _stancesSpeeds: {x: 1, y: 6, z: 10}
-  _maxStamina: 1000000
-  _staminaUsage: 0
-  _staminaRegen: 20
+  _stancesSpeeds: {x: 1, y: 4, z: 6}
+  _maxStamina: 100
+  _staminaUsage: 10
+  _staminaRegen: 15
   _exhaustionDur: 7
   _staminaWaiter: 3
   _staminaMultiplier: 1
@@ -2430,7 +2430,7 @@ MonoBehaviour:
   _maxHealth: 100
   _shakeCameraTransform: {fileID: 2558597041051772335}
   _shakeDuration: 0.3
-  _shakeStrength: {x: 5, y: 5, z: 2}
+  _shakeStrength: {x: 3, y: 3, z: 2}
   _vibrato: 10
 --- !u!114 &1574870206258873081
 MonoBehaviour:
@@ -2482,7 +2482,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _counterUI: {fileID: 5322249095550989364}
   _maxFood: 100
-  _foodDrainPerSecond: 1
+  _foodDrainPerSecond: 0.1
 --- !u!114 &8580609847667149802
 MonoBehaviour:
   m_ObjectHideFlags: 0
