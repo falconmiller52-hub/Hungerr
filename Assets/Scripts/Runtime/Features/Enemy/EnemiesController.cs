@@ -14,7 +14,7 @@ namespace Runtime.Features.Enemy
 	{
 		[SerializeField] private NavMeshSurface _navMeshSurface;
 		[SerializeField] private ThinEnemyAI _thinAIPrefab;
-		
+
 		private Dictionary<ThinEnemyAI, ThinSpawnPoint> _enemiesMap;
 		private DiContainer _container;
 
@@ -23,7 +23,7 @@ namespace Runtime.Features.Enemy
 		{
 			_container = diContainer;
 		}
-		
+
 		public void Init(GameObject targetPlayer)
 		{
 			if (_navMeshSurface == null)
@@ -50,13 +50,15 @@ namespace Runtime.Features.Enemy
 
 			foreach (var spawnPoint in thinSpawnPoints)
 			{
-				ThinEnemyAI thinAi = _container.InstantiatePrefabForComponent<ThinEnemyAI>(_thinAIPrefab, spawnPoint.transform);
+				ThinEnemyAI thinAi =
+								_container.InstantiatePrefabForComponent<ThinEnemyAI>(_thinAIPrefab,
+												spawnPoint.transform);
 
 				thinAi.Agent.Warp(spawnPoint.transform.position);
-				
+
 				thinAi.Init(targetPlayer, spawnPoint.PatrolPoints);
 				thinAi.ChangeState<PatrolState>();
-				
+
 				_enemiesMap.Add(thinAi, spawnPoint);
 			}
 		}

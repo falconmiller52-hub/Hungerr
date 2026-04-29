@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using FMODUnity;
-using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Audio.Sound;
-using Runtime.Features.DayNight.StateMachine;
 using Runtime.Features.Enemy.Thin.States;
 using UnityEngine;
 using UnityEngine.AI;
@@ -15,10 +12,10 @@ namespace Runtime.Features.Enemy.Thin
 	public class ThinEnemyAI : MonoBehaviour
 	{
 		private static readonly int Move = Animator.StringToHash("Move");
-		
+
 		[field: SerializeField] public Animator Animator { get; private set; }
 		[field: SerializeField] public NavMeshAgent Agent { get; private set; }
-		
+
 		public EnemySettingData EnemySettingData;
 
 		private Dictionary<Type, IEnemyState> _states = new();
@@ -31,19 +28,19 @@ namespace Runtime.Features.Enemy.Thin
 		public Transform Target { get; private set; }
 		public Transform[] PatrolPoints { get; private set; }
 		public ISoundService SoundService => _soundService;
-		
+
 		[Inject]
 		private void Construct(ISoundService soundService)
 		{
 			_soundService = soundService;
 		}
-		
+
 		private void Awake()
 		{
 			Agent.updatePosition = false;
 			Agent.updateRotation = true;
 		}
-		
+
 		private void OnDisable()
 		{
 			_states.Clear();
@@ -54,20 +51,20 @@ namespace Runtime.Features.Enemy.Thin
 			_currentState?.Execute();
 			SynchronizeAnimatorAndAgent();
 		}
-		
+
 		public void Init(GameObject target, Transform[] patrolPoints)
 		{
 			Target = target.transform;
-			
+
 			RegisterState(new PatrolState(this));
 			RegisterState(new ChaseState(this));
 			RegisterState(new LostPlayerState(this));
 			RegisterState(new AttackState(this));
-			
+
 			if (patrolPoints.Length > 0)
 				PatrolPoints = patrolPoints;
 		}
-		
+
 		public void RegisterState<TState>(TState state) where TState : IEnemyState
 		{
 			if (_states.ContainsKey(typeof(TState)))
@@ -80,9 +77,9 @@ namespace Runtime.Features.Enemy.Thin
 		{
 			if (_states.TryGetValue(typeof(TState), out var state))
 			{
-				if(state == _currentState)
+				if (state == _currentState)
 					return;
-				
+
 				_currentState?.Exit();
 				_currentState = state;
 				_currentState.Enter();
@@ -90,10 +87,12 @@ namespace Runtime.Features.Enemy.Thin
 		}
 
 		public bool CanSeePlayer() =>
-			Target != null && Vector3.Distance(transform.position, Target.position) < EnemySettingData.DetectionRadius;
+						Target != null && Vector3.Distance(transform.position, Target.position) <
+						EnemySettingData.DetectionRadius;
 
 		public bool CanAttackPlayer() =>
-			Target != null && Vector3.Distance(transform.position, Target.position) < EnemySettingData.AttackRadius;
+						Target != null && Vector3.Distance(transform.position, Target.position) <
+						EnemySettingData.AttackRadius;
 
 		public void SetNewAgentPoint()
 		{

@@ -1,7 +1,5 @@
-using System;
 using NaughtyAttributes;
 using Runtime.Common.Enums;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Runtime.Features.Enemy
@@ -33,8 +31,6 @@ namespace Runtime.Features.Enemy
 					break;
 				}
 			}
-			
-
 		}
 	}
 }
