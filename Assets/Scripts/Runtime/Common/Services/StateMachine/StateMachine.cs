@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Runtime.Common.Services.StateMachine
 {
@@ -13,6 +14,7 @@ namespace Runtime.Common.Services.StateMachine
 
 		public StateMachine()
 		{
+			Debug.Log("Initializing StateMachine");
 			_states = new Dictionary<Type, IState>();
 		}
 

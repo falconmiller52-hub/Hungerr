@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.Pause;
 using Runtime.Common.Services.StateMachine;
@@ -7,6 +5,8 @@ using Runtime.Features.Enemy.Thin.States;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
+using Debug = UnityEngine.Debug;
+using IState = Runtime.Common.Services.StateMachine.IState;
 using Random = UnityEngine.Random;
 
 namespace Runtime.Features.Enemy.Thin
@@ -19,12 +19,12 @@ namespace Runtime.Features.Enemy.Thin
 		[field: SerializeField] public NavMeshAgent Agent { get; private set; }
 
 		public ISoundService SoundService => _soundService;
-		public StateMachine StateMachine { get; private set; }
+		public StateMachine Machine { get; set; }
 		public EnemySettingData EnemySettingData;
 
-		private Dictionary<Type, IState> _states = new();
-
 		private ISoundService _soundService;
+		private IPauseController _pauseController;
+		private IState _lastState;
 
 		private int _currentTargetIndex = -1;
 		private Vector2 _smoothDeltaPosition;
@@ -34,41 +34,63 @@ namespace Runtime.Features.Enemy.Thin
 		public Transform[] PatrolPoints { get; private set; }
 
 		[Inject]
-		private void Construct(ISoundService soundService)
+		private void Construct(ISoundService soundService, IPauseController pauseController)
 		{
 			_soundService = soundService;
+			_pauseController = pauseController;
+			
+			_pauseController.Add(this);
 		}
 
 		private void Awake()
 		{
+			Machine = new StateMachine();
+			
 			Agent.updatePosition = false;
 			Agent.updateRotation = true;
 		}
 
-		private void OnDisable()
-		{
-			_states.Clear();
-		}
-
 		private void Update()
 		{
-			StateMachine.CurrentState?.Execute();
+			Machine.CurrentState?.Execute();
 			SynchronizeAnimatorAndAgent();
 		}
 
 		public void Init(GameObject target, Transform[] patrolPoints)
 		{
-			StateMachine = new StateMachine();
-
 			Target = target.transform;
 
-			StateMachine.RegisterState(new PatrolState(this));
-			StateMachine.RegisterState(new ChaseState(this));
-			StateMachine.RegisterState(new LostPlayerState(this));
-			StateMachine.RegisterState(new AttackState(this));
+			Machine.RegisterState(new PatrolState(this));
+			Machine.RegisterState(new ChaseState(this));
+			Machine.RegisterState(new LostPlayerState(this));
+			Machine.RegisterState(new AttackState(this));
+			Machine.RegisterState(new PauseState());
 
 			if (patrolPoints.Length > 0)
 				PatrolPoints = patrolPoints;
+		}
+		
+		public void OnAnimationEventInvoked()
+		{
+			if (Machine.CurrentState is IAnimationEventListener listener)
+			{
+				listener.OnAnimationEventHandled();
+			}
+		}
+
+		public void Stop()
+		{
+			Debug.Log("Stopping...");
+			
+			Machine.EnterIn<PauseState>();
+		}
+
+		public void Resume()
+		{
+			// TODO : Сделать возврат в последние состояние
+			
+			// Пока что так. Я не ебу хороший способ возвращаться в то же состояние, где мы были до паузы
+			Machine.EnterIn<PatrolState>();
 		}
 
 		public bool CanSeePlayer()
@@ -146,22 +168,6 @@ namespace Runtime.Features.Enemy.Thin
 			{
 				transform.position = Vector3.Lerp(transform.position, Agent.nextPosition, smooth);
 			}
-		}
-
-		public void OnAnimationEventInvoked()
-		{
-			if (StateMachine.CurrentState is IAnimationEventListener listener)
-			{
-				listener.OnAnimationEventHandled();
-			}
-		}
-
-		public void Stop()
-		{
-		}
-
-		public void Resume()
-		{
 		}
 	}
 }

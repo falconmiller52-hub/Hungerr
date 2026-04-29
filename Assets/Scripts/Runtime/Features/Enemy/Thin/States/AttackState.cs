@@ -31,7 +31,7 @@ namespace Runtime.Features.Enemy.Thin.States
 				if (_cooldownTimer >= _ai.EnemySettingData.AttackCooldown)
 				{
 					// Время отдыха вышло — возвращаемся к патрулю
-					_ai.StateMachine.EnterIn<PatrolState>();
+					_ai.Machine.EnterIn<PatrolState>();
 				}
 			}
 		}
