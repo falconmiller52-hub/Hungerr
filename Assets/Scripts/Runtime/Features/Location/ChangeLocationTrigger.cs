@@ -1,4 +1,3 @@
-using Runtime.Common.Enums;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.LoadingCurtain;
 using Runtime.Common.Services.Pause;
@@ -20,7 +19,6 @@ namespace Runtime.Features.Location
 		private LocationChanger _locationChanger;
 		private ILoadingCurtain _curtain;
 		private IPauseController _pauseController;
-		private EventBus _eventBus;
 
 		[Inject]
 		private void Construct(LocationChanger locationChanger,
@@ -31,7 +29,6 @@ namespace Runtime.Features.Location
 			_locationChanger = locationChanger;
 			_curtain = loadingCurtain;
 			_pauseController = pauseController;
-			_eventBus = eventBus;
 		}
 
 		public void Interact()
@@ -42,8 +39,6 @@ namespace Runtime.Features.Location
 
 		private void Teleport()
 		{
-			_eventBus.Trigger(EChangeLocation.ChangeLocationTriggered);
-			
 			_locationChanger.ChangeLocation(_nextPositionTransform);
 			_curtain.Hide(_locationChangerData.FadeOutSpeed);
 			

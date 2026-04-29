@@ -23,9 +23,9 @@ namespace Runtime.Features.Enemy.Thin
 		public EnemySettingData EnemySettingData;
 
 		private Dictionary<Type, IState> _states = new();
-		
+
 		private ISoundService _soundService;
-		
+
 		private int _currentTargetIndex = -1;
 		private Vector2 _smoothDeltaPosition;
 		private Vector2 _velocity;
@@ -59,7 +59,7 @@ namespace Runtime.Features.Enemy.Thin
 		public void Init(GameObject target, Transform[] patrolPoints)
 		{
 			StateMachine = new StateMachine();
-			
+
 			Target = target.transform;
 
 			StateMachine.RegisterState(new PatrolState(this));
@@ -70,10 +70,37 @@ namespace Runtime.Features.Enemy.Thin
 			if (patrolPoints.Length > 0)
 				PatrolPoints = patrolPoints;
 		}
-		
-		public bool CanSeePlayer() =>
-						Target != null && Vector3.Distance(transform.position, Target.position) <
-						EnemySettingData.DetectionRadius;
+
+		public bool CanSeePlayer()
+		{
+			if (Target == null)
+			{
+				Debug.LogError("No target found");
+				return false;
+			}
+
+			Vector3 playerDirection = (Target.position - transform.position).normalized;
+
+			// Есть ли препятствие между врагом и игроком
+			if (Physics.Raycast(transform.position, playerDirection, out RaycastHit hit,
+							    EnemySettingData.DetectionRadius))
+			{
+				// Препятствия нет
+				if (hit.collider.gameObject == Target.gameObject)
+				{
+					// Игрок близко
+					if (Vector3.Distance(transform.position, Target.position) < EnemySettingData.DetectionRadius)
+						return true;
+					return false;
+				}
+
+				// Есть препятствие, не видим игрока
+				return false;
+			}
+
+			// Игрок далеко
+			return false;
+		}
 
 		public bool CanAttackPlayer() =>
 						Target != null && Vector3.Distance(transform.position, Target.position) <

@@ -29,16 +29,6 @@ namespace Runtime.Features.Enemy
 			_eventBus = eventBus;
 		}
 
-		private void OnEnable()
-		{
-			_eventBus.Subscribe(EChangeLocation.ChangeLocationTriggered, SetAllEnemiesToPatrolState);
-		}
-
-		private void OnDisable()
-		{
-			_eventBus.Unsubscribe(EChangeLocation.ChangeLocationTriggered, SetAllEnemiesToPatrolState);
-		}
-
 		public void Init(GameObject targetPlayer)
 		{
 			if (_navMeshSurface == null)
@@ -80,20 +70,6 @@ namespace Runtime.Features.Enemy
 
 		public void SetAllEnemiesToSpawnPoint()
 		{
-			ForEachEnemy((ai) =>
-			{
-				ai.Agent.Warp(_enemiesMap[ai].transform.position);
-				ai.StateMachine.EnterIn<PatrolState>();
-			});
-		}
-
-		private void SetAllEnemiesToPatrolState()
-		{
-			ForEachEnemy((ai) => { ai.StateMachine.EnterIn<PatrolState>(); });
-		}
-
-		private void ForEachEnemy(Action<ThinEnemyAI> action)
-		{
 			if (_enemiesMap == null)
 			{
 				Debug.LogError("EnemiesController::SetAllEnemiesToPatrol() Enemies is null");
@@ -102,7 +78,8 @@ namespace Runtime.Features.Enemy
 
 			foreach (var ai in _enemiesMap.Keys)
 			{
-				action?.Invoke(ai);
+				ai.Agent.Warp(_enemiesMap[ai].transform.position);
+				ai.StateMachine.EnterIn<PatrolState>();
 			}
 		}
 	}

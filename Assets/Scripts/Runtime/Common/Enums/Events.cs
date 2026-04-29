@@ -46,9 +46,4 @@ namespace Runtime.Common.Enums
 		PlayerOnZeroHealth = 0,
 		PlayerOnZeroFood,
 	}
-
-	public enum EChangeLocation
-	{
-		ChangeLocationTriggered,
-	}
 }
