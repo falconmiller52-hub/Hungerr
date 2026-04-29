@@ -40,7 +40,7 @@ namespace Runtime.Features.MainMenu
 
 		private IEnumerator ProcessFadeStartPanel()
 		{
-			_curtain.Show(0.001f, onEnd:() =>
+			_curtain.Show(onEnd:() =>
 			{
 				_startPanelGroup.gameObject.SetActive(false);
 			});
