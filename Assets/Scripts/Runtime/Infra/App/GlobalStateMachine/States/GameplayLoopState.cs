@@ -23,6 +23,8 @@ namespace Runtime.Infra.App.GlobalStateMachine.States
 			_eventBus.Subscribe(EGameEvent.EndGameplay, EnterInGameMenuState);
 		}
 
+		public void Execute() { }
+
 		public void Exit()
 		{
 			_eventBus.Unsubscribe(EGameEvent.EndGameplay, EnterInGameMenuState);

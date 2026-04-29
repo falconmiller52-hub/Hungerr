@@ -124,7 +124,11 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			// Enter in main Gameplay State
 			_sceneStateMachine.EnterIn<PlayGameplayState>();
 		}
-		
+
+		public void Execute()
+		{
+		}
+
 		public void Exit()
 		{
 		}

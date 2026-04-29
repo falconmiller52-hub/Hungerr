@@ -1,10 +1,11 @@
 using FMOD.Studio;
+using Runtime.Common.Services.StateMachine;
 using UnityEngine;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 namespace Runtime.Features.Enemy.Thin.States
 {
-	public class ChaseState : IEnemyState
+	public class ChaseState : IState
 	{
 		private static readonly int WalkSpeed = Animator.StringToHash("WalkSpeed");
 		private static readonly int Chase = Animator.StringToHash("Chase");
@@ -28,13 +29,13 @@ namespace Runtime.Features.Enemy.Thin.States
 		{
 			if (!_ai.CanSeePlayer())
 			{
-				_ai.ChangeState<LostPlayerState>();
+				_ai.StateMachine.EnterIn<LostPlayerState>();
 				return;
 			}
 
 			if (_ai.CanAttackPlayer())
 			{
-				_ai.ChangeState<AttackState>();
+				_ai.StateMachine.EnterIn<AttackState>();
 				return;
 			}
 		

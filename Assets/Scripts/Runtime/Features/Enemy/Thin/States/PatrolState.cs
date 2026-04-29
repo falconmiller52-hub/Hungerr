@@ -1,10 +1,11 @@
 using FMOD.Studio;
+using Runtime.Common.Services.StateMachine;
 using UnityEngine;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 namespace Runtime.Features.Enemy.Thin.States
 {
-	public class PatrolState : IEnemyState
+	public class PatrolState : IState
 	{
 		private static readonly int WalkSpeed = Animator.StringToHash("WalkSpeed");
 		
@@ -15,6 +16,8 @@ namespace Runtime.Features.Enemy.Thin.States
 
 		public void Enter()
 		{
+			Debug.Log("Entering Patrol State");
+			
 			_ai.Animator.SetFloat(WalkSpeed, _ai.EnemySettingData.PatrolSpeedMultiplier);
 			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed) * _ai.transform.lossyScale.x;
 			
@@ -25,7 +28,7 @@ namespace Runtime.Features.Enemy.Thin.States
 		{
 			if (_ai.CanSeePlayer())
 			{
-				_ai.ChangeState<ChaseState>();
+				_ai.StateMachine.EnterIn<ChaseState>();
 				return;
 			}
 

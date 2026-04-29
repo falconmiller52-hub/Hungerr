@@ -8,8 +8,8 @@ namespace Runtime.Common.Services.StateMachine
 		public event Action<IState> StateChanged;
 		
 		readonly Dictionary<Type, IState> _states;
-		
-		IState _currentState;
+
+		public IState CurrentState { get; private set; }
 
 		public StateMachine()
 		{
@@ -20,11 +20,11 @@ namespace Runtime.Common.Services.StateMachine
 		{
 			if (_states.TryGetValue(typeof(TState), out var state))
 			{
-				_currentState?.Exit();
-				_currentState = state;
-				_currentState.Enter();
+				CurrentState?.Exit();
+				CurrentState = state;
+				CurrentState.Enter();
 
-				StateChanged?.Invoke(_currentState);
+				StateChanged?.Invoke(CurrentState);
 			}
 		}
 
@@ -35,6 +35,5 @@ namespace Runtime.Common.Services.StateMachine
 
 			_states.Add(typeof(TState), state);
 		}
-		
 	}
 }

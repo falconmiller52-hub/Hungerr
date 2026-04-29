@@ -72,7 +72,7 @@ namespace Runtime.Features.Enemy
 				thinAi.Agent.Warp(spawnPoint.transform.position);
 
 				thinAi.Init(targetPlayer, spawnPoint.PatrolPoints);
-				thinAi.ChangeState<PatrolState>();
+				thinAi.StateMachine.EnterIn<PatrolState>();
 
 				_enemiesMap.Add(thinAi, spawnPoint);
 			}
@@ -83,13 +83,13 @@ namespace Runtime.Features.Enemy
 			ForEachEnemy((ai) =>
 			{
 				ai.Agent.Warp(_enemiesMap[ai].transform.position);
-				ai.ChangeState<PatrolState>();
+				ai.StateMachine.EnterIn<PatrolState>();
 			});
 		}
 
 		private void SetAllEnemiesToPatrolState()
 		{
-			ForEachEnemy((ai) => { ai.ChangeState<PatrolState>(); });
+			ForEachEnemy((ai) => { ai.StateMachine.EnterIn<PatrolState>(); });
 		}
 
 		private void ForEachEnemy(Action<ThinEnemyAI> action)

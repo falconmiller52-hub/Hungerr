@@ -1,9 +1,10 @@
+using Runtime.Common.Services.StateMachine;
 using Runtime.Features.Health;
 using UnityEngine;
 
 namespace Runtime.Features.Enemy.Thin.States
 {
-	public class AttackState : IEnemyState, IAnimationEventListener
+	public class AttackState : IState, IAnimationEventListener
 	{
 		private static readonly int Attack = Animator.StringToHash("Attack");
 		
@@ -30,7 +31,7 @@ namespace Runtime.Features.Enemy.Thin.States
 				if (_cooldownTimer >= _ai.EnemySettingData.AttackCooldown)
 				{
 					// Время отдыха вышло — возвращаемся к патрулю
-					_ai.ChangeState<PatrolState>();
+					_ai.StateMachine.EnterIn<PatrolState>();
 				}
 			}
 		}

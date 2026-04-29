@@ -39,6 +39,10 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			_eventBus.Trigger(EGameEvent.EndGameplay);
 		}
 
+		public void Execute()
+		{
+		}
+
 		private void SaveGameStateData()
 		{
 			GameStateData data = new GameStateData();

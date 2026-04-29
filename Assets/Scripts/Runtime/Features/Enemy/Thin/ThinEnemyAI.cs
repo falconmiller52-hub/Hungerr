@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Runtime.Common.Services.Audio.Sound;
+using Runtime.Common.Services.Pause;
+using Runtime.Common.Services.StateMachine;
 using Runtime.Features.Enemy.Thin.States;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,25 +11,27 @@ using Random = UnityEngine.Random;
 
 namespace Runtime.Features.Enemy.Thin
 {
-	public class ThinEnemyAI : MonoBehaviour
+	public class ThinEnemyAI : MonoBehaviour, IPausable
 	{
 		private static readonly int Move = Animator.StringToHash("Move");
 
 		[field: SerializeField] public Animator Animator { get; private set; }
 		[field: SerializeField] public NavMeshAgent Agent { get; private set; }
 
+		public ISoundService SoundService => _soundService;
+		public StateMachine StateMachine { get; private set; }
 		public EnemySettingData EnemySettingData;
 
-		private Dictionary<Type, IEnemyState> _states = new();
-		private IEnemyState _currentState;
+		private Dictionary<Type, IState> _states = new();
+		
+		private ISoundService _soundService;
+		
 		private int _currentTargetIndex = -1;
 		private Vector2 _smoothDeltaPosition;
 		private Vector2 _velocity;
-		private ISoundService _soundService;
 
 		public Transform Target { get; private set; }
 		public Transform[] PatrolPoints { get; private set; }
-		public ISoundService SoundService => _soundService;
 
 		[Inject]
 		private void Construct(ISoundService soundService)
@@ -48,44 +52,25 @@ namespace Runtime.Features.Enemy.Thin
 
 		private void Update()
 		{
-			_currentState?.Execute();
+			StateMachine.CurrentState?.Execute();
 			SynchronizeAnimatorAndAgent();
 		}
 
 		public void Init(GameObject target, Transform[] patrolPoints)
 		{
+			StateMachine = new StateMachine();
+			
 			Target = target.transform;
 
-			RegisterState(new PatrolState(this));
-			RegisterState(new ChaseState(this));
-			RegisterState(new LostPlayerState(this));
-			RegisterState(new AttackState(this));
+			StateMachine.RegisterState(new PatrolState(this));
+			StateMachine.RegisterState(new ChaseState(this));
+			StateMachine.RegisterState(new LostPlayerState(this));
+			StateMachine.RegisterState(new AttackState(this));
 
 			if (patrolPoints.Length > 0)
 				PatrolPoints = patrolPoints;
 		}
-
-		public void RegisterState<TState>(TState state) where TState : IEnemyState
-		{
-			if (_states.ContainsKey(typeof(TState)))
-				throw new ArgumentException("State already existing in States Map: " + typeof(TState));
-
-			_states.Add(typeof(TState), state);
-		}
-
-		public void ChangeState<TState>() where TState : IEnemyState
-		{
-			if (_states.TryGetValue(typeof(TState), out var state))
-			{
-				if (state == _currentState)
-					return;
-
-				_currentState?.Exit();
-				_currentState = state;
-				_currentState.Enter();
-			}
-		}
-
+		
 		public bool CanSeePlayer() =>
 						Target != null && Vector3.Distance(transform.position, Target.position) <
 						EnemySettingData.DetectionRadius;
@@ -138,10 +123,18 @@ namespace Runtime.Features.Enemy.Thin
 
 		public void OnAnimationEventInvoked()
 		{
-			if (_currentState is IAnimationEventListener listener)
+			if (StateMachine.CurrentState is IAnimationEventListener listener)
 			{
 				listener.OnAnimationEventHandled();
 			}
+		}
+
+		public void Stop()
+		{
+		}
+
+		public void Resume()
+		{
 		}
 	}
 }

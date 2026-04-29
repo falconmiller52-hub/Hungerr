@@ -3,7 +3,6 @@ using Runtime.Common.Helpers;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.LoadingCurtain;
-using Runtime.Common.Services.SaveLoad;
 using Runtime.Common.Services.StateMachine;
 using Runtime.Features.DayNight.DaysCounter;
 using Runtime.Features.DayNight.StateMachine;
@@ -61,6 +60,8 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			_eventBus.Subscribe<EGameplayChangePhaseTriggerEvent, StartDayTriggerEventData>(EGameplayChangePhaseTriggerEvent.StartDayTrigger, StartDayPhaseTriggered);
 			_eventBus.Subscribe(EGameplayChangePhaseTriggerEvent.StartNightTrigger, StartNightPhaseTriggered);
 		}
+
+		public void Execute() { }
 
 		/// <summary>
 		/// хендлит начало дня:
