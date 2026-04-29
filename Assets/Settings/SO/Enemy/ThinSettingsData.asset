@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9412dddc8e4040d1bb32662130a96080, type: 3}
+  m_Name: ThinSettingsData
+  m_EditorClassIdentifier: 
+  <PatrolSounds>k__BackingField:
+    Guid:
+      Data1: -2096023248
+      Data2: 1129951426
+      Data3: -580151625
+      Data4: 720998879
+    Path: event:/SFX/Enemies/Slim/slim_inactive1
+  <PatrolSpeedMultiplier>k__BackingField: 1
+  <ChaseSpeedMultiplier>k__BackingField: 2
+  <DetectionRadius>k__BackingField: 10
+  <ChaseSounds>k__BackingField:
+    Guid:
+      Data1: -416055462
+      Data2: 1117657559
+      Data3: 593025687
+      Data4: 746905815
+    Path: event:/SFX/Enemies/Slim/slim_active1
+  <AttackRadius>k__BackingField: 2
+  <AttackDamage>k__BackingField: 10
+  <AttackCooldown>k__BackingField: 1.5

@@ -19,19 +19,7 @@ namespace Runtime.Features.Enemy.Thin
 		[field: SerializeField] public Animator Animator { get; private set; }
 		[field: SerializeField] public NavMeshAgent Agent { get; private set; }
 		
-		[field: Header("Patrol Settings")]
-		[field: SerializeField] public EventReference PatrolSounds { get; private set; }
-		[field: SerializeField] public float PatrolSpeedMultiplier { get; private set; }
-
-		[field: Header("Chase Settings")]
-		[field: SerializeField] public float ChaseSpeedMultiplier { get; private set; }
-		[field: SerializeField] public float DetectionRadius { get; private set; } = 10f;
-		[field: SerializeField] public EventReference ChaseSounds { get; private set; }
-
-		[field: Header("Attack Settings")]
-		[field: SerializeField] public float AttackRadius { get; private set; } = 2f;
-		[field: SerializeField] public int AttackDamage { get; private set; } = 10;
-		[field: SerializeField] public float AttackCooldown { get; private set; } = 1.5f; // Время отдыха
+		public EnemySettingData EnemySettingData;
 
 		private Dictionary<Type, IEnemyState> _states = new();
 		private IEnemyState _currentState;
@@ -102,10 +90,10 @@ namespace Runtime.Features.Enemy.Thin
 		}
 
 		public bool CanSeePlayer() =>
-			Target != null && Vector3.Distance(transform.position, Target.position) < DetectionRadius;
+			Target != null && Vector3.Distance(transform.position, Target.position) < EnemySettingData.DetectionRadius;
 
 		public bool CanAttackPlayer() =>
-			Target != null && Vector3.Distance(transform.position, Target.position) < AttackRadius;
+			Target != null && Vector3.Distance(transform.position, Target.position) < EnemySettingData.AttackRadius;
 
 		public void SetNewAgentPoint()
 		{

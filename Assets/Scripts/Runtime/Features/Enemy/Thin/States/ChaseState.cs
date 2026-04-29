@@ -16,12 +16,12 @@ namespace Runtime.Features.Enemy.Thin.States
 
 		public void Enter()
 		{
-			_ai.Animator.SetFloat(WalkSpeed, _ai.ChaseSpeedMultiplier);
+			_ai.Animator.SetFloat(WalkSpeed, _ai.EnemySettingData.ChaseSpeedMultiplier);
 			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed) * _ai.transform.lossyScale.x;
 		
 			_ai.Animator.SetBool(Chase, true);
 			
-			_currentSound = _ai.SoundService.PlaySound(_ai.ChaseSounds, _ai.transform.position);
+			_currentSound = _ai.SoundService.PlaySound(_ai.EnemySettingData.ChaseSounds, _ai.transform.position);
 		}
 
 		public void Execute()

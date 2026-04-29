@@ -15,10 +15,10 @@ namespace Runtime.Features.Enemy.Thin.States
 
 		public void Enter()
 		{
-			_ai.Animator.SetFloat(WalkSpeed, _ai.PatrolSpeedMultiplier);
+			_ai.Animator.SetFloat(WalkSpeed, _ai.EnemySettingData.PatrolSpeedMultiplier);
 			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed) * _ai.transform.lossyScale.x;
 			
-			_currentSound = _ai.SoundService.PlaySound(_ai.PatrolSounds, _ai.transform.position);
+			_currentSound = _ai.SoundService.PlaySound(_ai.EnemySettingData.PatrolSounds, _ai.transform.position);
 		}
 
 		public void Execute()
