@@ -18,7 +18,7 @@ namespace Runtime.Features.DayNight.StateMachine
 		{
 			Debug.Log("--- Наступил ПЕРВЫЙ ДЕНЬ ---");
 			
-			Curtain.Show(0.01f, onEnd: OnCurtainShowEnded);
+			Curtain.Show(onEnd: OnCurtainShowEnded);
 			
 			Owner.DayCycleVisualChanger.SetDay();
 			EventBus.Subscribe<EGameplayChangedPhaseEvent, StartNightEventData>(EGameplayChangedPhaseEvent.NightStarted, OnStartNightPhase);
@@ -33,7 +33,7 @@ namespace Runtime.Features.DayNight.StateMachine
 		{
 			Owner.DayCycleVisualChanger.SetDay();
 			
-			Curtain.Hide(0.01f);
+			Curtain.Hide();
 			InputHandler.Enable();
 		}
 		
