@@ -92,6 +92,9 @@ namespace Runtime.Features.Enemy.Thin
 		{
 			if (_states.TryGetValue(typeof(TState), out var state))
 			{
+				if(state == _currentState)
+					return;
+				
 				_currentState?.Exit();
 				_currentState = state;
 				_currentState.Enter();
