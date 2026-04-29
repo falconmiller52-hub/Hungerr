@@ -37,7 +37,8 @@ namespace Runtime.Features.Enemy.Thin.States
 
 		public void Exit()
 		{
-			
+			_cooldownTimer = 0;
+			_isAttackFinished = false;
 		}
 
 		public void OnAnimationEventHandled()
