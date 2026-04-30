@@ -37,19 +37,20 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		private readonly EnemiesController _enemiesController;
 		private readonly ISaveLoadService _saveLoadService;
 		private readonly ItemsIdentifierSO _identifierSO;
-		
+
 		private GameOverTriggerHandler _gameOverTriggerHandler;
-		
+
 		// saved data refs
 		Dictionary<int, int> _spawnPointsSaveData = new Dictionary<int, int>();
 		int _currentDay = 0;
-		
-		
+
+
 		[Inject]
 		public EntryGameplayState(SceneStateMachine sceneStateMachine, PhaseStateMachine phaseStateMachine,
 						StateFactory stateFactory, InputHandler inputHandler, IResourceLoader resourceLoader,
 						LocationChanger locationChanger,
-						DiContainer diContainer, EnemiesController enemiesController, ISaveLoadService saveLoadService, ItemsIdentifierSO itemsIdentifierSO)
+						DiContainer diContainer, EnemiesController enemiesController, ISaveLoadService saveLoadService,
+						ItemsIdentifierSO itemsIdentifierSO)
 		{
 			_sceneStateMachine = sceneStateMachine;
 			_phaseStateMachine = phaseStateMachine;
@@ -80,25 +81,25 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 							playerSpawnPoint ? playerSpawnPoint.transform.position : Vector3.one,
 							Quaternion.identity,
 							null);
-			
+
 			////
-			
+
 			ItemSpawner itemSpawner = Object.FindAnyObjectByType<ItemSpawner>();
 			StorageInventory storageInventory = Object.FindAnyObjectByType<StorageInventory>();
 			storageInventory.InitModel();
-			
+
 			GameStateData loadedData = _saveLoadService.LoadData();
-			
+
 			if (loadedData != null && playerInstance != null)
 				ApplyLoadedData(loadedData, playerInstance, storageInventory);
-			
+
 			if (_spawnPointsSaveData.Count > 0)
 				itemSpawner.SpawnItems(_spawnPointsSaveData);
 			else
 				itemSpawner.SpawnItems();
-			
+
 			////
-			
+
 			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
 
 			_inputHandler.Init();
@@ -115,12 +116,12 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 
 			FirstDayPhaseState firstDayPhaseState = _stateFactory.Create<FirstDayPhaseState>();
 			_phaseStateMachine.RegisterState(firstDayPhaseState);
-			
+
 			if (_currentDay == 0)
 				_phaseStateMachine.EnterIn<FirstDayPhaseState>();
 			else
 				_phaseStateMachine.EnterIn<DayPhaseState>();
-			
+
 			// Enter in main Gameplay State
 			_sceneStateMachine.EnterIn<PlayGameplayState>();
 		}
@@ -133,15 +134,17 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		{
 		}
 
-		private void ApplyLoadedData(GameStateData loadedData, GameObject playerInstance, StorageInventory storageInventory)
+		private void ApplyLoadedData(GameStateData loadedData, GameObject playerInstance,
+						StorageInventory storageInventory)
 		{
 			if (loadedData == null)
 				return;
-			
+
 			// проверяем и загружаем предметы игрока
-			if (loadedData.PlayerInventoryItems != null && loadedData.PlayerInventoryItems.Count > 0 && playerInstance != null)
+			if (loadedData.PlayerInventoryItems != null && loadedData.PlayerInventoryItems.Count > 0 &&
+			    playerInstance != null)
 			{
-				PlayerInventory playerInventory = playerInstance.GetComponentInChildren<PlayerInventory>();
+				PlayerInventory playerInventory = playerInstance.GetComponent<PlayerInventory>();
 				// убеждаемся что инвентарь точно есть
 				playerInventory.InitInventoryModel();
 				foreach (var saveItem in loadedData.PlayerInventoryItems)
@@ -162,18 +165,25 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			}
 
 			// проверяем и загружаем состояние здоровья
-			if (loadedData.Health > 0)
+			if (loadedData.PlayerHealth > 0)
 			{
-				var playerHealth = playerInstance.GetComponentInChildren<PlayerHealth>();
-				playerHealth.SetHealth(loadedData.Health);
+				var playerHealth = playerInstance.GetComponent<PlayerHealth>();
+				playerHealth.SetHealth(loadedData.PlayerHealth);
 			}
-			
+
+			// Проверяем и загружаем голод игрока
+			if (loadedData.PlayerHunger > 0)
+			{
+				PlayerFoodController playerFoodController = playerInstance.GetComponent<PlayerFoodController>();
+				playerFoodController.SetFood(loadedData.PlayerHunger);
+			}
+
 			// проверяем и загружаем предметы на спавн поинтах
 			if (loadedData.SpawnPoints != null && _spawnPointsSaveData != null)
 			{
 				_spawnPointsSaveData = loadedData.SpawnPoints.ToDictionary(
-					rvp => rvp.ID,
-					rvp => rvp.ItemConfigId
+								rvp => rvp.ID,
+								rvp => rvp.ItemConfigId
 				);
 			}
 
@@ -183,7 +193,6 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				currentDayController.Init(loadedData.CurrentDay);
 			else
 				Debug.LogError("EntryGameplayState::Enter() currentDayController is null");
-			
 		}
 	}
 }

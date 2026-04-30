@@ -8,7 +8,8 @@ namespace Runtime.Common.Services.SaveLoad
 		public List<InventoryItemSaveData> PlayerInventoryItems = new();
 		public List<InventoryItemSaveData> StorageInventoryItems = new();
 		public List<ItemSpawnPointSaveData> SpawnPoints = new();
-		public float Health;
+		public float PlayerHealth;
+		public float PlayerHunger;
 		public int CurrentDay;
 	}
 }

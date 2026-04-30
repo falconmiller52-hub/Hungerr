@@ -22,10 +22,10 @@ namespace Runtime.Features.Player.Other
 			_eventBus = eventBus;
 		}
 
-		private float CurrentFood
+		public float CurrentFood
 		{
 			get => _currentFood;
-			set { _currentFood = Mathf.Clamp(value, 0, _maxFood); }
+			private set { _currentFood = Mathf.Clamp(value, 0, _maxFood); }
 		}
 
 		private void Start()
@@ -41,6 +41,13 @@ namespace Runtime.Features.Player.Other
 				ApplyFoodDrain(_foodDrainPerSecond * Time.deltaTime);
 		}
 
+		public void SetFood(float value)
+		{
+			CurrentFood = value;
+
+			_counterUI.UpdateUI(_currentFood, _maxFood, type: "F0");
+		}
+
 		public void ApplyFoodDrain(float value)
 		{
 			CurrentFood -= value;
@@ -50,11 +57,11 @@ namespace Runtime.Features.Player.Other
 
 			_counterUI.UpdateUI(_currentFood, _maxFood, type: "F0");
 		}
-		
+
 		public void ApplyFoodIncrease(float value)
 		{
 			CurrentFood += value;
-			
+
 			_counterUI.UpdateUI(_currentFood, _maxFood, type: "F0");
 		}
 

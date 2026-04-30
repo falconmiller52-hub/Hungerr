@@ -8,6 +8,7 @@ using Runtime.Features.Health;
 using Runtime.Features.Inventory.View.EntryPoint;
 using Runtime.Features.ItemSpawner;
 using Runtime.Features.Player.Movement;
+using Runtime.Features.Player.Other;
 using UnityEngine;
 using Zenject;
 
@@ -46,8 +47,8 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		private void SaveGameStateData()
 		{
 			GameStateData data = new GameStateData();
-			
-			
+
+
 			GameObject playerInstance = Object.FindAnyObjectByType<PlayerMovement>().gameObject;
 
 			if (playerInstance == null)
@@ -55,16 +56,16 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				Debug.LogError("ExitGameplayState::SaveGameStateData() playerInstance is null");
 				return;
 			}
-			
+
 			//// сохраняем предметы игрока
-			PlayerInventory playerInventory = playerInstance.GetComponentInChildren<PlayerInventory>();
+			PlayerInventory playerInventory = playerInstance.GetComponent<PlayerInventory>();
 
 			if (playerInventory == null)
 			{
 				Debug.LogError("ExitGameplayState::SaveGameStateData() playerInventory is null");
 				return;
 			}
-			
+
 			foreach (var slot in playerInventory.GetInventory().Slots)
 			{
 				if (slot.Value.IsEmpty || slot.Value.Id == -1)
@@ -90,24 +91,36 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			{
 				if (slot.Value.IsEmpty || slot.Value.Id == -1)
 					continue;
-				
+
 				var item = new InventoryItemSaveData();
 				item.Position = new SerializableVector2Int(slot.Key);
 				item.ItemDataID = slot.Value.Item.Data.Id;
 				item.Amount = slot.Value.Item.Amount;
 				data.StorageInventoryItems.Add(item);
 			}
-			
+
 			//// сохраняем здоровье игрока
-			PlayerHealth playerHealth = playerInstance.GetComponentInChildren<PlayerHealth>();
+			PlayerHealth playerHealth = playerInstance.GetComponent<PlayerHealth>();
 
 			if (playerHealth == null)
 			{
 				Debug.LogError("ExitGameplayState::SaveGameStateData() playerHealth is null");
 				return;
 			}
-			
-			data.Health = playerHealth.CurrentHealth;
+
+			data.PlayerHealth = playerHealth.CurrentHealth;
+
+			//// сохраняем голод игрока
+
+			PlayerFoodController playerFoodController = playerInstance.GetComponent<PlayerFoodController>();
+
+			if (playerFoodController == null)
+			{
+				Debug.LogError("ExitGameplayState::SaveGameStateData() playerFoodController is null");
+				return;
+			}
+
+			data.PlayerHunger = playerFoodController.CurrentFood;
 
 			//// сохраняем предметы в мире из спавнеров
 			ItemSpawner itemsSpawner = Object.FindAnyObjectByType<ItemSpawner>();
@@ -117,7 +130,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				Debug.LogError("ExitGameplayState::SaveGameStateData() itemSpawer is null");
 				return;
 			}
-			
+
 			foreach (KeyValuePair<int, int> spawnPointData in itemsSpawner.GetSpawnPointsData())
 			{
 				var pointSaveData = new ItemSpawnPointSaveData();
@@ -126,7 +139,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 
 				data.SpawnPoints.Add(pointSaveData);
 			}
-			
+
 			//// сохраняем текущий день
 			CurrentDayController currentDayController = Object.FindAnyObjectByType<CurrentDayController>();
 
@@ -135,9 +148,9 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				Debug.LogError("ExitGameplayState::SaveGameStateData() currentDayController is null");
 				return;
 			}
-			
+
 			data.CurrentDay = currentDayController.CurrentDay;
-			
+
 			_saveLoadService.SaveData(data);
 		}
 
