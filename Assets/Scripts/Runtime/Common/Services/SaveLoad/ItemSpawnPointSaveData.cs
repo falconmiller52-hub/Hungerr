@@ -5,7 +5,7 @@ namespace Runtime.Common.Services.SaveLoad
 	[Serializable]
 	public struct ItemSpawnPointSaveData
 	{
-		public int ID;
+		public string ID;
 		public int ItemConfigId;
 	}
 }

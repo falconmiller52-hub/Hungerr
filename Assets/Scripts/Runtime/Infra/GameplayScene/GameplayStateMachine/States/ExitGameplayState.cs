@@ -131,7 +131,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				return;
 			}
 
-			foreach (KeyValuePair<int, int> spawnPointData in itemsSpawner.GetSpawnPointsData())
+			foreach (KeyValuePair<string, int> spawnPointData in itemsSpawner.GetSpawnPointsData())
 			{
 				var pointSaveData = new ItemSpawnPointSaveData();
 				pointSaveData.ID = spawnPointData.Key;

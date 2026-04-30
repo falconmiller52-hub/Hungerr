@@ -41,7 +41,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 		private GameOverTriggerHandler _gameOverTriggerHandler;
 
 		// saved data refs
-		Dictionary<int, int> _spawnPointsSaveData = new Dictionary<int, int>();
+		Dictionary<string, int> _spawnPointsSaveData = new Dictionary<string, int>();
 		int _currentDay = 0;
 
 
