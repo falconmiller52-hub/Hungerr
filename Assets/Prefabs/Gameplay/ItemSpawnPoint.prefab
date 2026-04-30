@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tierData: {fileID: 11400000, guid: 52fc050dc77527c49b623b88b727c8be, type: 2}
   _itemScale: {x: 0.5, y: 0.5, z: 0.5}
-  _spawnPointGuid: ced9dd05-0d58-4189-bb9f-ca8392c184cc
+  _spawnPointGuid: 1132f2b9-3718-4a39-a9eb-d1f6764af644

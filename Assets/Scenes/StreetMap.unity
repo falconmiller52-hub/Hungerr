@@ -3878,6 +3878,10 @@ PrefabInstance:
       propertyPath: _tierData
       value: 
       objectReference: {fileID: 11400000, guid: ee3c595a2fe60764ea913d4ab4d5c8fd, type: 2}
+    - target: {fileID: 7010269444122227401, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
+      propertyPath: _spawnPointGuid
+      value: d1de5e11-19bf-4b08-b429-0d6daaf0a409
+      objectReference: {fileID: 0}
     - target: {fileID: 7022418334845681172, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5954037
@@ -9490,6 +9494,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 77670741}
     m_Modifications:
+    - target: {fileID: 7010269444122227401, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
+      propertyPath: _spawnPointGuid
+      value: 20ccfb14-f2e9-43c4-be10-148ad5fa66de
+      objectReference: {fileID: 0}
     - target: {fileID: 7022418334845681172, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5954037
@@ -10324,6 +10332,10 @@ PrefabInstance:
       propertyPath: _tierData
       value: 
       objectReference: {fileID: 11400000, guid: ee3c595a2fe60764ea913d4ab4d5c8fd, type: 2}
+    - target: {fileID: 7010269444122227401, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
+      propertyPath: _spawnPointGuid
+      value: 1e92b0fa-dc9f-46ef-a57a-b29c20733cab
+      objectReference: {fileID: 0}
     - target: {fileID: 7022418334845681172, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.98799
@@ -12135,6 +12147,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 77670741}
     m_Modifications:
+    - target: {fileID: 7010269444122227401, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
+      propertyPath: _spawnPointGuid
+      value: ba0f4987-5f0f-410e-b438-54160c22c1fa
+      objectReference: {fileID: 0}
     - target: {fileID: 7022418334845681172, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5954037
@@ -14064,6 +14080,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1513173133}
     m_Modifications:
+    - target: {fileID: 7010269444122227401, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
+      propertyPath: _spawnPointGuid
+      value: da4180b7-2efd-43db-a5df-309b230dff93
+      objectReference: {fileID: 0}
     - target: {fileID: 7022418334845681172, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.21322489
@@ -18170,6 +18190,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1102943426}
     m_Modifications:
+    - target: {fileID: 7010269444122227401, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
+      propertyPath: _spawnPointGuid
+      value: 1b60acb5-1aa2-4ed1-b873-f2d6b89988dc
+      objectReference: {fileID: 0}
     - target: {fileID: 7022418334845681172, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.98799
@@ -18673,6 +18697,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1513173133}
     m_Modifications:
+    - target: {fileID: 7010269444122227401, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
+      propertyPath: _spawnPointGuid
+      value: c11343df-d856-4496-b485-49e155bb96f5
+      objectReference: {fileID: 0}
     - target: {fileID: 7022418334845681172, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
@@ -22544,6 +22572,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1513173133}
     m_Modifications:
+    - target: {fileID: 7010269444122227401, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
+      propertyPath: _spawnPointGuid
+      value: c6630fd8-d52a-44fe-8d32-8511d890a436
+      objectReference: {fileID: 0}
     - target: {fileID: 7022418334845681172, guid: 461dc577af111ae46b846ceca7cbf556, type: 3}
       propertyPath: m_LocalScale.x
       value: 1

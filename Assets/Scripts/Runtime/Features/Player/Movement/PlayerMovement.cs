@@ -1,7 +1,6 @@
 using FMODUnity;
 using NaughtyAttributes;
 using Runtime.Common.Extensions;
-using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
@@ -21,25 +20,15 @@ namespace Runtime.Features.Player.Movement
 
 		[SerializeField, Label("Ground Checker Length")]
 		private float _groundCheckDistance = 1f;
-
-		[Space, SerializeField, Label("Jump Height")]
-		private float _jumpHeight = 1f;
-
+		
 		[SerializeField, Label("Standard Step Sound")]
 		private EventReference _standartStepSound;
-
-		[SerializeField, Tooltip("Ground Sound On Start Jump")]
-		private EventReference _jumpStartSound;
-
-		[SerializeField, Tooltip("Ground Sound After Jump")]
-		private EventReference _jumpEndSound;
 
 		[Space, SerializeField, Label("Gravity Force")]
 		private float _gravityForce = 30f;
 
 		//Внутренние переменные
 		private float _currentSpeed;
-		private bool _isJumpInputActive;
 		private bool _isGrounded = true;
 		private RaycastHit _playerGroundHit;
 		private float _gravitySpeed = 0f;
@@ -80,7 +69,6 @@ namespace Runtime.Features.Player.Movement
 			}
 
 			_inputHandler.PlayerMoveInputChanged += SetNewMoveInputDirection;
-			_inputHandler.JumpInputPressed += SetJumpInputPressed;
 
 			if (_pauseController == null)
 			{
@@ -100,7 +88,6 @@ namespace Runtime.Features.Player.Movement
 			}
 
 			_inputHandler.PlayerMoveInputChanged -= SetNewMoveInputDirection;
-			_inputHandler.JumpInputPressed -= SetJumpInputPressed;
 
 			if (_pauseController == null)
 			{
@@ -119,9 +106,7 @@ namespace Runtime.Features.Player.Movement
 				GroundRayHit();
 				StanceUpdate();
 				Move(MovingDirection);
-
-				if (_isJumpInputActive)
-					Jump(_jumpHeight);
+				
 			}
 		}
 
@@ -207,7 +192,6 @@ namespace Runtime.Features.Player.Movement
 		{
 			_isGrounded = true;
 			_gravitySpeed = 0f;
-			_soundService.PlaySound(_jumpEndSound, _groundCheck.position);
 		}
 
 		public void Move(Vector2 direction)
@@ -220,24 +204,11 @@ namespace Runtime.Features.Player.Movement
 			if (direction.magnitude != 0f && _isGrounded) MakeStepSound();
 			else CancelInvoke("PlaySound");
 		}
-
-		public void Jump(float strength)
-		{
-			if (_isGrounded && _playerStance.CurrentStance != PlayerStance.Stance.Crouching)
-			{
-				_gravitySpeed = strength;
-				_soundService.PlaySound(_jumpStartSound, _groundCheck.position);
-			}
-		}
+		
 
 		private void SetNewMoveInputDirection(Vector2 inputDirection)
 		{
 			_inputDirection = inputDirection;
-		}
-
-		private void SetJumpInputPressed(bool isPressed)
-		{
-			_isJumpInputActive = isPressed;
 		}
 
 		//Геттеры и сеттеры
@@ -254,12 +225,6 @@ namespace Runtime.Features.Player.Movement
 		}
 
 		public bool IsGrounded => _isGrounded;
-
-		public float JumpHeight
-		{
-			get => _jumpHeight;
-			set => _jumpHeight = value;
-		}
 
 		public float CurrentSpeed
 		{
