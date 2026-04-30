@@ -21423,7 +21423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2506014e875b8342aea9e0b478c1a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _triggerEventType: 0
+  _triggerEventType: 1
 --- !u!65 &2012746456
 BoxCollider:
   m_ObjectHideFlags: 0
