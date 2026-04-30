@@ -114,8 +114,8 @@ namespace Runtime.Features.Enemy.Domovoi
 			int delta = Math.Max(totalSatietyFromInventory, 0) - Math.Max(_currentLevelData.DailySatietyLoss, 0);
 			_satiety = Math.Max(_satiety + delta, 0);
 
-			// если нет еды то увеличиваем счтечик дней без еды для Домового, иначе сбрасываем его
-			if (totalSatietyFromInventory <= 0)
+			// если сытость Домового 0 то увеличиваем счетчик без еды, иначе сбрасываем его
+			if (_satiety <= 0)
 			{
 				_notFedDaysCount++;
 
