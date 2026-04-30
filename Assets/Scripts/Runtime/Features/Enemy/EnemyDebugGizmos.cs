@@ -1,5 +1,4 @@
 using NaughtyAttributes;
-using Runtime.Common.Enums;
 using UnityEngine;
 
 namespace Runtime.Features.Enemy
@@ -11,9 +10,6 @@ namespace Runtime.Features.Enemy
 		
 		[Header("So врага который спавнится")]
 		[SerializeField] private EnemySettingData _enemySettingData;
-
-		[Header("Enemy type")] 
-		[SerializeField] private EnemyType _enemyType;
 
 		private void OnDrawGizmosSelected()
 		{
