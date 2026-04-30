@@ -1,8 +1,5 @@
 using System;
-using Runtime.Common.Services.Pause;
-using Unity.VisualScripting;
 using UnityEngine;
-using Zenject;
 
 namespace Runtime.Common.Services.Input
 {
