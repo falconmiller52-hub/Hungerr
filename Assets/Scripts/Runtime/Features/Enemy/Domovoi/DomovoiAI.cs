@@ -59,7 +59,7 @@ namespace Runtime.Features.Enemy.Domovoi
 		public (bool, EDomovoiSatietyLevel) StartDayPhaseHandler()
 		{
 			// кидаем ивент в зависимости от уровня сытости, если мало (по текущему уровню) то будет больно
-			if (_satiety < _currentLevelData.SatietyTreshholdForActivation)
+			if (_satiety <= _currentLevelData.SatietyTreshholdForActivation)
 				_satietyLevel = EDomovoiSatietyLevel.Critical;
 			else
 				_satietyLevel = EDomovoiSatietyLevel.Normal;
