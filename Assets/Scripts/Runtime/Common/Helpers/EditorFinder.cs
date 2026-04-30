@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -23,18 +24,18 @@ namespace Runtime.Common.Helpers
 				return result;
 			}
 
-			// Чистим путь: убираем лишние пробелы и слеши в начале/конце
+			// Clean path: trim spaces and slashes
 			string cleanPath = relativePath.Replace("\\", "/").Trim('/');
 			string folderPath = $"Assets/{cleanPath}";
 
-			// Проверка существования папки через AssetDatabase
+			// Check folder existence via AssetDatabase
 			if (!AssetDatabase.IsValidFolder(folderPath))
 			{
 				Debug.LogError($"[EditorFinder] Папка не найдена по пути: {folderPath}");
 				return result;
 			}
 
-			// Поиск: t:Тип ищет все файлы этого класса (и наследников) в указанном массиве путей
+			// Search: t:TypeName looks for all files of this class (and descendants) in the given paths
 			string filter = $"t:{typeof(T).Name}";
 			string[] guids = AssetDatabase.FindAssets(filter, new[] { folderPath });
 
@@ -80,3 +81,4 @@ namespace Runtime.Common.Helpers
 		}
 	}
 }
+#endif
