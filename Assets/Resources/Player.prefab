@@ -2292,7 +2292,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _groundCheck: {fileID: 3123808519059337597}
   _groundCheckDistance: 0.2
-  _jumpHeight: 0.2
   _standartStepSound:
     Guid:
       Data1: 753262989
@@ -2300,20 +2299,6 @@ MonoBehaviour:
       Data3: 1381036437
       Data4: 562968933
     Path: event:/SFX/Player_action/player_footsteps
-  _jumpStartSound:
-    Guid:
-      Data1: -1067796760
-      Data2: 1326276175
-      Data3: -1817600355
-      Data4: -690011161
-    Path: event:/SFX/Player_action/player_jump_begin
-  _jumpEndSound:
-    Guid:
-      Data1: -79019031
-      Data2: 1222560082
-      Data3: -1834122089
-      Data4: -1286697473
-    Path: event:/SFX/Player_action/player_jump_end
   _gravityForce: 0.07
 --- !u!114 &695208376743956962
 MonoBehaviour:
@@ -2430,9 +2415,9 @@ MonoBehaviour:
   _counterUI: {fileID: 8163710076659395384}
   _maxHealth: 100
   _shakeCameraTransform: {fileID: 2558597041051772335}
-  _shakeDuration: 0.3
-  _shakeStrength: {x: 3, y: 3, z: 2}
-  _vibrato: 10
+  _shakeDuration: 0.35
+  _shakeStrength: {x: 4, y: 4, z: 3}
+  _vibrato: 12
 --- !u!114 &1574870206258873081
 MonoBehaviour:
   m_ObjectHideFlags: 0
