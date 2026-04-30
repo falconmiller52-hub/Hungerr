@@ -6,7 +6,7 @@ namespace Runtime.Common.Services.SaveLoad
 {
 	public class SaveLoadService : ISaveLoadService
 	{
-		string _filePath;
+		private readonly string _filePath;
 
 		public SaveLoadService()
 		{

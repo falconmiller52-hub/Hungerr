@@ -1,4 +1,3 @@
-using System.Collections;
 using Runtime.Common.Enums;
 using Runtime.Common.Helpers;
 using Runtime.Common.Services.EventBus;

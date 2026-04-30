@@ -6,12 +6,13 @@ using Runtime.Common.Services.Audio;
 using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
+using Runtime.Common.Services.Pause;
 using UnityEngine;
 using Zenject;
 
 namespace Runtime.Features.Player.Movement
 {
-	public class PlayerStance : MonoBehaviour
+	public class PlayerStance : MonoBehaviour, IPausable
 	{
 		[Header("Components")] [SerializeField]
 		private Transform _playerTransform;
@@ -78,15 +79,21 @@ namespace Runtime.Features.Player.Movement
 		//Кэшированные переменные
 		private IInputHandler _inputHandler;
 		private ISoundService _soundService;
+		private IPauseController _pauseController;
 		private CharacterController _cc;
 		private EventBus _eventBus;
+		private bool _isPausable;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, ISoundService soundService, EventBus eventBus)
+		private void Construct(IInputHandler inputHandler,
+						ISoundService soundService,
+						EventBus eventBus,
+						IPauseController pauseController)
 		{
 			_inputHandler = inputHandler;
 			_soundService = soundService;
 			_eventBus = eventBus;
+			_pauseController = pauseController;
 		}
 
 		private void Start()
@@ -110,6 +117,8 @@ namespace Runtime.Features.Player.Movement
 			_inputHandler.PlayerMoveInputChanged += SetNewMoveInputDirection;
 			_inputHandler.RunInputPressed += Run;
 			_inputHandler.CrouchInputPressed += Crouch;
+
+			_pauseController.Add(this);
 		}
 
 		private void OnDisable()
@@ -127,12 +136,20 @@ namespace Runtime.Features.Player.Movement
 
 		private void Update()
 		{
+			if (_isPausable) return;
+
 			_isUnderCeiling = IsUnderCeiling;
 
 			StanceChange();
 			StaminaChange();
 			CrouchChange();
 		}
+
+		public void Stop()
+			=> _isPausable = true;
+
+		public void Resume()
+			=> _isPausable = false;
 
 		//Методы скрипта
 		private void StanceChange()

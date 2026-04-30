@@ -30,6 +30,9 @@ namespace Runtime.Features.Player.PlayerCamera
 		{
 			_pov.m_HorizontalAxis.m_InputAxisName = "";
 			_pov.m_VerticalAxis.m_InputAxisName = "";
+
+			_pov.m_HorizontalAxis.m_InputAxisValue = 0;
+			_pov.m_VerticalAxis.m_InputAxisValue = 0;
 		}
 
 		public void Resume()

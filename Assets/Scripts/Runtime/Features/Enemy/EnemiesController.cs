@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using Runtime.Common.Enums;
+using Runtime.Common.Services.EventBus;
 using Runtime.Features.Enemy.Thin;
 using Runtime.Features.Enemy.Thin.States;
 using Unity.AI.Navigation;
@@ -14,16 +17,18 @@ namespace Runtime.Features.Enemy
 	{
 		[SerializeField] private NavMeshSurface _navMeshSurface;
 		[SerializeField] private ThinEnemyAI _thinAIPrefab;
-		
+
 		private Dictionary<ThinEnemyAI, ThinSpawnPoint> _enemiesMap;
 		private DiContainer _container;
+		private EventBus _eventBus;
 
 		[Inject]
-		private void Construct(DiContainer diContainer)
+		private void Construct(DiContainer diContainer, EventBus eventBus)
 		{
 			_container = diContainer;
+			_eventBus = eventBus;
 		}
-		
+
 		public void Init(GameObject targetPlayer)
 		{
 			if (_navMeshSurface == null)
@@ -50,13 +55,15 @@ namespace Runtime.Features.Enemy
 
 			foreach (var spawnPoint in thinSpawnPoints)
 			{
-				ThinEnemyAI thinAi = _container.InstantiatePrefabForComponent<ThinEnemyAI>(_thinAIPrefab, spawnPoint.transform);
+				ThinEnemyAI thinAi =
+								_container.InstantiatePrefabForComponent<ThinEnemyAI>(_thinAIPrefab,
+												spawnPoint.transform);
 
 				thinAi.Agent.Warp(spawnPoint.transform.position);
-				
+
 				thinAi.Init(targetPlayer, spawnPoint.PatrolPoints);
-				thinAi.ChangeState<PatrolState>();
-				
+				thinAi.Machine.EnterIn<PatrolState>();
+
 				_enemiesMap.Add(thinAi, spawnPoint);
 			}
 		}
@@ -72,7 +79,7 @@ namespace Runtime.Features.Enemy
 			foreach (var ai in _enemiesMap.Keys)
 			{
 				ai.Agent.Warp(_enemiesMap[ai].transform.position);
-				ai.ChangeState<PatrolState>();
+				ai.Machine.EnterIn<PatrolState>();
 			}
 		}
 	}

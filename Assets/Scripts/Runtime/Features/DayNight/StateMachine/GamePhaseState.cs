@@ -28,12 +28,10 @@ namespace Runtime.Features.DayNight.StateMachine
 		{
 		}
 
-		public virtual void Exit()
-		{
-		}
+		public void Execute() { }
 
-		public virtual void Update()
-		{
-		}
+		public virtual void Exit() { }
+
+		public virtual void Update() { }
 	}
 }

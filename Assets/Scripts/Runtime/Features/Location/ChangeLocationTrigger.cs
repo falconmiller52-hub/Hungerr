@@ -1,3 +1,4 @@
+using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.LoadingCurtain;
 using Runtime.Common.Services.Pause;
 using Runtime.Features.Interactable;
@@ -20,7 +21,10 @@ namespace Runtime.Features.Location
 		private IPauseController _pauseController;
 
 		[Inject]
-		private void Construct(LocationChanger locationChanger, ILoadingCurtain loadingCurtain, IPauseController pauseController)
+		private void Construct(LocationChanger locationChanger,
+						ILoadingCurtain loadingCurtain,
+						IPauseController pauseController,
+						EventBus eventBus)
 		{
 			_locationChanger = locationChanger;
 			_curtain = loadingCurtain;

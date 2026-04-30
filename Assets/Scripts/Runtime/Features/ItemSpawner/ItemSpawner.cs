@@ -15,8 +15,8 @@ namespace Runtime.Features.ItemSpawner
 	{
 		private ItemSpawnPoint[] _spawnPoints;
 
-		// <int - InstanceId of spawnPoint, int - ID in InventoryItemData >
-		private Dictionary<WorldItem, int> _spawnPointsMap;
+		// world item and string ID
+		private Dictionary<WorldItem, string> _spawnPointsMap;
 		private ItemsIdentifierSO _itemsIdentifier;
 		private bool _isInitialized;
 		
@@ -35,7 +35,7 @@ namespace Runtime.Features.ItemSpawner
 			if (_isInitialized)
 				return;
 
-			_spawnPointsMap = new Dictionary<WorldItem, int>();
+			_spawnPointsMap = new Dictionary<WorldItem, string>();
 			FindAllSpawnPoints();
 			
 			foreach (var point in _spawnPoints)
@@ -71,12 +71,12 @@ namespace Runtime.Features.ItemSpawner
 		/// спавнит айтемы с загруженной даты
 		/// </summary>
 		/// <param name="spawnPointsData">int - pointId, int - item config id</param>
-		public void SpawnItems(Dictionary<int, int> spawnPointsData)
+		public void SpawnItems(Dictionary<string, int> spawnPointsData)
 		{
 			if (_isInitialized)
 				return;
 			
-			_spawnPointsMap = new Dictionary<WorldItem, int>();
+			_spawnPointsMap = new Dictionary<WorldItem, string>();
 			FindAllSpawnPoints();
 			
 			foreach (var point in _spawnPoints)
@@ -108,12 +108,27 @@ namespace Runtime.Features.ItemSpawner
 			_isInitialized = true;
 		}
 
-		public Dictionary<int, int> GetSpawnPointsData()
-		{
-			return _spawnPointsMap.ToDictionary(
-				kvp => kvp.Value, 
-				kvp => kvp.Key.GetItem().Data.Id);
-		}
+        public Dictionary<string, int> GetSpawnPointsData()
+        {
+            var result = new Dictionary<string, int>();
+            
+            foreach (var kvp in _spawnPointsMap)
+            {
+                string pointId = kvp.Value;
+                int itemId = kvp.Key.GetItem().Data.Id;
+
+                if (result.ContainsKey(pointId))
+                {
+	                Debug.LogWarning("ItemSpawner::GetSpawnPointData() Duplicate ID from Item Spawn Point ");
+	                continue;
+                }
+                
+				result.Add(pointId, itemId);
+                
+            }
+            
+            return result;
+        }
 
 		private void FindAllSpawnPoints()
 		{

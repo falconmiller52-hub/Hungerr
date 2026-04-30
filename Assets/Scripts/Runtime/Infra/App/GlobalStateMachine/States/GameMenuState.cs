@@ -37,6 +37,8 @@ namespace Runtime.Infra.App.GlobalStateMachine.States
 			_eventBus.Subscribe(EGameEvent.QuitGame, ExitMenu);
 		}
 
+		public void Execute() { }
+
 		public void Exit()
 		{
 			Debug.Log("Exit Menu  State");

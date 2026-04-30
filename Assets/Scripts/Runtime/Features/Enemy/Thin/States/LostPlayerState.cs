@@ -1,8 +1,9 @@
+using Runtime.Common.Services.StateMachine;
 using UnityEngine;
 
 namespace Runtime.Features.Enemy.Thin.States
 {
-	public class LostPlayerState : IEnemyState
+	public class LostPlayerState : IState
 	{
 		private readonly ThinEnemyAI _ai;
 		private float _timer;
@@ -19,7 +20,7 @@ namespace Runtime.Features.Enemy.Thin.States
 		{
 			if (_ai.CanSeePlayer())
 			{
-				_ai.ChangeState<ChaseState>();
+				_ai.Machine.EnterIn<ChaseState>();
 				return;
 			}
 
@@ -27,7 +28,7 @@ namespace Runtime.Features.Enemy.Thin.States
 		
 			if (_timer >= 3f)
 			{
-				_ai.ChangeState<PatrolState>();
+				_ai.Machine.EnterIn<PatrolState>();
 			}
 		}
 		
