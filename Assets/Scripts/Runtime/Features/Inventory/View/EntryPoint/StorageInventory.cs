@@ -88,7 +88,7 @@ namespace Runtime.Features.Inventory.View.EntryPoint
 			OnInventoryChanged?.Invoke();
 		}
 
-		public List<T> GetItems<T>() where T : InventoryItemData
+		public List<InventoryItem> GetItems<T>() where T : InventoryItemData
 		{
 			return _inventoryWithCells.GetItems<T>();
 		}

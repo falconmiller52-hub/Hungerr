@@ -108,8 +108,8 @@ namespace Runtime.Features.Enemy.Domovoi
 
 		private void UpdateSatietyStatus()
 		{
-			List<FoodInventoryItemData> foodItems = _storage.GetItems<FoodInventoryItemData>();
-			int totalSatietyFromInventory = foodItems.Sum(foodItem => foodItem.Satiety); // считаем всю сытость от еды в сундуке
+			List<InventoryItem> foodItems = _storage.GetItems<FoodInventoryItemData>();
+			int totalSatietyFromInventory = foodItems.Sum(foodItem => foodItem.Amount * ((FoodInventoryItemData)foodItem.Data).Satiety); // считаем всю сытость от еды в сундуке
 
 			int delta = Math.Max(totalSatietyFromInventory, 0) - Math.Max(_currentLevelData.DailySatietyLoss, 0);
 			_satiety = Math.Max(_satiety + delta, 0);

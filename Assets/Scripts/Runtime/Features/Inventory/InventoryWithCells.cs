@@ -44,14 +44,19 @@ namespace Runtime.Features.Inventory
 			return slot;
 		}
 
-		public List<T> GetItems<T>() where T : InventoryItemData
+		/// <summary>
+		/// Получаем список всех Items по типу даты
+		/// </summary>
+		/// <typeparam name="T"> T - тип InventoryItemData</typeparam>
+		/// <returns></returns>
+		public List<InventoryItem> GetItems<T>() where T : InventoryItemData
 		{
-			List<T> items = new List<T>();
+			List<InventoryItem> items = new List<InventoryItem>();
 			
 			foreach (var slot in Slots.Values)
 			{
 				if (!slot.IsEmpty && slot.Item.Data is T data)
-					items.Add(data);
+					items.Add(slot.Item);
 			}
 			
 			return items;
