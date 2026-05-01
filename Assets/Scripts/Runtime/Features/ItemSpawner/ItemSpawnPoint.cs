@@ -1,4 +1,5 @@
 using Runtime.Common.InspectorFeatures.ButtonEditor;
+using NaughtyAttributes;
 using UnityEngine;
 
 namespace Runtime.Features.ItemSpawner
@@ -57,7 +58,9 @@ namespace Runtime.Features.ItemSpawner
 		private void GenerateUniqID()
 		{
 			_spawnPointGuid = System.Guid.NewGuid().ToString();
-			// UnityEditor.EditorUtility.SetDirty(this);
+#if UNITY_EDITOR
+			UnityEditor.EditorUtility.SetDirty(this);
+#endif
 		}
 	}
 }
