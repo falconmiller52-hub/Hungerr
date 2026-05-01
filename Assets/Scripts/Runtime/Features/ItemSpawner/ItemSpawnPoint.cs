@@ -1,10 +1,10 @@
-using System;
+using Runtime.Common.InspectorFeatures.ButtonEditor;
 using NaughtyAttributes;
 using UnityEngine;
 
 namespace Runtime.Features.ItemSpawner
 {
-	public class ItemSpawnPoint : MonoBehaviour
+	public class ItemSpawnPoint : MonoBehaviour, IButtonPressedHandler
 	{
 		[SerializeField, Tooltip("Информация о том, какие предметы и какие шансы у предметов для этой точки")]
 		private ItemSpawnTierData _tierData;
@@ -23,24 +23,44 @@ namespace Runtime.Features.ItemSpawner
 		{
 			if (string.IsNullOrEmpty(_spawnPointGuid) || IsDuplicateGuidInScene())
 			{
-				_spawnPointGuid = System.Guid.NewGuid().ToString();
-				UnityEditor.EditorUtility.SetDirty(this);
+				Debug.LogError($"{gameObject.name} has an invalid guid ==> please Generate new");
 			}
 		}
 
 		private bool IsDuplicateGuidInScene()
 		{
-			var all = FindObjectsOfType<ItemSpawnPoint>();
+			var all = FindObjectsByType<ItemSpawnPoint>(FindObjectsSortMode.None);
 			int same = 0;
+			
 			foreach (var sp in all)
 			{
-				if (sp == this) continue;
-				if (sp._spawnPointGuid == this._spawnPointGuid) same++;
+				if (sp == this) 
+					continue;
+
+				if (sp._spawnPointGuid == this._spawnPointGuid)
+				{
+					Debug.LogWarning($"Duplicate GUID found on {sp.name}", sp); 
+					same++;
+				}
 			}
-			// Если найдены дубль-элементы, считаем как дубликат
+
 			return same > 0;
 		}
 #endif
+		
+		public void OnButtonPressed(string name)
+		{
+#if UNITY_EDITOR
+			GenerateUniqID();
+#endif
+		}
 
+		private void GenerateUniqID()
+		{
+			_spawnPointGuid = System.Guid.NewGuid().ToString();
+#if UNITY_EDITOR
+			UnityEditor.EditorUtility.SetDirty(this);
+#endif
+		}
 	}
 }

@@ -7,20 +7,24 @@ namespace Runtime.Common.InspectorFeatures.ButtonEditor
 	[CustomEditor(typeof(IButtonPressedHandler))]
 	public class ButtonEditor : Editor
 	{
-		private string _buttonName;
+		private string[] _buttonNames;
 
-		protected void SetButtonName(string name) =>
-			_buttonName = name;
+		protected void SetButtonName(string[] names) =>
+			_buttonNames = names;
 
 		public override void OnInspectorGUI()
 		{
 			base.OnInspectorGUI();
 			var script = (IButtonPressedHandler)target;
 
-			if (GUILayout.Button(_buttonName, GUILayout.Height(40)))
+			foreach (var button in _buttonNames)
 			{
-				script.OnButtonPressed();
+				if (GUILayout.Button(button, GUILayout.Height(40)))
+				{
+					script.OnButtonPressed(button);
+				}
 			}
+			
 		}
 	}
 }

@@ -48,7 +48,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5449522313352304142
 Transform:
   m_ObjectHideFlags: 0
@@ -57,13 +57,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2268786130448367365}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.078459114, y: -0, z: -0, w: 0.99691737}
-  m_LocalPosition: {x: -2.8930514, y: -1.2627487, z: -4.5249076}
+  m_LocalRotation: {x: 0.64278764, y: 0, z: 0, w: 0.7660445}
+  m_LocalPosition: {x: -2.8930514, y: 9.2, z: -4.5249076}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7435694777756425443}
-  m_LocalEulerAnglesHint: {x: 9, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -180.3, y: 0, z: 0}
 --- !u!108 &3435005461636565155
 Light:
   m_ObjectHideFlags: 0
@@ -74,7 +74,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3056603, g: 0.3056603, b: 0.3056603, a: 0}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
@@ -165,7 +165,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &487731040731733371
 Transform:
   m_ObjectHideFlags: 0
@@ -174,13 +174,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4135112607175952585}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.76604444, y: 0, z: 0, w: 0.64278764}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7435694777756425443}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 100, y: 0, z: 0}
 --- !u!108 &795540893642843538
 Light:
   m_ObjectHideFlags: 0
@@ -191,8 +191,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 5
+  m_Color: {r: 0.05893198, g: 0.09182647, b: 0.11698109, a: 1}
+  m_Intensity: 7
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -344,30 +344,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _directionalLight: {fileID: 3435005461636565155}
   _moon: {fileID: 795540893642843538}
-  _daySkybox: {fileID: 2100000, guid: 3f407492204439544acbac16eff7553d, type: 2}
-  _dayLightColor: {r: 0.90943396, g: 0.89742255, b: 0.89742255, a: 0}
-  _dayAmbientColor: {r: 0.83396226, g: 0.8257422, b: 0.78518337, a: 0}
-  _dayLightXRotation: 80
-  _nightStartLightXRotation: -90
-  _nightStartLightXRotationMoon: 90
-  _startMoonIntensity: 9
-  _nightSkybox: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
-  _direactionalLightGraident:
+  _dayFogColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0}
+  _nightFogColorGradient:
     serializedVersion: 2
-    key0: {r: 0.05893198, g: 0.09182647, b: 0.11698109, a: 1}
-    key1: {r: 0.124919906, g: 0.17245887, b: 0.20754719, a: 1}
-    key2: {r: 0.12543248, g: 0.22410707, b: 0.2981131, a: 0}
-    key3: {r: 0.10252048, g: 0.20948221, b: 0.2905661, a: 0}
-    key4: {r: 0.52180135, g: 0.553665, b: 0.5773585, a: 0}
-    key5: {r: 0.22352943, g: 0.4666667, b: 0.6509804, a: 0}
+    key0: {r: 0.16470589, g: 0.1764706, b: 0.23137255, a: 1}
+    key1: {r: 0.24800462, g: 0.25817764, b: 0.30565166, a: 1}
+    key2: {r: 0.3056603, g: 0.2854752, b: 0.2854752, a: 0}
+    key3: {r: 0.33306512, g: 0.3343948, b: 0.3509434, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
     ctime0: 0
-    ctime1: 15343
-    ctime2: 26908
-    ctime3: 59753
-    ctime4: 63916
-    ctime5: 65535
+    ctime1: 53739
+    ctime2: 56514
+    ctime3: 65535
+    ctime4: 0
+    ctime5: 0
     ctime6: 0
     ctime7: 0
     atime0: 0
@@ -380,14 +373,85 @@ MonoBehaviour:
     atime7: 0
     m_Mode: 0
     m_ColorSpace: 0
-    m_NumColorKeys: 5
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 2
+  _daySkybox: {fileID: 2100000, guid: c98af0badb3cc0b479afedfeaf71ce64, type: 2}
+  _dayLightColor: {r: 0.3056603, g: 0.3056603, b: 0.3056603, a: 0}
+  _dayAmbientColor: {r: 0.4792453, g: 0.4792453, b: 0.4792453, a: 0}
+  _sunDayXRotation: 80
+  _moonStartXRotation: 100
+  _moonEndXRotation: 180
+  _startMoonIntensity: 1
+  _moonIntensityCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 7
+      inSlope: -10.909774
+      outSlope: -10.909774
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5267818
+      value: 1.2529296
+      inSlope: -4.6724987
+      outSlope: -4.6724987
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.0042114
+      value: 2
+      inSlope: 1.5647761
+      outSlope: 1.5647761
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _nightSkybox: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  _directionalLightGraident:
+    serializedVersion: 2
+    key0: {r: 0.05893198, g: 0.09182647, b: 0.11698109, a: 1}
+    key1: {r: 0.124919906, g: 0.17245887, b: 0.20754719, a: 1}
+    key2: {r: 0.12543248, g: 0.22410707, b: 0.2981131, a: 0}
+    key3: {r: 0.10252048, g: 0.20948221, b: 0.2905661, a: 0}
+    key4: {r: 0.3056603, g: 0.28086147, b: 0.28086147, a: 0}
+    key5: {r: 0.6206692, g: 0.6519849, b: 0.6754716, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 15343
+    ctime2: 26908
+    ctime3: 55589
+    ctime4: 59907
+    ctime5: 63916
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: 0
+    m_NumColorKeys: 6
     m_NumAlphaKeys: 2
   _ambientLightGradient:
     serializedVersion: 2
     key0: {r: 0.09765039, g: 0.18140355, b: 0.24528301, a: 1}
     key1: {r: 0.16732642, g: 0.22375947, b: 0.2679245, a: 1}
     key2: {r: 0.20214306, g: 0.27790976, b: 0.335849, a: 0}
-    key3: {r: 0.78113204, g: 0.78113204, b: 0.78113204, a: 0}
+    key3: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 0}
     key4: {r: 0.48547465, g: 0.4734425, b: 0.6226415, a: 0}
     key5: {r: 0.48547465, g: 0.4734425, b: 0.6226415, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
@@ -412,6 +476,7 @@ MonoBehaviour:
     m_ColorSpace: 0
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
+  _nightTimeProgressDebug: 0.467
 --- !u!1 &7435694779163363307
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ namespace Runtime.Common.Services.ItemsIdentifier
 
 		private Dictionary<int, InventoryItemData> _itemsMap;
 
-		public void OnButtonPressed()
+		public void OnButtonPressed(string name)
 		{
 #if UNITY_EDITOR
 			LoadItems();

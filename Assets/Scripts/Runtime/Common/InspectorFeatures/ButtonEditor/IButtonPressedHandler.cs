@@ -2,6 +2,6 @@ namespace Runtime.Common.InspectorFeatures.ButtonEditor
 {
 	public interface IButtonPressedHandler
 	{
-		void OnButtonPressed();
+		void OnButtonPressed(string name);
 	}
 }
