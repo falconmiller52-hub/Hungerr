@@ -1,3 +1,4 @@
+using System;
 using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.Pause;
 using Runtime.Features.Enemy.Thin.States;
@@ -53,6 +54,12 @@ namespace Runtime.Features.Enemy.Thin
 		{
 			Machine.CurrentState?.Execute();
 			SynchronizeAnimatorAndAgent();
+		}
+
+		private void OnDisable()
+		{
+			_pauseController.Remove(this);
+			Machine.CurrentState?.Exit();
 		}
 
 		public void Init(GameObject target, Transform[] patrolPoints)

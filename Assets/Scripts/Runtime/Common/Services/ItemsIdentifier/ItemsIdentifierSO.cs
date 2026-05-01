@@ -42,13 +42,15 @@ namespace Runtime.Common.Services.ItemsIdentifier
 		{
 			if (_items == null)
 				LoadItems();
-
+			
 			_itemsMap ??= _items.ToDictionary(item => item.Id, item => item);
 		}
 
 		private void LoadItems()
 		{
+#if UNITY_EDITOR
 			_items = EditorFinder.Instance.GetAssetsFromFolder<InventoryItemData>(_path).ToList();
+#endif
 		}
 	}
 }

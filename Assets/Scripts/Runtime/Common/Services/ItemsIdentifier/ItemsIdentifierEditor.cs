@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using Runtime.Common.InspectorFeatures.ButtonEditor;
 using UnityEditor;
 
@@ -12,3 +13,4 @@ namespace Runtime.Common.Services.ItemsIdentifier
 		}
 	}
 }
+#endif
