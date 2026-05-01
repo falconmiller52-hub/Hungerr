@@ -1,9 +1,10 @@
 #if UNITY_EDITOR
-using Runtime.Common.InspectorFeatures.ButtonEditor;
+using Runtime.Common.Services.ItemsIdentifier;
 using Runtime.Features.DayNight;
+using Runtime.Features.ItemSpawner;
 using UnityEditor;
 
-namespace Runtime.Common.Services.ItemsIdentifier
+namespace Runtime.Common.InspectorFeatures.ButtonEditor
 {
 	[CustomEditor(typeof(ItemsIdentifierSO))]
 	public class ItemsIdentifierEditor : ButtonEditor
@@ -20,6 +21,15 @@ namespace Runtime.Common.Services.ItemsIdentifier
 		private void OnEnable()
 		{
 			SetButtonName(new [] { "Set Night", "Set Day" });
+		}
+	}
+	
+	[CustomEditor(typeof(ItemSpawnPoint))]
+	public class ItemSpawnPointEditor : ButtonEditor
+	{
+		private void OnEnable()
+		{
+			SetButtonName(new [] { "Generate Uniqe ID" });
 		}
 	}
 }
