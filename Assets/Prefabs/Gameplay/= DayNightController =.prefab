@@ -57,8 +57,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2268786130448367365}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.078459114, y: -0, z: -0, w: 0.99691737}
-  m_LocalPosition: {x: -2.8930514, y: -1.2627487, z: -4.5249076}
+  m_LocalRotation: {x: 0.64278764, y: 0, z: 0, w: 0.7660445}
+  m_LocalPosition: {x: -2.8930514, y: 9.2, z: -4.5249076}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -74,7 +74,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3056603, g: 0.3056603, b: 0.3056603, a: 0}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30
@@ -174,13 +174,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4135112607175952585}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7435694777756425443}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!108 &795540893642843538
 Light:
   m_ObjectHideFlags: 0
@@ -191,8 +191,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 5
+  m_Color: {r: 0.09765039, g: 0.18140355, b: 0.24528301, a: 1}
+  m_Intensity: 9
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -344,12 +344,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _directionalLight: {fileID: 3435005461636565155}
   _moon: {fileID: 795540893642843538}
-  _daySkybox: {fileID: 2100000, guid: 3f407492204439544acbac16eff7553d, type: 2}
-  _dayLightColor: {r: 0.90943396, g: 0.89742255, b: 0.89742255, a: 0}
-  _dayAmbientColor: {r: 0.83396226, g: 0.8257422, b: 0.78518337, a: 0}
-  _dayLightXRotation: 80
-  _nightStartLightXRotation: -90
-  _nightStartLightXRotationMoon: 90
+  _dayFogColor: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 0}
+  _nightFogColor: {r: 0.16470589, g: 0.1764706, b: 0.23137255, a: 0}
+  _daySkybox: {fileID: 2100000, guid: c98af0badb3cc0b479afedfeaf71ce64, type: 2}
+  _dayLightColor: {r: 0.3056603, g: 0.3056603, b: 0.3056603, a: 0}
+  _dayAmbientColor: {r: 0.4792453, g: 0.4792453, b: 0.4792453, a: 0}
+  _sunDayXRotation: 80
+  _sunStartXRotation: -90
+  _sunEndXRotation: 0
+  _moonStartXRotation: 90
+  _moonEndXRotation: 180
   _startMoonIntensity: 9
   _nightSkybox: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   _direactionalLightGraident:
