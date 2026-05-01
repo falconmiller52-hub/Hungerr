@@ -1,3 +1,4 @@
+using Runtime.Common.InspectorFeatures.ButtonEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -7,7 +8,7 @@ namespace Runtime.Features.DayNight
 	/// фасадный скрипт который дает апи для манипуляции с временем суток
 	/// </summary>
 	[ExecuteInEditMode]
-	public class DayCycleVisualChanger : MonoBehaviour
+	public class DayCycleVisualChanger : MonoBehaviour, IButtonPressedHandler
 	{
 		[Header(" Light Sources")]
 		[SerializeField] private Light _directionalLight;
@@ -15,7 +16,7 @@ namespace Runtime.Features.DayNight
 		
 		[Header("Fog Colors")]
 		[SerializeField] private Color _dayFogColor;
-		[SerializeField] private Color _nightFogColor;
+		[SerializeField] private Gradient _nightFogColorGradient;
 		
 		[Header("Day Settings")] 
 		[SerializeField] private Material _daySkybox;
@@ -24,16 +25,18 @@ namespace Runtime.Features.DayNight
 		[SerializeField, Tooltip(" поворот солнца днем")] private float _sunDayXRotation = 80f;
 
 		[Header("Night Gradient Settings")] 
-		[SerializeField, Tooltip("стартовый поворот солнца ночью")] private float _sunStartXRotation = -90f;
-		[SerializeField] private float _sunEndXRotation = 0f;
 		[SerializeField, Tooltip("стартовый поворот луны ночью")] private float _moonStartXRotation = 90f;
 		[SerializeField] private float _moonEndXRotation = 180f;
 		
 		[SerializeField, Tooltip("интенсивность луны в начале ночи")] private float _startMoonIntensity = 4.0f;
-
+		[SerializeField] private AnimationCurve _moonIntensityCurve;
+		
 		[SerializeField] private Material _nightSkybox;
-		[SerializeField] private Gradient _direactionalLightGraident;
+		[SerializeField] private Gradient _directionalLightGraident;
 		[SerializeField] private Gradient _ambientLightGradient;
+		
+		[Header("Debug")]
+		[SerializeField, Range(0f, 1f)] private float _nightTimeProgressDebug = 0;
 		
 		private Vector3 _defaultAngles;
 		private Vector3 _defaultMoonAngles;
@@ -52,32 +55,32 @@ namespace Runtime.Features.DayNight
 		/// <param name="timeProgress">от 0 до 1, где 0 это условно полночь а 1 это рассвет</param>
 		public void UpdateNightCycle(float timeProgress)
 		{
-			_directionalLight.color = _ambientLightGradient.Evaluate(timeProgress);
-			_moon.color = _ambientLightGradient.Evaluate(timeProgress);
+			_moon.color = _directionalLightGraident.Evaluate(timeProgress);
+			
 			RenderSettings.ambientLight = _ambientLightGradient.Evaluate(timeProgress);
-
-			float xAngle = Mathf.Lerp(_sunStartXRotation, _sunEndXRotation, timeProgress);
+			RenderSettings.fogColor = _nightFogColorGradient.Evaluate(timeProgress);
+			
 			float xMoonAngle = Mathf.Lerp(_moonStartXRotation, _moonEndXRotation, timeProgress);
-			float intensity = Mathf.Lerp(_startMoonIntensity, 0f, timeProgress);
+			float intensity = _startMoonIntensity * _moonIntensityCurve.Evaluate(timeProgress);
 			
 			_moon.intensity = intensity;
 			_moon.transform.localEulerAngles = new Vector3(xMoonAngle, _defaultMoonAngles.y, _defaultMoonAngles.z);
-			_directionalLight.transform.localEulerAngles = new Vector3(xAngle, _defaultAngles.y, _defaultAngles.z);
 		}
 
 		public void SetNight()
 		{
-			RenderSettings.fogColor = _nightFogColor;
 			RenderSettings.skybox = _nightSkybox;
 			_moon.intensity = _startMoonIntensity;
 			
 			_moon.gameObject.SetActive(true);
 			
-			Vector3 nightStartRotation = _defaultAngles;
-			nightStartRotation.x = _sunStartXRotation;
-			_directionalLight.transform.localEulerAngles = nightStartRotation;
+			// Vector3 nightStartRotation = _defaultAngles;
+			// nightStartRotation.x = _sunStartXRotation;
+			// _directionalLight.transform.localEulerAngles = nightStartRotation;
+			
+			_directionalLight.gameObject.SetActive(false);
 
-			nightStartRotation = _defaultMoonAngles;
+			Vector3 nightStartRotation = _defaultMoonAngles;
 			nightStartRotation.x = _moonStartXRotation;
 			_moon.transform.localEulerAngles = nightStartRotation;
 		}
@@ -85,6 +88,7 @@ namespace Runtime.Features.DayNight
 		public void SetDay()
 		{
 			_moon.gameObject.SetActive(false);
+			_directionalLight.gameObject.SetActive(true);
 			
 			RenderSettings.fogColor = _dayFogColor;
 			RenderSettings.skybox = _daySkybox;
@@ -98,21 +102,20 @@ namespace Runtime.Features.DayNight
 		
 		// Debug
 		
-		[ContextMenu("Set Day")]
-		public void SetDayDebug()
+		public void OnButtonPressed(string name)
 		{
-			SetDay();
-		}
-
-		[ContextMenu("Set Night")]
-		public void SetNightDebug()
-		{
-			SetNight();
-			
-			_directionalLight.color = _ambientLightGradient.Evaluate(0);
-			_moon.color = _ambientLightGradient.Evaluate(0);
-			RenderSettings.ambientLight = _ambientLightGradient.Evaluate(0);
-			
+#if UNITY_EDITOR
+			if (name.Equals("Set Night"))
+			{
+				SetNight();
+				UpdateNightCycle(_nightTimeProgressDebug);
+				Debug.Log("Intensity of Moon: " + (_startMoonIntensity * _moonIntensityCurve.Evaluate(_nightTimeProgressDebug)));
+			}
+			else if (name.Equals("Set Day"))
+			{
+				SetDay();
+			}
+#endif
 		}
 	}
 }

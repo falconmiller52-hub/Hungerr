@@ -1,5 +1,6 @@
 #if UNITY_EDITOR
 using Runtime.Common.InspectorFeatures.ButtonEditor;
+using Runtime.Features.DayNight;
 using UnityEditor;
 
 namespace Runtime.Common.Services.ItemsIdentifier
@@ -9,7 +10,16 @@ namespace Runtime.Common.Services.ItemsIdentifier
 	{
 		private void OnEnable()
 		{
-			SetButtonName("Reload & Identify");
+			SetButtonName(new []{"Reload & Identify"});
+		}
+	}
+	
+	[CustomEditor(typeof(DayCycleVisualChanger))]
+	public class DayCycleVisualChangerEditor : ButtonEditor
+	{
+		private void OnEnable()
+		{
+			SetButtonName(new [] { "Set Night", "Set Day" });
 		}
 	}
 }
