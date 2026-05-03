@@ -1,10 +1,7 @@
-using FMODUnity;
 using NaughtyAttributes;
-using Runtime.Common.Extensions;
 using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
-using Runtime.Features.Sounds;
 using UnityEngine;
 using Zenject;
 
@@ -12,6 +9,7 @@ namespace Runtime.Features.Player.Movement
 {
 	[RequireComponent(typeof(CharacterController))]
 	[RequireComponent(typeof(PlayerStance))]
+	[RequireComponent(typeof(PlayerMovementStepSound))]
 	public class PlayerMovement : MonoBehaviour, IPausable
 	{
 		//Переменные инспектора
@@ -20,9 +18,6 @@ namespace Runtime.Features.Player.Movement
 
 		[SerializeField, Label("Ground Checker Length")]
 		private float _groundCheckDistance = 1f;
-		
-		[SerializeField, Label("Standard Step Sound")]
-		private EventReference _standartStepSound;
 
 		[Space, SerializeField, Label("Gravity Force")]
 		private float _gravityForce = 30f;
@@ -33,13 +28,13 @@ namespace Runtime.Features.Player.Movement
 		private RaycastHit _playerGroundHit;
 		private float _gravitySpeed = 0f;
 		private Vector2 _inputDirection;
-		private EventReference _currentStepSoundData;
 		private bool _isCanMove = true;
 
 		//Кэшированные переменные
 		private Camera _playerCamera;
 		private CharacterController _cc;
 		private PlayerStance _playerStance;
+		private PlayerMovementStepSound _playerMovementStepSound;
 		private IInputHandler _inputHandler;
 		private ISoundService _soundService;
 		private IPauseController _pauseController;
@@ -56,6 +51,7 @@ namespace Runtime.Features.Player.Movement
 		{
 			_cc = GetComponent<CharacterController>();
 			_playerStance = GetComponent<PlayerStance>();
+			_playerMovementStepSound = GetComponent<PlayerMovementStepSound>();
 			_playerCamera = Camera.main;
 			StanceUpdate();
 		}
@@ -106,7 +102,6 @@ namespace Runtime.Features.Player.Movement
 				GroundRayHit();
 				StanceUpdate();
 				Move(MovingDirection);
-				
 			}
 		}
 
@@ -134,26 +129,6 @@ namespace Runtime.Features.Player.Movement
 			_currentSpeed = _playerStance.StanceSpeed(playerCurrentStance);
 		}
 
-		private void MakeStepSound()
-		{
-			var ray = new Ray(_groundCheck.position, -transform.up);
-
-			Physics.Raycast(ray, out RaycastHit hit, _groundCheckDistance);
-
-			if (hit.collider &&
-			    hit.collider.gameObject.TryGetComponent<SurfaceMaterialSoundHolder>(out var surfaceMaterialHolder))
-			{
-				_currentStepSoundData = surfaceMaterialHolder.MaterialSounds.Random();
-			}
-			else
-			{
-				_currentStepSoundData = _standartStepSound;
-			}
-
-			if (!IsInvoking("PlaySound"))
-				Invoke("PlaySound", 1 / _playerStance.StanceSpeed(_playerStance.CurrentStance) * 2);
-		}
-
 		private void GroundRayHit()
 		{
 			var ray = new Ray(_groundCheck.position, -transform.up);
@@ -164,11 +139,6 @@ namespace Runtime.Features.Player.Movement
 		{
 			if (!_isGrounded) _gravitySpeed += _gravityForce * -9.81f * Time.fixedDeltaTime;
 			_cc.Move(new Vector3(0, _gravitySpeed, 0));
-		}
-
-		private void PlaySound()
-		{
-			_soundService.PlaySound(_currentStepSoundData, transform.position);
 		}
 
 		private void GroundSet(bool isGrounded)
@@ -201,14 +171,30 @@ namespace Runtime.Features.Player.Movement
 
 			_cc.Move(nextPosition);
 
-			if (direction.magnitude != 0f && _isGrounded) MakeStepSound();
-			else CancelInvoke("PlaySound");
+			if (direction.magnitude != 0f && _isGrounded)
+				_playerMovementStepSound.StartMoveSound();
+			else
+				_playerMovementStepSound.StopMoveSound();
 		}
-		
+
 
 		private void SetNewMoveInputDirection(Vector2 inputDirection)
 		{
 			_inputDirection = inputDirection;
+		}
+
+		private Vector3 GetPlayerCameraForward()
+		{
+			Vector3 forward = _playerCamera.transform.forward;
+			forward.y = 0;
+			return forward.normalized;
+		}
+
+		private Vector3 GetPlayerCameraRight()
+		{
+			Vector3 right = _playerCamera.transform.right;
+			right.y = 0;
+			return right.normalized;
 		}
 
 		//Геттеры и сеттеры
@@ -217,19 +203,15 @@ namespace Runtime.Features.Player.Movement
 		{
 			get
 			{
-				var moveDirection = (_playerCamera.transform.forward * _inputDirection.y)
-				                    + (_playerCamera.transform.right * _inputDirection.x);
+				var moveDirection = (GetPlayerCameraForward() * _inputDirection.y)
+				                    + (GetPlayerCameraRight() * _inputDirection.x);
 				var directionResult = new Vector2(moveDirection.x, moveDirection.z);
-				return directionResult;
+				return directionResult.normalized;
 			}
 		}
 
-		public bool IsGrounded => _isGrounded;
+		public Transform GroundCheck => _groundCheck;
 
-		public float CurrentSpeed
-		{
-			get => _currentSpeed;
-			set => _currentSpeed = value;
-		}
+		public float GroundCheckDistance => _groundCheckDistance;
 	}
 }

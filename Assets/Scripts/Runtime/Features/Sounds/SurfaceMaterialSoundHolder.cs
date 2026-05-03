@@ -1,15 +1,16 @@
-using System.Collections.Generic;
-using FMODUnity;
-using NaughtyAttributes;
+using FMOD.Studio;
+using Runtime.Common.Enums;
 using UnityEngine;
 
 namespace Runtime.Features.Sounds
 {
 	public class SurfaceMaterialSoundHolder : MonoBehaviour
 	{
-		[SerializeField, Label("Surface Material Sound")]
-		private List<EventReference> _materialSounds;
+		[Header("Surface Type")] [SerializeField]
+		private SurfaceType _surfaceType;
 		
-		public List<EventReference> MaterialSounds => _materialSounds;
+
+		public void SetSurfaceSoundEvent(EventInstance eventInstance)
+			=> eventInstance.setParameterByName("surface", (int)_surfaceType);
 	}
 }
