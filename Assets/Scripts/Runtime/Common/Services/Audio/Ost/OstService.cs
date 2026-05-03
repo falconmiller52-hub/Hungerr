@@ -8,7 +8,6 @@ using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 namespace Runtime.Common.Services.Audio.Ost
 {
-	// TODO: как то переходы работают не так, нужно послушать и подумать как сделать правильнее
 	public class OstService : MonoBehaviour
 	{
 		private ISoundService _soundService;
