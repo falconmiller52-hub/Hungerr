@@ -1873,8 +1873,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 584972627f75ee24285f04c8fbe15a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _materialSounds:
-  - Guid:
+  _surfaceType: 1
+  _surfaceSoundEvent:
+    Guid:
       Data1: 753262989
       Data2: 1192397846
       Data3: 1381036437
@@ -6240,8 +6241,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 584972627f75ee24285f04c8fbe15a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _materialSounds:
-  - Guid:
+  _surfaceType: 0
+  _surfaceSoundEvent:
+    Guid:
       Data1: 753262989
       Data2: 1192397846
       Data3: 1381036437
@@ -14032,6 +14034,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3482704951998993761, guid: 2fc4d555042f5cf439ccf20823f2a25c, type: 3}
   m_PrefabInstance: {fileID: 1231343677}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1235821878 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 701648784134825965, guid: 5538bf4e2ba0f8a42a937c575d00330b, type: 3}
+  m_PrefabInstance: {fileID: 1702112877}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1248606305
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19763,13 +19770,36 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 701648784134825965, guid: 5538bf4e2ba0f8a42a937c575d00330b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1702112882}
   m_SourcePrefab: {fileID: 100100000, guid: 5538bf4e2ba0f8a42a937c575d00330b, type: 3}
 --- !u!4 &1702112878 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 701648784134825961, guid: 5538bf4e2ba0f8a42a937c575d00330b, type: 3}
   m_PrefabInstance: {fileID: 1702112877}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1702112882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1235821878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 584972627f75ee24285f04c8fbe15a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _surfaceType: 0
+  _surfaceSoundEvent:
+    Guid:
+      Data1: 753262989
+      Data2: 1192397846
+      Data3: 1381036437
+      Data4: 562968933
+    Path: event:/SFX/Player_action/player_footsteps
 --- !u!1001 &1702367172
 PrefabInstance:
   m_ObjectHideFlags: 0
