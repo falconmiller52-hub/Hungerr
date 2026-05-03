@@ -211,14 +211,6 @@ namespace Runtime.Features.Player.Movement
 			}
 		}
 
-		public bool IsGrounded => _isGrounded;
-
-		public float CurrentSpeed
-		{
-			get => _currentSpeed;
-			set => _currentSpeed = value;
-		}
-
 		public Transform GroundCheck => _groundCheck;
 
 		public float GroundCheckDistance => _groundCheckDistance;
