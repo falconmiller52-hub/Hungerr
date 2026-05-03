@@ -2225,6 +2225,7 @@ GameObject:
   - component: {fileID: 2579760495121860576}
   - component: {fileID: 4076023983911967388}
   - component: {fileID: 8580609847667149802}
+  - component: {fileID: 6516990197123141987}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2292,13 +2293,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _groundCheck: {fileID: 3123808519059337597}
   _groundCheckDistance: 0.2
-  _standartStepSound:
-    Guid:
-      Data1: 753262989
-      Data2: 1192397846
-      Data3: 1381036437
-      Data4: 562968933
-    Path: event:/SFX/Player_action/player_footsteps
   _gravityForce: 0.07
 --- !u!114 &695208376743956962
 MonoBehaviour:
@@ -2482,6 +2476,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dayCounter: {fileID: 7495219298041930133}
+--- !u!114 &6516990197123141987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3851059412217318600}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7b6eb86a4c24995a1841d1cebea15f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _standartStepEvent:
+    Guid:
+      Data1: 753262989
+      Data2: 1192397846
+      Data3: 1381036437
+      Data4: 562968933
+    Path: event:/SFX/Player_action/player_footsteps
 --- !u!1 &3851059412846384325
 GameObject:
   m_ObjectHideFlags: 0

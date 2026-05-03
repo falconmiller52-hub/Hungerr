@@ -8,7 +8,7 @@ using Zenject;
 
 namespace Runtime.Features.NPC
 {
-	// Тестовая вариация NPC для тестов диалоговой системы
+	
 	[SelectionBase]
 	public class Npc : MonoBehaviour, IInteractable
 	{
