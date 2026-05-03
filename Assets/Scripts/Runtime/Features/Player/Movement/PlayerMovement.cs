@@ -106,7 +106,6 @@ namespace Runtime.Features.Player.Movement
 				GroundRayHit();
 				StanceUpdate();
 				Move(MovingDirection);
-				
 			}
 		}
 
@@ -211,19 +210,33 @@ namespace Runtime.Features.Player.Movement
 			_inputDirection = inputDirection;
 		}
 
+		private Vector3 GetPlayerCameraForward()
+		{
+			Vector3 forward = _playerCamera.transform.forward;
+			forward.y = 0;
+			return forward.normalized;
+		}
+		
+		private Vector3 GetPlayerCameraRight()
+		{
+			Vector3 right = _playerCamera.transform.right;
+			right.y = 0;
+			return right.normalized;
+		}
+		
 		//Геттеры и сеттеры
 
 		public Vector2 MovingDirection
 		{
 			get
 			{
-				var moveDirection = (_playerCamera.transform.forward * _inputDirection.y)
-				                    + (_playerCamera.transform.right * _inputDirection.x);
+				var moveDirection = (GetPlayerCameraForward() * _inputDirection.y)
+				                    + (GetPlayerCameraRight() * _inputDirection.x);
 				var directionResult = new Vector2(moveDirection.x, moveDirection.z);
-				return directionResult;
+				return directionResult.normalized;
 			}
 		}
-
+		
 		public bool IsGrounded => _isGrounded;
 
 		public float CurrentSpeed
