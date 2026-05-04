@@ -24,8 +24,6 @@ namespace Runtime.Common.Services.Input
 		public event Action DialogSkipInputPressed =  delegate { };
 		public event Action ExitInputPressed = delegate { };
 		public event Action InventoryTriggerPressed = delegate { };
-		public event Action InventoryGrabPressed = delegate { };
-		public event Action InventoryReleasePressed = delegate { };
 		public event Action InventoryUsePressed = delegate { };
 		public event Action<Vector2> PlayerMoveInputChanged = delegate { };
 		public event Action<Vector2> RotateInputChanged = delegate { };
@@ -35,28 +33,25 @@ namespace Runtime.Common.Services.Input
 		
 		public void Init()
 		{
-			Input.Player.Run.performed += _ => RunInputPressed?.Invoke(true);
-			Input.Player.Run.canceled += _ => RunInputPressed?.Invoke(false);
+			Input.Gameplay.Run.performed += _ => RunInputPressed?.Invoke(true);
+			Input.Gameplay.Run.canceled += _ => RunInputPressed?.Invoke(false);
 
-			Input.Player.Move.performed += ctx => OnPlayerMoveInputChanged(ctx.ReadValue<Vector2>());
-			Input.Player.Move.canceled += ctx => OnPlayerMoveInputChanged(Vector2.zero);
+			Input.Gameplay.Move.performed += ctx => OnPlayerMoveInputChanged(ctx.ReadValue<Vector2>());
+			Input.Gameplay.Move.canceled += ctx => OnPlayerMoveInputChanged(Vector2.zero);
 
-			Input.Player.Look.performed += ctx => OnRotateInputChanged(ctx.ReadValue<Vector2>());
-			Input.Player.Interact.performed += _ => InteractPerformed?.Invoke();
+			Input.Gameplay.Look.performed += ctx => OnRotateInputChanged(ctx.ReadValue<Vector2>());
+			Input.Gameplay.Interact.performed += _ => InteractPerformed?.Invoke();
 
-			Input.Player.Flashlight.performed += _ => FlashlightInputPressed?.Invoke();
+			Input.Gameplay.Flashlight.performed += _ => FlashlightInputPressed?.Invoke();
 
-			Input.Player.Crouch.performed += _ => CrouchInputPressed?.Invoke();
+			Input.Gameplay.Crouch.performed += _ => CrouchInputPressed?.Invoke();
 			
-			Input.Player.DialogSkip.performed += _ => DialogSkipInputPressed?.Invoke();
+			Input.Gameplay.DialogSkip.performed += _ => DialogSkipInputPressed?.Invoke();
 			
-			Input.Player.Exit.performed += _ => ExitInputPressed?.Invoke();
+			Input.Gameplay.InventoryTrigger.performed += _ => InventoryTriggerPressed?.Invoke();
 			
-			Input.Player.InventoryTrigger.performed += _ => InventoryTriggerPressed?.Invoke();
-			
-			Input.Inventory.Grab.performed += _ => InventoryGrabPressed?.Invoke();
-			Input.Inventory.Release.performed += _ => InventoryReleasePressed?.Invoke();
-			Input.Inventory.Use.performed += _ => InventoryUsePressed?.Invoke();
+			Input.UI.Exit.performed += _ => ExitInputPressed?.Invoke();
+			Input.UI.Use.performed += _ => InventoryUsePressed?.Invoke();
 		}
 		
 		public void Enable()
@@ -69,6 +64,18 @@ namespace Runtime.Common.Services.Input
 			Input.Disable();
 		}
 
+		public void SwitchToUIMap()
+		{
+			Input.Gameplay.Disable();
+			Input.UI.Enable();
+		}
+		
+		public void SwitchToGameplayMap()
+		{
+			Input.UI.Disable();
+			Input.Gameplay.Enable();
+		}
+		
 		void OnRotateInputChanged(Vector2 direction)
 		{
 			RotateInputChanged?.Invoke(direction);

@@ -24,7 +24,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     ""name"": ""PlayerInputActions"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""Gameplay"",
             ""id"": ""33234114-477b-49ed-97cd-df8857b13ec9"",
             ""actions"": [
                 {
@@ -85,15 +85,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""DialogSkip"",
                     ""type"": ""Button"",
                     ""id"": ""bc26ec8b-4320-41e9-895e-370f520ec88e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Exit"",
-                    ""type"": ""Button"",
-                    ""id"": ""ff88ed14-b2a5-4152-874e-3eec670d6f78"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -233,17 +224,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d6e9d732-85a2-4f15-98be-b47a1646235b"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Exit"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""a4df8edd-046b-4611-89cf-e33c59c7bf8d"",
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
@@ -256,22 +236,13 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""Inventory"",
-            ""id"": ""6bd1aa5c-253c-4e09-8705-ed8ec2403f37"",
+            ""name"": ""UI"",
+            ""id"": ""0da9195b-d8ad-492b-9696-1877cbece8c2"",
             ""actions"": [
                 {
-                    ""name"": ""Grab"",
+                    ""name"": ""Exit"",
                     ""type"": ""Button"",
-                    ""id"": ""c021c9b1-5431-4af5-9bd1-beb5503765f7"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Release"",
-                    ""type"": ""Button"",
-                    ""id"": ""94b814f4-92d0-43dd-9fb8-6915330f728b"",
+                    ""id"": ""e01eb8cc-9181-4504-9613-1fa471ed095a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -280,7 +251,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Use"",
                     ""type"": ""Button"",
-                    ""id"": ""4aa6b6ee-eeff-4434-bbe7-f080514559d3"",
+                    ""id"": ""e7f4e895-8666-4035-a4b0-c964b7eaa355"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -290,29 +261,29 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""a9ade616-cd11-4d85-8a1f-96b6d890a571"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""645b2568-1f7b-4695-a3df-8ba49d2535c3"",
+                    ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Grab"",
+                    ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7039198b-8701-4c1e-8102-212705a82d04"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""ddd4fdab-c4d1-48ec-8f29-d1f5ec74e426"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Release"",
+                    ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""646743c1-76d1-4930-880d-1583ee88ba2c"",
+                    ""id"": ""12bf4873-7e4f-49bf-9f7c-e5ac4d532354"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -343,22 +314,20 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         }
     ]
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
-        m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
-        m_Player_Flashlight = m_Player.FindAction("Flashlight", throwIfNotFound: true);
-        m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-        m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_DialogSkip = m_Player.FindAction("DialogSkip", throwIfNotFound: true);
-        m_Player_Exit = m_Player.FindAction("Exit", throwIfNotFound: true);
-        m_Player_InventoryTrigger = m_Player.FindAction("InventoryTrigger", throwIfNotFound: true);
-        // Inventory
-        m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
-        m_Inventory_Grab = m_Inventory.FindAction("Grab", throwIfNotFound: true);
-        m_Inventory_Release = m_Inventory.FindAction("Release", throwIfNotFound: true);
-        m_Inventory_Use = m_Inventory.FindAction("Use", throwIfNotFound: true);
+        // Gameplay
+        m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
+        m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
+        m_Gameplay_Crouch = m_Gameplay.FindAction("Crouch", throwIfNotFound: true);
+        m_Gameplay_Run = m_Gameplay.FindAction("Run", throwIfNotFound: true);
+        m_Gameplay_Flashlight = m_Gameplay.FindAction("Flashlight", throwIfNotFound: true);
+        m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
+        m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
+        m_Gameplay_DialogSkip = m_Gameplay.FindAction("DialogSkip", throwIfNotFound: true);
+        m_Gameplay_InventoryTrigger = m_Gameplay.FindAction("InventoryTrigger", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_Exit = m_UI.FindAction("Exit", throwIfNotFound: true);
+        m_UI_Use = m_UI.FindAction("Use", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -417,40 +386,38 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
-    private readonly InputActionMap m_Player;
-    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_Crouch;
-    private readonly InputAction m_Player_Run;
-    private readonly InputAction m_Player_Flashlight;
-    private readonly InputAction m_Player_Move;
-    private readonly InputAction m_Player_Look;
-    private readonly InputAction m_Player_DialogSkip;
-    private readonly InputAction m_Player_Exit;
-    private readonly InputAction m_Player_InventoryTrigger;
-    public struct PlayerActions
+    // Gameplay
+    private readonly InputActionMap m_Gameplay;
+    private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
+    private readonly InputAction m_Gameplay_Interact;
+    private readonly InputAction m_Gameplay_Crouch;
+    private readonly InputAction m_Gameplay_Run;
+    private readonly InputAction m_Gameplay_Flashlight;
+    private readonly InputAction m_Gameplay_Move;
+    private readonly InputAction m_Gameplay_Look;
+    private readonly InputAction m_Gameplay_DialogSkip;
+    private readonly InputAction m_Gameplay_InventoryTrigger;
+    public struct GameplayActions
     {
         private @PlayerInputActions m_Wrapper;
-        public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Interact => m_Wrapper.m_Player_Interact;
-        public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
-        public InputAction @Run => m_Wrapper.m_Player_Run;
-        public InputAction @Flashlight => m_Wrapper.m_Player_Flashlight;
-        public InputAction @Move => m_Wrapper.m_Player_Move;
-        public InputAction @Look => m_Wrapper.m_Player_Look;
-        public InputAction @DialogSkip => m_Wrapper.m_Player_DialogSkip;
-        public InputAction @Exit => m_Wrapper.m_Player_Exit;
-        public InputAction @InventoryTrigger => m_Wrapper.m_Player_InventoryTrigger;
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public GameplayActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
+        public InputAction @Crouch => m_Wrapper.m_Gameplay_Crouch;
+        public InputAction @Run => m_Wrapper.m_Gameplay_Run;
+        public InputAction @Flashlight => m_Wrapper.m_Gameplay_Flashlight;
+        public InputAction @Move => m_Wrapper.m_Gameplay_Move;
+        public InputAction @Look => m_Wrapper.m_Gameplay_Look;
+        public InputAction @DialogSkip => m_Wrapper.m_Gameplay_DialogSkip;
+        public InputAction @InventoryTrigger => m_Wrapper.m_Gameplay_InventoryTrigger;
+        public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerActions instance)
+        public static implicit operator InputActionMap(GameplayActions set) { return set.Get(); }
+        public void AddCallbacks(IGameplayActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_GameplayActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GameplayActionsCallbackInterfaces.Add(instance);
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
@@ -472,15 +439,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @DialogSkip.started += instance.OnDialogSkip;
             @DialogSkip.performed += instance.OnDialogSkip;
             @DialogSkip.canceled += instance.OnDialogSkip;
-            @Exit.started += instance.OnExit;
-            @Exit.performed += instance.OnExit;
-            @Exit.canceled += instance.OnExit;
             @InventoryTrigger.started += instance.OnInventoryTrigger;
             @InventoryTrigger.performed += instance.OnInventoryTrigger;
             @InventoryTrigger.canceled += instance.OnInventoryTrigger;
         }
 
-        private void UnregisterCallbacks(IPlayerActions instance)
+        private void UnregisterCallbacks(IGameplayActions instance)
         {
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
@@ -503,91 +467,80 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @DialogSkip.started -= instance.OnDialogSkip;
             @DialogSkip.performed -= instance.OnDialogSkip;
             @DialogSkip.canceled -= instance.OnDialogSkip;
-            @Exit.started -= instance.OnExit;
-            @Exit.performed -= instance.OnExit;
-            @Exit.canceled -= instance.OnExit;
             @InventoryTrigger.started -= instance.OnInventoryTrigger;
             @InventoryTrigger.performed -= instance.OnInventoryTrigger;
             @InventoryTrigger.canceled -= instance.OnInventoryTrigger;
         }
 
-        public void RemoveCallbacks(IPlayerActions instance)
+        public void RemoveCallbacks(IGameplayActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_GameplayActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerActions instance)
+        public void SetCallbacks(IGameplayActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_GameplayActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_GameplayActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerActions @Player => new PlayerActions(this);
+    public GameplayActions @Gameplay => new GameplayActions(this);
 
-    // Inventory
-    private readonly InputActionMap m_Inventory;
-    private List<IInventoryActions> m_InventoryActionsCallbackInterfaces = new List<IInventoryActions>();
-    private readonly InputAction m_Inventory_Grab;
-    private readonly InputAction m_Inventory_Release;
-    private readonly InputAction m_Inventory_Use;
-    public struct InventoryActions
+    // UI
+    private readonly InputActionMap m_UI;
+    private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
+    private readonly InputAction m_UI_Exit;
+    private readonly InputAction m_UI_Use;
+    public struct UIActions
     {
         private @PlayerInputActions m_Wrapper;
-        public InventoryActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Grab => m_Wrapper.m_Inventory_Grab;
-        public InputAction @Release => m_Wrapper.m_Inventory_Release;
-        public InputAction @Use => m_Wrapper.m_Inventory_Use;
-        public InputActionMap Get() { return m_Wrapper.m_Inventory; }
+        public UIActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Exit => m_Wrapper.m_UI_Exit;
+        public InputAction @Use => m_Wrapper.m_UI_Use;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(InventoryActions set) { return set.Get(); }
-        public void AddCallbacks(IInventoryActions instance)
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActions instance)
         {
-            if (instance == null || m_Wrapper.m_InventoryActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_InventoryActionsCallbackInterfaces.Add(instance);
-            @Grab.started += instance.OnGrab;
-            @Grab.performed += instance.OnGrab;
-            @Grab.canceled += instance.OnGrab;
-            @Release.started += instance.OnRelease;
-            @Release.performed += instance.OnRelease;
-            @Release.canceled += instance.OnRelease;
+            if (instance == null || m_Wrapper.m_UIActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionsCallbackInterfaces.Add(instance);
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
             @Use.started += instance.OnUse;
             @Use.performed += instance.OnUse;
             @Use.canceled += instance.OnUse;
         }
 
-        private void UnregisterCallbacks(IInventoryActions instance)
+        private void UnregisterCallbacks(IUIActions instance)
         {
-            @Grab.started -= instance.OnGrab;
-            @Grab.performed -= instance.OnGrab;
-            @Grab.canceled -= instance.OnGrab;
-            @Release.started -= instance.OnRelease;
-            @Release.performed -= instance.OnRelease;
-            @Release.canceled -= instance.OnRelease;
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
             @Use.started -= instance.OnUse;
             @Use.performed -= instance.OnUse;
             @Use.canceled -= instance.OnUse;
         }
 
-        public void RemoveCallbacks(IInventoryActions instance)
+        public void RemoveCallbacks(IUIActions instance)
         {
-            if (m_Wrapper.m_InventoryActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_UIActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IInventoryActions instance)
+        public void SetCallbacks(IUIActions instance)
         {
-            foreach (var item in m_Wrapper.m_InventoryActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_UIActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_InventoryActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_UIActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public InventoryActions @Inventory => new InventoryActions(this);
+    public UIActions @UI => new UIActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -597,7 +550,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_KeyboardMouseSchemeIndex];
         }
     }
-    public interface IPlayerActions
+    public interface IGameplayActions
     {
         void OnInteract(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
@@ -606,13 +559,11 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnDialogSkip(InputAction.CallbackContext context);
-        void OnExit(InputAction.CallbackContext context);
         void OnInventoryTrigger(InputAction.CallbackContext context);
     }
-    public interface IInventoryActions
+    public interface IUIActions
     {
-        void OnGrab(InputAction.CallbackContext context);
-        void OnRelease(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
         void OnUse(InputAction.CallbackContext context);
     }
 }

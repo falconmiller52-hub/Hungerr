@@ -85,6 +85,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			////
 
 			ItemSpawner itemSpawner = Object.FindAnyObjectByType<ItemSpawner>();
+			CurrentDayController currentDayController = playerInstance.GetComponentInChildren<CurrentDayController>();
 			StorageInventory storageInventory = Object.FindAnyObjectByType<StorageInventory>();
 			storageInventory.InitModel();
 
@@ -97,12 +98,18 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 				itemSpawner.SpawnItems(_spawnPointsSaveData);
 			else
 				itemSpawner.SpawnItems();
+			
+			if (currentDayController != null)
+				currentDayController.Init(_currentDay);
+			else
+				Debug.LogError("EntryGameplayState::Enter() currentDayController is null");
 
 			////
 
 			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
 
 			_inputHandler.Init();
+			_inputHandler.SwitchToGameplayMap();
 			_enemiesController.Init(playerInstance);
 
 			_container.Instantiate<GameOverTriggerHandler>();
@@ -186,13 +193,8 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 								rvp => rvp.ItemConfigId
 				);
 			}
-
-			CurrentDayController currentDayController = Object.FindAnyObjectByType<CurrentDayController>();
-
-			if (currentDayController != null)
-				currentDayController.Init(loadedData.CurrentDay);
-			else
-				Debug.LogError("EntryGameplayState::Enter() currentDayController is null");
+			
+			_currentDay = loadedData.CurrentDay;
 		}
 	}
 }
