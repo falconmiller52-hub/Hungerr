@@ -59,6 +59,8 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			
 			_eventBus.Subscribe<EGameplayChangePhaseTriggerEvent, StartDayTriggerEventData>(EGameplayChangePhaseTriggerEvent.StartDayTrigger, StartDayPhaseTriggered);
 			_eventBus.Subscribe(EGameplayChangePhaseTriggerEvent.StartNightTrigger, StartNightPhaseTriggered);
+			
+			StartDayPhaseTriggered(new StartDayTriggerEventData() { ForceNightEnd = false });
 		}
 
 		public void Execute() { }
