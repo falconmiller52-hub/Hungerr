@@ -31,9 +31,9 @@ namespace Runtime.Features.Player.PlayerCamera
 		{
 			var mouse = Mouse.current;
 			Vector2 mouseDelta = mouse.delta.ReadValue();
-		
+
 			_pov.m_HorizontalAxis.Value += mouseDelta.x * Time.deltaTime;
-			_pov.m_VerticalAxis.Value -= mouseDelta.y * Time.deltaTime;;
+			_pov.m_VerticalAxis.Value -= mouseDelta.y * Time.deltaTime;
 		}
 
 		public void Stop()
