@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 4196016720406884}
   - component: {fileID: 33070133954621894}
   - component: {fileID: 23719656865238534}
-  - component: {fileID: 64417249396387252}
-  - component: {fileID: 95718132340211496}
+  - component: {fileID: 3947590507664878060}
   m_Layer: 0
   m_Name: bed
   m_TagString: Untagged
@@ -87,8 +86,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64417249396387252
-MeshCollider:
+--- !u!65 &3947590507664878060
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -105,29 +104,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 6a43712dffaf88a489a7e4edcd60ff96, type: 3}
---- !u!95 &95718132340211496
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1703843792552052}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 6a43712dffaf88a489a7e4edcd60ff96, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  serializedVersion: 3
+  m_Size: {x: 1.043637, y: 2.3463764, z: 1.4356204}
+  m_Center: {x: -0.0000018752595, y: -0.0000009458441, z: 0.7178231}
