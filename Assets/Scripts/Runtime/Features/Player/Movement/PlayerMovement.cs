@@ -99,7 +99,6 @@ namespace Runtime.Features.Player.Movement
 			// Сделал проверку тут, т.к когда isCanMove нельзя не только двигаться, но и прыгать, издавать звуки и т.д.
 			if (_isCanMove)
 			{
-				GroundRayHit();
 				StanceUpdate();
 				Move(MovingDirection);
 			}
@@ -107,6 +106,7 @@ namespace Runtime.Features.Player.Movement
 
 		private void FixedUpdate()
 		{
+			GroundRayHit();
 			GravityUpdate();
 		}
 
@@ -161,7 +161,7 @@ namespace Runtime.Features.Player.Movement
 		private void Grounded()
 		{
 			_isGrounded = true;
-			_gravitySpeed = 0f;
+			_gravitySpeed = -2f;
 		}
 
 		public void Move(Vector2 direction)

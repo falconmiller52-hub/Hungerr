@@ -16,8 +16,6 @@ namespace Runtime.Features.Enemy.Thin.States
 
 		public void Enter()
 		{
-			Debug.Log("Entering Patrol State");
-			
 			_ai.Animator.SetFloat(WalkSpeed, _ai.EnemySettingData.PatrolSpeedMultiplier);
 			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed) * _ai.transform.lossyScale.x;
 			
