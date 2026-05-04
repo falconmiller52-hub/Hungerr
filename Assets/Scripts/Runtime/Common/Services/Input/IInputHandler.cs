@@ -20,7 +20,7 @@ namespace Runtime.Common.Services.Input
 		void Enable();
 		void Disable();
 
-		void SwitchToPlayerMap();
+		void SwitchToGameplayMap();
 		void SwitchToUIMap();
 	}
 }

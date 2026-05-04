@@ -87,7 +87,7 @@ namespace Runtime.Features.Inventory
 
 				_playerInventory.InventoryOpenStateChanged(false);
 				
-				_inputHandler.SwitchToPlayerMap();
+				_inputHandler.SwitchToGameplayMap();
 			}
 		}
 		

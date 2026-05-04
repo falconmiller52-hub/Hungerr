@@ -208,7 +208,7 @@ namespace Runtime.Features._Story
 			}
 
 			_pauseController.PerformResume();
-			_inputHandler.SwitchToPlayerMap();
+			_inputHandler.SwitchToGameplayMap();
 			
 			OnStoryEnded?.Invoke();
 			StopTypeWriterEffect();

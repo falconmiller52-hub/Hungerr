@@ -109,8 +109,8 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 
 				// ВЫКЛючаем шторку
 				_curtain.Hide();
-				// ВКЛючаем инпут
-				_inputHandler.Enable();
+				// ВКЛючаем инпут gameplay
+				_inputHandler.SwitchToGameplayMap();
 			}
 		}
 
@@ -143,8 +143,8 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 
 				// ВЫКЛючаем шторку
 				_curtain.Hide();
-				// ВКЛючаем инпут
-				_inputHandler.Enable();
+				// ВКЛючаем инпут gameplay
+				_inputHandler.SwitchToGameplayMap();
 				
 				_playerFoodController.SetActiveFoodDrain(true);
 			}

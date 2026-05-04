@@ -33,22 +33,22 @@ namespace Runtime.Common.Services.Input
 		
 		public void Init()
 		{
-			Input.Player.Run.performed += _ => RunInputPressed?.Invoke(true);
-			Input.Player.Run.canceled += _ => RunInputPressed?.Invoke(false);
+			Input.Gameplay.Run.performed += _ => RunInputPressed?.Invoke(true);
+			Input.Gameplay.Run.canceled += _ => RunInputPressed?.Invoke(false);
 
-			Input.Player.Move.performed += ctx => OnPlayerMoveInputChanged(ctx.ReadValue<Vector2>());
-			Input.Player.Move.canceled += ctx => OnPlayerMoveInputChanged(Vector2.zero);
+			Input.Gameplay.Move.performed += ctx => OnPlayerMoveInputChanged(ctx.ReadValue<Vector2>());
+			Input.Gameplay.Move.canceled += ctx => OnPlayerMoveInputChanged(Vector2.zero);
 
-			Input.Player.Look.performed += ctx => OnRotateInputChanged(ctx.ReadValue<Vector2>());
-			Input.Player.Interact.performed += _ => InteractPerformed?.Invoke();
+			Input.Gameplay.Look.performed += ctx => OnRotateInputChanged(ctx.ReadValue<Vector2>());
+			Input.Gameplay.Interact.performed += _ => InteractPerformed?.Invoke();
 
-			Input.Player.Flashlight.performed += _ => FlashlightInputPressed?.Invoke();
+			Input.Gameplay.Flashlight.performed += _ => FlashlightInputPressed?.Invoke();
 
-			Input.Player.Crouch.performed += _ => CrouchInputPressed?.Invoke();
+			Input.Gameplay.Crouch.performed += _ => CrouchInputPressed?.Invoke();
 			
-			Input.Player.DialogSkip.performed += _ => DialogSkipInputPressed?.Invoke();
+			Input.Gameplay.DialogSkip.performed += _ => DialogSkipInputPressed?.Invoke();
 			
-			Input.Player.InventoryTrigger.performed += _ => InventoryTriggerPressed?.Invoke();
+			Input.Gameplay.InventoryTrigger.performed += _ => InventoryTriggerPressed?.Invoke();
 			
 			Input.UI.Exit.performed += _ => ExitInputPressed?.Invoke();
 			Input.UI.Use.performed += _ => InventoryUsePressed?.Invoke();
@@ -66,14 +66,14 @@ namespace Runtime.Common.Services.Input
 
 		public void SwitchToUIMap()
 		{
-			Input.Player.Disable();
+			Input.Gameplay.Disable();
 			Input.UI.Enable();
 		}
 		
-		public void SwitchToPlayerMap()
+		public void SwitchToGameplayMap()
 		{
 			Input.UI.Disable();
-			Input.Player.Enable();
+			Input.Gameplay.Enable();
 		}
 		
 		void OnRotateInputChanged(Vector2 direction)
