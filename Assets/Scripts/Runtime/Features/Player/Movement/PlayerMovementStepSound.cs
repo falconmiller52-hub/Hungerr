@@ -10,7 +10,7 @@ namespace Runtime.Features.Player.Movement
 	public class PlayerMovementStepSound : MonoBehaviour
 	{
 		[SerializeField, Label("Standard Step Sound")]
-		private EventReference _standartStepEvent;
+		private EventReference _standartdStepEvent;
 
 		private PlayerMovement _playerMovement;
 		private EventInstance _stepInstance;
@@ -18,7 +18,10 @@ namespace Runtime.Features.Player.Movement
 		private void OnDestroy()
 		{
 			if (_stepInstance.isValid())
+			{
+				_stepInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
 				_stepInstance.release();
+			}
 		}
 
 		private void Awake()
@@ -35,7 +38,7 @@ namespace Runtime.Features.Player.Movement
 		{
 			if (!_stepInstance.isValid())
 			{
-				_stepInstance = RuntimeManager.CreateInstance(_standartStepEvent);
+				_stepInstance = RuntimeManager.CreateInstance(_standartdStepEvent);
 				_stepInstance.start();
 				
 				Debug.Log("Creat and start sound step event");
@@ -54,7 +57,7 @@ namespace Runtime.Features.Player.Movement
 
 		public void StopMoveSound()	
 		{
-			if (!_stepInstance.isValid())
+			if (!_stepInstance.isValid())		
 				return;
 			
 			_stepInstance.getPlaybackState(out PLAYBACK_STATE state);
@@ -68,6 +71,8 @@ namespace Runtime.Features.Player.Movement
 
 		private void SetSoundStepBySurface()
 		{
+			if (!_stepInstance.isValid()) return;
+			
 			var ray = new Ray(_playerMovement.GroundCheck.position, -transform.up);
 
 			Physics.Raycast(ray, out RaycastHit hit, _playerMovement.GroundCheckDistance);

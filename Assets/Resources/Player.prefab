@@ -2488,13 +2488,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b6eb86a4c24995a1841d1cebea15f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _standartStepEvent:
+  _standartdStepEvent:
     Guid:
-      Data1: 753262989
-      Data2: 1192397846
-      Data3: 1381036437
-      Data4: 562968933
-    Path: event:/SFX/Player_action/player_footsteps
+      Data1: 1962527456
+      Data2: 1286439855
+      Data3: 1316657543
+      Data4: 1848301670
+    Path: event:/SFX/Player_action/player_current_footsteps
 --- !u!1 &3851059412846384325
 GameObject:
   m_ObjectHideFlags: 0
