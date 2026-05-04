@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 4354949854644242}
   - component: {fileID: 33600615051956864}
   - component: {fileID: 23659671185384098}
-  - component: {fileID: 64785825403769814}
-  - component: {fileID: 95922401131861548}
+  - component: {fileID: 2661356921266016808}
   m_Layer: 0
   m_Name: stool_3
   m_TagString: Untagged
@@ -87,8 +86,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64785825403769814
-MeshCollider:
+--- !u!65 &2661356921266016808
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -105,29 +104,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 942c022fd75bee14ea42f0a013b85692, type: 3}
---- !u!95 &95922401131861548
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1383224378593844}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 942c022fd75bee14ea42f0a013b85692, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  serializedVersion: 3
+  m_Size: {x: 0.48617566, y: 0.527404, z: 1.2219568}
+  m_Center: {x: -0.000000042801897, y: -0.00000068038406, z: 0.61099154}
