@@ -11,6 +11,5 @@ namespace Runtime.Features.Sounds
 		
 		public void SetSurfaceSoundEvent(EventInstance eventInstance)
 			=> eventInstance.setParameterByName("surface", (int)_surfaceType);
-			//=> eventInstance.setParameterByNameWithLabel("surface", _surfaceType.ToString());
 	}
 }
