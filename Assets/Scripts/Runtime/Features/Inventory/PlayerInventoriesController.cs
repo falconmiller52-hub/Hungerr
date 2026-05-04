@@ -35,36 +35,77 @@ namespace Runtime.Features.Inventory
 
 		private void Start()
 		{
-			_inputHandler.InventoryTriggerPressed += OnPlayerInventoryTriggerPressed;
+			_inputHandler.InventoryTriggerPressed += ChangeInventoryState;
+			_inputHandler.ExitInputPressed += ChangeInventoryState;
 		}
 
 		private void OnDisable()
 		{
-			_inputHandler.InventoryTriggerPressed -= OnPlayerInventoryTriggerPressed;
+			_inputHandler.InventoryTriggerPressed -= ChangeInventoryState;
+			_inputHandler.ExitInputPressed -= ChangeInventoryState;
 		}
 
-		private void OnPlayerInventoryTriggerPressed()
+		private void ChangeInventoryState()
 		{
-			_isOpened = !_isOpened;
-
 			if (_isOpened)
 			{
-				Cursor.lockState = CursorLockMode.None;
-				Cursor.visible = true;
-				_pauseController.PerformStop();
-			}
-			else
-			{
+				_isOpened = false;
+				
 				Cursor.lockState = CursorLockMode.Locked;
 				Cursor.visible = false;
 				_pauseController.PerformResume();
-
+				
 				if (_currentOpenedStorage != null)
 				{
 					_currentOpenedStorage.InventoryOpenStateChanged(_isOpened);
 					_currentOpenedStorage = null;
 					_itemDragger.CloseChest();
 				}
+
+				_playerInventory.InventoryOpenStateChanged(_isOpened);
+			}
+			else
+			{
+				_isOpened = true;
+				
+				Cursor.lockState = CursorLockMode.None;
+				Cursor.visible = true;
+				_pauseController.PerformStop();
+
+				_playerInventory.InventoryOpenStateChanged(_isOpened);
+			}
+		}
+		
+		private void TryOpenInventory()
+		{
+			if (_isOpened)
+				return;
+
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+			_pauseController.PerformStop();
+
+			_isOpened = true;
+
+			_playerInventory.InventoryOpenStateChanged(_isOpened);
+		}
+
+		private void TryCloseInventory()
+		{
+			if (!_isOpened)
+				return;
+
+			Cursor.lockState = CursorLockMode.Locked;
+			Cursor.visible = false;
+			_pauseController.PerformResume();
+
+			_isOpened = false;
+
+			if (_currentOpenedStorage != null)
+			{
+				_currentOpenedStorage.InventoryOpenStateChanged(_isOpened);
+				_currentOpenedStorage = null;
+				_itemDragger.CloseChest();
 			}
 
 			_playerInventory.InventoryOpenStateChanged(_isOpened);
