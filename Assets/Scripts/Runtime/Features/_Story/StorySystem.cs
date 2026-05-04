@@ -81,6 +81,8 @@ namespace Runtime.Features._Story
 				_pauseController.PerformStop();
 				Cursor.visible = true;
 				Cursor.lockState = CursorLockMode.None;
+				
+				_inputHandler.SwitchToUIMap();
 			}
 
 			_isStoryStart = true;
@@ -206,6 +208,8 @@ namespace Runtime.Features._Story
 			}
 
 			_pauseController.PerformResume();
+			_inputHandler.SwitchToPlayerMap();
+			
 			OnStoryEnded?.Invoke();
 			StopTypeWriterEffect();
 

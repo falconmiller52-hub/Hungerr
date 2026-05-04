@@ -35,44 +35,59 @@ namespace Runtime.Features.Inventory
 
 		private void Start()
 		{
-			_inputHandler.InventoryTriggerPressed += ChangeInventoryState;
-			_inputHandler.ExitInputPressed += ChangeInventoryState;
+			_inputHandler.InventoryTriggerPressed += OpenInventory;
+			_inputHandler.ExitInputPressed += CloseInventory;
 		}
 
 		private void OnDisable()
 		{
-			_inputHandler.InventoryTriggerPressed -= ChangeInventoryState;
-			_inputHandler.ExitInputPressed -= ChangeInventoryState;
+			_inputHandler.InventoryTriggerPressed -= OpenInventory;
+			_inputHandler.ExitInputPressed -= CloseInventory;
 		}
 
-		private void ChangeInventoryState()
+		private void OpenInventory()
+		{
+			if (_isOpened) return; // Если уже открыто, ничего не делаем
+    
+			_isOpened = true;
+			ApplyInventoryState();
+		}
+
+		private void CloseInventory()
+		{
+			if (!_isOpened) return; // Если уже закрыто, ничего не делаем
+    
+			_isOpened = false;
+			ApplyInventoryState();
+		}
+
+		private void ApplyInventoryState()
 		{
 			if (_isOpened)
 			{
-				_isOpened = false;
+				Cursor.lockState = CursorLockMode.None;
+				Cursor.visible = true;
+				_pauseController.PerformStop();
+				_playerInventory.InventoryOpenStateChanged(true);
 				
+				_inputHandler.SwitchToUIMap(); 
+			}
+			else
+			{
 				Cursor.lockState = CursorLockMode.Locked;
 				Cursor.visible = false;
 				_pauseController.PerformResume();
-				
+
 				if (_currentOpenedStorage != null)
 				{
-					_currentOpenedStorage.InventoryOpenStateChanged(_isOpened);
+					_currentOpenedStorage.InventoryOpenStateChanged(false);
 					_currentOpenedStorage = null;
 					_itemDragger.CloseChest();
 				}
 
-				_playerInventory.InventoryOpenStateChanged(_isOpened);
-			}
-			else
-			{
-				_isOpened = true;
+				_playerInventory.InventoryOpenStateChanged(false);
 				
-				Cursor.lockState = CursorLockMode.None;
-				Cursor.visible = true;
-				_pauseController.PerformStop();
-
-				_playerInventory.InventoryOpenStateChanged(_isOpened);
+				_inputHandler.SwitchToPlayerMap();
 			}
 		}
 		

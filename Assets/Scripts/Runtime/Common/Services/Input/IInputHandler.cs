@@ -15,11 +15,12 @@ namespace Runtime.Common.Services.Input
 		event Action ExitInputPressed;
 		event Action InventoryTriggerPressed;
 		
-		event Action InventoryGrabPressed;
-		event Action InventoryReleasePressed;
 		event Action InventoryUsePressed;
 
 		void Enable();
 		void Disable();
+
+		void SwitchToPlayerMap();
+		void SwitchToUIMap();
 	}
 }

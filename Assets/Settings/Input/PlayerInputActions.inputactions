@@ -69,15 +69,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Exit",
-                    "type": "Button",
-                    "id": "ff88ed14-b2a5-4152-874e-3eec670d6f78",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "InventoryTrigger",
                     "type": "Button",
                     "id": "1f5ded23-1770-4dd6-b011-1ef034cc1e63",
@@ -211,28 +202,6 @@
                 },
                 {
                     "name": "",
-                    "id": "d6e9d732-85a2-4f15-98be-b47a1646235b",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Exit",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "84993781-263c-4f00-86f9-5c9d1b3f67ee",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Exit",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a4df8edd-046b-4611-89cf-e33c59c7bf8d",
                     "path": "<Keyboard>/tab",
                     "interactions": "",
@@ -245,22 +214,13 @@
             ]
         },
         {
-            "name": "Inventory",
-            "id": "6bd1aa5c-253c-4e09-8705-ed8ec2403f37",
+            "name": "UI",
+            "id": "0da9195b-d8ad-492b-9696-1877cbece8c2",
             "actions": [
                 {
-                    "name": "Grab",
+                    "name": "Exit",
                     "type": "Button",
-                    "id": "c021c9b1-5431-4af5-9bd1-beb5503765f7",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Release",
-                    "type": "Button",
-                    "id": "94b814f4-92d0-43dd-9fb8-6915330f728b",
+                    "id": "e01eb8cc-9181-4504-9613-1fa471ed095a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -269,7 +229,7 @@
                 {
                     "name": "Use",
                     "type": "Button",
-                    "id": "4aa6b6ee-eeff-4434-bbe7-f080514559d3",
+                    "id": "e7f4e895-8666-4035-a4b0-c964b7eaa355",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -279,29 +239,29 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "a9ade616-cd11-4d85-8a1f-96b6d890a571",
-                    "path": "<Mouse>/leftButton",
+                    "id": "645b2568-1f7b-4695-a3df-8ba49d2535c3",
+                    "path": "<Keyboard>/tab",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Grab",
+                    "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "7039198b-8701-4c1e-8102-212705a82d04",
-                    "path": "<Mouse>/leftButton",
+                    "id": "ddd4fdab-c4d1-48ec-8f29-d1f5ec74e426",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Release",
+                    "action": "Exit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "646743c1-76d1-4930-880d-1583ee88ba2c",
+                    "id": "12bf4873-7e4f-49bf-9f7c-e5ac4d532354",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
