@@ -1,6 +1,7 @@
 using Cinemachine;
 using Runtime.Common.Services.Pause;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Zenject;
 
 namespace Runtime.Features.Player.PlayerCamera
@@ -24,6 +25,15 @@ namespace Runtime.Features.Player.PlayerCamera
 			_pov = _cinemachineVirtualCamera.GetCinemachineComponent<CinemachinePOV>();
 
 			_pauseController.Add(this);
+		}
+
+		private void Update()
+		{
+			var mouse = Mouse.current;
+			Vector2 mouseDelta = mouse.delta.ReadValue();
+
+			_pov.m_HorizontalAxis.Value += mouseDelta.x * Time.deltaTime;
+			_pov.m_VerticalAxis.Value -= mouseDelta.y * Time.deltaTime;
 		}
 
 		public void Stop()
