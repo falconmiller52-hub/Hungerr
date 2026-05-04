@@ -31,7 +31,11 @@ namespace Runtime.Features.Player.Movement
 
 		private void Update()
 		{
-			SetSoundStepBySurface();
+			//SetSoundStepBySurface();
+			
+			_stepInstance.getPlaybackState(out PLAYBACK_STATE state);
+			
+			Debug.Log($"Current state: [{state}]");
 		}
 
 		public void StartMoveSound()
