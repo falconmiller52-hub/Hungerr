@@ -31,11 +31,7 @@ namespace Runtime.Features.Player.Movement
 
 		private void Update()
 		{
-			//SetSoundStepBySurface();
-			
-			_stepInstance.getPlaybackState(out PLAYBACK_STATE state);
-			
-			Debug.Log($"Current state: [{state}]");
+			SetSoundStepBySurface();
 		}
 
 		public void StartMoveSound()
@@ -45,8 +41,6 @@ namespace Runtime.Features.Player.Movement
 				_stepInstance = RuntimeManager.CreateInstance(_standartdStepEvent);
 				_stepInstance.start();
 				
-				Debug.Log("Creat and start sound step event");
-				
 				return;
 			}
 
@@ -54,7 +48,6 @@ namespace Runtime.Features.Player.Movement
 
 			if (state == PLAYBACK_STATE.STOPPED)
 			{
-				Debug.Log("start again sound step event");
 				_stepInstance.start();
 			}
 		}
@@ -68,7 +61,6 @@ namespace Runtime.Features.Player.Movement
 
 			if (state == PLAYBACK_STATE.PLAYING)
 			{
-				Debug.Log("Stop sound step event");
 				_stepInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
 			}
 		}
