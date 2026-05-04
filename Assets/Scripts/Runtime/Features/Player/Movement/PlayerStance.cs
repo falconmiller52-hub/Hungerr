@@ -1,16 +1,18 @@
+using System;
 using System.Collections;
 using FMODUnity;
 using NaughtyAttributes;
 using Runtime.Common.Enums;
-using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
+using Runtime.Common.Services.Pause;
 using UnityEngine;
 using Zenject;
 
 namespace Runtime.Features.Player.Movement
 {
-	public class PlayerStance : MonoBehaviour
+	public class PlayerStance : MonoBehaviour, IPausable
 	{
 		[Header("Components")] [SerializeField]
 		private Transform _playerTransform;
@@ -69,30 +71,49 @@ namespace Runtime.Features.Player.Movement
 			Crouching
 		}
 
+		public event Action<float> OnStaminaChanged;
+		
+		public float CurrentStamina
+		{
+			get => _currentStamina;
+			private set
+			{
+				_currentStamina = value;
+				OnStaminaChanged?.Invoke(_currentStamina);
+			} 
+		}
+
+		private float _currentStamina;
 		private bool _isExhausted = false, _isUnderCeiling = false;
-		private float _currentStamina, _staminaWaiterTimer, _exhaustionTimer, _crouchingTimer;
+		private float _staminaWaiterTimer, _exhaustionTimer, _crouchingTimer;
 		private bool _runPress = false, _crouchPress = false;
 		private Vector2 _inputDirection;
 
 		//Кэшированные переменные
 		private IInputHandler _inputHandler;
-		private IAudioService _audioService;
+		private ISoundService _soundService;
+		private IPauseController _pauseController;
 		private CharacterController _cc;
 		private EventBus _eventBus;
+		private bool _isPausable;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, IAudioService audioService, EventBus eventBus)
+		private void Construct(IInputHandler inputHandler,
+						ISoundService soundService,
+						EventBus eventBus,
+						IPauseController pauseController)
 		{
 			_inputHandler = inputHandler;
-			_audioService = audioService;
+			_soundService = soundService;
 			_eventBus = eventBus;
+			_pauseController = pauseController;
 		}
 
 		private void Start()
 		{
 			_cc = GetComponentInChildren<CharacterController>();
 
-			_currentStamina = _maxStamina;
+			CurrentStamina = _maxStamina;
 			_staminaWaiterTimer = _staminaWaiter;
 			_exhaustionTimer = _exhaustionDur;
 			_crouchingTimer = _crouchingCooldown;
@@ -109,6 +130,8 @@ namespace Runtime.Features.Player.Movement
 			_inputHandler.PlayerMoveInputChanged += SetNewMoveInputDirection;
 			_inputHandler.RunInputPressed += Run;
 			_inputHandler.CrouchInputPressed += Crouch;
+
+			_pauseController.Add(this);
 		}
 
 		private void OnDisable()
@@ -126,12 +149,20 @@ namespace Runtime.Features.Player.Movement
 
 		private void Update()
 		{
+			if (_isPausable) return;
+
 			_isUnderCeiling = IsUnderCeiling;
 
 			StanceChange();
 			StaminaChange();
 			CrouchChange();
 		}
+
+		public void Stop()
+			=> _isPausable = true;
+
+		public void Resume()
+			=> _isPausable = false;
 
 		//Методы скрипта
 		private void StanceChange()
@@ -151,7 +182,7 @@ namespace Runtime.Features.Player.Movement
 					_currentStance = Stance.Crouching;
 					_crouchingTimer = 0f;
 				}
-				else if (!_runPress || _currentStamina <= 0f)
+				else if (!_runPress || CurrentStamina <= 0f)
 				{
 					_eventBus.Trigger(EPlayerStanceEvent.StartWalkState);
 
@@ -190,30 +221,30 @@ namespace Runtime.Features.Player.Movement
 
 		private void StaminaChange()
 		{
-			_currentStamina = Mathf.Clamp(_currentStamina, 0, _maxStamina);
+			CurrentStamina = Mathf.Clamp(CurrentStamina, 0, _maxStamina);
 			_staminaWaiterTimer = Mathf.Clamp(_staminaWaiterTimer, 0, _staminaWaiter);
 			_exhaustionTimer = Mathf.Clamp(_exhaustionTimer, 0, _exhaustionDur);
 
 			if (_currentStance == Stance.Running && _playerTransform.forward.magnitude > 0f && !_isExhausted)
 			{
 				_staminaWaiterTimer = _staminaWaiter;
-				_currentStamina -= _staminaUsage * _staminaMultiplier * Time.deltaTime;
+				CurrentStamina -= _staminaUsage * _staminaMultiplier * Time.deltaTime;
 
-				if (_currentStamina <= 0f)
+				if (CurrentStamina <= 0f)
 				{
 					_isExhausted = true;
-					_audioService.PlaySound(_exhaustionStepSound, transform.position);
+					_soundService.PlaySound(_exhaustionStepSound, transform.position);
 				}
 			}
 			else
 			{
-				if (_currentStamina < 100f)
+				if (CurrentStamina < 100f)
 				{
 					if (_staminaWaiterTimer > 0f) _staminaWaiterTimer -= Time.deltaTime;
 					else if (_staminaWaiterTimer <= 0f)
 					{
 						var movementCoefficient = _playerTransform.forward.magnitude == 0f ? 1f : 0.8f;
-						_currentStamina += _staminaRegen * _staminaMultiplier * Time.deltaTime * movementCoefficient;
+						CurrentStamina += _staminaRegen * _staminaMultiplier * Time.deltaTime * movementCoefficient;
 					}
 				}
 
@@ -298,13 +329,7 @@ namespace Runtime.Features.Player.Movement
 			get => _stancesSpeeds;
 			set => _stancesSpeeds = value;
 		}
-
-		public float CurrentStamina
-		{
-			get => _currentStamina;
-			set => _currentStamina = value;
-		}
-
+		
 		public float MaximumStamina
 		{
 			get => _maxStamina;

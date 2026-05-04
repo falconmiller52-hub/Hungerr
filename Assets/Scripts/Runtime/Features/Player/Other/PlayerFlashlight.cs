@@ -1,6 +1,6 @@
 using FMODUnity;
 using NaughtyAttributes;
-using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.Input;
 using UnityEngine;
 using Zenject;
@@ -22,14 +22,14 @@ namespace Runtime.Features.Player.Other
 		private EventReference _flashlightTurnffSound;
 
 		private IInputHandler _inputHandler;
-		private IAudioService _audioService;
+		private ISoundService _soundService;
 		private bool _isEnabled = false;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, IAudioService audioService)
+		private void Construct(IInputHandler inputHandler, ISoundService soundService)
 		{
 			_inputHandler = inputHandler;
-			_audioService = audioService;
+			_soundService = soundService;
 		}
 
 		private void OnEnable()
@@ -62,7 +62,7 @@ namespace Runtime.Features.Player.Other
 			_flashlightObject.intensity = _isEnabled ? _intensity : 0f;
 
 			var sound = _isEnabled ? _flashlightTurnOnSound : _flashlightTurnffSound;
-			_audioService.PlaySound(sound, transform.position);
+			_soundService.PlaySound(sound, transform.position);
 		}
 	}
 }

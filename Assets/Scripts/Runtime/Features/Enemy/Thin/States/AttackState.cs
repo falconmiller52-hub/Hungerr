@@ -1,9 +1,10 @@
+using Runtime.Common.Services.StateMachine;
 using Runtime.Features.Health;
 using UnityEngine;
 
 namespace Runtime.Features.Enemy.Thin.States
 {
-	public class AttackState : IEnemyState, IAnimationEventListener
+	public class AttackState : IState, IAnimationEventListener
 	{
 		private static readonly int Attack = Animator.StringToHash("Attack");
 		
@@ -27,17 +28,18 @@ namespace Runtime.Features.Enemy.Thin.States
 			{
 				_cooldownTimer += Time.deltaTime;
 
-				if (_cooldownTimer >= _ai.AttackCooldown)
+				if (_cooldownTimer >= _ai.EnemySettingData.AttackCooldown)
 				{
 					// Время отдыха вышло — возвращаемся к патрулю
-					_ai.ChangeState(new PatrolState(_ai));
+					_ai.Machine.EnterIn<PatrolState>();
 				}
 			}
 		}
 
 		public void Exit()
 		{
-			
+			_cooldownTimer = 0;
+			_isAttackFinished = false;
 		}
 
 		public void OnAnimationEventHandled()
@@ -55,7 +57,7 @@ namespace Runtime.Features.Enemy.Thin.States
 			Vector3 origin = _ai.transform.position + Vector3.up * 1.0f; 
 			Vector3 direction = _ai.transform.forward;
 			Quaternion orientation = _ai.transform.rotation;
-			float maxDistance = _ai.AttackRadius; // Насколько далеко летит "коробка"
+			float maxDistance = _ai.EnemySettingData.AttackRadius; // Насколько далеко летит "коробка"
 			
 			if (Physics.BoxCast(origin, halfExtents, direction, out RaycastHit hit, orientation, maxDistance))
 			{
@@ -63,7 +65,7 @@ namespace Runtime.Features.Enemy.Thin.States
         
 				if (damageable != null)
 				{
-					damageable.ApplyDamage(_ai.AttackDamage);
+					damageable.ApplyDamage(_ai.EnemySettingData.AttackDamage);
 					Debug.Log($"<color=yellow>BoxCast попал по: {hit.collider.name}</color>");
 				}
 			}

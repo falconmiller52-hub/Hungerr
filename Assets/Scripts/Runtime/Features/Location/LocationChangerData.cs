@@ -4,17 +4,15 @@ using UnityEngine;
 namespace Runtime.Features.Location
 {
 	[Serializable]
-	public struct LocationChangerData
+	public class LocationChangerData
 	{
-		[field: SerializeField] public float FadeInDuration { get; private set; }
-		[field:SerializeField] public float StayBlackDuration { get; private set; }
-		[field:SerializeField] public float FadeOutDuration { get; private set; }
+		[field: SerializeField, Tooltip("Длительность появления шторки, в секундах")]
+		public float FadeInDuration { get; private set; } = 0.5f;
 		
-		public LocationChangerData(float  fadeInDuration, float stayBlackDuration, float fadeOutDuration)
-		{
-			FadeInDuration = fadeInDuration;
-			StayBlackDuration = stayBlackDuration;
-			FadeOutDuration = fadeOutDuration;
-		}
+		[field:SerializeField] 
+		public float StayBlackDuration { get; private set; }
+
+		[field: SerializeField, Tooltip("Длительность исчезания шторки, в секундах")]
+		public float FadeOutSpeed { get; private set; } = 0.5f;
 	}
 }

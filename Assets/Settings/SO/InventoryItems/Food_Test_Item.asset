@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bd48263934a4664bbbb6c05fb42340d, type: 3}
   m_Name: Food_Test_Item
   m_EditorClassIdentifier: 
+  <Id>k__BackingField: 3
   <ItemName>k__BackingField: Food
   <Description>k__BackingField: 
   <MaxStackSize>k__BackingField: 64
@@ -19,3 +20,18 @@ MonoBehaviour:
   <PrefabForInventory>k__BackingField: {fileID: 3919629856071798191, guid: 686768d9f643beb488009df1e26287c9, type: 3}
   <Width>k__BackingField: 1
   <Height>k__BackingField: 1
+  <GrabItemInInventorySound>k__BackingField:
+    Guid:
+      Data1: -1825936398
+      Data2: 1114081382
+      Data3: -1661977700
+      Data4: -2010312041
+    Path: event:/SFX/Inventory/Food/inventory_food_click
+  <PutItemInInventorySound>k__BackingField:
+    Guid:
+      Data1: -987756422
+      Data2: 1116564405
+      Data3: 879767212
+      Data4: -503762435
+    Path: event:/SFX/Inventory/Food/inventory_food_put
+  <Satiety>k__BackingField: 45

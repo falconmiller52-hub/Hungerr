@@ -16,7 +16,12 @@ namespace Runtime.Features.DayNight.StateMachine
 		
 		private Dictionary<Type, GamePhaseState> _states = new Dictionary<Type, GamePhaseState>();
 		private GamePhaseState _currentState;
-		
+
+		private void OnDisable()
+		{
+			_states.Clear();
+		}
+
 		public void EnterIn<TState>() where TState : GamePhaseState
 		{
 			if (_states.TryGetValue(typeof(TState), out var state))

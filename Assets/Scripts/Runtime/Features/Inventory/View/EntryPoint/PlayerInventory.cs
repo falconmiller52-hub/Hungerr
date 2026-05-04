@@ -1,10 +1,11 @@
+using System;
+using System.Collections.Generic;
 using FMODUnity;
-using Runtime.Common.Services.Audio;
-using Runtime.Features.Inventory.View.EntryPoint;
+using Runtime.Common.Services.Audio.Sound;
 using UnityEngine;
 using Zenject;
 
-namespace Runtime.Features.Inventory
+namespace Runtime.Features.Inventory.View.EntryPoint
 {
 	/// <summary>
 	/// это controller инвентаря, такая штука может быть у сундуков или у игрока
@@ -23,23 +24,31 @@ namespace Runtime.Features.Inventory
 		private int _width = 10;
 		private int _height = 10;
 		private bool _isOpened;
-		private IAudioService _audioService;
+		private ISoundService _soundService;
 
 		[Inject]
-		private void Construct(IAudioService audioService)
+		private void Construct(ISoundService soundService)
 		{
-			_audioService = audioService;
+			_soundService = soundService;
 		}
-		
+
 		private void Start()
 		{
-			_inventoryWithCells = new InventoryWithCells(_width, _height);
+			InitInventoryModel();
 		}
 
-
+		public void InitInventoryModel()
+		{
+			if (_inventoryWithCells == null)
+				_inventoryWithCells = new InventoryWithCells(_width, _height);
+			
+			Width = _width;
+			Height = _height;
+		}
+		
 		public void InventoryOpenStateChanged(bool openState)
 		{
-			_audioService.PlaySound(_openInventorySound, transform.position);
+			_soundService.PlaySound(_openInventorySound, transform.position);
 			
 			OnInventoryOpenStateChanged?.Invoke(openState);
 		}
@@ -65,9 +74,26 @@ namespace Runtime.Features.Inventory
 			return false;
 		}
 		
-		public override InventoryWithCells GetInventory() => _inventoryWithCells;
-    
+		public void RemoveAllItemsByType<T>() where T : InventoryItemData
+		{
+			_inventoryWithCells.RemoveAllItemsByType<T>();
+			
+			OnInventoryChanged?.Invoke();
+		}
+
+		public List<InventoryItem> GetItems<T>() where T : InventoryItemData
+		{
+			return _inventoryWithCells.GetItems<T>();
+		}
 		
+		public override InventoryWithCells GetInventory() => _inventoryWithCells;
+		
+		public override Dictionary<Vector2Int, InventorySlot> GetSlots()
+		{
+			return _inventoryWithCells.Slots;
+		}
+
+
 		// DEBUG
 
 		[ContextMenu("Add Item")]

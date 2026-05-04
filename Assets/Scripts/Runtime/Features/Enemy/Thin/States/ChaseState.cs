@@ -1,45 +1,41 @@
 using FMOD.Studio;
-using FMODUnity;
-using Runtime.Common.Extensions;
+using Runtime.Common.Services.StateMachine;
 using UnityEngine;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 namespace Runtime.Features.Enemy.Thin.States
 {
-	public class ChaseState : IEnemyState
+	public class ChaseState : IState
 	{
 		private static readonly int WalkSpeed = Animator.StringToHash("WalkSpeed");
 		private static readonly int Chase = Animator.StringToHash("Chase");
 	
 		private readonly ThinEnemyAI _ai;
 		private EventInstance _currentSound;
-		private bool _isActive = false;
 		
 		public ChaseState(ThinEnemyAI ai) => _ai = ai;
 
 		public void Enter()
 		{
-			_isActive = true;
-			
-			_ai.Animator.SetFloat(WalkSpeed, _ai.ChaseSpeedMultiplier);
+			_ai.Animator.SetFloat(WalkSpeed, _ai.EnemySettingData.ChaseSpeedMultiplier);
 			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed) * _ai.transform.lossyScale.x;
 		
 			_ai.Animator.SetBool(Chase, true);
 			
-			_currentSound = _ai.AudioService.PlaySound(_ai.ChaseSounds, _ai.transform.position);
+			_currentSound = _ai.SoundService.PlaySound(_ai.EnemySettingData.ChaseSounds, _ai.transform.position);
 		}
 
 		public void Execute()
 		{
 			if (!_ai.CanSeePlayer())
 			{
-				_ai.ChangeState(new LostPlayerState(_ai));
+				_ai.Machine.EnterIn<LostPlayerState>();
 				return;
 			}
 
 			if (_ai.CanAttackPlayer())
 			{
-				_ai.ChangeState(new AttackState(_ai));
+				_ai.Machine.EnterIn<AttackState>();
 				return;
 			}
 		
@@ -48,9 +44,8 @@ namespace Runtime.Features.Enemy.Thin.States
 
 		public void Exit()
 		{
-			_isActive = false;
 			_ai.Animator.SetBool(Chase, false);
-			_ai.AudioService.StopSound(_currentSound, STOP_MODE.ALLOWFADEOUT);
+			_ai.SoundService.StopSound(_currentSound, STOP_MODE.ALLOWFADEOUT);
 		}
 	}
 }

@@ -1,8 +1,5 @@
 using System;
-using Runtime.Common.Services.Pause;
-using Unity.VisualScripting;
 using UnityEngine;
-using Zenject;
 
 namespace Runtime.Common.Services.Input
 {
@@ -27,8 +24,10 @@ namespace Runtime.Common.Services.Input
 		public event Action DialogSkipInputPressed =  delegate { };
 		public event Action ExitInputPressed = delegate { };
 		public event Action InventoryTriggerPressed = delegate { };
+		public event Action InventoryGrabPressed = delegate { };
+		public event Action InventoryReleasePressed = delegate { };
+		public event Action InventoryUsePressed = delegate { };
 		public event Action<Vector2> PlayerMoveInputChanged = delegate { };
-		public event Action<bool> JumpInputPressed = delegate { };
 		public event Action<Vector2> RotateInputChanged = delegate { };
 		public event Action InteractPerformed = delegate { };
 
@@ -45,9 +44,6 @@ namespace Runtime.Common.Services.Input
 			Input.Player.Look.performed += ctx => OnRotateInputChanged(ctx.ReadValue<Vector2>());
 			Input.Player.Interact.performed += _ => InteractPerformed?.Invoke();
 
-			Input.Player.Jump.performed += _ => JumpInputPressed?.Invoke(true);
-			Input.Player.Jump.canceled += _ => JumpInputPressed?.Invoke(false);
-
 			Input.Player.Flashlight.performed += _ => FlashlightInputPressed?.Invoke();
 
 			Input.Player.Crouch.performed += _ => CrouchInputPressed?.Invoke();
@@ -57,6 +53,10 @@ namespace Runtime.Common.Services.Input
 			Input.Player.Exit.performed += _ => ExitInputPressed?.Invoke();
 			
 			Input.Player.InventoryTrigger.performed += _ => InventoryTriggerPressed?.Invoke();
+			
+			Input.Inventory.Grab.performed += _ => InventoryGrabPressed?.Invoke();
+			Input.Inventory.Release.performed += _ => InventoryReleasePressed?.Invoke();
+			Input.Inventory.Use.performed += _ => InventoryUsePressed?.Invoke();
 		}
 		
 		public void Enable()

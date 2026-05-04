@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad149e7783e9e594fa12bb5f99611174, type: 3}
   m_Name: Battery_Item
   m_EditorClassIdentifier: 
+  <Id>k__BackingField: 1
   <ItemName>k__BackingField: Battery
   <Description>k__BackingField: "\u041F\u0440\u043E\u0441\u0442\u043E \u0431\u0430\u0442\u0430\u0440\u0435\u0439\u043A\u0430,
     \u043B\u043E\u043B"
@@ -20,3 +21,17 @@ MonoBehaviour:
   <PrefabForInventory>k__BackingField: {fileID: 3919629856071798191, guid: bf507c3e9383de84da242ac1262d44af, type: 3}
   <Width>k__BackingField: 1
   <Height>k__BackingField: 1
+  <GrabItemInInventorySound>k__BackingField:
+    Guid:
+      Data1: -2135232117
+      Data2: 1082241329
+      Data3: 613952409
+      Data4: -403144416
+    Path: event:/SFX/Inventory/Metal/inventory_metal_click
+  <PutItemInInventorySound>k__BackingField:
+    Guid:
+      Data1: -1473162081
+      Data2: 1191396088
+      Data3: -379065448
+      Data4: -1438941035
+    Path: event:/SFX/Inventory/Metal/inventory_metal_put

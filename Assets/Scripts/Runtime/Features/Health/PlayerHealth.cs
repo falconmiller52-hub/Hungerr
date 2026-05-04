@@ -1,6 +1,9 @@
 using PrimeTween;
+using Runtime.Common.Enums;
+using Runtime.Common.Services.EventBus;
 using Runtime.UI;
 using UnityEngine;
+using Zenject;
 
 namespace Runtime.Features.Health
 {
@@ -9,18 +12,25 @@ namespace Runtime.Features.Health
 		[SerializeField] private CounterUI _counterUI;
 		[SerializeField] private float _maxHealth;
 		
-		[Header("Shake Settings")]
+		[Header("Настройки тряски камеры при потери ХП")]
 		[SerializeField] private Transform _shakeCameraTransform;
 		[SerializeField, Tooltip("Длительность тряски")] private float _shakeDuration = 0.3f;
 		[SerializeField, Tooltip("Сила тряски по осям (вращение)")] private Vector3 _shakeStrength = new Vector3(5f, 5f, 2f); 
 		[SerializeField, Tooltip("Насколько часто будет дергаться камера")] private int _vibrato = 10; 
 		
+		private EventBus _eventBus;
 		private float _currentHealth;
 
-		private float CurrentHealth
+		[Inject]
+		private void Construct(EventBus eventBus)
+		{
+			_eventBus = eventBus;
+		}
+
+		public float CurrentHealth
 		{
 			get => _currentHealth;
-			set
+			private set
 			{
 				_currentHealth = Mathf.Clamp(value, 0, _maxHealth);
 			}
@@ -36,10 +46,18 @@ namespace Runtime.Features.Health
 		public void ApplyDamage(int value)
 		{
 			CurrentHealth -= value;
+
+			if (CurrentHealth <= 0)
+				_eventBus.Trigger(EGameOver.PlayerOnZeroHealth);
 			
 			_counterUI.UpdateUI(_currentHealth, _maxHealth);
 			
 			ShakeCameraOnDamage();
+		}
+
+		public void SetHealth(float value)
+		{
+			CurrentHealth = value;
 		}
 		
 		private void ShakeCameraOnDamage()

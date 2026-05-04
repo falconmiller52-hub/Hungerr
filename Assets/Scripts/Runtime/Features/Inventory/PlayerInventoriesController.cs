@@ -1,4 +1,5 @@
 using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
 using Runtime.Features.Inventory.View;
@@ -20,16 +21,16 @@ namespace Runtime.Features.Inventory
 
 		private IInputHandler _inputHandler;
 		private IPauseController _pauseController;
-		private IAudioService _audioService;
+		private ISoundService _soundService;
 		private bool _isOpened;
 		private StorageInventory _currentOpenedStorage;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, IPauseController pauseController, IAudioService audioService)
+		private void Construct(IInputHandler inputHandler, IPauseController pauseController, ISoundService soundService)
 		{
 			_inputHandler = inputHandler;
 			_pauseController = pauseController;
-			_audioService = audioService;
+			_soundService = soundService;
 		}
 
 		private void Start()

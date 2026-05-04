@@ -1,49 +1,44 @@
 using FMOD.Studio;
-using FMODUnity;
-using Runtime.Common.Extensions;
+using Runtime.Common.Services.StateMachine;
 using UnityEngine;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 namespace Runtime.Features.Enemy.Thin.States
 {
-	public class PatrolState : IEnemyState
+	public class PatrolState : IState
 	{
 		private static readonly int WalkSpeed = Animator.StringToHash("WalkSpeed");
 		
 		private readonly ThinEnemyAI _ai;
 		private EventInstance _currentSound;
-		private bool _isActive = false;
 
 		public PatrolState(ThinEnemyAI ai) => _ai = ai;
 
 		public void Enter()
 		{
-			_isActive = true;
+			Debug.Log("Entering Patrol State");
 			
-			_ai.Animator.SetFloat(WalkSpeed, _ai.PatrolSpeedMultiplier);
+			_ai.Animator.SetFloat(WalkSpeed, _ai.EnemySettingData.PatrolSpeedMultiplier);
 			_ai.Agent.speed = _ai.Animator.GetFloat(WalkSpeed) * _ai.transform.lossyScale.x;
 			
-			_currentSound = _ai.AudioService.PlaySound(_ai.PatrolSounds, _ai.transform.position);
+			_currentSound = _ai.SoundService.PlaySound(_ai.EnemySettingData.PatrolSounds, _ai.transform.position);
 		}
 
 		public void Execute()
 		{
 			if (_ai.CanSeePlayer())
 			{
-				_ai.ChangeState(new ChaseState(_ai));
+				_ai.Machine.EnterIn<ChaseState>();
 				return;
 			}
 
 			if (!_ai.Agent.pathPending && _ai.Agent.remainingDistance <= _ai.Agent.stoppingDistance)
-			{
 				_ai.SetNewAgentPoint();
-			}
 		}
 
 		public void Exit()
 		{
-			_isActive = false;
-			_ai.AudioService.StopSound(_currentSound, STOP_MODE.ALLOWFADEOUT);
+			_ai.SoundService.StopSound(_currentSound, STOP_MODE.ALLOWFADEOUT);
 		}
 	}
 }

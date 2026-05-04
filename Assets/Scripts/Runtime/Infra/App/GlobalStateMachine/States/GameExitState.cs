@@ -32,8 +32,8 @@ namespace Runtime.Infra.App.GlobalStateMachine.States
 			Application.Quit();
 		}
 
-		public void Exit()
-		{
-		}
+		public void Execute() { }
+
+		public void Exit() {}
 	}
 }

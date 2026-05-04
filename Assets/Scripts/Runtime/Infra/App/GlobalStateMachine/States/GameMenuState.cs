@@ -1,5 +1,7 @@
+using FMODUnity;
 using Runtime.Common.Constants;
 using Runtime.Common.Enums;
+using Runtime.Common.Services.Audio.Ost;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.LoadingCurtain;
 using Runtime.Common.Services.StateMachine;
@@ -14,28 +16,39 @@ namespace Runtime.Infra.App.GlobalStateMachine.States
     /// </summary>
     public class GameMenuState : IState
 	{
-		readonly EventBus _eventBus;
-		readonly ILoadingCurtain _loadingCurtain;
-		readonly GlobalStateMachine _stateMachine;
+		private readonly EventBus _eventBus;
+		private readonly ILoadingCurtain _loadingCurtain;
+		private readonly OstService _ostService;
+		private readonly GlobalStateMachine _stateMachine;
+		// TODO : В данный момент захардкодил путь к ивенту, потом переделать на SoProvider
+		private readonly string _pathToMainMenuTheme;
 
 		[Inject]
-		public GameMenuState(ILoadingCurtain loadingCurtain, EventBus eventBus, GlobalStateMachine stateMachine)
+		public GameMenuState(ILoadingCurtain loadingCurtain, EventBus eventBus, GlobalStateMachine stateMachine,
+						OstService ostService)
 		{
 			_loadingCurtain = loadingCurtain;
 			_eventBus = eventBus;
 			_stateMachine = stateMachine;
+			_ostService = ostService;
+
+			_pathToMainMenuTheme = "event:/OST/Main Menu Theme (3)";
 		}
 
 		public void Enter()
 		{
 			Debug.Log("Menu  State");
-
+			
 			SceneManager.LoadScene(Scenes.MenuName);
 			_loadingCurtain.Hide();
+			
+			_ostService.StartOst(RuntimeManager.PathToEventReference(_pathToMainMenuTheme));
 
 			_eventBus.Subscribe(EGameEvent.StartGameplay, GoToGameplay);
 			_eventBus.Subscribe(EGameEvent.QuitGame, ExitMenu);
 		}
+
+		public void Execute() { }
 
 		public void Exit()
 		{

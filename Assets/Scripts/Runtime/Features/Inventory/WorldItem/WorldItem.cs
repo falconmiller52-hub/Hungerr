@@ -1,59 +1,69 @@
+using System;
 using UnityEngine;
 
 namespace Runtime.Features.Inventory.WorldItem
 {
-    [RequireComponent(typeof(MeshRenderer))]
-    public class WorldItem : MonoBehaviour, IHoverable
-    {
-        [SerializeField] private InventoryItemData _itemData;
-        [SerializeField] private int _amount = 1;
+	[RequireComponent(typeof(MeshRenderer))]
+	public class WorldItem : MonoBehaviour, IHoverable
+	{
+		[SerializeField] private InventoryItemData _itemData;
+		[SerializeField] private int _amount = 1;
 
-        private InventoryItem _instance;
-        private bool _isHovered = false;
+		public event Action<WorldItem> WorldItemDestroyed;
 
-        public InventoryItem Instance => _instance;
+		private InventoryItem _instance;
 
-        private void Awake()
-        {
-            _instance = new InventoryItem(_itemData, _amount);
-        }
+		private void Awake()
+		{
+			_instance = new InventoryItem(_itemData, _amount);
+		}
 
-        // метод для инициализации из кода, например если предмет с моба выпадет или с инвентаря
-        public void Initialize(InventoryItemData data, int count = 1)
-        {
-            _itemData = data;
-            _amount = count;
-            _instance = new InventoryItem(data, count);
+		// метод для инициализации из кода, например если предмет с моба выпадет или с инвентаря
+		public void Initialize(InventoryItemData data, int count = 1)
+		{
+			_itemData = data;
+			_amount = count;
+			_instance = new InventoryItem(data, count);
 
-            if (data.WorldPrefab != null)
-            {
-                var prefab = Instantiate(data.WorldPrefab, transform);
-                prefab.transform.localPosition = Vector3.zero;
-            }
-        }
+			if (data.WorldPrefab != null)
+			{
+				var prefab = Instantiate(data.WorldPrefab, transform);
+				prefab.transform.localPosition = Vector3.zero;
+			}
+		}
 
-        public void HoverEnter()
-        {
-            _isHovered = true;
-            TooltipController.Instance?.ShowTooltip(this);
-        }
+		public void HoverEnter()
+		{
+			TooltipController.Instance?.ShowTooltip(this);
+		}
 
-        public void HoverExit()
-        {
-            _isHovered = false;
-            TooltipController.Instance?.HideTooltip();
-        }
+		public void HoverExit()
+		{
+			TooltipController.Instance?.HideTooltip();
+		}
 
-        public string GetDisplayName() => _itemData.ItemName;
-        public string GetDescription()
-        {
-            switch (_itemData)
-            {
-                case FoodInventoryItemData food:
-                    return $"Сытость: {food.Satiety}";
-                default:
-                    return _itemData.Description;
-            }
-        }
-    }
+		public InventoryItem GetItem()
+		{
+			return _instance;
+		}
+
+		public void DestroyWorldItem()
+		{
+			WorldItemDestroyed?.Invoke(this);
+			Destroy(gameObject);
+		}
+
+		public string GetDisplayName() => _itemData.ItemName;
+
+		public string GetDescription()
+		{
+			switch (_itemData)
+			{
+				case FoodInventoryItemData food:
+					return $"Сытость: {food.Satiety}";
+				default:
+					return _itemData.Description;
+			}
+		}
+	}
 }

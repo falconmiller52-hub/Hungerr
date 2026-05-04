@@ -1,5 +1,5 @@
-using System.Collections;
 using Runtime.Common.Enums;
+using Runtime.Common.Helpers;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.LoadingCurtain;
@@ -13,7 +13,7 @@ namespace Runtime.Features.DayNight.StateMachine
 	{
 		private float _timeProgress;
 		private bool _isTimerActive;
-		private TimeCounterUI _timeCounterUI = null;
+		private TimeCounterUI _timeCounterUI;
 		
 		public NightPhaseState(PhaseStateMachine owner, EventBus eventBus, ILoadingCurtain curtain, IInputHandler inputHandler, LocationChanger locationChanger) : base(owner, eventBus, curtain, inputHandler, locationChanger)
 		{
@@ -24,7 +24,7 @@ namespace Runtime.Features.DayNight.StateMachine
 			Debug.Log("--- Наступила НОЧЬ ---");
 			
 			_timeProgress = 0f;
-			_timeCounterUI = Object.FindObjectOfType<TimeCounterUI>();
+			_timeCounterUI = Object.FindAnyObjectByType<TimeCounterUI>();
 			
 			if (_timeCounterUI != null)
 			{
@@ -32,17 +32,12 @@ namespace Runtime.Features.DayNight.StateMachine
 				_timeCounterUI.SetTime(_timeProgress);
 			}
 			
-			Curtain.Show(0.01f, onEnd: OnCurtainShowEnded);
+			Owner.DayCycleVisualChanger.SetNight();
 			
-			EventBus.Subscribe(EGameplayStateEvent.EndNightPhaseTrigger, EndNightPhase);
+			_isTimerActive = true;
 		}
 
 		public override void Exit()
-		{
-			EventBus.Unsubscribe(EGameplayStateEvent.EndNightPhaseTrigger, EndNightPhase);
-		}
-		
-		private void EndNightPhase()
 		{
 			_isTimerActive = false;
 			
@@ -51,21 +46,8 @@ namespace Runtime.Features.DayNight.StateMachine
 				_timeCounterUI.SetTimeState(false);
 				_timeCounterUI = null;
 			}
-
-			Owner.EnterIn<DayPhaseState>();
 		}
 		
-		private void OnCurtainShowEnded()
-		{
-			LocationChanger.ChangeLocation(Owner.NightStartLocationtransform, needCurtain: false);
-			Owner.DayCycleVisualChanger.SetNight();
-			
-			_isTimerActive = true;
-			
-			Curtain.Hide(0.01f);
-			InputHandler.Enable();
-		}
-
 		public override void Update()
 		{
 			if (!_isTimerActive)
@@ -75,8 +57,8 @@ namespace Runtime.Features.DayNight.StateMachine
 
 			if (_timeProgress >= 1f)
 			{
-				TriggerDeath();
-				EndNightPhase();
+				TriggerForceNightEnd();
+				_isTimerActive = false;
 				return;
 			}
 			
@@ -86,10 +68,16 @@ namespace Runtime.Features.DayNight.StateMachine
 				_timeCounterUI.SetTime(_timeProgress);
 		}
 
-		private void TriggerDeath()
+		private void TriggerForceNightEnd()
 		{
-			Debug.LogError("Игрок не успел спрятаться и погиб!");
-			// Здесь можно вызвать переход в состояние Exit или вызвать экран смерти
+			Debug.LogError("Игрок не успел домой до 6");
+			
+			StartDayTriggerEventData data = new StartDayTriggerEventData()
+			{
+				ForceNightEnd = true
+			};
+			
+			EventBus.Trigger(EGameplayChangePhaseTriggerEvent.StartDayTrigger, data);
 		}
 	}
 }

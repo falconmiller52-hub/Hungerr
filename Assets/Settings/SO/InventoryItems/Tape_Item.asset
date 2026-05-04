@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad149e7783e9e594fa12bb5f99611174, type: 3}
   m_Name: Tape_Item
   m_EditorClassIdentifier: 
+  <Id>k__BackingField: 4
   <ItemName>k__BackingField: Tape
   <Description>k__BackingField: 
   <MaxStackSize>k__BackingField: 1

@@ -1,12 +1,10 @@
-using System;
 using Runtime.Common.Enums;
+using Runtime.Common.Helpers;
 using Runtime.Common.Services.EventBus;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.LoadingCurtain;
 using Runtime.Features.Location;
-using Runtime.Features.Player.Other;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Runtime.Features.DayNight.StateMachine
 {
@@ -20,12 +18,13 @@ namespace Runtime.Features.DayNight.StateMachine
 		{
 			Debug.Log("--- Наступил ПЕРВЫЙ ДЕНЬ ---");
 			
-			Curtain.Show(0.01f, onEnd: OnCurtainShowEnded);
+			Curtain.Show(onEnd: OnCurtainShowEnded);
 			
-			EventBus.Subscribe(EGameplayStateEvent.StartNightPhaseTrigger, StartNightPhase);
+			Owner.DayCycleVisualChanger.SetDay();
+			EventBus.Subscribe<EGameplayChangedPhaseEvent, StartNightEventData>(EGameplayChangedPhaseEvent.NightStarted, OnStartNightPhase);
 		}
 
-		private void StartNightPhase()
+		private void OnStartNightPhase(StartNightEventData data)
 		{
 			Owner.EnterIn<NightPhaseState>();
 		}
@@ -34,13 +33,13 @@ namespace Runtime.Features.DayNight.StateMachine
 		{
 			Owner.DayCycleVisualChanger.SetDay();
 			
-			Curtain.Hide(0.01f);
+			Curtain.Hide();
 			InputHandler.Enable();
 		}
 		
 		public override void Exit()
 		{
-			EventBus.Unsubscribe(EGameplayStateEvent.StartNightPhaseTrigger, StartNightPhase);
+			EventBus.Unsubscribe<EGameplayChangedPhaseEvent, StartNightEventData>(EGameplayChangedPhaseEvent.NightStarted, OnStartNightPhase);
 		}
 	}
 }

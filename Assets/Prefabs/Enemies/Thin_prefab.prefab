@@ -549,24 +549,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Animator>k__BackingField: {fileID: 285659395}
   <Agent>k__BackingField: {fileID: 285659396}
-  <PatrolPoints>k__BackingField: []
-  <PatrolSounds>k__BackingField:
-    Guid:
-      Data1: -2096023248
-      Data2: 1129951426
-      Data3: -580151625
-      Data4: 720998879
-    Path: event:/SFX/Enemies/Slim/slim_inactive1
-  <PatrolSpeedMultiplier>k__BackingField: 1
-  <ChaseSpeedMultiplier>k__BackingField: 2
-  <DetectionRadius>k__BackingField: 11
-  <ChaseSounds>k__BackingField:
-    Guid:
-      Data1: -416055462
-      Data2: 1117657559
-      Data3: 593025687
-      Data4: 746905815
-    Path: event:/SFX/Enemies/Slim/slim_active1
-  <AttackRadius>k__BackingField: 2
-  <AttackDamage>k__BackingField: 10
-  <AttackCooldown>k__BackingField: 7
+  EnemySettingData: {fileID: 11400000, guid: 2c486c399bce957429b316f54fb6615d, type: 2}

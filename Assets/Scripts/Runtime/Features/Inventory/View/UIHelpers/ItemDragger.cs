@@ -1,5 +1,6 @@
 using FMODUnity;
-using Runtime.Common.Services.Audio;
+using Runtime.Common.Services.Audio.Sound;
+using Runtime.Common.Services.Input;
 using UnityEngine;
 using Zenject;
 
@@ -11,8 +12,8 @@ namespace Runtime.Features.Inventory.View.UIHelpers
 	/// </summary>
 	public class ItemDragger : MonoBehaviour
 	{
-		[Header("References")] [SerializeField]
-		private Camera _mainCamera;
+		[Header("References")] 
+		[SerializeField] private Camera _mainCamera;
 
 		[SerializeField] private Inventory3DView _view;
 		[SerializeField] private LayerMask _gridLayer;
@@ -24,12 +25,15 @@ namespace Runtime.Features.Inventory.View.UIHelpers
 		private InventoryItem _selectedItem;
 		private (Vector2Int, Inventory3DView) _originalPositionInInventory;
 		private InventoryItemView _ghostItem;
-		private IAudioService _audioService;
+		private ISoundService _soundService;
+		private IInputHandler _inputHandler;
+		private bool _isGhostNew;
 
 		[Inject]
-		private void Construct(IAudioService audioService)
+		private void Construct(ISoundService soundService, IInputHandler inputHandler)
 		{
-			_audioService = audioService;
+			_soundService = soundService;
+			_inputHandler = inputHandler;
 		}
 
 		public void OpenChest(Inventory3DView view)
@@ -86,8 +90,12 @@ namespace Runtime.Features.Inventory.View.UIHelpers
 					_selectedItem = slot.Item;
 					_originalPositionInInventory.Item1 = FindTopLeftOfItem(_selectedItem, coords, _view);
 					_originalPositionInInventory.Item2 = _view;
+					
 					RemoveItemFromLogic(_selectedItem, _originalPositionInInventory.Item1, _originalPositionInInventory.Item2);
+					
 					PrepareGhost(_selectedItem);
+					
+					_soundService.PlayOneShot2D(_selectedItem.Data.GrabItemInInventorySound);
 					return;
 				}
 
@@ -133,7 +141,18 @@ namespace Runtime.Features.Inventory.View.UIHelpers
 
 				// Важно: переносим призрака в контейнер той сетки, над которой держим
 				_ghostItem.transform.SetParent(targetView.ItemsContainer);
-				_ghostItem.UpdateVisualPosition(ghostTargetPos, false);
+
+				if (_isGhostNew)
+				{
+					_ghostItem.UpdateVisualPosition(ghostTargetPos, true);
+					_ghostItem.gameObject.SetActive(true);
+					_isGhostNew = false;
+				}
+				else
+				{
+					_ghostItem.UpdateVisualPosition(ghostTargetPos, false);
+					
+				}
 
 				// 4. Проверяем возможность установки
 				bool canPlace = targetView.Model.CanPlaceItem(_selectedItem, targetCoords);
@@ -145,7 +164,7 @@ namespace Runtime.Features.Inventory.View.UIHelpers
 					if (canPlace)
 					{
 						targetView.Model.AddItem(_selectedItem, targetCoords);
-						// _audioService.PlayOneShot(_moveItemToNewSlotSound); // Опционально звук
+						_soundService.PlayOneShot2D(_selectedItem.Data.PutItemInInventorySound);
 						ClearSelection();
 					}
 					else
@@ -189,11 +208,14 @@ namespace Runtime.Features.Inventory.View.UIHelpers
 		{
 			// Можно просто заспавнить тот же префаб
 			GameObject ghostObj = Instantiate(item.Data.PrefabForInventory, _view.ItemsContainer);
+			ghostObj.gameObject.SetActive(false);
 			ghostObj.transform.localScale = new Vector3(item.Data.Width, 1, item.Data.Height);
 			_ghostItem = ghostObj.GetComponent<InventoryItemView>();
-
+			
 			// Делаем полупрозрачным (нужен шейдер с поддержкой прозрачности)
 
+			_isGhostNew = true;
+			
 			if (!_isDraggedItemTransparent)
 				return;
 
@@ -239,6 +261,7 @@ namespace Runtime.Features.Inventory.View.UIHelpers
 		{
 			if (view == null)
 				return Vector2Int.zero;
+			
 			// Поиск реального начала предмета по его ID
 			// Можно реализовать через цикл по соседям или хранить ID в слоте
 			// Для упрощения возьмем логику из твоего GetUniqueItemsWithTopLeft
@@ -259,9 +282,12 @@ namespace Runtime.Features.Inventory.View.UIHelpers
 
 		private void ClearSelection()
 		{
-			if (_ghostItem != null) Destroy(_ghostItem.gameObject);
+			if (_ghostItem != null) 
+				Destroy(_ghostItem.gameObject);
+			
 			_selectedItem = null;
 			_ghostItem = null;
+			
 			// Обновляем визуал, чтобы меш встал на место
 			_view.Invoke("SyncVisuals", 0);
 			_viewChestCompat?.Invoke("SyncVisuals", 0);

@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be2d2ffeea8b42b98aa1ae411b8287b3, type: 3}
+  m_Name: OstData
+  m_EditorClassIdentifier: 
+  <OstMainMenu>k__BackingField:
+    Guid:
+      Data1: 2142649010
+      Data2: 1310639113
+      Data3: -828369480
+      Data4: 78678258
+    Path: event:/OST/Main Menu Theme (3)
+  <OstDayHomeOne>k__BackingField:
+    Guid:
+      Data1: -1066026311
+      Data2: 1125165660
+      Data3: -110804587
+      Data4: -7778872
+    Path: event:/OST/Day Home 1 (1)
+  <OstDayHomeTwo>k__BackingField:
+    Guid:
+      Data1: -522840805
+      Data2: 1252837787
+      Data3: -1091597405
+      Data4: -876153336
+    Path: event:/OST/Day Home 2 (2)
+  <OstHomie>k__BackingField:
+    Guid:
+      Data1: 1693399491
+      Data2: 1205667260
+      Data3: 1942130345
+      Data4: -66181511
+    Path: event:/OST/Homie Theme
+  <OsTheEnd>k__BackingField:
+    Guid:
+      Data1: 137129731
+      Data2: 1310111847
+      Data3: -632854108
+      Data4: 1903978573
+    Path: event:/OST/The End (4)

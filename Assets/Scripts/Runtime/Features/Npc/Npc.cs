@@ -1,14 +1,14 @@
 using Cinemachine;
 using FMODUnity;
 using Ink.Runtime;
-using Runtime.Features.Dialog;
+using Runtime.Features._Story;
 using Runtime.Features.Interactable;
 using UnityEngine;
 using Zenject;
 
 namespace Runtime.Features.NPC
 {
-	// Тестовая вариация NPC для тестов диалоговой системы
+	
 	[SelectionBase]
 	public class Npc : MonoBehaviour, IInteractable
 	{
@@ -21,25 +21,25 @@ namespace Runtime.Features.NPC
 		[SerializeField] [Tooltip("Звук диалога NPC")]
 		private EventReference _npcDialogSound;
 
-		private DialogSystem _dialogSystem;
+		private StorySystem _storySystem;
 		private Story _story;
 
 		[Inject]
-		public void Construct(DialogSystem dialogSystem)
+		public void Construct(StorySystem storySystem)
 		{
-			_dialogSystem = dialogSystem;
+			_storySystem = storySystem;
 		}
 
 		private void Start()
 		{
 			_story = new Story(_dialogJson.text);
 
-			_dialogSystem.OnStoryEnded += DisableNpcCamera;
+			_storySystem.OnStoryEnded += DisableNpcCamera;
 		}
 
 		private void OnDestroy()
 		{
-			_dialogSystem.OnStoryEnded -= DisableNpcCamera;
+			_storySystem.OnStoryEnded -= DisableNpcCamera;
 		}
 
 		public void Interact()
@@ -49,7 +49,7 @@ namespace Runtime.Features.NPC
 
 		private void StartDialog()
 		{
-			_dialogSystem.StartStory(_story, _npcDialogSound);
+			_storySystem.StartStory(_story, _npcDialogSound);
 			EnableNpcCamera();
 		}
 

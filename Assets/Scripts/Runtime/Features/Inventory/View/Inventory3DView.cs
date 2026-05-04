@@ -52,9 +52,6 @@ namespace Runtime.Features.Inventory.View
 
 		private void SyncVisuals()
 		{
-			if (Model == null)
-				return;
-
 			// Находим реальный Top-Left для каждого предмета
 			var itemsInLogic = GetUniqueItemsWithTopLeft();
 
@@ -99,7 +96,7 @@ namespace Runtime.Features.Inventory.View
 		{
 			var result = new Dictionary<int, (Vector2Int, InventoryItem)>();
 
-			foreach (var kvp in Model.Slots)
+			foreach (var kvp in _inventoryController.GetSlots())
 			{
 				var slot = kvp.Value;
 
@@ -131,8 +128,8 @@ namespace Runtime.Features.Inventory.View
 		{
 			// Если логика еще не инициализирована (в эдите), используем тестовые значения
 			// или пытаемся достать их из ScriptableObject/полей
-			int drawWidth = (Model != null) ? Model.Width : 10;
-			int drawHeight = (Model != null) ? Model.Height : 10;
+			int drawWidth = (_inventoryController != null) ? _inventoryController.Width : 10;
+			int drawHeight = (_inventoryController != null) ? _inventoryController.Height : 10;
 
 			Gizmos.matrix = _gridAnchor.localToWorldMatrix; // Учитываем поворот и позицию чемодана
 
