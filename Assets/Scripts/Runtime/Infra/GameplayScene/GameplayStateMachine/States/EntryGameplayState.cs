@@ -103,6 +103,7 @@ namespace Runtime.Infra.GameplayScene.GameplayStateMachine.States
 			_locationChanger.Init(playerInstance.GetComponentInChildren<CharacterController>());
 
 			_inputHandler.Init();
+			_inputHandler.SwitchToPlayerMap();
 			_enemiesController.Init(playerInstance);
 
 			_container.Instantiate<GameOverTriggerHandler>();
