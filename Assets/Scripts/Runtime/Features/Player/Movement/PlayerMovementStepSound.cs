@@ -67,7 +67,8 @@ namespace Runtime.Features.Player.Movement
 
 		private void SetSoundStepBySurface()
 		{
-			if (!_stepInstance.isValid()) return;
+			if (!_stepInstance.isValid()) 
+				return;
 			
 			var ray = new Ray(_playerMovement.GroundCheck.position, -transform.up);
 

@@ -25,7 +25,6 @@ namespace Runtime.Features.Player.Movement
 		//Внутренние переменные
 		private float _currentSpeed;
 		private bool _isGrounded = true;
-		private RaycastHit _playerGroundHit;
 		private float _gravitySpeed = 0f;
 		private Vector2 _inputDirection;
 		private bool _isCanMove = true;
@@ -36,14 +35,12 @@ namespace Runtime.Features.Player.Movement
 		private PlayerStance _playerStance;
 		private PlayerMovementStepSound _playerMovementStepSound;
 		private IInputHandler _inputHandler;
-		private ISoundService _soundService;
 		private IPauseController _pauseController;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, ISoundService soundService, IPauseController pauseController)
+		private void Construct(IInputHandler inputHandler, IPauseController pauseController)
 		{
 			_inputHandler = inputHandler;
-			_soundService = soundService;
 			_pauseController = pauseController;
 		}
 
@@ -132,7 +129,7 @@ namespace Runtime.Features.Player.Movement
 		private void GroundRayHit()
 		{
 			var ray = new Ray(_groundCheck.position, -transform.up);
-			GroundSet(Physics.Raycast(ray, out _playerGroundHit, _groundCheckDistance));
+			GroundSet(Physics.Raycast(ray, _groundCheckDistance));
 		}
 
 		private void GravityUpdate()
