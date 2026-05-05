@@ -2,7 +2,6 @@ using System;
 using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.Pause;
 using Runtime.Features.Enemy.Thin.States;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
@@ -112,10 +111,11 @@ namespace Runtime.Features.Enemy.Thin
 				return false;
 			}
 
-			Vector3 playerDirection = (Target.position - transform.position).normalized;
+            Vector3 playerDirection = (Target.position - transform.position).normalized;
+            Vector3 enemyForward = transform.forward;
 
-			// Есть ли препятствие между врагом и игроком
-			if (Physics.Raycast(transform.position, playerDirection, out RaycastHit hit,
+            // Есть ли препятствие между врагом и игроком
+            if (Physics.Raycast(transform.position, playerDirection, out RaycastHit hit,
 							    EnemySettingData.DetectionRadius))
 			{
 				// Препятствия нет

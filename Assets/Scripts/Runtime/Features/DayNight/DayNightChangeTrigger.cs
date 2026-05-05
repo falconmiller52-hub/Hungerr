@@ -35,6 +35,7 @@ namespace Runtime.Features.DayNight
 
 				case EGameplayChangePhaseTriggerEvent.StartNightTrigger:
 					_eventBus.Trigger(_triggerEventType);
+					_eventBus.Trigger(EGameplayChangePhaseTriggerEvent.StartNightTrigger);
 
 					break;
 			}
