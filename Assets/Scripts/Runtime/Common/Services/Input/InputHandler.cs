@@ -45,11 +45,9 @@ namespace Runtime.Common.Services.Input
 			Input.Gameplay.Flashlight.performed += _ => FlashlightInputPressed?.Invoke();
 
 			Input.Gameplay.Crouch.performed += _ => CrouchInputPressed?.Invoke();
-			
-			Input.Gameplay.DialogSkip.performed += _ => DialogSkipInputPressed?.Invoke();
-			
 			Input.Gameplay.InventoryTrigger.performed += _ => InventoryTriggerPressed?.Invoke();
 			
+			Input.UI.DialogSkip.performed += _ => DialogSkipInputPressed?.Invoke();
 			Input.UI.Exit.performed += _ => ExitInputPressed?.Invoke();
 			Input.UI.Use.performed += _ => InventoryUsePressed?.Invoke();
 		}

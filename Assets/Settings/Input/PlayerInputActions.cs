@@ -82,15 +82,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""DialogSkip"",
-                    ""type"": ""Button"",
-                    ""id"": ""bc26ec8b-4320-41e9-895e-370f520ec88e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""InventoryTrigger"",
                     ""type"": ""Button"",
                     ""id"": ""1f5ded23-1770-4dd6-b011-1ef034cc1e63"",
@@ -213,17 +204,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a945ec84-5c93-423e-92a2-41d878e782a4"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DialogSkip"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""a4df8edd-046b-4611-89cf-e33c59c7bf8d"",
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
@@ -252,6 +232,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""name"": ""Use"",
                     ""type"": ""Button"",
                     ""id"": ""e7f4e895-8666-4035-a4b0-c964b7eaa355"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DialogSkip"",
+                    ""type"": ""Button"",
+                    ""id"": ""41d8e65a-e0ba-438f-9689-a6435f3fbee6"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -291,6 +280,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Use"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2d7ead33-8085-4b03-8868-ca79cf359809"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DialogSkip"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -322,12 +322,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Gameplay_Flashlight = m_Gameplay.FindAction("Flashlight", throwIfNotFound: true);
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
         m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
-        m_Gameplay_DialogSkip = m_Gameplay.FindAction("DialogSkip", throwIfNotFound: true);
         m_Gameplay_InventoryTrigger = m_Gameplay.FindAction("InventoryTrigger", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Exit = m_UI.FindAction("Exit", throwIfNotFound: true);
         m_UI_Use = m_UI.FindAction("Use", throwIfNotFound: true);
+        m_UI_DialogSkip = m_UI.FindAction("DialogSkip", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -395,7 +395,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Flashlight;
     private readonly InputAction m_Gameplay_Move;
     private readonly InputAction m_Gameplay_Look;
-    private readonly InputAction m_Gameplay_DialogSkip;
     private readonly InputAction m_Gameplay_InventoryTrigger;
     public struct GameplayActions
     {
@@ -407,7 +406,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Flashlight => m_Wrapper.m_Gameplay_Flashlight;
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
         public InputAction @Look => m_Wrapper.m_Gameplay_Look;
-        public InputAction @DialogSkip => m_Wrapper.m_Gameplay_DialogSkip;
         public InputAction @InventoryTrigger => m_Wrapper.m_Gameplay_InventoryTrigger;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
@@ -436,9 +434,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Look.started += instance.OnLook;
             @Look.performed += instance.OnLook;
             @Look.canceled += instance.OnLook;
-            @DialogSkip.started += instance.OnDialogSkip;
-            @DialogSkip.performed += instance.OnDialogSkip;
-            @DialogSkip.canceled += instance.OnDialogSkip;
             @InventoryTrigger.started += instance.OnInventoryTrigger;
             @InventoryTrigger.performed += instance.OnInventoryTrigger;
             @InventoryTrigger.canceled += instance.OnInventoryTrigger;
@@ -464,9 +459,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Look.started -= instance.OnLook;
             @Look.performed -= instance.OnLook;
             @Look.canceled -= instance.OnLook;
-            @DialogSkip.started -= instance.OnDialogSkip;
-            @DialogSkip.performed -= instance.OnDialogSkip;
-            @DialogSkip.canceled -= instance.OnDialogSkip;
             @InventoryTrigger.started -= instance.OnInventoryTrigger;
             @InventoryTrigger.performed -= instance.OnInventoryTrigger;
             @InventoryTrigger.canceled -= instance.OnInventoryTrigger;
@@ -493,12 +485,14 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_Exit;
     private readonly InputAction m_UI_Use;
+    private readonly InputAction m_UI_DialogSkip;
     public struct UIActions
     {
         private @PlayerInputActions m_Wrapper;
         public UIActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Exit => m_Wrapper.m_UI_Exit;
         public InputAction @Use => m_Wrapper.m_UI_Use;
+        public InputAction @DialogSkip => m_Wrapper.m_UI_DialogSkip;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -514,6 +508,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Use.started += instance.OnUse;
             @Use.performed += instance.OnUse;
             @Use.canceled += instance.OnUse;
+            @DialogSkip.started += instance.OnDialogSkip;
+            @DialogSkip.performed += instance.OnDialogSkip;
+            @DialogSkip.canceled += instance.OnDialogSkip;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -524,6 +521,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Use.started -= instance.OnUse;
             @Use.performed -= instance.OnUse;
             @Use.canceled -= instance.OnUse;
+            @DialogSkip.started -= instance.OnDialogSkip;
+            @DialogSkip.performed -= instance.OnDialogSkip;
+            @DialogSkip.canceled -= instance.OnDialogSkip;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -558,12 +558,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnFlashlight(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnDialogSkip(InputAction.CallbackContext context);
         void OnInventoryTrigger(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
         void OnExit(InputAction.CallbackContext context);
         void OnUse(InputAction.CallbackContext context);
+        void OnDialogSkip(InputAction.CallbackContext context);
     }
 }
