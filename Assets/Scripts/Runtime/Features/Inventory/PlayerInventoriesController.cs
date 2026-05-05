@@ -21,16 +21,14 @@ namespace Runtime.Features.Inventory
 
 		private IInputHandler _inputHandler;
 		private IPauseController _pauseController;
-		private ISoundService _soundService;
 		private bool _isOpened;
 		private StorageInventory _currentOpenedStorage;
 
 		[Inject]
-		private void Construct(IInputHandler inputHandler, IPauseController pauseController, ISoundService soundService)
+		private void Construct(IInputHandler inputHandler, IPauseController pauseController)
 		{
 			_inputHandler = inputHandler;
 			_pauseController = pauseController;
-			_soundService = soundService;
 		}
 
 		private void Start()
@@ -61,6 +59,25 @@ namespace Runtime.Features.Inventory
 			ApplyInventoryState();
 		}
 
+		public void OpenStorage(StorageInventory storage, Inventory3DView inventoryView)
+		{
+			if (storage == null || _playerInventory == null)
+				return;
+
+			_currentOpenedStorage = storage;
+			_isOpened = true;
+
+			Cursor.lockState = CursorLockMode.None;
+			Cursor.visible = true;
+			_pauseController.PerformStop();
+			
+			_inputHandler.SwitchToUIMap(); 
+
+			_playerInventory.InventoryOpenStateChanged(_isOpened);
+			_currentOpenedStorage.InventoryOpenStateChanged(_isOpened);
+			_itemDragger.OpenChest(inventoryView);
+		}
+		
 		private void ApplyInventoryState()
 		{
 			if (_isOpened)
@@ -124,23 +141,6 @@ namespace Runtime.Features.Inventory
 			}
 
 			_playerInventory.InventoryOpenStateChanged(_isOpened);
-		}
-
-		public void OpenStorage(StorageInventory storage, Inventory3DView inventoryView)
-		{
-			if (storage == null || _playerInventory == null)
-				return;
-
-			_currentOpenedStorage = storage;
-			_isOpened = true;
-
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
-			_pauseController.PerformStop();
-
-			_playerInventory.InventoryOpenStateChanged(_isOpened);
-			_currentOpenedStorage.InventoryOpenStateChanged(_isOpened);
-			_itemDragger.OpenChest(inventoryView);
 		}
 	}
 }
