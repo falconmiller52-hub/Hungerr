@@ -1966,7 +1966,7 @@ Transform:
   m_GameObject: {fileID: 3123808519059337596}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.95, z: 0}
+  m_LocalPosition: {x: 0, y: 0.115, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2274,8 +2274,8 @@ CharacterController:
   serializedVersion: 3
   m_Height: 1.7
   m_Radius: 0.35
-  m_SlopeLimit: 90
-  m_StepOffset: 0.4
+  m_SlopeLimit: 55
+  m_StepOffset: 0.3
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
@@ -2292,7 +2292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _groundCheck: {fileID: 3123808519059337597}
-  _groundCheckDistance: 0.2
+  _groundCheckDistance: 1
   _gravityForce: 0.07
 --- !u!114 &695208376743956962
 MonoBehaviour:
@@ -2344,18 +2344,18 @@ MonoBehaviour:
   _intensity: 50
   _flashlightTurnOnSound:
     Guid:
-      Data1: 160243803
-      Data2: 1152174906
-      Data3: -1769027942
-      Data4: 1338607287
-    Path: event:/SFX/UI/click
+      Data1: 1107992867
+      Data2: 1090127860
+      Data3: 1053722244
+      Data4: -944122354
+    Path: event:/SFX/Player_action/player_flashlight_on
   _flashlightTurnffSound:
     Guid:
-      Data1: 160243803
-      Data2: 1152174906
-      Data3: -1769027942
-      Data4: 1338607287
-    Path: event:/SFX/UI/click
+      Data1: -1667458220
+      Data2: 1307917744
+      Data3: -791059833
+      Data4: 831981996
+    Path: event:/SFX/Player_action/player_flashlight_off
 --- !u!114 &1791534461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2488,13 +2488,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7b6eb86a4c24995a1841d1cebea15f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _standartStepEvent:
+  _standartdStepEvent:
     Guid:
-      Data1: 753262989
-      Data2: 1192397846
-      Data3: 1381036437
-      Data4: 562968933
-    Path: event:/SFX/Player_action/player_footsteps
+      Data1: 1816399558
+      Data2: 1263487840
+      Data3: -1157568611
+      Data4: 97500725
+    Path: event:/SFX/Player_action/footstep2d_timeline
 --- !u!1 &3851059412846384325
 GameObject:
   m_ObjectHideFlags: 0
