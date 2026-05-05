@@ -185,7 +185,10 @@ namespace Runtime.Features.Player.Interactions
 		//Методы скрипта
 
 		public void Stop()
-			=> SetDisableInteract();
+		{
+			SetDisableInteract();
+			ClearCurrentTarget();
+		}
 
 		public void Resume()
 			=> SetEnableInteract();
