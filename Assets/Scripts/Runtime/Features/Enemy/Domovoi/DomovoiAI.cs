@@ -1,13 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using NaughtyAttributes;
+using FMODUnity;
 using Runtime.Common.Enums;
 using Runtime.Common.Extensions;
+using Runtime.Common.Services.Audio.Ost;
 using Runtime.Common.Services.EventBus;
 using Runtime.Features.Enemy.Domovoi.Patterns;
 using Runtime.Features.Inventory;
 using Runtime.Features.Inventory.View.EntryPoint;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -20,19 +21,24 @@ namespace Runtime.Features.Enemy.Domovoi
 
 		[SerializeField, ReadOnly] private int _satiety;
 		[SerializeField, ReadOnly] private DomovoiLevelData _currentLevelData;
-		private EventBus _eventBus;
+
+        [SerializeField] private EventReference _evilOst;
+
+        private EventBus _eventBus;
 		private int _notFedDaysCount;
 		private bool _needToTriggerDontFeed;
 		private EDomovoiSatietyLevel _satietyLevel;
 		private DomovoiPattern _currentDomovoiPattern;
+        private OstService _ostService;
 
-		[Inject]
-		private void Construct(EventBus eventBus)
+        [Inject]
+		private void Construct(EventBus eventBus, OstService ostService)
 		{
 			_eventBus = eventBus;
-		}
+            _ostService = ostService;
+        }
 
-		private void Start()
+        private void Start()
 		{
 			// если нет сохранений состояния
 			if (_domovoiLevelData == null || _domovoiLevelData.Length == 0)
@@ -58,14 +64,20 @@ namespace Runtime.Features.Enemy.Domovoi
 		/// <returns>bool as NeedToTriggerDontFeed | EDomovoiSatietyLevel as level of satiety</returns>
 		public (bool, EDomovoiSatietyLevel) StartDayPhaseHandler()
 		{
-			// кидаем ивент в зависимости от уровня сытости, если мало (по текущему уровню) то будет больно
-			if (_satiety < _currentLevelData.SatietyTreshholdForActivation)
-				_satietyLevel = EDomovoiSatietyLevel.Critical;
+            // кидаем ивент в зависимости от уровня сытости, если мало (по текущему уровню) то будет больно
+            if (_satiety < _currentLevelData.SatietyTreshholdForActivation)
+			{
+                _ostService.StartOst(_evilOst);
+                _satietyLevel = EDomovoiSatietyLevel.Critical;
+            }
 			else
-				_satietyLevel = EDomovoiSatietyLevel.Normal;
-			
-			// выбираем рандомный паттерн поведения на сейчас если уровень сытости - критический
-			if (_satietyLevel == EDomovoiSatietyLevel.Critical &&  _currentLevelData.Patterns != null && _currentLevelData.Patterns.Count > 0)
+			{
+                _satietyLevel = EDomovoiSatietyLevel.Normal;
+                _eventBus.Trigger(_satietyLevel);
+            }
+
+            // выбираем рандомный паттерн поведения на сейчас если уровень сытости - критический
+            if (_satietyLevel == EDomovoiSatietyLevel.Critical &&  _currentLevelData.Patterns != null && _currentLevelData.Patterns.Count > 0)
 			{
 				_currentDomovoiPattern = _currentLevelData.Patterns.Random();
 				_currentDomovoiPattern.Trigger();

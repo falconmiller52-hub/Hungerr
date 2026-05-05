@@ -130,14 +130,13 @@ namespace Runtime.Features.Player.Interactions
 		private void Interact()
 		{
 			if (!_isCanInteract || _interactableObject == null) return;
-
 			// Сначала сохраняем ссылку
 			GameObject target = _interactableObject;
 
 			if (target.TryGetComponent(out IInteractable interactable))
 				interactable.Interact();
 
-			if (target.TryGetComponent(out WorldItem worldItem))
+            if (target.TryGetComponent(out WorldItem worldItem))
 			{
 				if (_playerInventory.AddItem(worldItem.GetItem()))
 				{

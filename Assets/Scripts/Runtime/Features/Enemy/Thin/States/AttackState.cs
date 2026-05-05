@@ -58,17 +58,15 @@ namespace Runtime.Features.Enemy.Thin.States
 			Vector3 direction = _ai.transform.forward;
 			Quaternion orientation = _ai.transform.rotation;
 			float maxDistance = _ai.EnemySettingData.AttackRadius; // Насколько далеко летит "коробка"
-			
-			if (Physics.BoxCast(origin, halfExtents, direction, out RaycastHit hit, orientation, maxDistance))
-			{
-				var damageable = hit.collider.GetComponentInParent<IDamageable>();
-        
-				if (damageable != null)
-				{
-					damageable.ApplyDamage(_ai.EnemySettingData.AttackDamage);
-					Debug.Log($"<color=yellow>BoxCast попал по: {hit.collider.name}</color>");
-				}
-			}
-		}
+
+            if (Physics.BoxCast(origin, halfExtents, direction, out RaycastHit hit, orientation, maxDistance))
+            {
+                if (hit.collider.CompareTag("Player"))
+                {
+                    IDamageable damageable = hit.collider.GetComponentInParent<IDamageable>();
+                    damageable?.ApplyDamage(_ai.EnemySettingData.AttackDamage);
+                }
+            }
+        }
 	}
 }

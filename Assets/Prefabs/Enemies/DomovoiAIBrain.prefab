@@ -72,6 +72,13 @@ MonoBehaviour:
     SatietyTreshholdForActivation: 0
     NotFeededDaysAvailableBeforePunishment: 2
     Patterns: []
+  _evilOst:
+    Guid:
+      Data1: 137129731
+      Data2: 1310111847
+      Data3: -632854108
+      Data4: 1903978573
+    Path: event:/OST/The End (4)
 --- !u!114 &3147328430984531256
 MonoBehaviour:
   m_ObjectHideFlags: 0

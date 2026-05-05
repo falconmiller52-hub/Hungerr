@@ -10,7 +10,9 @@ namespace Runtime.Common.Services.Audio.Ost
 {
 	public class OstService : MonoBehaviour
 	{
-		private ISoundService _soundService;
+		public EventReference evesntReference;
+
+        private ISoundService _soundService;
 
 		private EventInstance _currentOstInstance;
 		private EventInstance _newOstInstance;
@@ -29,7 +31,8 @@ namespace Runtime.Common.Services.Audio.Ost
 		/// <param name="eventReference">Ost который нужно запустить</param>
 		public void StartOst(EventReference eventReference)
 		{
-			_currentOstInstance.getPlaybackState(out PLAYBACK_STATE state);
+            evesntReference = eventReference;
+            _currentOstInstance.getPlaybackState(out PLAYBACK_STATE state);
 
 			if (state == PLAYBACK_STATE.PLAYING)
 			{
