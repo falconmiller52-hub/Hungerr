@@ -60,15 +60,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "DialogSkip",
-                    "type": "Button",
-                    "id": "bc26ec8b-4320-41e9-895e-370f520ec88e",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "InventoryTrigger",
                     "type": "Button",
                     "id": "1f5ded23-1770-4dd6-b011-1ef034cc1e63",
@@ -191,17 +182,6 @@
                 },
                 {
                     "name": "",
-                    "id": "a945ec84-5c93-423e-92a2-41d878e782a4",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "DialogSkip",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a4df8edd-046b-4611-89cf-e33c59c7bf8d",
                     "path": "<Keyboard>/tab",
                     "interactions": "",
@@ -230,6 +210,15 @@
                     "name": "Use",
                     "type": "Button",
                     "id": "e7f4e895-8666-4035-a4b0-c964b7eaa355",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DialogSkip",
+                    "type": "Button",
+                    "id": "41d8e65a-e0ba-438f-9689-a6435f3fbee6",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -267,6 +256,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Use",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d7ead33-8085-4b03-8868-ca79cf359809",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DialogSkip",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

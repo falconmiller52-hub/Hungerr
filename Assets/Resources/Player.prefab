@@ -2394,6 +2394,9 @@ MonoBehaviour:
       Data3: 1877899450
       Data4: 1678767546
     Path: event:/SFX/Inventory/inventory_open
+  _itemLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!114 &7221009674689892835
 MonoBehaviour:
   m_ObjectHideFlags: 0

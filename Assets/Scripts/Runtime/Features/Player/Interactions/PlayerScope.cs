@@ -30,7 +30,7 @@ namespace Runtime.Features.Player.Interactions
 		private PlayerInventoriesController _playerInventoriesController;
 
 		[SerializeField] private EventReference _pickUpSound;
-
+		
 		//Внутренние переменные
 		private RaycastHit _rayHit;
 		private GameObject _interactableObject;
@@ -91,6 +91,9 @@ namespace Runtime.Features.Player.Interactions
 
 		private void Update()
 		{
+			if (!_isCanInteract)
+				return;
+			
 			// 1. Делаем рейкаст
 			var ray = _playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
 			bool hitSomething = Physics.Raycast(ray, out _rayHit, _rayLength);
@@ -180,7 +183,10 @@ namespace Runtime.Features.Player.Interactions
 		//Методы скрипта
 
 		public void Stop()
-			=> SetDisableInteract();
+		{
+			SetDisableInteract();
+			ClearCurrentTarget();
+		}
 
 		public void Resume()
 			=> SetEnableInteract();

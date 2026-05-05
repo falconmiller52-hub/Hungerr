@@ -12,6 +12,7 @@ namespace Runtime.Features.Player.PlayerCamera
 		private CinemachinePOV _pov;
 		private CinemachineVirtualCamera _cinemachineVirtualCamera;
 		private IPauseController _pauseController;
+		private bool _isPaused;
 
 		[Inject]
 		private void Construct(IPauseController pauseController)
@@ -29,6 +30,9 @@ namespace Runtime.Features.Player.PlayerCamera
 
 		private void Update()
 		{
+			if (_isPaused)
+				return;
+			
 			var mouse = Mouse.current;
 			Vector2 mouseDelta = mouse.delta.ReadValue();
 
@@ -38,6 +42,8 @@ namespace Runtime.Features.Player.PlayerCamera
 
 		public void Stop()
 		{
+			_isPaused = true;
+			
 			_pov.m_HorizontalAxis.m_InputAxisName = "";
 			_pov.m_VerticalAxis.m_InputAxisName = "";
 
@@ -49,6 +55,8 @@ namespace Runtime.Features.Player.PlayerCamera
 		{
 			_pov.m_HorizontalAxis.m_InputAxisName = "Mouse X";
 			_pov.m_VerticalAxis.m_InputAxisName = "Mouse Y";
+			
+			_isPaused = false;
 		}
 	}
 }
