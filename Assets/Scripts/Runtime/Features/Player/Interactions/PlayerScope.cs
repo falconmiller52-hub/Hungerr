@@ -31,8 +31,6 @@ namespace Runtime.Features.Player.Interactions
 
 		[SerializeField] private EventReference _pickUpSound;
 		
-		[SerializeField] private LayerMask _itemLayerMask;
-
 		//Внутренние переменные
 		private RaycastHit _rayHit;
 		private GameObject _interactableObject;
@@ -98,7 +96,7 @@ namespace Runtime.Features.Player.Interactions
 			
 			// 1. Делаем рейкаст
 			var ray = _playerCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
-			bool hitSomething = Physics.Raycast(ray, out _rayHit, _rayLength, _itemLayerMask);
+			bool hitSomething = Physics.Raycast(ray, out _rayHit, _rayLength);
 
 			// Получаем объект, если он есть и он НЕ находится в процессе удаления
 			GameObject hitObject = (hitSomething && _rayHit.collider != null) ? _rayHit.collider.gameObject : null;
