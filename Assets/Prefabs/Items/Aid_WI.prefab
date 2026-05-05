@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8255308191636439011}
   - component: {fileID: 1048691957333025022}
   - component: {fileID: 245894171661668537}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Aid_WI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 5099721042670742007}
   - component: {fileID: 7231554300205875658}
   - component: {fileID: 5471775178176414416}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}

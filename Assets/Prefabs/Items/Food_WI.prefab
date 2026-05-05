@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Food_WI
       objectReference: {fileID: 0}
+    - target: {fileID: 1896720402374228, guid: e51edc67d8ab8c54f8a1fceb7c497a9b, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4582117764247738, guid: e51edc67d8ab8c54f8a1fceb7c497a9b, type: 3}
       propertyPath: m_LocalScale.x
       value: 1
