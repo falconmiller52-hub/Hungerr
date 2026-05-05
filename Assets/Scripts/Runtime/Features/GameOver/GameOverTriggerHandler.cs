@@ -26,7 +26,7 @@ namespace Runtime.Features.GameOver
 			_gameOverCurtain = gameOverCurtain;
 			_ostService	= ostService;
 
-			_pathToTheEndTheme = "event:/OST/The End (4)";
+			_pathToTheEndTheme = "event:/OST/The End";
 			
 			_eventBus.Subscribe(EGameOver.PlayerOnZeroHealth, PlayerZeroHealthGameOver);
 		}

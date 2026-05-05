@@ -32,7 +32,7 @@ namespace Runtime.Infra.App.GlobalStateMachine.States
 			_stateMachine = stateMachine;
 			_ostService = ostService;
 
-			_pathToMainMenuTheme = "event:/OST/Main Menu Theme (3)";
+			_pathToMainMenuTheme = "event:/OST/Main Menu Theme";
 		}
 
 		public void Enter()

@@ -9,7 +9,6 @@ namespace Runtime.Features.Sounds
 		[Header("Surface Type")] [SerializeField]
 		private SurfaceType _surfaceType;
 		
-
 		public void SetSurfaceSoundEvent(EventInstance eventInstance)
 			=> eventInstance.setParameterByName("surface", (int)_surfaceType);
 	}
