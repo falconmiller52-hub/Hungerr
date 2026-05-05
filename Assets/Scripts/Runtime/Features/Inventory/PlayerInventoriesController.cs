@@ -1,5 +1,3 @@
-using Runtime.Common.Services.Audio;
-using Runtime.Common.Services.Audio.Sound;
 using Runtime.Common.Services.Input;
 using Runtime.Common.Services.Pause;
 using Runtime.Features.Inventory.View;
@@ -21,8 +19,8 @@ namespace Runtime.Features.Inventory
 
 		private IInputHandler _inputHandler;
 		private IPauseController _pauseController;
-		private bool _isOpened;
 		private StorageInventory _currentOpenedStorage;
+		private bool _isOpened;
 
 		[Inject]
 		private void Construct(IInputHandler inputHandler, IPauseController pauseController)
@@ -45,7 +43,8 @@ namespace Runtime.Features.Inventory
 
 		private void OpenInventory()
 		{
-			if (_isOpened) return; // Если уже открыто, ничего не делаем
+			if (_isOpened) 
+				return; // Если уже открыто, ничего не делаем
     
 			_isOpened = true;
 			ApplyInventoryState();
@@ -53,7 +52,8 @@ namespace Runtime.Features.Inventory
 
 		private void CloseInventory()
 		{
-			if (!_isOpened) return; // Если уже закрыто, ничего не делаем
+			if (!_isOpened) 
+				return; // Если уже закрыто, ничего не делаем
     
 			_isOpened = false;
 			ApplyInventoryState();
@@ -106,41 +106,6 @@ namespace Runtime.Features.Inventory
 				
 				_inputHandler.SwitchToGameplayMap();
 			}
-		}
-		
-		private void TryOpenInventory()
-		{
-			if (_isOpened)
-				return;
-
-			Cursor.lockState = CursorLockMode.None;
-			Cursor.visible = true;
-			_pauseController.PerformStop();
-
-			_isOpened = true;
-
-			_playerInventory.InventoryOpenStateChanged(_isOpened);
-		}
-
-		private void TryCloseInventory()
-		{
-			if (!_isOpened)
-				return;
-
-			Cursor.lockState = CursorLockMode.Locked;
-			Cursor.visible = false;
-			_pauseController.PerformResume();
-
-			_isOpened = false;
-
-			if (_currentOpenedStorage != null)
-			{
-				_currentOpenedStorage.InventoryOpenStateChanged(_isOpened);
-				_currentOpenedStorage = null;
-				_itemDragger.CloseChest();
-			}
-
-			_playerInventory.InventoryOpenStateChanged(_isOpened);
 		}
 	}
 }
